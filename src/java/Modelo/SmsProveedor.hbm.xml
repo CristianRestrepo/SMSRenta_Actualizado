@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.SmsProveedor" table="sms_proveedor" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idProveedor" type="java.lang.Integer">
+            <column name="idProveedor" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="smsUsuario" class="Modelo.SmsUsuario" fetch="select">
+            <column name="idUsuario" not-null="true" />
+        </many-to-one>
+        <property name="proveedorValorGanancia" type="int">
+            <column name="Proveedor_ValorGanancia" not-null="true" />
+        </property>
+        <set name="smsMercados" table="sms_mercado_sms_proveedor" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idProveedor" not-null="true" />
+            </key>
+            <many-to-many entity-name="Modelo.SmsMercado">
+                <column name="idMercado" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="smsVehiculos" table="sms_vehiculo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idProveedor" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsVehiculo" />
+        </set>
+        <set name="smsEmpleados" table="sms_empleado" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idProveedor" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsEmpleado" />
+        </set>
+    </class>
+</hibernate-mapping>

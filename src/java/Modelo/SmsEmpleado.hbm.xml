@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.SmsEmpleado" table="sms_empleado" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idEmpleado" type="java.lang.Integer">
+            <column name="idEmpleado" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="smsHojavida" class="Modelo.SmsHojavida" fetch="select">
+            <column name="idhojaVida" />
+        </many-to-one>
+        <many-to-one name="smsProveedor" class="Modelo.SmsProveedor" fetch="select">
+            <column name="idProveedor" not-null="true" />
+        </many-to-one>
+        <many-to-one name="smsUsuario" class="Modelo.SmsUsuario" fetch="select">
+            <column name="idUsuario" not-null="true" />
+        </many-to-one>
+        <set name="smsCategoriasServicios" table="sms_empleado_sms_categorias_servicio" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idEmpleado" not-null="true" />
+            </key>
+            <many-to-many entity-name="Modelo.SmsCategoriasServicio">
+                <column name="idCategoria_Servicio" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="smsReservacions" table="sms_reservacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idEmpleado" />
+            </key>
+            <one-to-many class="Modelo.SmsReservacion" />
+        </set>
+    </class>
+</hibernate-mapping>

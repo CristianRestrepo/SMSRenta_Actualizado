@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.SmsCiudad" table="sms_ciudad" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idCiudad" type="java.lang.Integer">
+            <column name="idCiudad" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="smsPais" class="Modelo.SmsPais" fetch="select">
+            <column name="idPais" not-null="true" />
+        </many-to-one>
+        <property name="ciudadNombre" type="string">
+            <column name="Ciudad_nombre" length="50" not-null="true" />
+        </property>
+        <set name="smsMunicipioses" table="sms_ciudad_sms_municipios" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idCiudad" not-null="true" />
+            </key>
+            <many-to-many entity-name="Modelo.SmsMunicipios">
+                <column name="idMunicipio" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="smsLugareses" table="sms_lugares" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCiudad" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsLugares" />
+        </set>
+        <set name="smsReservacionsForIdCiudadDestino" table="sms_reservacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCiudad_destino" />
+            </key>
+            <one-to-many class="Modelo.SmsReservacion" />
+        </set>
+        <set name="smsVehiculos" table="sms_vehiculo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCiudad" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsVehiculo" />
+        </set>
+        <set name="smsUsuarios" table="sms_usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCiudad" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsUsuario" />
+        </set>
+        <set name="smsReservacionsForIdCiudadInicio" table="sms_reservacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idCiudad_inicio" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsReservacion" />
+        </set>
+    </class>
+</hibernate-mapping>

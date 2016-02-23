@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="./../temp-admin2.xhtml">
+        <ui:define name="content1">
+            <b:container fluid="true">
+                <b:row>
+                    <h:form> 
+                        <p:messages id="msg" autoUpdate="true" closable="true"/>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-info espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-map-marker"/>
+                                    <h4 class="box-title">Registro de Ciudades</h4>
+                                </div> 
+                                <div class="box-body">
+                                    <p style="text-justify: auto">En este panel de registro podrá registrar la información referente a las ciudades en donde
+                                        SMS Renta presta sus servicios.</p> 
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
+                            <div class="box box-danger ">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-pencil-square-o"/>
+                                    <h4 class="box-title">Datos de Ciudad</h4>
+                                </div>      
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <h:panelGrid id="PCiudad" columns="3" cellpadding="5" style="width: 100%">
+                                            <p:outputLabel for="SPaises" value="País:"/>
+                                            <b:selectOneMenu id="SPaises" required="true" requiredMessage="Seleccione País" value="#{ciudadBean.paisView.paisNombre}">
+                                                <f:selectItem itemLabel="Seleccione país"/>
+                                                <f:selectItems value="#{paisBean.nombrePaisesListView}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SPaises"/>
+
+                                            <p:outputLabel for="TNombreCiudad" value="Nombre de la ciudad:"/>
+                                            <b:inputText maxlength="50" id="TNombreCiudad" required="true" requiredMessage="Ingrese nombre de ciudad" placeholder="Nombre de la ciudad"  value="#{ciudadBean.ciudadView.ciudadNombre}" style="width: 100%"></b:inputText>                                            
+                                            <p:message for="TNombreCiudad"/>
+                                        </h:panelGrid>
+                                    </div><hr/>
+                                    <p:commandButton class="btn btn-block btn-danger" id="BTCiudad" action="#{ciudadBean.metodo()}" update="msg PCiudad BTCiudad DTCiudades" value="#{ciudadBean.nombre}"/>                                       
+                                </div>
+                            </div>                            
+                        </b:column>
+
+                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+                            <div class="box box-success ">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-search"/>
+                                    <h4 class="box-title">Consulta de Ciudades</h4>
+                                </div>
+
+                                <div class="box-body">
+                                    <b:inputText placeholder="Buscar" value="#{ciudadBean.buscar}" style="width: 100%">
+                                        <p:ajax event="keyup" listener="#{ciudadBean.filtrar()}" process="@this" update="DTCiudades"/>
+                                    </b:inputText>                                            
+                                    <p:dataTable id="DTCiudades" emptyMessage="Ciudades no registradas" var="ciudades" value="#{ciudadBean.ciudadesListView}" 
+                                                 rows="5"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15">
+                                        <p:column headerText="Ciudad">
+                                            <h:outputText value="#{ciudades.ciudadNombre}"/>
+                                        </p:column>
+
+                                        <p:column headerText="PaíSs">
+                                            <h:outputText value="#{ciudades.smsPais.paisNombre}"/>
+                                        </p:column>                                        
+                                    </p:dataTable>    
+                                    
+                                </div>
+                            </div> 
+                        </b:column>
+
+
+                    </h:form> 
+                </b:row>
+            </b:container>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../temp-proveedor.xhtml">
+
+            <ui:define name="content4">
+
+                <b:container fluid="true"> 
+                    <b:row>
+                        <section class="content-header">
+                            <h3>Plataforma Segura de Pagos<small><em>  su mejor opcion de pago seguro por Intenet</em></small></h3>
+                        </section>
+                        <b:column col-lg="8">
+                            <div class="box box-info espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-user-plus "/>
+                                    <h4 class="box-title">PSP Plataforma Segura de Pago</h4>
+                                </div>
+                                <div class="box-body">                                    
+                                    <div class="row ">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <img class="center-block" src="../../../resources/images/pago/credibanco.png" width="200" 
+                                                 height="auto" alt="credibanco" style="margin-top: 22px"/>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3s col-sm-3 col-xs-6">
+                                            <img class="center-block" src="../../../resources/images/pago/logo-sms.png" width="100" height="auto" alt="logo-sms"/>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">                                           
+                                            <blockquote style=" margin-top: 26px;">
+                                                <p class="text-left"><strong>Total a Pagar: </strong>(COP 300.000)</p>
+                                            </blockquote>
+                                        </div>                                            
+                                    </div>
+                                    <hr></hr>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-lg-offset-1
+                                             col-md-4 col-md-offset-1
+                                             col-sm-4 col-sm-offset-1
+                                             col-xs-8 col-xs-offset-1 
+                                             well well-sm espacio-arriba" style="position: relative; left: 29px;"> 
+                                            <h:link class="link-no-efect">
+                                                <h6 style="margin-bottom: 40px"><strong>Pago con Tarjeta de Crédito: </strong></h6>
+                                                <img src="../../../resources/images/pago/tarjetaspago.png" class="img-responsive center-block margin-bottom" alt="tarjetaspago"/>                                                
+                                            </h:link>
+                                        </div>
+                                        <div class="col-lg-4 col-lg-offset-2
+                                             col-md-4 col-md-offset-2
+                                             col-sm-4 col-sm-offset-2
+                                             col-xs-8 col-xs-offset-2 btn-pago-1
+                                             well well-sm espacio-arriba" style="position: relative; right: 29px;">
+                                            <h:link>
+                                                <h6><strong>Pago con Platafoma Segura de Pagos PSP Pagos: </strong></h6>
+                                                <img src="../../../resources/images/pago/logo-psp-.png" class="img-responsive center-block " alt="logo-psp-"/>
+                                            </h:link>
+                                        </div>                                        
+                                    </div>
+                                    <div class="box-footer">
+                                        <p:commandButton class="btn btn-info btn-lg" style="width: 33%" value="Regreso"/>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </b:column>
+
+                    </b:row>                        
+                </b:container>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

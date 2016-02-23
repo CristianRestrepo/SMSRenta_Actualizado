@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="./../temp-proveedor.xhtml">
+
+        <ui:define name="content4">
+
+            <b:container fluid="true"> 
+                <b:row>
+                    <section class="content-header">
+                        <h3>Plataforma Segura de Pagos<small><em>  su mejor opcion de pago seguro por Intenet</em></small></h3>
+                    </section>
+                    <b:column col-lg="8">
+                        <div class="box box-info espacio-arriba">
+                            <div class="box-header with-border">
+                                <i class="fa fa-2x fa-user-plus "/>
+                                <h4 class="box-title">PSP Plataforma Segura de Pago</h4>
+                            </div>
+                            <div class="box-body">                                    
+                                <div class="row ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <img class="center-block img-responsive" src="../../../resources/images/pago/credibanco.png" width="200" 
+                                             height="auto" alt="credibanco" style="margin-top: 22px"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <img class="center-block img-responsive" src="../../../resources/images/pago/logo-sms.png" width="100" height="auto" alt="logo-sms"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">                                           
+                                        <img src="../../../resources/images/pago/logo-psp-.png" class="center-block img-responsive" width="200" height="auto" alt="logo-psp-"/>
+                                    </div>                                            
+                                </div>
+                                <hr></hr>
+                                <div class="row">
+                                    <div class="col-lg-8 col-lg-offset-2
+                                         col-md-10 col-md-offset-1
+                                         col-sm-10 col-sm-offset-1
+                                         col-xs-10 col-xs-offset-1 " > 
+                                        <h4 style="margin-bottom: 40px"><strong>Pago con Tarjeta de Crédito: </strong> COP: 1´400.000</h4>
+                                        <table class="table table-responsive ">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="width: 45%">Tipo de Documento *</th>
+                                                    <td>
+                                                        <b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="brandID" >
+                                                            <f:selectItem itemLabel="Fiat" itemValue="1"/>
+                                                            <f:selectItem itemLabel="Honda" itemValue="2"/>
+                                                            <f:selectItem itemLabel="Opel" itemValue="3"/>
+                                                        </b:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Número de Documento *</th>
+                                                    <td>
+                                                        <b:inputText placeholder="Ingrese número de Documento..."/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Seleccione forma de Pago *</th>
+                                                    <td>
+                                                        <b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="formaPago" >
+                                                            <f:selectItem itemLabel="Fiat" itemValue="1"/>
+                                                            <f:selectItem itemLabel="Honda" itemValue="2"/>
+                                                            <f:selectItem itemLabel="Opel" itemValue="3"/>
+                                                        </b:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Seleccione la Franquicia *</th>
+                                                    <td><b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="fanquicia" >
+                                                            <f:selectItem itemLabel="Fiat" itemValue="1"/>
+                                                            <f:selectItem itemLabel="Honda" itemValue="2"/>
+                                                            <f:selectItem itemLabel="Opel" itemValue="3"/>
+                                                        </b:selectOneMenu></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Número de Tarjeta *</th>
+                                                    <td>
+                                                        <b:inputText placeholder="Ingrese número de Documento..."/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Codigo de Seguridad *</th>
+                                                    <td>
+                                                        <b:inputText placeholder="Ingrese número de Documento..."/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Fecha de Vencimiento *</th>
+                                                    <td>
+                                                        <b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="fechaVenciMes" class="select-pago1">
+                                                            <f:selectItem itemLabel="1" itemValue="1"/>
+                                                            <f:selectItem itemLabel="2" itemValue="2"/>
+                                                            <f:selectItem itemLabel="3" itemValue="3"/>
+                                                        </b:selectOneMenu>
+                                                        <b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="fechaVenciAno"  class="select-pago2">
+                                                            <f:selectItem itemLabel="1" itemValue="1"/>
+                                                            <f:selectItem itemLabel="2" itemValue="2"/>
+                                                            <f:selectItem itemLabel="3" itemValue="3"/>
+                                                        </b:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>                                                                                
+                                </div>
+                                <div class="box-footer">
+                                    <p:commandButton class="btn btn-info " style="float: right; width: 33%; margin-bottom: 25px" value="Pagar" ></p:commandButton>
+                                </div>
+                            </div>
+                        </div>                            
+                    </b:column>
+
+                </b:row>                        
+            </b:container>                
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

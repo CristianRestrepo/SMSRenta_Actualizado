@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui">
+
+
+    <ui:composition template="./../template-admin-p.xhtml">
+
+        <ui:define name="content">
+            <b:container fluid="true">
+                <b:row>
+                    <b:column col-lg="6" col-md="7" col-sm="6" col-xs="12" >
+                        <div class="box box-danger direct-chat direct-chat-danger espacio-arriba">
+                            <div class="box-header with-borde">
+                                <i class="fa fa-line-chart"></i>
+                                <h3 class="box-title">Linea de Clientes por Mes</h3>
+                            </div>
+                            <div>
+                                <p:chart type="line" model="#{estadisticasBean.dateModel}" style="height:400px;"/>
+                            </div>
+                        </div>
+                    </b:column>
+                    <b:column col-lg="3" col-md="5" col-sm="6" col-xs="6">
+                        <div class="box box-primary direct-chat direct-chat-danger espacio-arriba">
+                            <div class="box-header with-borde">
+                                <i class="fa fa-pie-chart"></i>
+                                <h3 class="box-title">Lugares más Concurridos</h3>
+                            </div>
+                            <div>
+                                <p:chart type="pie" model="#{estadisticasBean.pieModel1}" style="width:400px;height:300px" />
+                            </div>
+                        </div>
+                    </b:column>
+                    <b:column col-lg="3" col-md="6" col-sm="6" col-xs="6" class="espacio-arriba">
+                        <div class="box box-info direct-chat direct-chat-danger ">
+                            <div class="box-header with-borde">
+                                <i class="fa fa-pie-chart"></i>
+                                <h3 class="box-title">Ganancias por Mes</h3>
+                            </div>
+                            <div>
+                                <p:chart type="bar" model="#{estadisticasBean.barModel}" style="height:300px" />
+                            </div>
+                        </div>
+                    </b:column>
+                </b:row>
+            </b:container>
+        </ui:define>
+
+    </ui:composition>
+
+</html>

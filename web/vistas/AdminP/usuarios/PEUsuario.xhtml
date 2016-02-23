@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template-admin-p.xhtml">
+            <ui:define name="content">
+                <b:container fluid="true">
+                    <b:row>
+                        <h:form id="formulario">                            
+
+                            <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" class="espacio-arriba">
+                                <div class="box box-info">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-user-plus"/>
+                                        <h4 class="box-title">Registro de Administradores</h4>                                    
+                                    </div>
+                                    <div class="box-body">
+                                        <p style="text-justify: auto">En este panel de registro podra registrar la informacion referente a nuestros usuarios y podra crear una cuenta de sesion para el ingreso al sistema,
+                                            esta cuenta podra ser de tipo administrador principal o secundario.</p>
+                                    </div>   
+                                </div>
+
+                                <div class="box box-success espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-user-plus"/>
+                                        <h4 class="box-title">Fotografia de perfil</h4>
+                                    </div>
+                                    <div class="box-body" style="width: 100%" align="center">
+                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.modUsuarioView.usuarioFotoRuta}"/> 
+                                    </div>
+                                </div>
+
+                            </b:column>
+
+                            <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+                                <div class="box box-danger espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-list-alt"/>
+                                        <h4 class="box-title">Datos de Administrador</h4>                                       
+                                    </div> 
+                                    <div class="box-body">
+                                        <div class="table-responsive">
+                                            <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
+                                                <p:outputLabel value="Nombre:* "/>
+                                                <b:inputText id="TNombreApUsu" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{usuarioBean.modUsuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
+                                                <p:message for="TNombreApUsu"/>
+
+                                                <p:outputLabel value="CC: " />
+                                                <b:inputText id="TCcUsu" maxlength="45" placeholder="Cedula de ciudadania" value="#{usuarioBean.modUsuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                                <p:message for="TCcUsu"/>
+
+                                                <p:outputLabel value="Telefono: "/>
+                                                <b:inputText id="TTelUsu" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{usuarioBean.modUsuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                                <p:message for="TTelUsu"/>
+
+                                                <p:outputLabel value="Email:* "/>
+                                                <b:inputText id="TEmailProv" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{usuarioBean.modUsuarioView.usuarioEmail}" style="width: 100%" ></b:inputText>
+                                                <p:message for="TEmailProv"/>
+
+                                                <p:outputLabel value="Razon social: "/>
+                                                <b:inputText id="TRazSocUsu" maxlength="100" placeholder="Nombre de la empresa" value="#{usuarioBean.modUsuarioView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
+                                                <p:message for="TRazSocUsu"/>
+
+                                                <p:outputLabel value="Nit: "/>
+                                                <b:inputText id="TNitUsu" maxlength="45" placeholder="Nit de la empresa" value="#{usuarioBean.modUsuarioView.usuarioNit}" style="width: 100%" ></b:inputText>
+                                                <p:message for="TNitUsu"/>
+
+                                                <p:outputLabel value="Ciudad:* "/>
+                                                <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{usuarioBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Seleccione ciudad"/>
+                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                </b:selectOneMenu>
+                                                <p:message for="SCiudades"/>
+                                            </h:panelGrid>
+                                        </div>
+                                    </div> 
+                                
+
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-check-circle"/>
+                                        <h4 class="box-title">Datos de sesion</h4>  
+                                        <br/><br/>
+                                        <p:commandLink value="Editar datos de sesion">
+                                            <p:ajax listener="#{usuarioBean.habilitarEdicion()}" event="click" update="@form"/>
+                                        </p:commandLink>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="table-responsive">                                       
+                                            <h:panelGrid rendered="#{usuarioBean.habilitarEditarSesion}" cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
+
+                                                <p:outputLabel value="Login: "/>
+                                                <b:inputText id="TLoginUsu" maxlength="60" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioLogin}" placeholder="Login de sesion"></b:inputText>
+                                                <p:message for="TLoginUsu"/>
+
+                                                <p:outputLabel value="Contraseña: "/>
+                                                <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                                    <f:validateLength minimum="6"/>
+                                                </b:inputSecret>
+                                                <p:message for="TPassUsu"/>
+
+                                                <p:outputLabel value="Repita contraseña: "/>
+                                                <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
+                                                    <f:validateLength minimum="6"/>
+                                                    <f:attribute name="password" value="#{MUsuarioPass.value}"/>
+                                                </b:inputSecret>
+                                                <p:message for="TRemPassUsu"/>
+                                                
+                                                <p:commandLink value="Cerrar">
+                                                    <p:ajax event="click" listener="#{usuarioBean.deshabilitarEdicion()}" update="@form"/>
+                                                </p:commandLink>
+                                            </h:panelGrid>
+                                            
+                                            <h:panelGrid columns="3" style="width: 100%">
+                                                <p:outputLabel value="Perfil:* "/>
+                                                <b:selectOneMenu required="true" requiredMessage="Seleccion tipo de usuario" id="SPerfiles" style="width: 100%" value="#{usuarioBean.rolView.rolNombre}">
+                                                    <f:selectItem itemLabel="Seleccione tipo de perfil"/>
+                                                    <f:selectItem itemLabel="Administrador Principal" itemValue="Administrador Principal"/>
+                                                    <f:selectItem itemLabel="Administrador Secundario" itemValue="Administrador Secundario"/>
+                                                </b:selectOneMenu>
+                                                <p:message for="SPerfiles"/>
+                                            </h:panelGrid>
+                                        </div><hr/>                                      
+                                                
+                                        <h:panelGrid columns="2" width="100%">
+                                            <p:commandButton style="width: 100%" id="BTModUsuario" ajax="true" class="btn btn-block btn-success" update="@form" action="#{usuarioBean.modificar()}" value="Modificar Administrador" />
+                                            <p:commandButton style="width: 100%" id="BTCancel" ajax="true" class="btn btn-block btn-danger" action="#{usuarioBean.regresar()}" value="Regresar" />                                            
+                                        </h:panelGrid>
+                                    </div> 
+                                </div>
+                            </b:column>                       
+
+
+                        </h:form>
+                    </b:row>
+                </b:container>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

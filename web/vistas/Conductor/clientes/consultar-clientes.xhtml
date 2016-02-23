@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="./../temp-conductor.xhtml">
+
+        <ui:define name="content3">
+
+
+            <b:container>
+                <b:row>
+                    <b:column col-lg="7" col-md="7" col-sm="10" col-xs="12" style="margin-top: 20px" >
+                        <h:form>
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-5x fa-road"></i>
+                                    <h1 class="box-title">Fecha de Reservación</h1>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-5 col-lg-offset-1">
+                                            <p class="box-title">
+                                                <i class="fa fa-calendar"/>
+                                                <strong>Ingrese fecha de Registro del cliente:</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <b:datepicker mode="icon-popup" showWeek="true" placeholder="Fecha de reservación">
+                                            </b:datepicker>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">  
+                                        <div class="col-lg-5 col-lg-offset-1">
+                                            <p class="box-title">
+                                                <i class="fa fa-calendar"/>
+                                                <strong>Rango de fechas de Registro del cliente:</strong>
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <b:datepicker mode="icon-popup" showWeek="true" placeholder="Fecha inicio" >
+                                            </b:datepicker><br/>
+                                            <b:datepicker mode="icon-popup" showWeek="true" placeholder="Fecha fin">
+                                            </b:datepicker>
+                                        </div>
+
+                                    </div>
+
+                                </div> 
+
+
+                                <div class="box-footer clearfix">
+                                    <p:dataTable var="car" value="#{dtBasicView.cars}">
+                                        <p:column headerText="Fecha de registro">
+                                            <h:outputText value="#{car.id}" />
+                                        </p:column>
+
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{car.year}" />
+                                        </p:column>
+
+                                        <p:column headerText="Apelido">
+                                            <h:outputText value="#{car.brand}" />
+                                        </p:column>
+
+                                        <p:column headerText="Vehículo reservado">
+                                            <h:outputText value="#{car.reser}" />
+                                        </p:column>
+                                        <p:column headerText="Consultar">
+
+                                        </p:column>
+                                    </p:dataTable>
+                                    <hr/>
+
+                                    <h:panelGrid columns="1" cellpadding="5">
+                                        <p:commandButton value="Boton de Consulta" class="btn btn-danger" type="button" onclick="PF('dlg2').show();" />
+                                    </h:panelGrid>
+
+                                    <!-- MODULO DE VISUALIZACION DE DATOS DEL CLIENTE CONULTADO -->
+                                    <p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="100">
+                                        <p:dataTable var="car" value="#{dtBasicView.cars}">
+
+                                            <p:column headerText="Nombre">
+                                                <h:outputText value="#{car.year}" />
+                                            </p:column>
+
+                                            <p:column headerText="Apelido">
+                                                <h:outputText value="#{car.brand}" />
+                                            </p:column>
+
+                                            <p:column headerText="Vehiculo reservado">
+                                                <h:outputText value="#{car.reser}" />
+                                            </p:column>
+                                            <p:column headerText="Lugar">
+                                                <h:panelGrid columns="1" cellpadding="5">
+                                                    <h:outputText value="#{car.reser}" />
+                                                </h:panelGrid>
+                                            </p:column>
+                                            <p:column headerText="Conductor">
+                                                <h:panelGrid columns="1" cellpadding="5">
+                                                    <h:outputText value="#{car.reser}" />
+                                                </h:panelGrid>
+                                            </p:column>
+                                            <p:column headerText="Vehiculo">
+                                                <h:panelGrid columns="1" cellpadding="5">
+                                                    <h:outputText value="#{car.reser}" />
+                                                </h:panelGrid>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:dialog> 
+                                </div> 
+
+
+
+
+                            </div>
+                        </h:form>
+                    </b:column>
+
+                    <b:column col-lg="3" col-md="3" col-sm="10" col-xs="12">
+                        <div class="box box-success espacio-arriba">
+                            <div class="box-header with-border">
+                                <i class="fa fa-5x fa-info-circle"></i>
+                                <h2 class="box-title">Fechas de Reservación</h2>
+                            </div>
+                            <div class="box-body">
+                                <p class="text-justify">
+                                    Este espacio le permite hacer consultas de los Clientes según su 
+                                    fecha re registro de servicio.
+                                </p>
+                            </div>
+                        </div>
+                    </b:column>
+
+                </b:row>
+            </b:container>
+
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

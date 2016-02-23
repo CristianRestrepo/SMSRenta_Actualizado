@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <body>
+
+        <ui:composition template="./../template-admin-p.xhtml">
+
+            <ui:define name="content">
+                <b:container fluid="true">
+                    <b:row>
+
+                        <h:form id="formA">                        
+                            <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >
+                                <div class="box box-info espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-truck"/>
+                                        <h4 class="box-title">Modificacion de Proveedores</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <p style="text-justify: auto">En este panel de registro podra registrar la informacion referente a nuestros proveedores, asignar una valor
+                                            de ganancias y ademas podra crear una cuenta de sesion para el ingreso al sistema.</p> 
+                                    </div>
+                                </div>
+                                
+                                <div class="box box-success espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-user-plus"/>
+                                        <h4 class="box-title">Fotografia de perfil</h4>
+                                    </div>
+                                    <div class="box-body" style="width: 100%" align="center">
+                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{proveedorBean.modUsuarioView.usuarioFotoRuta}"/> 
+                                    </div>
+                                </div>
+                                
+                            </b:column>
+
+                            <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+
+                                <div class="box box-danger espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-file-text"/>
+                                        <h4 class="box-title"> Datos del Proveedor</h4>                                        
+                                    </div> 
+                                    <div class="box-body">
+                                        <div class="table-responsive">
+                                            <h:panelGrid  id="seccionDatosUsuario" columns="3" cellpadding="2" style="width: 100%;">
+                                                <p:outputLabel value="Nombre: *"/>
+                                                <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.modUsuarioView.usuarioNombre}"></b:inputText>                       
+                                                <p:message for="TNombreApProv"/>
+
+                                                <p:outputLabel value="CC: " />
+                                                <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{proveedorBean.modUsuarioView.usuarioCc}"></b:inputText>
+                                                <p:message for="TCcProv"/>
+
+                                                <p:outputLabel value="Telefono: "/>
+                                                <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{proveedorBean.modUsuarioView.usuarioTelefono}"></b:inputText> 
+                                                <p:message for="TTelProv"/>
+
+                                                <p:outputLabel value="Email: *"/>
+                                                <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.modUsuarioView.usuarioEmail}"></b:inputText>
+                                                <p:message for="TEmailProv"/>
+
+                                                <p:outputLabel value="Razon social: "/>
+                                                <b:inputText maxlength="100" id="TRazSocProv" placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.modUsuarioView.usuarioRazonSocial}"></b:inputText>
+                                                <p:message for="TRazSocProv"/>
+
+                                                <p:outputLabel value="Nit: "/>
+                                                <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.modUsuarioView.usuarioNit}"></b:inputText>
+                                                <p:message for="TNitProv"/>
+
+                                                <p:outputLabel value="Valor Ganancia: *"/>
+                                                <b:inputText id="TValorGProv" placeholder="Valor de ganancia" required="true" requiredMessage="Indique valor de ganancia acordado con el proveedor" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorValorGanancia}"></b:inputText>
+                                                <p:message for="TValorGProv"/>
+
+                                                <p:outputLabel value="Ciudad: *"/>
+                                                <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{proveedorBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Seleccione ciudad"/>
+                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                </b:selectOneMenu>
+                                                <p:message for="SCiudades"/>
+                                            </h:panelGrid>
+                                        </div>
+                                        <div class="box-header with-border">
+                                            <i class="fa fa-2x fa-check-square"/>
+                                            <h4 class="box-title">Datos de Sesión</h4>
+                                            <br/><br/>                                        
+                                            <p:commandLink value="Editar datos de sesion">
+                                                <p:ajax listener="#{proveedorBean.habilitarEdicion()}" event="click" update="@form"/>
+                                            </p:commandLink>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="table-responsive"> 
+                                                <h:panelGrid columns="2" rendered="#{proveedorBean.habilitarEditarSesion}" id="seccionDatosSesion"  cellpadding="2"  style="width: 100%">
+
+                                                    <p:outputLabel value="Login: "/>
+                                                    <b:inputText style="width: 100%" maxlength="60" placeholder="Login de sesion" value="#{proveedorBean.modUsuarioView.usuarioLogin}"></b:inputText>
+
+                                                    <p:outputLabel value="Contraseña: "/>
+                                                    <b:inputSecret label="Contraseña" style="width: 100%" binding="#{MProvPass}" maxlength="20" placeholder="Contraseña de sesion" value="#{proveedorBean.modUsuarioView.usuarioPassword}">
+                                                        <f:validateLength minimum="6"/>
+                                                    </b:inputSecret>
+
+                                                    <p:outputLabel value="Repita contraseña: "/>
+                                                    <b:inputSecret label="Repita contraseña" style="width: 100%" maxlength="20" validator="repeatPasswordValidator" placeholder="Repita contraseña de sesion" value="#{proveedorBean.modUsuarioView.usuarioRememberToken}">
+                                                        <f:attribute name="password" value="#{MProv.value}"/>
+                                                        <f:validateLength minimum="6"/>
+                                                    </b:inputSecret>
+
+                                                    <p:commandLink value="Cancelar Edicion">
+                                                        <p:ajax event="click" listener="#{proveedorBean.deshabilitarEdicion()}" update="@form"/>
+                                                    </p:commandLink>
+                                                </h:panelGrid>                                        
+                                            </div><hr/>                                    
+                                            <h:panelGrid columns="2" width="100%">
+                                                <p:commandButton style="width: 100%" id="BTModCliente" ajax="true" class="btn btn-block btn-success" update="@form" action="#{proveedorBean.modificar()}" value="Modificar Proveedor" />
+                                                <p:commandButton style="width: 100%" id="BTCancel" ajax="true" class="btn btn-block btn-danger" action="#{proveedorBean.regresar()}" value="Regresar" />                                            
+                                            </h:panelGrid>
+                                        </div>
+                                    </div>
+                                </div>                    
+                            </b:column>
+                        </h:form>
+                    </b:row>
+                </b:container>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

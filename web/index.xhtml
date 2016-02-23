@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Dashboard SMS | Administradot Principal</title>
+        <h:outputStylesheet library="myLocalFontAwesome" name="font-awesome.css"></h:outputStylesheet>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css" />
+    </h:head>
+    <script type="text/javascript">
+        PrimeFaces.locales['tr'] = {
+            closeText: 'kapat',
+            prevText: 'geri',
+            nextText: 'ileri',
+            currentText: 'bugün',
+            monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+                'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+            monthNamesShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
+                'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+            dayNames: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+            dayNamesShort: ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct'],
+            dayNamesMin: ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct'],
+            weekHeader: 'Hf',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            month: 'Ay',
+            week: 'Hafta',
+            day: 'Gün',
+            allDayText: 'Tüm Gün'
+        };
+    </script>
+    <style type="text/css">
+        .value {
+            width: 1000px;
+        }
+    </style>
+
+    <h:body>
+        
+            <b:container fluid="true">
+                <b:row><!-- MENU -->
+                    <b:navBar brand="SMS Citas" brandHref="#" inverse="true">
+                        <b:navbarLinks pull="right">
+                            <b:dropMenu value="Nomnbre del Usuario" >
+                                <b:navLink value="Perfil" href="#"></b:navLink>
+                                <b:navLink></b:navLink>
+                                <b:navLink header="Sesión"></b:navLink>
+                                <b:button value="Cerrar Seseion" icon="power" iconAlign="right" style="margin-left:5%">
+                                    <f:param name="#" value="11"/>
+                                </b:button>
+
+                            </b:dropMenu>
+                        </b:navbarLinks>
+                    </b:navBar>
+                </b:row><!-- MENU -->
+            </b:container>
+
+            <!-- PANEL de la izquierda -->
+            <b:container fluid="true" >
+                <b:row >
+                    <b:column id="fondo" col-lg="3" col-md="3"  col-sm="5" col-xs="12" tooltip-delay-hide="10">
+                        <div class="well-1">
+                            <!-- submenu -->   
+                            <b:thumbnail id="esp1">
+                                <b:panelGrid colSpans="4,8">
+                                    <img src="#"/>
+                                    <f:facet name="caption"/>
+                                    <h4>Thumbnail label</h4>
+                                    <p>Nombre: "Nombre Completo."</p>
+                                    <p>Perfil : "tipo de perfil."</p>
+                                </b:panelGrid>
+                            </b:thumbnail>
+                            <b:listLinks>
+
+                                <b:panel  collapsed="true"  title="Reservaciones">
+
+                                    <b:listLinks>
+                                        <b:navLink header="Reservaciones realizadas por clientes." id="in-panel" />
+                                        <b:navLink value=" Reservacion de Vehiculo" icon="road" href="#" />
+                                        <b:navLink value=" Reservacion de Conductor" icon="user"  href="#" />
+                                        <b:navLink><hr></hr></b:navLink>
+                                        <b:navLink header="Reservas y Clientes" id="in-panel" />
+                                        <b:navLink value="Consultar Reservacion" href="#" icon="info-sign"/>
+                                        <b:navLink value="Modificar Reservacion" href="#" icon="pencil"/>
+                                        <b:navLink value="Eliminar Reservacion" href="#" icon="remove"/>
+                                    </b:listLinks>
+                                </b:panel>
+
+                                <b:panel look="primary" collapsed="true" title="Clientes" >
+
+                                    <b:listLinks>
+                                        <b:navLink header="Informacion y opciones de Clientes."  id="in-panel" ></b:navLink>
+                                        <b:navLink value="Registrar Clientes" icon="user" href="#"></b:navLink>
+                                        <b:navLink value="Editar Clientes" icon="pencil" href="#"></b:navLink>
+                                        <b:navLink value="Consultar Clientes" icon="ok" href="#"></b:navLink>
+                                        <b:navLink value="Eliminar Clientes" icon="trash" href="#"></b:navLink>
+                                    </b:listLinks>
+                                </b:panel>
+
+                                <b:panel look="primary" collapsed="true" title="Vehiculos" >
+                                    <b:listLinks>
+                                        <b:navLink header="Marca de Vehiculos SMS" id="in-panel"></b:navLink>
+                                        <b:navLink value="Registrar marca de Vehiculo" href="#" icon="star"></b:navLink>                                   
+                                        <b:navLink value="Consultar marca de Vehiculo" href="#" icon="ok-circle"></b:navLink>                                   
+                                        <b:navLink value="Editar marca de Vehiculo" href="#" icon="pencil"></b:navLink>                                   
+                                        <b:navLink value="Eliminar marca de Vehiculo" href="#" icon="remove-circle"></b:navLink>  
+                                        <b:navLink><hr></hr></b:navLink>
+
+                                        <b:navLink header="Categorias de Vehiculos SMS" id="in-panel"></b:navLink>
+                                        <b:navLink value="Registrar Categorias de Vehiculo" href="#" icon="bookmark"></b:navLink>                                   
+                                        <b:navLink value="Consultar Categorias de Vehiculo" href="#" icon="ok-sign"></b:navLink>                                   
+                                        <b:navLink value="Editar Categorias de Vehiculo" href="#" icon="pencil"></b:navLink>                                   
+                                        <b:navLink value="Eliminar Categorias de Vehiculo" href="#" icon="remove-circle"></b:navLink>  
+                                        <b:navLink><hr></hr></b:navLink>
+
+                                        <b:navLink header="Informacion del Vehiculo" id="in-panel"></b:navLink>                               
+                                        <b:navLink value="Consultar Vehiculo" href="#" icon="ok-circle"></b:navLink>                                   
+                                        <b:navLink value="Editar Vehiculo" href="#" icon="pencil"></b:navLink>                                   
+                                        <b:navLink value="Eliminar Vehiculo" href="#" icon="trash"></b:navLink>  
+
+                                    </b:listLinks>
+                                </b:panel>
+
+                                <b:panel look="primary" collapsed="true" title="Conductores SMS" >
+                                    <b:listLinks>        
+                                        <b:navLink header="Panel de informacion de Conductores SMS" id="in-panel"/>
+                                        <b:navLink value="Registrar Conductores" href="#" icon="log-in"></b:navLink>                                   
+                                        <b:navLink value="Consultar Conductores" href="#" icon="new-window"></b:navLink>                                   
+                                        <b:navLink value="Editar Conductores" href="#" icon="pencil"></b:navLink>                                   
+                                        <b:navLink value="Eliminar Conductores" href="#" icon="log-out"></b:navLink> 
+                                    </b:listLinks>
+                                </b:panel>
+
+                                <b:panel look="primary" collapsed="true" title="Calificaciones" >
+                                    <b:listLinks>          
+                                        <b:navLink header="Calificaicones SMS" id="in-panel"/>
+                                        <b:navLink value="Calificaciones de Conductores" href="#" icon="thumbs-up"></b:navLink>                                   
+                                        <b:navLink value="Consultar Calificaciones" href="#" icon="signalw"></b:navLink>                                   
+
+                                    </b:listLinks>
+                                </b:panel>
+
+                                <b:panel look="primary" collapsed="true" title="Estadisticas" >
+                                    <b:listLinks>
+                                        <b:navLink header="Estadisticas generales SMS" id="in-panel"></b:navLink>
+                                        <b:navLink value="Del vehiculo" href="#"></b:navLink>
+                                        <b:navLink value="Del Conductor" href="#"></b:navLink>
+                                        <b:navLink value="Del Proveedor" href="#"></b:navLink>
+                                    </b:listLinks>
+                                </b:panel>
+
+                            </b:listLinks>
+                        </div>
+                    </b:column>
+
+
+                    <!-- PANEL CENTRAL -->
+
+                    <b:column col-lg="9" col-md="9" col-sm="6" col-xs="12" >
+                        
+                        <p:growl id="messages" showDetail="true" />
+                        <h:panelGrid columnClasses="value" >
+                            <h3 style="margin-top: 0">PRIMER CALENDARIO</h3>
+                            <p:schedule id="schedule"  widgetVar="myschedule" timeZone="GMT+2">
+                                
+                                <p:ajax event="dateSelect"  update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                <p:ajax event="eventSelect"  update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                <p:ajax event="eventMove"  update="messages" />
+                                <p:ajax event="eventResize"  update="messages" />
+
+                            </p:schedule>
+                        </h:panelGrid>
+
+                        <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+                            <h:panelGrid id="eventDetails" columns="2">
+                                <p:outputLabel for="title" value="Titles:" />
+                                <p:inputText id="title"  required="true" />
+
+                                <p:outputLabel for="from" value="From:" />
+                                <p:calendar id="from"  timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                                <p:outputLabel for="to" value="To:" />
+                                <p:calendar id="to"  timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                                <p:outputLabel for="allDay" value="All Day:" />
+                                <h:selectBooleanCheckbox id="allDay" value="" />
+
+                                <p:commandButton type="reset" value="Reset" />
+                                <p:commandButton id="addButton" value="Save"  oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                            </h:panelGrid>
+                        </p:dialog>  
+                       
+                    </b:column>
+                </b:row>            
+            </b:container>
+
+
+        
+    </h:body>
+</html>

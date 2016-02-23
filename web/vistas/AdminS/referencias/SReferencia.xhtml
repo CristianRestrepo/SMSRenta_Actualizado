@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:composition template="./../temp-admin2.xhtml">
+        <ui:define name="content1">
+            <b:container fluid="true">
+                <b:row>
+                    <h:form>   
+                        <p:messages id="msg" closable="true"/>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-info espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-tags"/>
+                                    <h3 class="box-title">Referencias SMS Renta</h3>
+                                </div>
+                                <div class="box-body">
+                                    <p>En este panel podrá registrar las referencias de los vehículos a manejar en SMS Renta, 
+                                        relacionando esta referencia con su respectiva marca.</p>
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
+                            <div class="box box-danger ">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-list-alt"/>
+                                    <h3 class="box-title">Registro de referencias SMS Renta</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="table-responsive">                                        
+                                        <h:panelGrid id="PReferencias" columns="3" cellpadding="5" style="width: 100%">
+                                            <p:outputLabel value="Marca"/>
+                                            <b:selectOneMenu value="#{referenciaBean.marcaView.marcaNombre}">
+                                                <f:selectItem id="SMarcas" itemLabel="Seleccione Marca"/>
+                                                <f:selectItems value="#{marcaBean.nombresMarcaView}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SMarcas" />
+
+                                            <p:outputLabel  value="Referencia: "/>
+                                            <b:inputText id="TNombreRef" placeholder="Referencia del vehiculo" required="true" requiredMessage="Ingrese referencia" style="width: 100%" value="#{referenciaBean.referenciaView.referenciaNombre}"/>
+                                            <p:message for="TNombreRef" />
+                                        </h:panelGrid>
+                                    </div> 
+                                    <hr/>
+                                    <p:commandButton  id="BTReferencia" update="@form" class="btn btn-block btn-danger" value="#{referenciaBean.nombre}" action="#{referenciaBean.metodo()}"/>                                   
+                                </div>                                  
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-search"/>
+                                    <h4 class="box-title">Consultar Referencias SMS Renta</h4>                                
+                                </div>
+                                <div class="box-body">
+                                    <b:inputText id="TBuscar" placeholder="Buscar" value="#{referenciaBean.buscar}" style="width: 100%">
+                                        <p:ajax event="keyup" listener="#{referenciaBean.filtrar()}" process="@this" update="DTReferencias"/>
+                                    </b:inputText>                                 
+                                    <p:dataTable id="DTReferencias" var="Referencias" value="#{referenciaBean.referenciasListView}"
+                                                 rows="5"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15" emptyMessage="Referencias no registradas">
+                                        <p:column headerText="Referencia">
+                                            <p:outputLabel value="#{Referencias.referenciaNombre}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Marca">
+                                            <p:outputLabel value="#{Referencias.smsMarca.marcaNombre}"/>
+                                        </p:column>
+
+                                        
+                                    </p:dataTable>
+
+                                   
+                                </div>
+                            </div>
+                        </b:column>
+
+                    </h:form> 
+                </b:row>
+            </b:container>
+        </ui:define>
+    </ui:composition>
+
+</html>

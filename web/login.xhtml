@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./bootstrap/css/bootstrap.css"/>
+        <h:outputStylesheet name="./bootstrap/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="./bootstrap/css/login.css"/>
+        <h:outputStylesheet name="./adminLT/css/AdminLTE.css"/>
+        <h:outputStylesheet name="./adminLT/css/skins/_all-skins.min.css"/>
+
+        <title>Login | Registro de SMS</title>
+    </h:head>
+    <script>
+        $(document).ready(function () {
+            $(document).mousemove(function (e) {
+                TweenLite.to($('body'),
+                        .5,
+                        {css:
+                                    {
+                                        backgroundPosition: "" + parseInt(event.pageX / 8) + "px " + parseInt(event.pageY / '12') + "px, " + parseInt(event.pageX / '15') + "px " + parseInt(event.pageY / '15') + "px, " + parseInt(event.pageX / '30') + "px " + parseInt(event.pageY / '30') + "px"
+                                    }
+                        });
+            });
+        });
+    </script>
+    <h:body>
+        <h:form>
+            <b:container fluid="true">               
+                <script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
+                <!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
+                <h:form>
+                    <div class="container">
+                        <div class="row vertical-offset-100">
+                            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-10
+                                 col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 " >
+
+                                <div class="box box-danger">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-5x fa-desktop"></i>
+                                        <h3 class="box-title">Plataforma <stong>SMS Renta</stong></h3>
+                                    </div>
+                                    <div class="box-body">
+
+                                        <f:facet name="anchor"><b:iconAwesome name="user" size="1x"  /></f:facet>
+                                        <!-- <form accept-charset="UTF-8" role="form">-->
+                                        <fieldset>
+                                            <p:fragment autoUpdate="true">
+                                                <p:growl id="messages" life="2000"/>
+                                                <div class="form-group centro">
+                                                    <img src="resources/images/logo.jpg" class="cntr-1 img-thumbnail "/>
+                                                    <b:inputText placeholder="Ingrese su nombre de usuario" required="true" requiredMessage="Por favor, ingrese nombre de sesion" value="#{usuarioBean.usuarioView.usuarioLogin}" style="width: 100%; margin-bottom: 12px"/>
+                                                    <b:inputSecret  placeholder="Ingrese su contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{usuarioBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
+                                                </div>
+                                                <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrarse?"/>
+                                                <p:commandButton class="btn btn-lg btn-block btn-danger" update="messages"
+                                                                 action="#{usuarioBean.iniciarSesion()}" value="Ingrese Aquí"/>
+                                            </p:fragment>
+                                        </fieldset>
+                                        <!--</form>-->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </b:container>
+        </h:form>
+    </h:body>
+</html>
+

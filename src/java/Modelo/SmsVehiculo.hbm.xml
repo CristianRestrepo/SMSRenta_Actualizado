@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.SmsVehiculo" table="sms_vehiculo" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idVehiculo" type="java.lang.Integer">
+            <column name="idVehiculo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="smsCategoria" class="Modelo.SmsCategoria" fetch="select">
+            <column name="idCategoria" not-null="true" />
+        </many-to-one>
+        <many-to-one name="smsCiudad" class="Modelo.SmsCiudad" fetch="select">
+            <column name="idCiudad" not-null="true" />
+        </many-to-one>
+        <many-to-one name="smsProveedor" class="Modelo.SmsProveedor" fetch="select">
+            <column name="idProveedor" not-null="true" />
+        </many-to-one>
+        <many-to-one name="smsReferencia" class="Modelo.SmsReferencia" fetch="select">
+            <column name="idReferencia" not-null="true" />
+        </many-to-one>
+        <property name="vehPlaca" type="string">
+            <column name="Veh_placa" length="50" not-null="true" />
+        </property>
+        <property name="vehModelo" type="string">
+            <column name="Veh_modelo" length="50" not-null="true" />
+        </property>
+        <property name="vehColor" type="string">
+            <column name="Veh_color" length="50" />
+        </property>
+        <property name="vehNumPersonas" type="java.lang.Integer">
+            <column name="Veh_num_personas" />
+        </property>
+        <property name="vehNumMalGrande" type="java.lang.Integer">
+            <column name="Veh_num_malGrande" />
+        </property>
+        <property name="vehNumMalPeque&#195;&#177;a" type="java.lang.Integer">
+            <column name="Veh_num_malPeque&#195;&#177;a" />
+        </property>
+        <property name="vehFotoNombre" type="string">
+            <column name="Veh_foto_nombre" length="65535" />
+        </property>
+        <property name="vehFotoRuta" type="string">
+            <column name="Veh_foto_ruta" length="65535" />
+        </property>
+        <property name="vehFoto2Nombre" type="string">
+            <column name="Veh_foto2_nombre" length="65535" />
+        </property>
+        <property name="vehFoto2Ruta" type="string">
+            <column name="Veh_foto2_ruta" length="65535" />
+        </property>
+        <set name="smsCategoriasServicios" table="sms_vehiculo_sms_categorias_servicio" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idVehiculo" not-null="true" />
+            </key>
+            <many-to-many entity-name="Modelo.SmsCategoriasServicio">
+                <column name="idCategoria_Servicio" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="smsReservacions" table="sms_reservacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idVehiculo" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsReservacion" />
+        </set>
+        <set name="smsEstadovehiculos" table="sms_estadovehiculo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idVehiculo" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsEstadovehiculo" />
+        </set>
+    </class>
+</hibernate-mapping>

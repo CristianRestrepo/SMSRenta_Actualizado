@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./bootstrap/css/bootstrap.css"/>
+        <h:outputStylesheet name="./bootstrap/css/bootstrap.min.css"/>
+        <h:outputStylesheet name="./bootstrap/css/login.css"/>
+        <h:outputStylesheet name="./adminLT/css/AdminLTE.css"/>
+        <h:outputStylesheet name="./adminLT/css/skins/_all-skins.min.css"/>
+
+        <title>Login | Registro de SMS</title>
+    </h:head>
+    <script>
+        $(document).ready(function () {
+            $(document).mousemove(function (e) {
+                TweenLite.to($('body'),
+                        .5,
+                        {css:
+                                    {
+                                        backgroundPosition: "" + parseInt(event.pageX / 8) + "px " + parseInt(event.pageY / '12') + "px, " + parseInt(event.pageX / '15') + "px " + parseInt(event.pageY / '15') + "px, " + parseInt(event.pageX / '30') + "px " + parseInt(event.pageY / '30') + "px"
+                                    }
+                        });
+            });
+        });
+    </script>
+    <h:body>
+        <h:form>
+            <b:container fluid="true">               
+                <script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
+                <!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
+                <h:form>
+                    <div class="container">
+                        <div class="row vertical-offset-100">
+                            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-10
+                                 col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 " >
+
+                                <div class="box box-danger">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-5x fa-desktop"></i>
+                                        <h3 class="box-title">Plataforma <stong>SMS Renta</stong></h3>
+                                    </div>
+                                    <div class="box-body">
+
+                                        <f:facet name="anchor"><b:iconAwesome name="user-plus" size="1x"  /></f:facet>
+                                        <!-- <form accept-charset="UTF-8" role="form">-->
+
+                                        <fieldset>
+                                            <p:fragment autoUpdate="true">
+                                                <p:growl id="messages-2" life="2000"/>                                                                                                            
+
+                                                <div class="box-header with-border">
+                                                    <i class="fa fa-2x fa-th-list"/>
+                                                    <h4 class="box-title">Datos del Cliente</h4>
+                                                </div>       
+                                                <div class="box-body">
+                                                    <div class="table-responsive">
+                                                        <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="2" style="width: 100%;">
+
+                                                            <b:inputText maxlength="60" id="TNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.clienteView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
+                                                            <p:message for="TNombreApCli"/>
+
+
+                                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.clienteView.usuarioEmail}" style="width: 100%"/>
+                                                            <p:message for="TEmailCli"/>
+
+
+                                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{clienteBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                                                <f:selectItem itemLabel="Seleccione ciudad"/>
+                                                                <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                            </b:selectOneMenu>
+                                                            <p:message for="SCiudades"/>
+                                                        </h:panelGrid>
+                                                    </div>
+                                                </div>
+                                                <div class="box-header with-border">
+                                                    <i class="fa fa-2x fa-check-square"/>
+                                                    <h4 class="box-title">Datos de Sesión</h4>
+                                                </div>
+                                                <div class="box-body">                                  
+                                                    <div class="table-responsive">
+                                                        <h:panelGrid cellpadding="5" columns="2" id="seccionDatosSesion" style="width: 100%">
+
+
+                                                            <b:inputText id="TLoginCli" maxlength="60" validator="regLoginValidator" style="width: 100%" value="#{clienteBean.clienteView.usuarioLogin}" placeholder="Login de sesion"/>
+                                                            <p:message for="TLoginCli"/>
+
+
+                                                            <b:inputSecret label="Contraseña" id="TPassCli" binding="#{pass}"  maxlength="20" style="width: 100%" value="#{clienteBean.clienteView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                                                <f:validateLength minimum="6"/>
+                                                            </b:inputSecret>
+                                                            <p:message for="TPassCli"/>
+
+
+                                                            <b:inputSecret label="Repita contraseña" id="TRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.clienteView.usuarioRememberToken}" placeholder="Repita contraseña de sesion">
+                                                                <f:validator validatorId="repeatPasswordValidator" />
+                                                                <f:attribute name="password" value="#{pass.value}"/>
+                                                                <f:validateLength minimum="6" />
+                                                            </b:inputSecret> 
+                                                            <p:message id="msgPass" for="TRemPassCli"/>
+
+                                                        </h:panelGrid>
+                                                    </div><hr/>
+                                                    <!--<p:commandLink value="Login" process="@this" immediate="true" action="#{pathBean.ir_Login()}"/>-->
+                                                    <p:commandButton id="BTCliente" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-success" ajax="true" action="#{clienteBean.registrar()}" value="Registrar" />
+                                                    <script type="text/javascript">
+                                                    function start() {
+                                                    PF('statusDialog').show();
+                                                    }
+                                                    function stop() {
+                                                    PF('statusDialog').hide();
+                                                    }
+                                                    </script>
+                                                    <p:dialog modal="true" widgetVar="statusDialog" header="Registrando Usuario" draggable="false" closable="false" resizable="false">
+                                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                    </p:dialog>
+                                                </div>                                                         
+                                            </p:fragment>
+
+                                        </fieldset>
+                                        <!--</form>-->
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </b:container>
+        </h:form>
+    </h:body>
+</html>
+
+

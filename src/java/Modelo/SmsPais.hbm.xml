@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.SmsPais" table="sms_pais" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idPais" type="java.lang.Integer">
+            <column name="idPais" />
+            <generator class="identity" />
+        </id>
+        <property name="paisNombre" type="string">
+            <column name="Pais_nombre" length="50" />
+        </property>
+        <set name="smsMunicipioses" table="sms_municipios" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idPais" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsMunicipios" />
+        </set>
+        <set name="smsCiudads" table="sms_ciudad" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idPais" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsCiudad" />
+        </set>
+    </class>
+</hibernate-mapping>

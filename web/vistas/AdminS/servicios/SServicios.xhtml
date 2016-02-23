@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+     <ui:composition template="./../temp-admin2.xhtml">
+        <ui:define name="content1">
+            <b:container fluid="true">
+                <b:row>
+                    <h:form>                        
+                        <p:messages id="msg" closable="true"/>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-info espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-briefcase"/>
+                                    <h4 class="box-title">Registro de Servicios</h4>
+                                </div>
+                                <div class="box-body">
+                                    <p style="text-justify: auto">En este panel de registro podrá registrar
+                                        la información referente a los diferentes tipos de servicios
+                                        que presta SMS Renta.</p> 
+                                </div>
+                            </div>                            
+                        </b:column>
+
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">                              
+                                    <i class="fa fa-2x fa-list-alt"/>
+                                    <h4 class="box-title">Datos de Servicios</h4>
+                                </div> 
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <h:panelGrid id="PServicios" columns="3" cellpadding="5" style="width: 100%">
+                                            <p:outputLabel value="Nombre:"/>
+                                            <b:inputText id="TNombreServ" style="width: 100%" required="true" requiredMessage="Ingrese nombre del servicio" value="#{serviciosBean.servicioView.serviciosNombre}" placeholder="Nombre del servicio">                                            
+                                            </b:inputText>
+                                            <p:message for="TNombreServ"/>
+
+                                            <p:outputLabel value="Descripción: "/>
+                                            <p:inputTextarea id="TDescServ" placeholder="Descripción del servicio" value="#{serviciosBean.servicioView.serviciosDescripcion}" style="width: 100%" rows="3"></p:inputTextarea>
+                                            <p:message for="TDescServ"/>
+                                        </h:panelGrid>
+                                    </div>
+                                    <hr/>
+                                    <p:commandButton id="BTServicio" update="@form" action="#{serviciosBean.metodo()}" class="btn btn-block btn-danger" value="#{serviciosBean.nombre}"/>                           
+                                </div>                               
+                            </div>
+                        </b:column>
+                        
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-shopping-cart"/>
+                                    <h4 class="box-title">Servicios SMS Renta</h4>
+                                </div>
+                                <div class="box-body">
+                                    <b:inputText placeholder="Buscar" value="#{serviciosBean.buscar}" style="width: 100%">
+                                        <p:ajax event="keyup" listener="#{serviciosBean.filtrar()}" process="@this" update="DTservicios"/>
+                                    </b:inputText>
+                                    <p:dataTable id="DTservicios" var="servicio" value="#{serviciosBean.serviciosListView}" 
+                                                 rows="5"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15" emptyMessage="Servicios no registrados">
+
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{servicio.serviciosNombre}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Descripción del servicio">
+                                            <h:outputText value="#{servicio.serviciosDescripcion}"/>
+                                        </p:column>
+
+                                        
+                                    </p:dataTable>                                
+
+                                </div>                             
+                            </div>
+                        </b:column>                      
+                                                
+                    </h:form> 
+                </b:row>
+            </b:container>
+        </ui:define>
+    </ui:composition>
+</html>

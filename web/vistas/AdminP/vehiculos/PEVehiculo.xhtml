@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template-admin-p.xhtml">
+
+            <ui:define name="content">
+                <b:container fluid="true">
+                    <b:row>
+                        <h:form id="formA">
+                            <p:messages closable="true" id="msg"/>
+
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <div class="box box-info espacio-arriba">
+                                    <div class="box-header with-border"> 
+                                        <i class="fa fa-2x fa-car"/>
+                                        <h4 class="box-title">Vehiculos SMS Renta</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <p>En este panel podrá ingresar las Marcas de los vehículos de SMS renta como 
+                                            consultar los vehículos por sus respectivas Marcas.</p>
+                                    </div>
+                                </div>
+                            </b:column>
+
+                            <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" >
+                                <div class="box box-danger">
+                                    <div class="box-header with-border">   
+                                        <i class="fa fa-2x fa-folder-open"/>
+                                        <h4 class="box-title">Edicion de Vehiculos SMS Renta</h4>
+                                    </div>
+                                    <div class="box-body">
+
+                                        <div class=" table-responsive">                                
+                                            <h:panelGrid id="seccionDatosVehiculo" columns="4" style="width: 100%; padding: 12px">                                     
+                                                <p:outputLabel value="Referencia: " />
+                                                <b:selectOneMenu id="referencia"  required="true" value="#{vehiculoBean.mreferenciaView.referenciaNombre}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Seleccionar Referencia" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{referenciaBean.nombresReferenciaListView}" />
+                                                </b:selectOneMenu>
+
+
+                                                <p:outputLabel value="Ciudad:" />
+                                                <b:selectOneMenu id="ciudad"  required="true" value="#{vehiculoBean.mciudadView.ciudadNombre}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Selecionar Ciudad" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}" />
+                                                </b:selectOneMenu>
+
+
+                                                <p:outputLabel value="Categoria:" />
+                                                <b:selectOneMenu id="categoria" required="true" value="#{vehiculoBean.mcategoriaView.categoriaNombre}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Seleccionar Categoria" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{categoriaBean.nombresCategoriasListView}" />
+                                                </b:selectOneMenu>
+
+
+                                                <p:outputLabel value="Proveedor:" />
+                                                <b:selectOneMenu id="proveedor" required="true"  value="#{vehiculoBean.musuarioView.usuarioNombre}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Seleccionar Proveedor" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{proveedorBean.nombresProveedoresView}" />
+                                                </b:selectOneMenu>
+
+
+                                                <p:outputLabel value="Color: "/>
+                                                <b:inputText id="TVehColor" required="true" requiredMessage="Ingrese color " placeholder="Color del vehiculo" style="width: 100%" value="#{vehiculoBean.mvehiculoView.vehColor}"/>
+
+
+                                                <p:outputLabel value="Modelo: "/>
+                                                <b:inputText id="TVehModelo" required="true" requiredMessage="Ingrese modelo del vehiculo" placeholder="Modelo del vehiculo" style="width: 100%" value="#{vehiculoBean.mvehiculoView.vehModelo}"/>
+
+
+                                                <p:outputLabel value="N° de Maletas P: "/>
+                                                <b:inputText id="TVehMalP" placeholder="Cant. maletas pequeñas" style="width: 100%"  value="#{vehiculoBean.mvehiculoView.vehNumMalPequeña}"/>
+
+
+                                                <p:outputLabel value="N° de Maletas G: "/>
+                                                <b:inputText id="TVehMalG" placeholder="Cant. maletas grandes" style="width: 100%" value="#{vehiculoBean.mvehiculoView.vehNumMalGrande}"/>
+
+
+                                                <p:outputLabel value="N° de Personas: "/>
+                                                <b:inputText id="TVehPer" placeholder="Cant. personas" style="width: 100%" value="#{vehiculoBean.mvehiculoView.vehNumPersonas}"/>
+
+
+                                                <p:outputLabel value="N° de Placa: "/>
+                                                <b:inputText id="TVehPlaca" required="true" requiredMessage="Ingrese placa del vehiculo" placeholder="Numero del placa" style="width: 100%" value="#{vehiculoBean.mvehiculoView.vehPlaca}"/>                                                
+
+                                            </h:panelGrid>
+                                        </div>
+                                        <hr/>
+                                        <div class="table-responsive">
+                                            <h4>Estado Vehiculo</h4>
+                                            <h:panelGrid id="seccionEstadoVehiculo" columns="4" style="width: 100%">
+                                                <p:outputLabel value="Frenos:" />
+                                                <b:selectOneMenu id="est-frenos" value="#{vehiculoBean.mestadoVehiculoView.estadoVehFrenos}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Excelente" itemValue="Excelente" />
+                                                    <f:selectItem itemLabel="Bueno" itemValue="Bueno" />
+                                                    <f:selectItem itemLabel="Regular" itemValue="Regular" />
+                                                    <f:selectItem itemLabel="Malo" itemValue="Malo" />
+                                                </b:selectOneMenu>
+
+                                                <p:outputLabel value="Motor:" />
+                                                <b:selectOneMenu id="est-motor" value="#{vehiculoBean.mestadoVehiculoView.estadoVehMotor}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Excelente" itemValue="Excelente" />
+                                                    <f:selectItem itemLabel="Bueno" itemValue="Bueno" />
+                                                    <f:selectItem itemLabel="Regular" itemValue="Regular" />
+                                                    <f:selectItem itemLabel="Malo" itemValue="Malo" />
+                                                </b:selectOneMenu>
+
+                                                <p:outputLabel value="Silleteria:" />
+                                                <b:selectOneMenu id="est-sillas" value="#{vehiculoBean.mestadoVehiculoView.estadoVehSilleteria}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Excelente" itemValue="Excelente" />
+                                                    <f:selectItem itemLabel="Bueno" itemValue="Bueno" />
+                                                    <f:selectItem itemLabel="Regular" itemValue="Regular" />
+                                                    <f:selectItem itemLabel="Malo" itemValue="Malo" />
+                                                </b:selectOneMenu>
+
+                                                <p:outputLabel value="Pintura:" />
+                                                <b:selectOneMenu id="est-pintu" value="#{vehiculoBean.mestadoVehiculoView.estadoVehPintura}" style="width: 100%">
+                                                    <f:selectItem itemLabel="Excelente" itemValue="Excelente" />
+                                                    <f:selectItem itemLabel="Bueno" itemValue="Bueno" />
+                                                    <f:selectItem itemLabel="Regular" itemValue="Regular" />
+                                                    <f:selectItem itemLabel="Malo" itemValue="Malo" />
+                                                </b:selectOneMenu>
+
+                                                <p:outputLabel value="Kilometraje:" />
+                                                <b:inputText placeholder="Valor del kilometraje" style="width: 100%" value="#{vehiculoBean.mestadoVehiculoView.estadoVehKilometraje}"/>
+                                            </h:panelGrid>
+
+                                        </div><hr/>
+                                        <h:panelGrid columns="2" width="100%">
+                                            <p:commandButton id="BTVehiculo" class="btn btn-block btn-success"  value="Modificar Vehiculo" update=":formA:msg :formA:seccionDatosVehiculo :formA:seccionEstadoVehiculo :formA:BTVehiculo :formB:TEstadoFoto :formB:fileIdPhoto" action="#{vehiculoBean.modificar()}"/>
+                                            <p:commandButton style="width: 100%" id="BTCancel" ajax="true" class="btn btn-block btn-danger" action="#{vehiculoBean.regresar()}" value="Regresar" />                                            
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
+                            </b:column>  
+                        </h:form>
+
+                        <h:form id="formB" enctype="multipart/form-data">
+                            <b:column col-lg="4" col-md="4" col-sm="12" col-xs="12" >
+                                <div class="box box-primary">
+                                    <p:fragment autoUpdate="true">
+                                        <div class="box-header with-border">    
+                                            <i class="fa fa-2x fa-camera"/>
+                                            <h4 class="box-title">Ingreso de Fotografía</h4>
+                                        </div>
+                                        <div class="box-body">
+                                            <p:outputLabel id="TEstadoFoto" value="#{vehiculoBean.modEstadoArchivo}"/>
+                                            <div class="table-responsive">
+                                                <p:fileUpload id="fileIdPhoto" fileUploadListener="#{vehiculoBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                              process="@this" uploadLabel="Subir fotografia" cancelLabel="Cancelar" update=":formB" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+
+                                                <p:messages id="messages" closable="true" />
+                                            </div> 
+                                        </div>
+                                    </p:fragment>
+                                </div>
+                            </b:column>
+                        </h:form>
+                    </b:row>
+                </b:container>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

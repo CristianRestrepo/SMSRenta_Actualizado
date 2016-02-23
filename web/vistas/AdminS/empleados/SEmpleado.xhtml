@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+    <ui:composition template="./../temp-admin2.xhtml">
+        <ui:define name="content1">
+            <b:container fluid="true">
+                <b:row>
+                     <h:form id="formA">
+                        <p:messages id="msg" closable="true"/>
+
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-info espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-list-alt"/>
+                                    <h4 class="box-title">Registro de Conductores</h4>
+                                </div>
+                                <div class="box-body">
+                                    <p style="text-justify: auto">En este panel de registro podrá 
+                                        registrar la información referente a nuestros empleados y
+                                        podrá crear una cuenta de sesión para el ingreso al sistema,
+                                        con la que posteriormente el empleado realizara sus consultas.</p> 
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-info"/>
+                                    <h4 class="box-title"> Datos del Empleado</h4>                                       
+                                </div> 
+
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
+                                            <p:outputLabel value="Nombre:* "/>
+                                            <b:inputText id="TNombreApEmp" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{empleadoBean.usuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
+                                            <p:message for="TNombreApEmp"/>
+
+                                            <p:outputLabel value="CC: " />
+                                            <b:inputText id="TCcEmp" maxlength="45" placeholder="Cédula de ciudadania" value="#{empleadoBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                            <p:message for="TCcEmp"/>
+
+                                            <p:outputLabel value="Teléfono: "/>
+                                            <b:inputText id="TTelEmp" maxlength="45" placeholder="Número de teléfono fijo o celular" value="#{empleadoBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                            <p:message for="TTelEmp"/>
+
+                                            <p:outputLabel value="Email:* "/>
+                                            <b:inputText id="TEmailEmp" maxlength="100" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{empleadoBean.usuarioView.usuarioEmail}" style="width: 100%" ></b:inputText>
+                                            <p:message for="TEmailEmp"/>
+
+                                            <p:outputLabel value="Ciudad:* "/>
+                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{empleadoBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccione ciudad"/>
+                                                <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SCiudades"/>
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-check-square"/>
+                                    <h4 class="box-title">Datos de Sesión</h4>                                                                      
+                                </div>
+                                <div class="box-body">
+                                    <div class="table-responsive">    
+                                        <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
+
+                                            <p:outputLabel value="Login: "/>
+                                            <b:inputText id="TLoginEmp" maxlength="60" validator="regLoginValidator" style="width: 100%" value="#{empleadoBean.usuarioView.usuarioLogin}" placeholder="Login de sesion">
+                                            </b:inputText>
+                                            <p:message for="TLoginEmp"/>
+
+                                            <p:outputLabel value="Contraseña: "/>
+                                            <b:inputSecret label="Contraseña" id="TPassEmp" maxlength="20" binding="#{ConPass}" style="width: 100%" value="#{empleadoBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                                <f:validateLength minimum="6"/>
+                                            </b:inputSecret>
+                                            <p:message for="TPassEmp"/>
+
+                                            <p:outputLabel value="Repita contraseña: "/>
+                                            <b:inputSecret label="Repita contraseña" validator="repeatPasswordValidator" id="TRemPassEmp" maxlength="20" style="width: 100%" value="#{empleadoBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
+                                                <f:validateLength minimum="6"/>
+                                                <f:attribute name="password" value="#{ConPass.value}"/>
+                                            </b:inputSecret>
+                                            <p:message for="TRemPassEmp"/>
+                                           
+                                        </h:panelGrid>
+                                    </div><hr/>
+                                    <p:commandButton id="BTEmpleado" class="btn btn-block btn-danger" update=":formA:msg :formA:seccionDatosUsuario :formA:seccionDatosSesion :formA:BTEmpleado :formC:DTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.registrar()}" value="Registrar Conductor" />
+                                </div>
+                            </div>
+                        </b:column>   
+                    </h:form>
+
+                    <h:form id="formB" enctype="multipart/form-data">
+                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >                            
+
+                            <div class="box box-primary">
+                                <p:fragment autoUpdate="true">
+                                    <div class="box-header with-border">    
+                                        <i class="fa fa-2x fa-camera"/>
+                                        <h4 class="box-title">Ingreso de Fotografía</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <p:outputLabel id="TEstadoFoto" value="#{empleadoBean.estadoFoto}"/>
+                                        <div class="table-responsive">
+                                            <p:fileUpload id="fileIdPhoto" fileUploadListener="#{empleadoBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                          process="@this" auto="true" update=":formB" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+
+                                            <p:messages id="messages" closable="true" /></div> 
+                                    </div>
+                                </p:fragment>
+                            </div>
+
+                        </b:column>
+                    </h:form>
+
+                    <h:form id="formD" enctype="multipart/form-data">
+                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
+                            <div class="box box-primary">
+                                <p:fragment autoUpdate="true">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-suitcase"/>    
+                                        <h4 class="box-title">Ingreso Hoja de Vida</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <p:outputLabel id="TEstadoArchivo" value="#{empleadoBean.estadoArchivo}"/>
+                                        <div class="table-responsive">
+                                            <p:fileUpload id="fileIdDoc" fileUploadListener="#{empleadoBean.uploadDoc}" mode="advanced" dragDropSupport="false"
+                                                          process="@this" auto="true" update=":formD" sizeLimit="10000000" allowTypes="/(\.|\/)(docx|doc|pdf)$/"  />
+
+                                            <p:messages id="messages" closable="true" />
+                                        </div> 
+                                    </div>
+                                </p:fragment>
+                            </div>                           
+
+                        </b:column>
+                    </h:form>
+
+                    <h:form id="formC">
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-users"/>
+                                    <h4 class="box-title">Empleados SMS Renta</h4>                                     
+                                </div>
+                                <div class="box-body">
+                                    <b:inputText placeholder="Buscar" value="#{empleadoBean.buscar}" style=" width: 100%">
+                                        <p:ajax event="keyup" listener="#{empleadoBean.filtrar()}" process="@this" update="DTEmpleado"/>
+                                    </b:inputText>
+                                    <p:dataTable id="DTEmpleado" var="empleado" emptyMessage="Empleados no registrados" value="#{empleadoBean.empleadosListView}" rows="5"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15">
+                                        <p:column headerText="Nombre y apellido">
+                                            <p:outputLabel value="#{empleado.usuarioNombre}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Email">
+                                            <p:outputLabel value="#{empleado.usuarioEmail}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Teléfono">
+                                            <p:outputLabel value="#{empleado.usuarioTelefono}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </div>
+                            </div>
+                        </b:column>
+
+                    </h:form>
+                </b:row>
+            </b:container>
+        </ui:define>
+    </ui:composition>
+
+</html>

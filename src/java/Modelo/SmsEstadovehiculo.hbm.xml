@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.SmsEstadovehiculo" table="sms_estadovehiculo" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idEstadoVeh" type="java.lang.Integer">
+            <column name="idEstadoVeh" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="smsVehiculo" class="Modelo.SmsVehiculo" fetch="select">
+            <column name="idVehiculo" not-null="true" />
+        </many-to-one>
+        <property name="estadoVehFrenos" type="string">
+            <column name="EstadoVeh_frenos" length="45" />
+        </property>
+        <property name="estadoVehMotor" type="string">
+            <column name="EstadoVeh_motor" length="45" />
+        </property>
+        <property name="estadoVehSilleteria" type="string">
+            <column name="EstadoVeh_silleteria" length="45" />
+        </property>
+        <property name="estadoVehPintura" type="string">
+            <column name="EstadoVeh_pintura" length="45" />
+        </property>
+        <property name="estadoVehKilometraje" type="string">
+            <column name="EstadoVeh_kilometraje" length="45" />
+        </property>
+        <property name="fechaEstadoVehiculo" type="date">
+            <column name="Fecha_EstadoVehiculo" length="0" />
+        </property>
+    </class>
+</hibernate-mapping>

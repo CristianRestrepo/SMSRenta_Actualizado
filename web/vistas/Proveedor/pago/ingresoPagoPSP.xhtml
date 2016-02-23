@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:composition template="./../temp-proveedor.xhtml">
+
+        <ui:define name="content4">
+
+            <b:container fluid="true"> 
+                <b:row>
+                    <section class="content-header">
+                        <h3>Plataforma Segura de Pagos<small><em>  su mejor opcion de pago seguro por Intenet</em></small></h3>
+                    </section>
+                    <b:column col-lg="8">
+                        <div class="box box-info espacio-arriba">
+                            <div class="box-header with-border">
+                                <i class="fa fa-2x fa-user-plus "/>
+                                <h4 class="box-title">PSP Plataforma Segura de Pago</h4>
+                            </div>
+                            <div class="box-body">                                    
+                                <div class="row ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <img class="center-block img-responsive" src="../../../resources/images/pago/credibanco.png" width="200" 
+                                             height="auto" alt="credibanco" style="margin-top: 22px"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <img class="center-block img-responsive" src="../../../resources/images/pago/logo-sms.png" width="100" height="auto" alt="logo-sms"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">                                           
+                                        <img src="../../../resources/images/pago/logo-psp-.png" class="center-block img-responsive" width="200" height="auto" alt="logo-psp-"/>
+                                    </div>                                            
+                                </div>
+                                <hr></hr>
+                                <div class="row">
+                                    <div class="col-lg-8 col-lg-offset-2
+                                         col-md-10 col-md-offset-1
+                                         col-sm-10 col-sm-offset-1
+                                         col-xs-10 col-xs-offset-1 " > 
+                                        <h4 style="margin-bottom: 40px"><strong>Pago con Tarjeta de Crédito: </strong> COP: 1´400.000</h4>
+                                        <table class="table table-responsive ">
+                                            <tbody>
+                                                <tr>
+                                                    <th style="width: 45%">Medio de Pago </th>
+                                                    <td>
+                                                        <img src="../../../resources/images/pago/logo-psp-.png" width="120" height="auto" class="center-block" alt="logo-psp-"/>                                                        
+                                                    </td>
+                                                </tr>                                                
+                                                <tr>
+                                                    <th>Entidad Financiera * </th>
+                                                    <td>
+                                                        <b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="entidadFin" >
+                                                            <f:selectItem itemLabel="Davivienda" itemValue="1"/>
+                                                            <f:selectItem itemLabel="Banco Caja Social" itemValue="2"/>
+                                                            <f:selectItem itemLabel="Colpatria" itemValue="3"/>
+                                                            <f:selectItem itemLabel="Banco de Occidente" itemValue="3"/>
+                                                            <f:selectItem itemLabel="AV Villas" itemValue="3"/>
+                                                            <f:selectItem itemLabel="Corpbanca" itemValue="3"/>
+                                                        </b:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Tipo de Cliente *</th>
+                                                    <td>
+                                                        <b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="tipoCliente" >
+                                                            <f:selectItem itemLabel="Persona Natirual" itemValue="1"/>
+                                                            <f:selectItem itemLabel="Persona Juridica" itemValue="1"/>                                                            
+                                                        </b:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Típo de documento de Identificación *</th>
+                                                    <td>
+                                                        <b:selectOneMenu  value="#{selectOneMenuBean.brand}" id="docIdentificacion" >
+                                                            <f:selectItem itemLabel="Cedula de Diudadania" itemValue="1"/>
+                                                            <f:selectItem itemLabel="Cedula de Extrangeria" itemValue="1"/>                                                            
+                                                            <f:selectItem itemLabel="Pasaporte" itemValue="1"/>                                                            
+                                                            <f:selectItem itemLabel="Tarjeta de identidad" itemValue="1"/>                                                            
+                                                        </b:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Documento de Identificación *</th>
+                                                    <td>
+                                                        <b:inputText placeholder="Ingrese su número de Documento..."/>
+                                                    </td>
+                                                </tr>
+
+
+
+                                            </tbody>
+                                        </table>
+                                                <p>
+                                                    <strong>* Campos Requeridos</strong><br></br>
+                                                    <strong>*' Requeridos sin guiones, puntos, comas u otros caracteres especiales.</strong>                                                            
+                                                </p>
+                                    </div>                                                                                
+                                </div>
+                                <div class="box-footer">
+                                    <p:commandButton class="btn btn-success " style="float: right; width: 33%; margin-bottom: 25px" value="Pagar" ></p:commandButton>
+                                </div>
+                            </div>
+                        </div>                            
+                    </b:column>
+
+                </b:row>                        
+            </b:container>   
+
+        </ui:define>
+
+    </ui:composition>
+
+
+</html>
