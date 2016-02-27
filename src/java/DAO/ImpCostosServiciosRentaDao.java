@@ -25,7 +25,7 @@ public class ImpCostosServiciosRentaDao implements ICostosServiciosRentaDao {
     private FacesMessage message;
 
     @Override
-    public List<SmsCostosserviciosRenta> mostrarCostosServicios() {
+    public List<SmsCostosserviciosRenta> consultarCostos() {
         Session session = null;
         List<SmsCostosserviciosRenta> Costos = new ArrayList<>();
         try {

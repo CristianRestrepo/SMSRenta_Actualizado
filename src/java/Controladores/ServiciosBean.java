@@ -7,6 +7,8 @@ package Controladores;
 
 import DAO.IServicioDao;
 import DAO.ImpServicioDao;
+import Modelo.SmsCategoriasServicio;
+import Modelo.SmsMercado;
 import Modelo.SmsServicios;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class ServiciosBean implements Serializable{
     //Objetos necesarios
     protected SmsServicios servicioView;
     protected SmsServicios DServicioView;
+    private SmsCategoriasServicio categoriaServicioView;
+    private SmsMercado mercadoView;
     protected List<SmsServicios> serviciosListView;
     protected List<String> nombreServiciosListView;
 
@@ -36,6 +40,7 @@ public class ServiciosBean implements Serializable{
     public ServiciosBean() {
         servicioView = new SmsServicios();
         serviciosListView = new ArrayList<>();
+        categoriaServicioView = new SmsCategoriasServicio();
         nombreServiciosListView = new ArrayList<>();
         DServicioView = new SmsServicios();
         buscar = null;
@@ -114,6 +119,24 @@ public class ServiciosBean implements Serializable{
     public void setDServicioView(SmsServicios DServicioView) {
         this.DServicioView = DServicioView;
     }
+
+    public SmsCategoriasServicio getCategoriaServicioView() {
+        return categoriaServicioView;
+    }
+
+    public void setCategoriaServicioView(SmsCategoriasServicio categoriaServicioView) {
+        this.categoriaServicioView = categoriaServicioView;
+    }
+
+    public SmsMercado getMercadoView() {
+        return mercadoView;
+    }
+
+    public void setMercadoView(SmsMercado mercadoView) {
+        this.mercadoView = mercadoView;
+    }
+    
+    
 
     //Metodos Propios
     public void metodo() {

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template-admin-p.xhtml">
+
+            <ui:define name="content">                
+                <b:container fluid="true">
+                    <b:row>
+                        <h:form>
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <div class="box box-info espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Mercados y Servicios SMS Renta</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <p>En este panel podrá ingresar las Marcas de los vehículos de SMS renta.</p>
+                                    </div>
+                                </div>
+                            </b:column> 
+
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <div class="box box-success">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Mercados y Servicios SMS Renta</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="table-responsive">
+                                            <h:panelGrid cellpadding="5" columns="2" id="PMercado">
+                                                <h:panelGrid cellpadding="5" columns="3">
+                                                    <p:outputLabel  value="Nombre del mercado: "/>
+                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" requiredMessage="Ingrese nombre del mercado" style="width: 200px" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
+                                                    <p:message for="TNombreMrd"/>
+
+                                                    <p:outputLabel  value="Descripcion del mercado: "/>
+                                                    <p:inputTextarea rows="3" placeholder="Descripcion del mercado" id="TDescripcionMrd" required="true" requiredMessage="Ingrese descripcion del mercado" style="width: 200px" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
+                                                    <p:message for="TDescripcionMrd"/>
+
+                                                    <p:commandButton id="BTMarca" class="btn btn-block btn-danger" update="@form" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
+                                                </h:panelGrid>
+                                                <h:panelGrid>
+                                                    <p:dataTable var="Mercado" value="#{mercadoBean.mercadoListView}"  
+                                                                 rows="5"
+                                                                 paginator="true"
+                                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15" emptyMessage="Marcas no registrados">
+
+                                                        <p:column headerText="Nombre">
+                                                            <h:outputText value="#{Marca.marcaNombre}" />
+                                                        </p:column>
+
+                                                        <p:column headerText="Descripcion">
+                                                            <h:outputText value="#{Marca.marcaNombre}" />
+                                                        </p:column>
+
+                                                        <p:column style="width: 35px">
+                                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" title="Modificar">
+                                                                <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
+                                                            </p:commandLink>
+                                                        </p:column>
+
+                                                        <p:column style="width: 35px">
+                                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" title="Eliminar">
+                                                                <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
+                                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este mercado?" icon="ui-icon-alert" /> 
+                                                            </p:commandLink>
+                                                        </p:column>
+
+                                                    </p:dataTable>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                        </div>
+                                        <hr/>                                
+                                    </div> 
+                                </div>
+                            </b:column>
+
+                        </h:form>
+                    </b:row>
+                </b:container>                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

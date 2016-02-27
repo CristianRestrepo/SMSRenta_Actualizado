@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface ICostosServiciosRentaDao {
     
-    public List<SmsCostosserviciosRenta> mostrarCostosServicios();
+    public List<SmsCostosserviciosRenta> consultarCostos();
     public List<SmsCostosserviciosRenta> consultarCostoServicio(SmsServicios servicio, SmsCategoria categoria);
     public void registrarCostoServicio(SmsCostosserviciosRenta costo);
     public void modificarCostoServicio(SmsCostosserviciosRenta costo);

@@ -22,6 +22,10 @@ public class PathBean implements Serializable {
         return "AdminPUsuario";
     }
 
+    public String ir_PMercado() {
+        return "AdminPMercado";
+    }
+    
     public String ir_PCategoria() {
         return "AdminPCategoria";
     }

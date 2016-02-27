@@ -41,6 +41,8 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         nombresClientesListView = new ArrayList<>();
         emailController = new SendEmail();
         clienteDao = new ImpClienteDao();
+        
+        buscar = null;
     }
 
     @PostConstruct

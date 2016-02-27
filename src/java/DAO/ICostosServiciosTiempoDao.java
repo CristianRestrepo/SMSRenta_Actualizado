@@ -5,10 +5,21 @@
  */
 package DAO;
 
+import Modelo.SmsCostoserviciosTiempo;
+import java.util.List;
+
 /**
  *
  * @author Desarrollo_Planit
  */
 public interface ICostosServiciosTiempoDao {
+    
+    public List<SmsCostoserviciosTiempo> consultarCostos();
+    
+    public void registrarCosto(SmsCostoserviciosTiempo costo);
+    
+    public void modificarCosto(SmsCostoserviciosTiempo costo);
+    
+    public void eliminarCosto(SmsCostoserviciosTiempo costo);
     
 }

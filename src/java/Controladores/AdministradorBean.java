@@ -28,7 +28,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
     public AdministradorBean() {
         super();
         adminDao = new ImpAdministradorDao();
-        buscar = "";
+        buscar = null;
 
     }
 

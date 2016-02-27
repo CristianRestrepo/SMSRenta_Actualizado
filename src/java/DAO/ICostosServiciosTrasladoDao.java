@@ -5,10 +5,22 @@
  */
 package DAO;
 
+import Modelo.SmsCostoserviciosTraslado;
+import java.util.List;
+
 /**
  *
  * @author Desarrollo_Planit
  */
 public interface ICostosServiciosTrasladoDao {
+    
+    public List<SmsCostoserviciosTraslado> consultarCostos();
+    
+    public void registrarCosto(SmsCostoserviciosTraslado costo);
+    
+    public void modificarCosto(SmsCostoserviciosTraslado costo);
+    
+    public void eliminarCosto(SmsCostoserviciosTraslado costo);
+    
     
 }

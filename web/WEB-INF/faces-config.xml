@@ -390,6 +390,11 @@
             <from-outcome>VistaReservaConductor</from-outcome>
             <to-view-id>/vistas/Conductor/general/vistaReserva.xhtml</to-view-id>            
         </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminPMercado</from-outcome>
+            <to-view-id>/vistas/AdminP/mercados/PMercados.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     
     <!-- otras rutas admin principal-->

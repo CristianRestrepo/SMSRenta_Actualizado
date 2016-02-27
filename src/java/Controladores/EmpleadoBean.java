@@ -68,7 +68,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         hojavidaView = new SmsHojavida();
         proveedorView = new SmsProveedor();
          
-        buscar = "";        
+        buscar = null;        
         estado = 0;
        
         estadoFoto = "Foto sin subir";       
