@@ -15,7 +15,7 @@
 
             <b:container fluid="true">
                 <h:form id="formA">
-                    <p:messages closable="true" id="msg"/>
+                    <p:messages closable="true"/>
                     <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">                        
                         <div class="box box-danger espacio-arriba">
                             <div class="box-header with-border">
@@ -60,46 +60,42 @@
                                 </div>
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-check-circle"/>
-                                    <h4 class="box-title">Datos de sesion</h4>  
+                                    <h4 class="box-title">Datos de cuenta</h4>  
                                     <br/><br/>
-                                    <p:commandLink value="Editar datos de sesion">
-                                        <p:ajax listener="#{usuarioBean.habilitarEdicion()}" event="click" update="@form"/>
-                                    </p:commandLink>
                                 </div>
                                 <div class="box-body">
                                     <div class="table-responsive">                                       
-                                        <h:panelGrid rendered="#{usuarioBean.habilitarEditarSesion}" cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
+                                        <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
 
                                             <p:outputLabel value="Login: "/>
-                                            <b:inputText id="TLoginUsu" maxlength="60" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioLogin}" placeholder="Login de sesion"></b:inputText>
-                                            <!-- <p:message for="TLoginUsu"/>-->
+                                            <b:inputText id="TLoginUsu" maxlength="60" validator="modLoginValidator" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioLogin}" placeholder="Login de sesion">
+                                                <f:attribute name="usuario" value="#{usuarioBean.modUsuarioView}"/>
+                                            </b:inputText>
+                                            <p:message for="TLoginUsu"/>
 
                                             <p:outputLabel value="Contraseña: "/>
                                             <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
                                                 <f:validateLength minimum="6"/>
                                             </b:inputSecret>
-                                            <!--<p:message for="TPassUsu"/>-->
+                                            <p:message for="TPassUsu"/>
 
                                             <p:outputLabel value="Repita contraseña: "/>
                                             <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
                                                 <f:validateLength minimum="6"/>
                                                 <f:attribute name="password" value="#{MUsuarioPass.value}"/>
                                             </b:inputSecret>
-                                            <!-- <p:message for="TRemPassUsu"/>-->
-
-                                            <p:commandLink value="Cerrar">
-                                                <p:ajax event="click" listener="#{usuarioBean.deshabilitarEdicion()}" update="@form"/>
-                                            </p:commandLink>
+                                            <p:message for="TRemPassUsu"/>
                                         </h:panelGrid>
 
                                     </div><hr/>                                      
 
                                     <h:panelGrid columns="2" width="100%">
-                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-success" ajax="false" action="#{usuarioBean.modificarPerfil()}" value="Modificar Administrador" />
+                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-success" update=":formA :formB:TEstadoFoto :formB:fileIdPhoto" action="#{usuarioBean.modificarPerfil()}" value="Modificar Administrador" />
                                     </h:panelGrid>
                                 </div>                                        
                             </div>
                         </div>
+                        <p:messages closable="true"/>
                     </b:column>
 
                     <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">

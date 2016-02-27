@@ -85,7 +85,7 @@
 
                                             </h:panelGrid>                                        
                                         </div><hr/>                                    
-                                        <p:commandButton id="BTProveedor" class="btn btn-block btn-danger" update="@form" action="#{proveedorBean.registrar()}" value="Registrar Proveedor" />
+                                        <p:commandButton id="BTProveedor" class="btn btn-block btn-danger" update="@form" action="#{proveedorBean.registrarProveedor()}" value="Registrar Proveedor" />
                                     </div>                                        
                                 </div>
                             </div>
@@ -116,9 +116,9 @@
                                 </div>
                                 <div class="box-body">
                                     <b:inputText placeholder="Buscar" value="#{proveedorBean.buscar}" style=" width: 100%">
-                                        <p:ajax event="keyup" listener="#{proveedorBean.filtrar()}" process="@this" update="DTProveedores"/>
+                                        <p:ajax event="keyup" listener="#{proveedorBean.filtrarProveedores()}" process="@this" update="DTProveedores"/>
                                     </b:inputText>
-                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.proveedoresListView}">
+                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.usuariosListView}">
 
                                         <p:column headerText="Representante">
                                             <p:outputLabel value="#{proveedor.usuarioNombre}"/>
@@ -143,7 +143,7 @@
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{proveedorBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{proveedorBean.eliminarProveedor()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.DUsuarioView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este Proveedor?" icon="ui-icon-alert" /> 
                                             </p:commandLink>

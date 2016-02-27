@@ -32,7 +32,7 @@
                                         <h4 class="box-title">Fotografia de perfil</h4>
                                     </div>
                                     <div class="box-body" style="width: 100%" align="center">
-                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{clienteBean.modClienteView.usuarioFotoRuta}"/> 
+                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{clienteBean.modUsuarioView.usuarioFotoRuta}"/> 
                                     </div>
                                 </div>
                             </b:column>
@@ -49,27 +49,27 @@
                                         <div class="table-responsive">
                                             <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
                                                 <p:outputLabel value="Nombre: *"/>
-                                                <b:inputText maxlength="60" id="TMNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.modClienteView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
+                                                <b:inputText maxlength="60" id="TMNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.modUsuarioView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
                                                 <p:message for="TMNombreApCli"/>
 
                                                 <p:outputLabel value="CC:" />
-                                                <b:inputText maxlength="45" id="TMCcCli" placeholder="Cedula de ciudadania" value="#{clienteBean.modClienteView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                                <b:inputText maxlength="45" id="TMCcCli" placeholder="Cedula de ciudadania" value="#{clienteBean.modUsuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
                                                 <p:message for="TMCcCli"/>
 
                                                 <p:outputLabel value="Telefono:"/>
-                                                <b:inputText maxlength="45" id="TMTelCli" placeholder="Numero de telefono fijo o celular" value="#{clienteBean.modClienteView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                                <b:inputText maxlength="45" id="TMTelCli" placeholder="Numero de telefono fijo o celular" value="#{clienteBean.modUsuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                                 <p:message for="TMTelCli"/>
 
                                                 <p:outputLabel value="Email: *"/>
-                                                <b:inputText maxlength="100" validator="emailValidator" id="TMEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.modClienteView.usuarioEmail}" style="width: 100%"/>
+                                                <b:inputText maxlength="100" validator="emailValidator" id="TMEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.modUsuarioView.usuarioEmail}" style="width: 100%"/>
                                                 <p:message for="TMEmailCli"/>
 
                                                 <p:outputLabel value="Razon social: "/>
-                                                <b:inputText maxlength="100" id="TMRazSocCli" placeholder="Nombre de la empresa" value="#{clienteBean.modClienteView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
+                                                <b:inputText maxlength="100" id="TMRazSocCli" placeholder="Nombre de la empresa" value="#{clienteBean.modUsuarioView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
                                                 <p:message for="TMRazSocCli"/>
 
                                                 <p:outputLabel value="Nit: "/>
-                                                <b:inputText maxlength="45" id="TMNitCli" placeholder="Nit de la empresa" value="#{clienteBean.modClienteView.usuarioNit}" style="width: 100%" ></b:inputText>
+                                                <b:inputText maxlength="45" id="TMNitCli" placeholder="Nit de la empresa" value="#{clienteBean.modUsuarioView.usuarioNit}" style="width: 100%" ></b:inputText>
                                                 <p:message for="TMNitCli"/>
 
                                                 <p:outputLabel value="Ciudad: *"/>
@@ -85,39 +85,36 @@
                                         <i class="fa fa-2x fa-check-square"/>
                                         <h4 class="box-title">Datos de Sesión</h4>
                                         <br/><br/>
-                                        <p:commandLink value="Editar datos de sesion">
-                                            <p:ajax listener="#{clienteBean.habilitarEdicion()}" event="click" update="@form"/>
-                                        </p:commandLink>
+                                        
                                     </div>
 
                                     <div class="box-body">
                                         <div class="table-responsive">
-                                            <h:panelGrid rendered="#{clienteBean.habilitarEditarSesion}" cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
+                                            <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
 
                                                 <p:outputLabel value="Login: "/>
-                                                <b:inputText id="TMLoginCli"  maxlength="60" style="width: 100%" value="#{clienteBean.modClienteView.usuarioLogin}" placeholder="Login de sesion"/>
+                                                <b:inputText id="TMLoginCli" validator="modLoginValidator"  maxlength="60" style="width: 100%" value="#{clienteBean.modUsuarioView.usuarioLogin}" placeholder="Login de sesion">
+                                                      <f:attribute name="usuario" value="#{clienteBean.modUsuarioView}"/>
+                                                </b:inputText>
                                                 <p:message for="TMLoginCli"/>
 
                                                 <p:outputLabel value="Contraseña: "/>
-                                                <b:inputSecret label="Contraseña" binding="#{Mpass}" id="TMPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.modClienteView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                                <b:inputSecret label="Contraseña" binding="#{Mpass}" id="TMPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.modUsuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
                                                     <f:validateLength minimum="6"/>                                                    
                                                 </b:inputSecret>
                                                 <p:message for="TMPassCli"/>
 
                                                 <p:outputLabel value="Repita contraseña: "/>
-                                                <b:inputSecret validator="repeatPasswordValidator" label="Repetir contraseña" id="TMRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.modClienteView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
+                                                <b:inputSecret validator="repeatPasswordValidator" label="Repetir contraseña" id="TMRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.modUsuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
                                                     <f:validateLength minimum="6" />
                                                     <f:attribute name="password" value="#{Mpass.value}"/>
                                                 </b:inputSecret>
                                                 <p:message for="TMRemPassCli"/>
-
-                                                <p:commandLink value="Cancelar Edicion">
-                                                    <p:ajax event="click" listener="#{clienteBean.deshabilitarEdicion()}" update="@form"/>
-                                                </p:commandLink>
+                                                
                                             </h:panelGrid>
                                         </div><hr/>
                                         <h:panelGrid columns="2" width="100%">
-                                            <p:commandButton style="width: 100%" id="BTModCliente" ajax="true" class="btn btn-block btn-success" update="@form" action="#{clienteBean.modificar()}" value="Modificar Cliente" />
+                                            <p:commandButton style="width: 100%" id="BTModCliente" ajax="true" class="btn btn-block btn-success" update="@form" action="#{clienteBean.modificarCliente()}" value="Modificar Cliente" />
                                             <p:commandButton style="width: 100%" id="BTCancel" ajax="true" class="btn btn-block btn-danger" action="#{clienteBean.regresar()}" value="Regresar" />                                            
                                         </h:panelGrid>
                                     </div>

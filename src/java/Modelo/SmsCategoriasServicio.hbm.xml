@@ -24,7 +24,7 @@
             <key>
                 <column name="idCategoria_Servicio" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsEmpleado">
+            <many-to-many class="Modelo.SmsEmpleado">
                 <column name="idEmpleado" not-null="true" />
             </many-to-many>
         </set>
@@ -32,7 +32,7 @@
             <key>
                 <column name="idCategoria_Servicio" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsVehiculo">
+            <many-to-many class="Modelo.SmsVehiculo">
                 <column name="idVehiculo" not-null="true" />
             </many-to-many>
         </set>

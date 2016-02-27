@@ -15,7 +15,7 @@
             <key>
                 <column name="idRol" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsPermisos">
+            <many-to-many class="Modelo.SmsPermisos">
                 <column name="idPermisos" not-null="true" />
             </many-to-many>
         </set>

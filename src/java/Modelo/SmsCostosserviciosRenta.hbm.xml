@@ -11,8 +11,11 @@
         <many-to-one name="smsServicios" class="Modelo.SmsServicios" fetch="select">
             <column name="idServicio" not-null="true" />
         </many-to-one>
-        <property name="costoServicioPrecio" type="string">
-            <column name="CostoServicio_precio" length="45" not-null="true" />
+        <many-to-one name="smsCategoria" class="Modelo.SmsCategoria" fetch="select">
+            <column name="idCategoria" not-null="true" />
+        </many-to-one>
+        <property name="costoServicioPrecio" type="int">
+            <column name="CostoServicio_precio" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

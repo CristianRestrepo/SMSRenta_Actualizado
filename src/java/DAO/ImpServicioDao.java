@@ -48,7 +48,7 @@ public class ImpServicioDao implements IServicioDao {
             session.beginTransaction();
             session.save(servicio);
             session.getTransaction().commit();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Servicio registrado", "" + servicio.getServiciosNombre());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Servicio registrado", "" + servicio.getServicioNombre());
         } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
@@ -69,7 +69,7 @@ public class ImpServicioDao implements IServicioDao {
             session.beginTransaction();
             session.update(servicio);
             session.getTransaction().commit();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Servicio modificado", "" + servicio.getServiciosNombre());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Servicio modificado", "" + servicio.getServicioNombre());
         } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
@@ -90,7 +90,7 @@ public class ImpServicioDao implements IServicioDao {
             session.beginTransaction();
             session.delete(servicio);
             session.getTransaction().commit();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Servicio eliminado", "" + servicio.getServiciosNombre());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Servicio eliminado", "" + servicio.getServicioNombre());
         } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
@@ -127,7 +127,7 @@ public class ImpServicioDao implements IServicioDao {
         List<SmsServicios> servicios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsServicios as servicio where servicio.serviciosNombre = '" + servicio.getServiciosNombre() + "' or servicio.idServicios = '" + servicio.getIdServicios() + "'");
+            Query query = session.createQuery("from SmsServicios as servicio where servicio.serviciosNombre = '" + servicio.getServicioNombre() + "' or servicio.idServicios = '" + servicio.getIdServicio()+ "'");
             servicios = (List<SmsServicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

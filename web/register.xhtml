@@ -81,14 +81,14 @@
                                                 </div>
                                                 <div class="box-header with-border">
                                                     <i class="fa fa-2x fa-check-square"/>
-                                                    <h4 class="box-title">Datos de Sesión</h4>
+                                                    <h4 class="box-title">Datos de Cuenta</h4>
                                                 </div>
                                                 <div class="box-body">                                  
                                                     <div class="table-responsive">
                                                         <h:panelGrid cellpadding="5" columns="2" id="seccionDatosSesion" style="width: 100%">
 
 
-                                                            <b:inputText id="TLoginCli" maxlength="60" validator="regLoginValidator" style="width: 100%" value="#{clienteBean.clienteView.usuarioLogin}" placeholder="Login de sesion"/>
+                                                            <b:inputText id="TLoginCli" maxlength="60" validator="regLoginValidator" style="width: 100%" value="#{clienteBean.clienteView.usuarioLogin}" placeholder="Nombre de sesion"/>
                                                             <p:message for="TLoginCli"/>
 
 
@@ -110,12 +110,12 @@
                                                     <!--<p:commandLink value="Login" process="@this" immediate="true" action="#{pathBean.ir_Login()}"/>-->
                                                     <p:commandButton id="BTCliente" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-success" ajax="true" action="#{clienteBean.registrar()}" value="Registrar" />
                                                     <script type="text/javascript">
-                                                    function start() {
-                                                    PF('statusDialog').show();
-                                                    }
-                                                    function stop() {
-                                                    PF('statusDialog').hide();
-                                                    }
+                                                        function start() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function stop() {
+                                                            PF('statusDialog').hide();
+                                                        }
                                                     </script>
                                                     <p:dialog modal="true" widgetVar="statusDialog" header="Registrando Usuario" draggable="false" closable="false" resizable="false">
                                                         <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />

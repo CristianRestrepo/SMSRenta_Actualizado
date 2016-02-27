@@ -83,19 +83,19 @@
                                 </div>
                                 <div class="box-body">
                                     <!-- LISTA DE CONDUCTORES -->
-                                    <p:dataTable value="#{empleadoBean.empleadosListView}" var="condictores" styleClass="paginated" rows="5"
+                                    <p:dataTable value="#{empleadoBean.usuariosListView}" var="conductores" styleClass="paginated" rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <p:column headerText="ID ">
-                                            <h:outputText value="#{condictores.idUsuario}" />
+                                            <h:outputText value="#{conductores.idUsuario}" />
                                         </p:column>
                                         <p:column headerText="Nombre ">
-                                            <h:outputText value="#{condictores.usuarioNombre}" />
+                                            <h:outputText value="#{conductores.usuarioNombre}" />
                                         </p:column>
                                         <p:column headerText="Teléfono">
-                                            <h:outputText value="#{condictores.usuarioTelefono}" />
+                                            <h:outputText value="#{conductores.usuarioTelefono}" />
                                         </p:column>
 
                                     </p:dataTable>
@@ -111,26 +111,21 @@
                                 </div>
                                 <div class="box-body">
                                     <!-- LISTA DE CLIENTES -->
-                                    <p:dataTable var="clien" value="#{clienteBean.clientesListView}" rows="5"
+                                    <p:dataTable var="cliente" value="#{clienteBean.usuariosListView}" rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  rowsPerPageTemplate="5,10,15">
                                         <p:column headerText="Id">
-                                            <h:outputText value="#{clien.idUsuario}" />
+                                            <h:outputText value="#{cliente.idUsuario}" />
                                         </p:column>
 
                                         <p:column headerText="Nombres">
-                                            <h:outputText value="#{clien.usuarioNombre}" />
+                                            <h:outputText value="#{cliente.usuarioNombre}" />
                                         </p:column>
 
                                         <p:column headerText="Ciudad Origen">
-                                            <h:outputText value="#{clien.smsCiudad.ciudadNombre}" />
+                                            <h:outputText value="#{cliente.smsCiudad.ciudadNombre}" />
                                         </p:column>
-
-                                        <!-- <p:column headerText="Ciudad Servicio">
-                                             <h:outputText value="#{agendaBean.ciudadView.ciudadNombre}" />
-                                         </p:column>-->
-
                                     </p:dataTable>
                                 </div>
                             </div>

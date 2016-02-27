@@ -7,104 +7,104 @@
     
     <managed-bean>
         <managed-bean-name>usuarioBean</managed-bean-name>
-        <managed-bean-class>Bean.UsuarioBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.UsuarioBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>marcaBean</managed-bean-name>
-        <managed-bean-class>Bean.MarcaBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.MarcaBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>costosServicioBean</managed-bean-name>
-        <managed-bean-class>Bean.CostosServicioBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.CostosServicioBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>clienteBean</managed-bean-name>
-        <managed-bean-class>Bean.ClienteBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.ClienteBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>proveedorBean</managed-bean-name>
-        <managed-bean-class>Bean.ProveedorBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.ProveedorBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>empleadoBean</managed-bean-name>
-        <managed-bean-class>Bean.EmpleadoBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.EmpleadoBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>rolBean</managed-bean-name>
-        <managed-bean-class>Bean.RolBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.RolBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>permisosBean</managed-bean-name>
-        <managed-bean-class>Bean.PermisosBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.PermisosBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>ciudadBean</managed-bean-name>
-        <managed-bean-class>Bean.CiudadBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.CiudadBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>vehiculoBean</managed-bean-name>
-        <managed-bean-class>Bean.VehiculoBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.VehiculoBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>referenciaBean</managed-bean-name>
-        <managed-bean-class>Bean.ReferenciaBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.ReferenciaBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>categoriaBean</managed-bean-name>
-        <managed-bean-class>Bean.CategoriaBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.CategoriaBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>calificacionBean</managed-bean-name>
-        <managed-bean-class>Bean.CalificacionBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.CalificacionBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>reservacionBean</managed-bean-name>
-        <managed-bean-class>Bean.ReservacionBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.ReservacionBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>serviciosBean</managed-bean-name>
-        <managed-bean-class>Bean.ServiciosBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.ServiciosBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>paisBean</managed-bean-name>
-        <managed-bean-class>Bean.PaisBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.PaisBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>pruebaBean</managed-bean-name>
-        <managed-bean-class>Bean.PruebaBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.PruebaBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>pathBean</managed-bean-name>
-        <managed-bean-class>Bean.PathBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.PathBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>carouselBean</managed-bean-name>
-        <managed-bean-class>Bean.carouselBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.carouselBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>lugarBean</managed-bean-name>
-        <managed-bean-class>Bean.LugarBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>Controladores.LugarBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     
     <navigation-rule>
         <from-view-id>*</from-view-id>
@@ -476,4 +476,19 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>administradorBean</managed-bean-name>
+        <managed-bean-class>Controladores.AdministradorBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>contraseñaUsuarioBean</managed-bean-name>
+        <managed-bean-class>Controladores.ContraseñaUsuarioBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>mercadoBean</managed-bean-name>
+        <managed-bean-class>Controladores.MercadoBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

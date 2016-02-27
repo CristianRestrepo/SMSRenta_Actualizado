@@ -23,25 +23,9 @@ public interface IUsuarioDao {
 
     public void eliminarUsuario(SmsUsuario usuario);
 
-    public List<SmsUsuario> consultarUsuariosAdministradores();
-
-    public List<SmsUsuario> consultarUsuariosClientes();
-
-    public List<SmsUsuario> consultarUsuariosEmpleados();
-
-    public List<SmsUsuario> consultarUsuariosProveedores();
-
     public List<SmsUsuario> consultarUsuario(SmsUsuario usuario);
 
     public List<SmsUsuario> consultarDatosSesionUsuario(SmsUsuario usuario);
 
-    public List<SmsUsuario> filtrarUsuariosEmpleados(String valor);
-
-    public List<SmsUsuario> filtrarUsuariosProveedores(String valor);
-
-    public List<SmsUsuario> filtrarUsuariosClientes(String valor);
-    
-    public List<SmsUsuario> filtrarUsuariosAdministradores(String valor);
-    
     public List<SmsUsuario> verificarLoginDisponible(String valor);
 }

@@ -18,7 +18,7 @@
             <key>
                 <column name="idMercado" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsServicios">
+            <many-to-many class="Modelo.SmsServicios">
                 <column name="idServicios" not-null="true" />
             </many-to-many>
         </set>
@@ -26,7 +26,7 @@
             <key>
                 <column name="idMercado" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsProveedor">
+            <many-to-many class="Modelo.SmsProveedor">
                 <column name="idProveedor" not-null="true" />
             </many-to-many>
         </set>
@@ -34,7 +34,7 @@
             <key>
                 <column name="idMercado" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsCategoria">
+            <many-to-many class="Modelo.SmsCategoria">
                 <column name="idCategoria" not-null="true" />
             </many-to-many>
         </set>

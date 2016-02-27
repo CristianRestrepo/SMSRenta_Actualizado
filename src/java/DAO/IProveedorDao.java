@@ -14,13 +14,23 @@ import java.util.List;
  * @author Desarrollo_Planit
  */
 public interface IProveedorDao {
-    
-   //Definicion de metodos CRUD
+
+    //Definicion de metodos CRUD
     public List<SmsProveedor> consultarProveedorUsuario(SmsUsuario usuario);
-    public List<SmsProveedor> consultarProveedor(SmsProveedor proveedor);   
+
+    public List<SmsProveedor> consultarProveedor(SmsProveedor proveedor);
+
     public List<SmsProveedor> mostrarProveedores();
+
     public void registrarProveedor(SmsProveedor proveedor);
+
     public void modificarProveedor(SmsProveedor proveedor);
+
     public void eliminarProveedor(SmsProveedor proveedor);
+
+    public List<SmsUsuario> consultarUsuariosProveedores();
+
+    public List<SmsUsuario> filtrarUsuariosProveedores(String valor);
+
     public List<SmsProveedor> filtrarProveedor(String dato);
 }

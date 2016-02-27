@@ -18,7 +18,7 @@
             <key>
                 <column name="idProveedor" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsMercado">
+            <many-to-many class="Modelo.SmsMercado">
                 <column name="idMercado" not-null="true" />
             </many-to-many>
         </set>

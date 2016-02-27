@@ -16,19 +16,21 @@ public class SmsCategoria  implements java.io.Serializable {
      private String categoriaDescripcion;
      private Set<SmsVehiculo> smsVehiculos = new HashSet<SmsVehiculo>(0);
      private Set<SmsMercado> smsMercados = new HashSet<SmsMercado>(0);
-
+     private Set<SmsCostosserviciosRenta> smsCostosServiciosRentas = new HashSet<SmsCostosserviciosRenta>(0);
+     
+     
     public SmsCategoria() {
     }
-
 	
     public SmsCategoria(String categoriaNombre) {
         this.categoriaNombre = categoriaNombre;
     }
-    public SmsCategoria(String categoriaNombre, String categoriaDescripcion, Set<SmsVehiculo> smsVehiculos, Set<SmsMercado> smsMercados) {
+    public SmsCategoria(String categoriaNombre, String categoriaDescripcion, Set<SmsVehiculo> smsVehiculos, Set<SmsMercado> smsMercados, Set<SmsCostosserviciosRenta> smsCostosServiciosRenta) {
        this.categoriaNombre = categoriaNombre;
        this.categoriaDescripcion = categoriaDescripcion;
        this.smsVehiculos = smsVehiculos;
        this.smsMercados = smsMercados;
+       this.smsCostosServiciosRentas = smsCostosServiciosRenta;
     }
    
     public Integer getIdCategoria() {
@@ -67,7 +69,17 @@ public class SmsCategoria  implements java.io.Serializable {
         this.smsMercados = smsMercados;
     }
 
+    public Set<SmsCostosserviciosRenta> getSmsCostosServiciosRentas() {
+        return this.smsCostosServiciosRentas;
+    }
 
+    public void setSmsCostosServiciosRentas(Set<SmsCostosserviciosRenta> smsCostosServiciosRenta) {
+        this.smsCostosServiciosRentas = smsCostosServiciosRenta;
+    }
+
+    
+
+    
 
 
 }

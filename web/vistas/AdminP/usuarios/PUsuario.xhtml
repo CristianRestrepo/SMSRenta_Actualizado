@@ -25,31 +25,31 @@
                                     <div class="table-responsive">
                                         <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
                                             <p:outputLabel value="Nombre: "/>
-                                            <b:inputText id="TNombreApUsu" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{usuarioBean.usuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
+                                            <b:inputText id="TNombreApUsu" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{administradorBean.usuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
                                             <p:message for="TNombreApUsu"/>
 
                                             <p:outputLabel value="CC: " />
-                                            <b:inputText id="TCcUsu" maxlength="45" placeholder="Cedula de ciudadania" value="#{usuarioBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                            <b:inputText id="TCcUsu" maxlength="45" placeholder="Cedula de ciudadania" value="#{administradorBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
                                             <p:message for="TCcUsu"/>
 
                                             <p:outputLabel value="Teléfono: "/>
-                                            <b:inputText id="TTelUsu" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{usuarioBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                            <b:inputText id="TTelUsu" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{administradorBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelUsu"/>
 
                                             <p:outputLabel value="Email: "/>
-                                            <b:inputText id="TEmailProv" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%" ></b:inputText>
+                                            <b:inputText id="TEmailProv" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{administradorBean.usuarioView.usuarioEmail}" style="width: 100%" ></b:inputText>
                                             <p:message for="TEmailProv"/>
 
                                             <p:outputLabel value="Razón social: "/>
-                                            <b:inputText id="TRazSocUsu" maxlength="100" placeholder="Nombre de la empresa" value="#{usuarioBean.usuarioView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
+                                            <b:inputText id="TRazSocUsu" maxlength="100" placeholder="Nombre de la empresa" value="#{administradorBean.usuarioView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
                                             <p:message for="TRazSocUsu"/>
 
                                             <p:outputLabel value="Nit: "/>
-                                            <b:inputText id="TNitUsu" maxlength="45" placeholder="Nit de la empresa" value="#{usuarioBean.usuarioView.usuarioNit}" style="width: 100%" ></b:inputText>
+                                            <b:inputText id="TNitUsu" maxlength="45" placeholder="Nit de la empresa" value="#{administradorBean.usuarioView.usuarioNit}" style="width: 100%" ></b:inputText>
                                             <p:message for="TNitUsu"/>
 
                                             <p:outputLabel value="Ciudad:* "/>
-                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{usuarioBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{administradorBean.ciudadView.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>
@@ -67,17 +67,17 @@
                                         <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
 
                                             <p:outputLabel value="Login: "/>
-                                            <b:inputText id="TLoginUsu" validator="regLoginValidator" maxlength="60" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioLogin}" placeholder="Login de sesion"></b:inputText>
+                                            <b:inputText id="TLoginUsu" validator="regLoginValidator" maxlength="60" style="width: 100%" value="#{administradorBean.usuarioView.usuarioLogin}" placeholder="Login de sesion"></b:inputText>
                                             <p:message for="TLoginUsu"/>
 
                                             <p:outputLabel value="Contraseña: "/>
-                                            <b:inputSecret label="Contraseña" binding="#{UsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                            <b:inputSecret label="Contraseña" binding="#{UsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{administradorBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
                                                 <f:validateLength minimum="6"/>
                                             </b:inputSecret>
                                             <p:message for="TPassUsu"/>
 
                                             <p:outputLabel value="Repita contraseña: "/>
-                                            <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
+                                            <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{administradorBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
                                                 <f:validateLength minimum="6"/>
                                                 <f:attribute name="password" value="#{UsuarioPass.value}"/>
                                             </b:inputSecret>
@@ -86,7 +86,7 @@
                                         </h:panelGrid><hr/>
                                         <h:panelGrid columns="3" width="100%">
                                             <p:outputLabel value="Perfil:* "/>
-                                            <b:selectOneMenu required="true" requiredMessage="Seleccion tipo de usuario" id="SPerfiles" style="width: 100%" value="#{usuarioBean.rolView.rolNombre}">
+                                            <b:selectOneMenu required="true" requiredMessage="Seleccion tipo de usuario" id="SPerfiles" style="width: 100%" value="#{administradorBean.rolView.rolNombre}">
                                                 <f:selectItem itemLabel="Seleccione tipo de perfil"/>
                                                 <f:selectItem itemLabel="Administrador Principal" itemValue="Administrador Principal"/>
                                                 <f:selectItem itemLabel="Administrador Secundario" itemValue="Administrador Secundario"/>
@@ -94,7 +94,7 @@
                                             <p:message for="SPerfiles"/>
                                         </h:panelGrid>
                                     </div><hr/>
-                                    <p:commandButton class="btn btn-block btn-danger" id="BTUsuario"  update="@form" action="#{usuarioBean.registrar()}" value="Registrar Administrador" />
+                                    <p:commandButton class="btn btn-block btn-danger" id="BTUsuario"  update="@form" action="#{administradorBean.registrarAdministrador()}" value="Registrar Administrador" />
                                 </div>
                             </div>
                         </b:column>  
@@ -120,10 +120,10 @@
                                     <h4 class="box-title">Administradores SMS Renta</h4>
                                 </div>
                                 <div class="box-body">
-                                    <b:inputText placeholder="Buscar" value="#{usuarioBean.buscar}" style=" width: 100%">
-                                        <p:ajax event="keyup" listener="#{usuarioBean.filtrar()}" process="@this" update="DTUsuarios"/>
+                                    <b:inputText placeholder="Buscar" value="#{administradorBean.buscar}" style=" width: 100%">
+                                        <p:ajax event="keyup" listener="#{administradorBean.filtrar()}" process="@this" update="DTUsuarios"/>
                                     </b:inputText>
-                                    <p:dataTable id="DTUsuarios" var="usuario" emptyMessage="Administradores no registrados" value="#{usuarioBean.usuariosListView}"
+                                    <p:dataTable id="DTUsuarios" var="usuario" emptyMessage="Administradores no registrados" value="#{administradorBean.usuariosListView}"
                                                  rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -137,14 +137,14 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" action="#{usuarioBean.irModificarAdministrador()}" title="Modificar">
-                                                <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.modUsuarioView}"/>
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" action="#{administradorBean.irModificarAdministrador()}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{usuario}" target="#{administradorBean.modUsuarioView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{usuarioBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.DUsuarioView}"/>
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{administradorBean.eliminarAdministrador()}" title="Eliminar">
+                                                <f:setPropertyActionListener value="#{usuario}" target="#{administradorBean.DUsuarioView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este administrador?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>

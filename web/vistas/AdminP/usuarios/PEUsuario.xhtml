@@ -33,7 +33,7 @@
                                         <h4 class="box-title">Fotografia de perfil</h4>
                                     </div>
                                     <div class="box-body" style="width: 100%" align="center">
-                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.modUsuarioView.usuarioFotoRuta}"/> 
+                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{administradorBean.modUsuarioView.usuarioFotoRuta}"/> 
                                     </div>
                                 </div>
 
@@ -49,31 +49,31 @@
                                         <div class="table-responsive">
                                             <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
                                                 <p:outputLabel value="Nombre:* "/>
-                                                <b:inputText id="TNombreApUsu" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{usuarioBean.modUsuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
+                                                <b:inputText id="TNombreApUsu" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{administradorBean.modUsuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
                                                 <p:message for="TNombreApUsu"/>
 
                                                 <p:outputLabel value="CC: " />
-                                                <b:inputText id="TCcUsu" maxlength="45" placeholder="Cedula de ciudadania" value="#{usuarioBean.modUsuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                                <b:inputText id="TCcUsu" maxlength="45" placeholder="Cedula de ciudadania" value="#{administradorBean.modUsuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
                                                 <p:message for="TCcUsu"/>
 
                                                 <p:outputLabel value="Telefono: "/>
-                                                <b:inputText id="TTelUsu" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{usuarioBean.modUsuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                                <b:inputText id="TTelUsu" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{administradorBean.modUsuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                                 <p:message for="TTelUsu"/>
 
                                                 <p:outputLabel value="Email:* "/>
-                                                <b:inputText id="TEmailProv" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{usuarioBean.modUsuarioView.usuarioEmail}" style="width: 100%" ></b:inputText>
+                                                <b:inputText id="TEmailProv" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{administradorBean.modUsuarioView.usuarioEmail}" style="width: 100%" ></b:inputText>
                                                 <p:message for="TEmailProv"/>
 
                                                 <p:outputLabel value="Razon social: "/>
-                                                <b:inputText id="TRazSocUsu" maxlength="100" placeholder="Nombre de la empresa" value="#{usuarioBean.modUsuarioView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
+                                                <b:inputText id="TRazSocUsu" maxlength="100" placeholder="Nombre de la empresa" value="#{administradorBean.modUsuarioView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
                                                 <p:message for="TRazSocUsu"/>
 
                                                 <p:outputLabel value="Nit: "/>
-                                                <b:inputText id="TNitUsu" maxlength="45" placeholder="Nit de la empresa" value="#{usuarioBean.modUsuarioView.usuarioNit}" style="width: 100%" ></b:inputText>
+                                                <b:inputText id="TNitUsu" maxlength="45" placeholder="Nit de la empresa" value="#{administradorBean.modUsuarioView.usuarioNit}" style="width: 100%" ></b:inputText>
                                                 <p:message for="TNitUsu"/>
 
                                                 <p:outputLabel value="Ciudad:* "/>
-                                                <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{usuarioBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                                <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{administradorBean.ciudadView.ciudadNombre}" style="width: 100%">
                                                     <f:selectItem itemLabel="Seleccione ciudad"/>
                                                     <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                                 </b:selectOneMenu>
@@ -85,41 +85,37 @@
 
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-check-circle"/>
-                                        <h4 class="box-title">Datos de sesion</h4>  
-                                        <br/><br/>
-                                        <p:commandLink value="Editar datos de sesion">
-                                            <p:ajax listener="#{usuarioBean.habilitarEdicion()}" event="click" update="@form"/>
-                                        </p:commandLink>
+                                        <h4 class="box-title">Datos de cuenta</h4>  
+                                        <br/><br/>                                        
                                     </div>
                                     <div class="box-body">
                                         <div class="table-responsive">                                       
-                                            <h:panelGrid rendered="#{usuarioBean.habilitarEditarSesion}" cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
+                                            <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
 
                                                 <p:outputLabel value="Login: "/>
-                                                <b:inputText id="TLoginUsu" maxlength="60" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioLogin}" placeholder="Login de sesion"></b:inputText>
+                                                <b:inputText id="TLoginUsu" maxlength="60" style="width: 100%" validator="modLoginValidator" value="#{administradorBean.modUsuarioView.usuarioLogin}" placeholder="Login de sesion">
+                                                     <f:attribute name="usuario" value="#{usuarioBean.modUsuarioView}"/>
+                                                </b:inputText>
                                                 <p:message for="TLoginUsu"/>
 
                                                 <p:outputLabel value="Contraseña: "/>
-                                                <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                                <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{administradorBean.modUsuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
                                                     <f:validateLength minimum="6"/>
                                                 </b:inputSecret>
                                                 <p:message for="TPassUsu"/>
 
                                                 <p:outputLabel value="Repita contraseña: "/>
-                                                <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
+                                                <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{administradorBean.modUsuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
                                                     <f:validateLength minimum="6"/>
                                                     <f:attribute name="password" value="#{MUsuarioPass.value}"/>
                                                 </b:inputSecret>
-                                                <p:message for="TRemPassUsu"/>
-                                                
-                                                <p:commandLink value="Cerrar">
-                                                    <p:ajax event="click" listener="#{usuarioBean.deshabilitarEdicion()}" update="@form"/>
-                                                </p:commandLink>
+                                                <p:message for="TRemPassUsu"/>                                                
+                                              
                                             </h:panelGrid>
                                             
                                             <h:panelGrid columns="3" style="width: 100%">
                                                 <p:outputLabel value="Perfil:* "/>
-                                                <b:selectOneMenu required="true" requiredMessage="Seleccion tipo de usuario" id="SPerfiles" style="width: 100%" value="#{usuarioBean.rolView.rolNombre}">
+                                                <b:selectOneMenu required="true" requiredMessage="Seleccion tipo de usuario" id="SPerfiles" style="width: 100%" value="#{administradorBean.rolView.rolNombre}">
                                                     <f:selectItem itemLabel="Seleccione tipo de perfil"/>
                                                     <f:selectItem itemLabel="Administrador Principal" itemValue="Administrador Principal"/>
                                                     <f:selectItem itemLabel="Administrador Secundario" itemValue="Administrador Secundario"/>
@@ -129,8 +125,8 @@
                                         </div><hr/>                                      
                                                 
                                         <h:panelGrid columns="2" width="100%">
-                                            <p:commandButton style="width: 100%" id="BTModUsuario" ajax="true" class="btn btn-block btn-success" update="@form" action="#{usuarioBean.modificar()}" value="Modificar Administrador" />
-                                            <p:commandButton style="width: 100%" id="BTCancel" ajax="true" class="btn btn-block btn-danger" action="#{usuarioBean.regresar()}" value="Regresar" />                                            
+                                            <p:commandButton style="width: 100%" id="BTModUsuario" ajax="true" class="btn btn-block btn-success" update="@form" action="#{administradorBean.modificarAdministrador()}" value="Modificar Administrador" />
+                                            <p:commandButton style="width: 100%" id="BTCancel" ajax="true" class="btn btn-block btn-danger" action="#{administradorBean.regresar()}" value="Regresar" />                                            
                                         </h:panelGrid>
                                     </div> 
                                 </div>

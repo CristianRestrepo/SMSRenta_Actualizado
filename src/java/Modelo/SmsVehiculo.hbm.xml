@@ -35,8 +35,8 @@
         <property name="vehNumMalGrande" type="java.lang.Integer">
             <column name="Veh_num_malGrande" />
         </property>
-        <property name="vehNumMalPeque&#195;&#177;a" type="java.lang.Integer">
-            <column name="Veh_num_malPeque&#195;&#177;a" />
+        <property name="vehNumMalPequeña" type="java.lang.Integer">
+            <column name="Veh_num_malPequeña" />
         </property>
         <property name="vehFotoNombre" type="string">
             <column name="Veh_foto_nombre" length="65535" />
@@ -54,7 +54,7 @@
             <key>
                 <column name="idVehiculo" not-null="true" />
             </key>
-            <many-to-many entity-name="Modelo.SmsCategoriasServicio">
+            <many-to-many class="Modelo.SmsCategoriasServicio">
                 <column name="idCategoria_Servicio" not-null="true" />
             </many-to-many>
         </set>

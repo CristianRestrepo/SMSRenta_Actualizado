@@ -55,8 +55,8 @@
                                                 <p:growl id="messages" life="2000"/>
                                                 <div class="form-group centro">
                                                     <img src="resources/images/logo.jpg" class="cntr-1 img-thumbnail "/>
-                                                    <b:inputText placeholder="Ingrese su nombre de usuario" required="true" requiredMessage="Por favor, ingrese nombre de sesion" value="#{usuarioBean.usuarioView.usuarioLogin}" style="width: 100%; margin-bottom: 12px"/>
-                                                    <b:inputSecret  placeholder="Ingrese su contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{usuarioBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
+                                                    <b:inputText placeholder="Nombre de sesion o correo electronico" required="true" requiredMessage="Por favor, ingrese nombre de sesion" value="#{usuarioBean.usuarioView.usuarioLogin}" style="width: 100%; margin-bottom: 12px"/>
+                                                    <b:inputSecret  placeholder="Contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{usuarioBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
                                                 </div>
                                                 <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrarse?"/>
                                                 <p:commandButton class="btn btn-lg btn-block btn-danger" update="messages"

@@ -11,13 +11,15 @@ public class SmsCostosserviciosRenta  implements java.io.Serializable {
 
      private Integer idCostosServRenta;
      private SmsServicios smsServicios;
-     private String costoServicioPrecio;
+     private SmsCategoria smsCategoria;
+     private Integer costoServicioPrecio;
 
     public SmsCostosserviciosRenta() {
     }
 
-    public SmsCostosserviciosRenta(SmsServicios smsServicios, String costoServicioPrecio) {
+    public SmsCostosserviciosRenta(SmsServicios smsServicios,SmsCategoria smsCategoria, int costoServicioPrecio) {
        this.smsServicios = smsServicios;
+       this.smsCategoria = smsCategoria;
        this.costoServicioPrecio = costoServicioPrecio;
     }
    
@@ -35,13 +37,23 @@ public class SmsCostosserviciosRenta  implements java.io.Serializable {
     public void setSmsServicios(SmsServicios smsServicios) {
         this.smsServicios = smsServicios;
     }
-    public String getCostoServicioPrecio() {
+    public int getCostoServicioPrecio() {
         return this.costoServicioPrecio;
     }
     
-    public void setCostoServicioPrecio(String costoServicioPrecio) {
+    public void setCostoServicioPrecio(int costoServicioPrecio) {
         this.costoServicioPrecio = costoServicioPrecio;
     }
+
+    public SmsCategoria getSmsCategoria() {
+        return smsCategoria;
+    }
+
+    public void setSmsCategoria(SmsCategoria smsCategoria) {
+        this.smsCategoria = smsCategoria;
+    }
+    
+    
 
 
 

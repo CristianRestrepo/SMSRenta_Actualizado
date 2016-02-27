@@ -19,7 +19,7 @@
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-list-alt"/>
-                                    <h4 class="box-title">Registro de Empleados</h4>
+                                    <h4 class="box-title">Registro de Conductores</h4>
                                 </div>
                                 <div class="box-body">
                                     <p style="text-justify: auto">En este panel de registro podrá registrar la información
@@ -33,12 +33,17 @@
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-info"/>
-                                    <h4 class="box-title"> Datos del Empleado</h4>                                       
+                                    <h4 class="box-title"> Datos del Conductor</h4>                                       
                                 </div> 
 
                                 <div class="box-body">
                                     <div class="table-responsive">
                                         <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
+                                            <b:selectOneMenu required="true" requiredMessage="Seleccione proveedor" id="SCiudades" value="#{empleadoBean.proveedorView.smsUsuario.usuarioNombre}" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccione proveedor"/>
+                                                <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                            </b:selectOneMenu>
+                                                                                        
                                             <p:outputLabel value="Nombre:* "/>
                                             <b:inputText id="TNombreApEmp" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{empleadoBean.usuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
                                             <p:message for="TNombreApEmp"/>
@@ -92,7 +97,7 @@
                                            
                                         </h:panelGrid>
                                     </div><hr/>
-                                    <p:commandButton id="BTEmpleado" class="btn btn-block btn-danger" update=":formA:msg :formA:seccionDatosUsuario :formA:seccionDatosSesion :formA:BTEmpleado :formC:DTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.registrar()}" value="Registrar Conductor" />
+                                    <p:commandButton id="BTEmpleado" class="btn btn-block btn-danger" update=":formA:msg :formA:seccionDatosUsuario :formA:seccionDatosSesion :formA:BTEmpleado :formC:DTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.registrarEmpleado()}" value="Registrar Conductor" />
                                 </div>
                             </div>
                         </b:column>   
@@ -153,9 +158,9 @@
                                 </div>
                                 <div class="box-body">
                                     <b:inputText placeholder="Buscar" value="#{empleadoBean.buscar}" style=" width: 100%">
-                                        <p:ajax event="keyup" listener="#{empleadoBean.filtrar()}" process="@this" update="DTEmpleado"/>
+                                        <p:ajax event="keyup" listener="#{empleadoBean.filtrarEmpleados()}" process="@this" update="DTEmpleado"/>
                                     </b:inputText>
-                                    <p:dataTable id="DTEmpleado" var="empleado" emptyMessage="Empleados no registrados" value="#{empleadoBean.empleadosListView}" rows="5"
+                                    <p:dataTable id="DTEmpleado" var="empleado" emptyMessage="Empleados no registrados" value="#{empleadoBean.usuariosListView}" rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  rowsPerPageTemplate="5,10,15">
@@ -178,7 +183,7 @@
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formA:msg :formA:seccionDatosUsuario :formC :formA:seccionDatosSesion :formA:BTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formA:msg :formA:seccionDatosUsuario :formC :formA:seccionDatosSesion :formA:BTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.eliminarEmpleado()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{empleado}" target="#{empleadoBean.DUsuarioView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este conductor?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
