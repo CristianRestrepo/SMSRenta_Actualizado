@@ -7,6 +7,7 @@ package Controladores;
 
 import DAO.IMercadoDao;
 import DAO.ImpMercadoDao;
+import Modelo.SmsCategoriasServicio;
 import Modelo.SmsMercado;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,22 +19,33 @@ import javax.annotation.PostConstruct;
  */
 public class MercadoBean {
 
+    //Variables
     private SmsMercado mercadoView;
     private List<SmsMercado> mercadoListView;
-    
+    private List<String> nombresMercadosListView;
+
+    private SmsCategoriasServicio categoriaServicioView;
+
+    //Relacion con controladores
+    CostosServicioBean costosController;
+
     private String buscar;
     IMercadoDao mercadoDao;
-    
+
     public MercadoBean() {
         mercadoDao = new ImpMercadoDao();
         mercadoView = new SmsMercado();
         mercadoListView = new ArrayList<>();
-        
+        nombresMercadosListView = new ArrayList<>();       
+
         buscar = null;
+
+        costosController = new CostosServicioBean();
+
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         mercadoListView = mercadoDao.consultarMercados();
     }
 
@@ -52,31 +64,52 @@ public class MercadoBean {
     public void setMercadoListView(List<SmsMercado> mercadoListView) {
         this.mercadoListView = mercadoListView;
     }
-    
+
+    public List<String> getNombresMercadosListView() {
+        return nombresMercadosListView;
+    }
+
+    public void setNombresMercadosListView(List<String> nombresMercadosListView) {
+        this.nombresMercadosListView = nombresMercadosListView;
+    }
+
+    public String getBuscar() {
+        return buscar;
+    }
+
+    public void setBuscar(String buscar) {
+        this.buscar = buscar;
+    }
+
     //Metodos
-    public void registrarMercado(){
+    public void registrarMercado() {
         mercadoDao.registrarMercado(mercadoView);
         mercadoListView = mercadoDao.consultarMercados();
+
+        mercadoView = new SmsMercado();
     }
-    
-    public void modificarMercado(){
+
+    public void modificarMercado() {
         mercadoDao.modificarMercado(mercadoView);
         mercadoListView = mercadoDao.consultarMercados();
-    
+
+        mercadoView = new SmsMercado();
     }
-    
-    public void eliminarMercado(){
+
+    public void eliminarMercado() {
         mercadoDao.eliminarMercado(mercadoView);
-        mercadoListView= mercadoDao.consultarMercados();
+        mercadoListView = mercadoDao.consultarMercados();
+
+        mercadoView = new SmsMercado();
+
     }
-    
-    public void filtrarMercados(){
-        if(buscar == null){
-           mercadoListView = mercadoDao.consultarMercados();
-        }else{
-           mercadoListView = mercadoDao.filtrarMercados(buscar);
+
+    public void filtrarMercados() {
+        if (buscar == null) {
+            mercadoListView = mercadoDao.consultarMercados();
+        } else {
+            mercadoListView = mercadoDao.filtrarMercados(buscar);
         }
     }
-    
-    
+
 }
