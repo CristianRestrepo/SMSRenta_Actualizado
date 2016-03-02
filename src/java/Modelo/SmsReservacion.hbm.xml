@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Modelo.SmsReservacion" table="sms_reservacion" catalog="smsrenta_actualizada" optimistic-lock="version">
         <id name="idReservacion" type="java.lang.Integer">
@@ -19,6 +19,12 @@
         </many-to-one>
         <many-to-one name="smsEmpleado" class="Modelo.SmsEmpleado" fetch="select">
             <column name="idEmpleado" />
+        </many-to-one>
+        <many-to-one name="smsEstado" class="Modelo.SmsEstado" fetch="select">
+            <column name="idEstado" not-null="true" />
+        </many-to-one>
+        <many-to-one name="smsServicios" class="Modelo.SmsServicios" fetch="select">
+            <column name="idServicio" not-null="true" />
         </many-to-one>
         <many-to-one name="smsUsuario" class="Modelo.SmsUsuario" fetch="select">
             <column name="idCliente" not-null="true" />

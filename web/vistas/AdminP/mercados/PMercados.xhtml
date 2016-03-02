@@ -14,7 +14,9 @@
             <ui:define name="content">                
                 <b:container fluid="true">
                     <b:row>
-                        <h:form>
+                        <h:form id="formularioMercado">
+                            <p:messages id="msg" closable="true"/>
+
                             <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                                 <div class="box box-info espacio-arriba">
                                     <div class="box-header with-border">
@@ -35,18 +37,21 @@
                                     </div>
                                     <div class="box-body">
                                         <div class="table-responsive">                                            
-                                            <h:panelGrid cellpadding="5" width="100%" columns="" id="PMercado">
-                                                <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
-                                                <p:message for="TNombreMrd"/>
+                                            <div class="form-group">
+                                                <h:panelGrid cellpadding="5" width="100%" columns="2" id="PMercado">
+                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
+                                                    <p:message for="TNombreMrd"/>
 
-                                                <p:inputTextarea rows="3" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
-                                                <p:message for="TDescripcionMrd"/>
-                                            </h:panelGrid>
-                                            <p:commandButton id="BTMarca" class="btn btn-block btn-danger" style="width: 100%" update="@form" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
+                                                    <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
+                                                    <p:message for="TDescripcionMrd"/>
+                                                </h:panelGrid>
+                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:PMercado :formularioMercado:ListaMercados :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </b:column>
+
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
@@ -54,8 +59,8 @@
                                         <h3 class="box-title">Lista Mercados SMS Renta</h3>
                                     </div>
                                     <div class="box-body">
-                                        <div class="table-responsive">       
-                                            <p:dataTable var="Mercado" value="#{mercadoBean.mercadoListView}"  
+                                        <div class="table-responsive">                                      
+                                            <p:dataTable id="ListaMercados" var="Mercado" value="#{mercadoBean.mercadoListView}"  
                                                          rows="5"
                                                          paginator="true"
                                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -76,30 +81,25 @@
                                                 </p:column>
 
                                                 <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-list btn btn-block btn-primary" process="@this" update="@form" title="Agregar Servicios">
-                                                        <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
-                                                    </p:commandLink>
-                                                </p:column>
-
-                                                <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update="@form" title="Eliminar">
+                                                    <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update=":formularioMercado:ListaMercados :formularioServicios:SMMercado" title="Eliminar">
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
                                                         <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este mercado?" icon="ui-icon-alert" /> 
                                                     </p:commandLink>
                                                 </p:column>
-
                                             </p:dataTable>
 
                                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                                 <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
                                                 <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                            </p:confirmDialog>
-                                        </div>
-                                        <hr/>                                
+                                            </p:confirmDialog>                                      
+                                        </div>                                                                       
                                     </div> 
                                 </div>
-                            </b:column>                      
+                            </b:column> 
+                        </h:form>
 
+
+                        <h:form id="formularioServicios">
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
                                 <div class="box box-danger">
                                     <div class="box-header with-border">
@@ -109,44 +109,46 @@
                                     <div class="box-body">
                                         <div class="table-responsive">
                                             <div class="form-group">
-                                                <h:panelGrid width="100%" columns="2" cellspacing="5">
+                                                <h:panelGrid width="100%" columns="2" id="PServicios" cellspacing="5">
 
-                                                    <b:selectMultiMenu id="TMercado" value="#{mercadoBean.mercadoView.mercadoNombre}" nonSelectedText="Seleccione Mercados" fieldSize="lg" style="width: 100%" placeholder="Mercado">
+                                                    <b:selectOneMenu  tooltip="Mercado al que pertenece el servicio" id="SMMercado" value="#{serviciosBean.mercadoView.mercadoNombre}" label="Mercado" style="width: 100%">                                                            
+                                                        <f:selectItem itemLabel="Seleccione mercado" noSelectionOption="true"/>
                                                         <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
-                                                    </b:selectMultiMenu>
-                                                    <p:message for="TMercado"/>
+                                                        <p:ajax event="change" update="SMCatVehiculo"/> 
+                                                    </b:selectOneMenu>
+                                                    <p:message for="SMMercado"/>
 
-                                                    <b:selectOneMenu label="Categoria del servicio" style="width: 100%" id="SMCatServicio"> 
+                                                    <b:selectOneMenu value="#{serviciosBean.categoriaServicioView.catNombre}" label="Categoria del servicio" style="width: 100%" id="SMCatServicio"> 
                                                         <f:selectItem itemLabel="Seleccione categoria del servicio" noSelectionOption="true"/>
-
+                                                        <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
                                                     </b:selectOneMenu>
                                                     <p:message for="SMCatServicio"/>
 
-                                                    <b:selectOneMenu style="width: 100%" label="Categoria del vehiculo" id="SMCatVehiculo"> 
+                                                    <b:selectOneMenu value="#{serviciosBean.categoriaView.categoriaNombre}" style="width: 100%" label="Categoria del vehiculo" id="SMCatVehiculo"> 
                                                         <f:selectItem itemLabel="Seleccione categoria del vehiculo" noSelectionOption="true"/>
-                                                        <f:selectItems value="#{categoriaBean.nombresCategoriasListView}"/>
+                                                        <f:selectItems value="#{serviciosBean.nombresCategoriasListView}"/>
                                                     </b:selectOneMenu>
                                                     <p:message for="SMCatVehiculo"/>
 
-                                                    <b:inputText id="TNombreServicio" style="width: 100%" required="true" requiredMessage="Ingrese nombre de servicio" placeholder="Nombre del servicio"/>
+                                                    <b:inputText id="TNombreServicio" value="#{serviciosBean.servicioView.servicioNombre}" style="width: 100%" required="true" requiredMessage="Ingrese nombre de servicio" placeholder="Nombre del servicio"/>
                                                     <p:message for="TNombreServicio"/>
 
-                                                    <p:inputTextarea rows="3" style="width: 100%" id="TDescripcionServicio" placeholder="Descripcion del servicio"/>
+                                                    <p:inputTextarea rows="3" value="#{serviciosBean.servicioView.servicioDescripcion}" style="width: 100%" id="TDescripcionServicio" placeholder="Descripcion del servicio"/>
                                                     <p:message for="TDescripcionServicio"/>
 
-                                                    <b:inputText id="TCostoServicio" style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
+                                                    <b:inputText id="TCostoServicio" value="#{serviciosBean.costoView.costoServicioPrecio}" style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
                                                     <p:message for="TNombreServicio"/>
-
                                                 </h:panelGrid>
 
                                                 <p:commandButton class="btn btn-block btn-danger" value="Registrar servicio" style="width: 100%"/>
+                                            </div>
 
-                                            </div>                                                
                                         </div>
                                     </div>
                                 </div>
                             </b:column> 
                         </h:form>
+
                     </b:row>
                 </b:container>                
             </ui:define>

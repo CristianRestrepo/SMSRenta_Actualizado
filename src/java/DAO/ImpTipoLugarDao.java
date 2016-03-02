@@ -5,33 +5,44 @@
  */
 package DAO;
 
-import Modelo.SmsCostoserviciosTraslado;
+import Modelo.SmsTipoLugar;
 import java.util.List;
 
 /**
  *
  * @author Desarrollo_Planit
  */
-public class ImpCostosServiciosTrasladoDao implements ICostosServiciosTrasladoDao{
+public class ImpTipoLugarDao implements ITipoLugarDao{
 
     @Override
-    public List<SmsCostoserviciosTraslado> consultarCostos() {
+    public List<SmsTipoLugar> consultarTiposLugares() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void registrarCosto(SmsCostoserviciosTraslado costo) {
+    public List<SmsTipoLugar> consultarTipoLugar(SmsTipoLugar tipoLugar) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void modificarCosto(SmsCostoserviciosTraslado costo) {
+    public List<SmsTipoLugar> filtrarTipoLugar(String valor) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void eliminarCosto(SmsCostoserviciosTraslado costo) {
+    public void registrarTipoLugar(SmsTipoLugar tipoLugar) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void modificarTipoLugar(SmsTipoLugar tipoLugar) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminarTipoLugar(SmsTipoLugar tipoLugar) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

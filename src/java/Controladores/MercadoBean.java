@@ -7,8 +7,8 @@ package Controladores;
 
 import DAO.IMercadoDao;
 import DAO.ImpMercadoDao;
-import Modelo.SmsCategoriasServicio;
 import Modelo.SmsMercado;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,17 +17,12 @@ import javax.annotation.PostConstruct;
  *
  * @author Desarrollo_Planit
  */
-public class MercadoBean {
+public class MercadoBean implements Serializable {
 
     //Variables
     private SmsMercado mercadoView;
     private List<SmsMercado> mercadoListView;
     private List<String> nombresMercadosListView;
-
-    private SmsCategoriasServicio categoriaServicioView;
-
-    //Relacion con controladores
-    CostosServicioBean costosController;
 
     private String buscar;
     IMercadoDao mercadoDao;
@@ -36,11 +31,9 @@ public class MercadoBean {
         mercadoDao = new ImpMercadoDao();
         mercadoView = new SmsMercado();
         mercadoListView = new ArrayList<>();
-        nombresMercadosListView = new ArrayList<>();       
+        nombresMercadosListView = new ArrayList<>();
 
         buscar = null;
-
-        costosController = new CostosServicioBean();
 
     }
 
@@ -66,6 +59,12 @@ public class MercadoBean {
     }
 
     public List<String> getNombresMercadosListView() {
+        mercadoListView = new ArrayList<>();
+        nombresMercadosListView = new ArrayList<>();
+        mercadoListView = mercadoDao.consultarMercados();
+        for (int i = 0; i < mercadoListView.size(); i++) {
+            nombresMercadosListView.add(mercadoListView.get(i).getMercadoNombre());
+        }
         return nombresMercadosListView;
     }
 
@@ -111,5 +110,7 @@ public class MercadoBean {
             mercadoListView = mercadoDao.filtrarMercados(buscar);
         }
     }
+    
+    
 
 }

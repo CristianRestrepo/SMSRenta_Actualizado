@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -17,6 +17,8 @@ public class SmsReservacion  implements java.io.Serializable {
      private SmsCiudad smsCiudadByIdCiudadDestino;
      private SmsCiudad smsCiudadByIdCiudadInicio;
      private SmsEmpleado smsEmpleado;
+     private SmsEstado smsEstado;
+     private SmsServicios smsServicios;
      private SmsUsuario smsUsuario;
      private SmsVehiculo smsVehiculo;
      private String reservacionLugarLlegada;
@@ -27,15 +29,17 @@ public class SmsReservacion  implements java.io.Serializable {
      private Date reservacionHoraInicio;
      private Date reservacionHoraLlegada;
      private Integer reservacionCosto;
-     private Set<SmsCalificacion> smsCalificacions = new HashSet<SmsCalificacion>(0);
+     private Set<SmsCalificacion> smsCalificacions = new HashSet<>(0);
 
     public SmsReservacion() {
     }
 
 	
-    public SmsReservacion(SmsCategoriasServicio smsCategoriasServicio, SmsCiudad smsCiudadByIdCiudadInicio, SmsUsuario smsUsuario, SmsVehiculo smsVehiculo, String reservacionLugarLlegada, String reservacionLugarDestino, Date reservacionFechaInicio, Date reservacionHoraInicio) {
+    public SmsReservacion(SmsCategoriasServicio smsCategoriasServicio, SmsCiudad smsCiudadByIdCiudadInicio, SmsEstado smsEstado, SmsServicios smsServicios, SmsUsuario smsUsuario, SmsVehiculo smsVehiculo, String reservacionLugarLlegada, String reservacionLugarDestino, Date reservacionFechaInicio, Date reservacionHoraInicio) {
         this.smsCategoriasServicio = smsCategoriasServicio;
         this.smsCiudadByIdCiudadInicio = smsCiudadByIdCiudadInicio;
+        this.smsEstado = smsEstado;
+        this.smsServicios = smsServicios;
         this.smsUsuario = smsUsuario;
         this.smsVehiculo = smsVehiculo;
         this.reservacionLugarLlegada = reservacionLugarLlegada;
@@ -43,11 +47,13 @@ public class SmsReservacion  implements java.io.Serializable {
         this.reservacionFechaInicio = reservacionFechaInicio;
         this.reservacionHoraInicio = reservacionHoraInicio;
     }
-    public SmsReservacion(SmsCategoriasServicio smsCategoriasServicio, SmsCiudad smsCiudadByIdCiudadDestino, SmsCiudad smsCiudadByIdCiudadInicio, SmsEmpleado smsEmpleado, SmsUsuario smsUsuario, SmsVehiculo smsVehiculo, String reservacionLugarLlegada, String reservacionLugarDestino, String reservacionNotas, Date reservacionFechaInicio, Date reservacionFechaLlegada, Date reservacionHoraInicio, Date reservacionHoraLlegada, Integer reservacionCosto, Set<SmsCalificacion> smsCalificacions) {
+    public SmsReservacion(SmsCategoriasServicio smsCategoriasServicio, SmsCiudad smsCiudadByIdCiudadDestino, SmsCiudad smsCiudadByIdCiudadInicio, SmsEmpleado smsEmpleado, SmsEstado smsEstado, SmsServicios smsServicios, SmsUsuario smsUsuario, SmsVehiculo smsVehiculo, String reservacionLugarLlegada, String reservacionLugarDestino, String reservacionNotas, Date reservacionFechaInicio, Date reservacionFechaLlegada, Date reservacionHoraInicio, Date reservacionHoraLlegada, Integer reservacionCosto, Set<SmsCalificacion> smsCalificacions) {
        this.smsCategoriasServicio = smsCategoriasServicio;
        this.smsCiudadByIdCiudadDestino = smsCiudadByIdCiudadDestino;
        this.smsCiudadByIdCiudadInicio = smsCiudadByIdCiudadInicio;
        this.smsEmpleado = smsEmpleado;
+       this.smsEstado = smsEstado;
+       this.smsServicios = smsServicios;
        this.smsUsuario = smsUsuario;
        this.smsVehiculo = smsVehiculo;
        this.reservacionLugarLlegada = reservacionLugarLlegada;
@@ -95,6 +101,20 @@ public class SmsReservacion  implements java.io.Serializable {
     
     public void setSmsEmpleado(SmsEmpleado smsEmpleado) {
         this.smsEmpleado = smsEmpleado;
+    }
+    public SmsEstado getSmsEstado() {
+        return this.smsEstado;
+    }
+    
+    public void setSmsEstado(SmsEstado smsEstado) {
+        this.smsEstado = smsEstado;
+    }
+    public SmsServicios getSmsServicios() {
+        return this.smsServicios;
+    }
+    
+    public void setSmsServicios(SmsServicios smsServicios) {
+        this.smsServicios = smsServicios;
     }
     public SmsUsuario getSmsUsuario() {
         return this.smsUsuario;

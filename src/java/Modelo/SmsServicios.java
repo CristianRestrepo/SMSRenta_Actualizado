@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,10 +15,9 @@ public class SmsServicios  implements java.io.Serializable {
      private SmsCategoriasServicio smsCategoriasServicio;
      private String servicioNombre;
      private String servicioDescripcion;
-     private Set<SmsCostosserviciosRenta> smsCostosserviciosRentas = new HashSet<SmsCostosserviciosRenta>(0);
-     private Set<SmsCostoserviciosTraslado> smsCostoserviciosTraslados = new HashSet<SmsCostoserviciosTraslado>(0);
-     private Set<SmsCostoserviciosTiempo> smsCostoserviciosTiempos = new HashSet<SmsCostoserviciosTiempo>(0);
-     private Set<SmsMercado> smsMercados = new HashSet<SmsMercado>(0);
+     private Set<SmsCostosservicios> smsCostosservicioses = new HashSet<>(0);
+     private Set<SmsMercado> smsMercados = new HashSet<>(0);
+     private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
 
     public SmsServicios() {
     }
@@ -28,14 +27,13 @@ public class SmsServicios  implements java.io.Serializable {
         this.smsCategoriasServicio = smsCategoriasServicio;
         this.servicioNombre = servicioNombre;
     }
-    public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, String servicioDescripcion, Set<SmsCostosserviciosRenta> smsCostosserviciosRentas, Set<SmsCostoserviciosTraslado> smsCostoserviciosTraslados, Set<SmsCostoserviciosTiempo> smsCostoserviciosTiempos, Set<SmsMercado> smsMercados) {
+    public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, String servicioDescripcion, Set<SmsCostosservicios> smsCostosservicioses, Set<SmsMercado> smsMercados, Set<SmsReservacion> smsReservacions) {
        this.smsCategoriasServicio = smsCategoriasServicio;
        this.servicioNombre = servicioNombre;
        this.servicioDescripcion = servicioDescripcion;
-       this.smsCostosserviciosRentas = smsCostosserviciosRentas;
-       this.smsCostoserviciosTraslados = smsCostoserviciosTraslados;
-       this.smsCostoserviciosTiempos = smsCostoserviciosTiempos;
+       this.smsCostosservicioses = smsCostosservicioses;
        this.smsMercados = smsMercados;
+       this.smsReservacions = smsReservacions;
     }
    
     public Integer getIdServicio() {
@@ -66,26 +64,12 @@ public class SmsServicios  implements java.io.Serializable {
     public void setServicioDescripcion(String servicioDescripcion) {
         this.servicioDescripcion = servicioDescripcion;
     }
-    public Set<SmsCostosserviciosRenta> getSmsCostosserviciosRentas() {
-        return this.smsCostosserviciosRentas;
+    public Set<SmsCostosservicios> getSmsCostosservicioses() {
+        return this.smsCostosservicioses;
     }
     
-    public void setSmsCostosserviciosRentas(Set<SmsCostosserviciosRenta> smsCostosserviciosRentas) {
-        this.smsCostosserviciosRentas = smsCostosserviciosRentas;
-    }
-    public Set<SmsCostoserviciosTraslado> getSmsCostoserviciosTraslados() {
-        return this.smsCostoserviciosTraslados;
-    }
-    
-    public void setSmsCostoserviciosTraslados(Set<SmsCostoserviciosTraslado> smsCostoserviciosTraslados) {
-        this.smsCostoserviciosTraslados = smsCostoserviciosTraslados;
-    }
-    public Set<SmsCostoserviciosTiempo> getSmsCostoserviciosTiempos() {
-        return this.smsCostoserviciosTiempos;
-    }
-    
-    public void setSmsCostoserviciosTiempos(Set<SmsCostoserviciosTiempo> smsCostoserviciosTiempos) {
-        this.smsCostoserviciosTiempos = smsCostoserviciosTiempos;
+    public void setSmsCostosservicioses(Set<SmsCostosservicios> smsCostosservicioses) {
+        this.smsCostosservicioses = smsCostosservicioses;
     }
     public Set<SmsMercado> getSmsMercados() {
         return this.smsMercados;
@@ -93,6 +77,13 @@ public class SmsServicios  implements java.io.Serializable {
     
     public void setSmsMercados(Set<SmsMercado> smsMercados) {
         this.smsMercados = smsMercados;
+    }
+    public Set<SmsReservacion> getSmsReservacions() {
+        return this.smsReservacions;
+    }
+    
+    public void setSmsReservacions(Set<SmsReservacion> smsReservacions) {
+        this.smsReservacions = smsReservacions;
     }
 
 

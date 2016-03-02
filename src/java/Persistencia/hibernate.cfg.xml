@@ -12,26 +12,25 @@
     <mapping resource="Modelo/SmsRol.hbm.xml"/>
     <mapping resource="Modelo/SmsPais.hbm.xml"/>
     <mapping resource="Modelo/SmsEstadovehiculo.hbm.xml"/>
-    <mapping resource="Modelo/SmsCostoserviciosTraslado.hbm.xml"/>
+    <mapping resource="Modelo/SmsEstado.hbm.xml"/>
     <mapping resource="Modelo/SmsPermisos.hbm.xml"/>
-    <mapping resource="Modelo/SmsCostoserviciosTiempo.hbm.xml"/>
     <mapping resource="Modelo/SmsMarca.hbm.xml"/>
     <mapping resource="Modelo/SmsVehiculo.hbm.xml"/>
     <mapping resource="Modelo/SmsReferencia.hbm.xml"/>
+    <mapping resource="Modelo/SmsCostosservicios.hbm.xml"/>
     <mapping resource="Modelo/SmsHojavida.hbm.xml"/>
+    <mapping resource="Modelo/SmsDepartamento.hbm.xml"/>
     <mapping resource="Modelo/SmsMercado.hbm.xml"/>
     <mapping resource="Modelo/SmsReservacion.hbm.xml"/>
     <mapping resource="Modelo/SmsEmpleado.hbm.xml"/>
     <mapping resource="Modelo/SmsCiudad.hbm.xml"/>
-    <mapping resource="Modelo/SmsMunicipios.hbm.xml"/>
     <mapping resource="Modelo/SmsCalificacion.hbm.xml"/>
     <mapping resource="Modelo/SmsLugares.hbm.xml"/>
-    <mapping resource="Modelo/SmsCostosserviciosRenta.hbm.xml"/>
+    <mapping resource="Modelo/SmsTipoLugar.hbm.xml"/>
     <mapping resource="Modelo/SmsUsuario.hbm.xml"/>
     <mapping resource="Modelo/SmsServicios.hbm.xml"/>
     <mapping resource="Modelo/SmsCategoriasServicio.hbm.xml"/>
     <mapping resource="Modelo/SmsProveedor.hbm.xml"/>
     <mapping resource="Modelo/SmsCategoria.hbm.xml"/>
-    <mapping resource="Modelo/SmsContraseñaUsuario.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -8,14 +8,14 @@ package Controladores;
 import Funciones.SendEmail;
 import Modelo.SmsReservacion;
 import DAO.ICiudadDao;
-import DAO.ICostosServiciosRentaDao;
+import DAO.ICostosServiciosDao;
 import DAO.IEmpleadoDao;
 import DAO.IReservacionDao;
 import DAO.IServicioDao;
 import DAO.IUsuarioDao;
 import DAO.IVehiculoDao;
 import DAO.ImpCiudadDao;
-import DAO.ImpCostosServiciosRentaDao;
+import DAO.ImpCostosServiciosDao;
 import DAO.ImpEmpleadoDao;
 import DAO.ImpReservacionDao;
 import DAO.ImpServicioDao;
@@ -23,7 +23,7 @@ import DAO.ImpUsuarioDao;
 import DAO.ImpVehiculoDao;
 import Modelo.SmsCategoria;
 import Modelo.SmsCiudad;
-import Modelo.SmsCostosserviciosRenta;
+import Modelo.SmsCostosservicios;
 import Modelo.SmsEmpleado;
 import Modelo.SmsLugares;
 import Modelo.SmsServicios;
@@ -71,7 +71,7 @@ public class ReservacionBean implements Serializable{
     private SmsUsuario MclienteView;
     private SmsUsuario MConductorView;
 
-    private SmsCostosserviciosRenta costoServicioView;
+    private SmsCostosservicios costoServicioView;
     private SmsServicios servicioView;
 
     private SmsUsuario sesion; //objeto donde guardaremos los datos del usuario logueado
@@ -125,7 +125,7 @@ public class ReservacionBean implements Serializable{
         ciudadView = new SmsCiudad();
         clienteView = new SmsUsuario();
 
-        costoServicioView = new SmsCostosserviciosRenta();
+        costoServicioView = new SmsCostosservicios();
         servicioView = new SmsServicios();
 
         MvehiculoView = new SmsVehiculo();
@@ -224,11 +224,11 @@ public class ReservacionBean implements Serializable{
         this.MclienteView = MclienteView;
     }
 
-    public SmsCostosserviciosRenta getCostoServicioView() {
+    public SmsCostosservicios getCostoServicioView() {
         return costoServicioView;
     }
 
-    public void setCostoServicioView(SmsCostosserviciosRenta costoServicioView) {
+    public void setCostoServicioView(SmsCostosservicios costoServicioView) {
         this.costoServicioView = costoServicioView;
     }
 
@@ -776,7 +776,7 @@ public class ReservacionBean implements Serializable{
         //Instacia de variable propias del metodo
         int costo = 0;
 
-        SmsCostosserviciosRenta costos;
+        SmsCostosservicios costos;
         SmsServicios hora = new SmsServicios();
         SmsServicios dia = new SmsServicios();
 
@@ -784,7 +784,7 @@ public class ReservacionBean implements Serializable{
         dia.setServicioNombre("Plan dia 24 horas");
 
         //instancia de objetos relacionados a los DAO necesarios
-        ICostosServiciosRentaDao cosDao = new ImpCostosServiciosRentaDao();
+        ICostosServiciosDao cosDao = new ImpCostosServiciosDao();
         IServicioDao serDao = new ImpServicioDao();
         IVehiculoDao vehDao = new ImpVehiculoDao();
 

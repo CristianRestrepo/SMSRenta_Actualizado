@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Modelo.SmsRol" table="sms_rol" catalog="smsrenta_actualizada" optimistic-lock="version">
         <id name="idRol" type="java.lang.Integer">
@@ -9,13 +9,13 @@
             <generator class="identity" />
         </id>
         <property name="rolNombre" type="string">
-            <column name="Rol_nombre" length="45" />
+            <column name="Rol_nombre" length="45" not-null="true" />
         </property>
         <set name="smsPermisoses" table="sms_rol_permisos" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="idRol" not-null="true" />
             </key>
-            <many-to-many class="Modelo.SmsPermisos">
+            <many-to-many entity-name="Modelo.SmsPermisos">
                 <column name="idPermisos" not-null="true" />
             </many-to-many>
         </set>

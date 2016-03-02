@@ -9,7 +9,6 @@ import DAO.IAdministradorDao;
 import DAO.ImpAdministradorDao;
 import Funciones.MD5;
 import Modelo.SmsCiudad;
-import Modelo.SmsContraseñaUsuario;
 import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.Serializable;
@@ -76,8 +75,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
 
         //Consultamos la informacion del usuario recien registrado y registramos un respaldo de su contraseña
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
-        contraseñaController.registrarContraseña(usuarioView, password);
-
+        
         //limpiamos objetos
         usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
@@ -89,11 +87,10 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         MD5 md = new MD5();
 
         // en caso de modificar las contraseñas estas se encriptan de nuevo
-        if (!modUsuarioView.getUsuarioPassword().equalsIgnoreCase(md.getMD5(contraseñaController.contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0).getPassword()))) {
             password = modUsuarioView.getUsuarioPassword();//guardamos un relpaldo de la contraseña antes de encriptar
             modUsuarioView.setUsuarioPassword(md.getMD5(modUsuarioView.getUsuarioPassword()));
             modUsuarioView.setUsuarioRememberToken(md.getMD5(modUsuarioView.getUsuarioRememberToken()));
-        }
+        
         ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
         modUsuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
 
@@ -102,15 +99,11 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
 
         usuarioDao.modificarUsuario(modUsuarioView);//modificamos la informacion de usuario
         //Modificamos el respaldo de la contraseña si esta fue modificada
-        if (!modUsuarioView.getUsuarioPassword().equalsIgnoreCase(md.getMD5(contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0).getPassword()))) {
-            contraseñaUsuarioView = contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0);
-            contraseñaController.modificarContraseña(contraseñaUsuarioView, password);
-        }
+        
 
         usuariosListView = adminDao.consultarUsuariosAdministradores();
 
         //limpiamos objetos
-        contraseñaUsuarioView = new SmsContraseñaUsuario();
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
         modUsuarioView = new SmsUsuario();

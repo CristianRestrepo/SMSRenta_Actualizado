@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,12 +13,16 @@ public class SmsRol  implements java.io.Serializable {
 
      private Integer idRol;
      private String rolNombre;
-     private Set<SmsPermisos> smsPermisoses = new HashSet<SmsPermisos>(0);
-     private Set<SmsUsuario> smsUsuarios = new HashSet<SmsUsuario>(0);
+     private Set<SmsPermisos> smsPermisoses = new HashSet<>(0);
+     private Set<SmsUsuario> smsUsuarios = new HashSet<>(0);
 
     public SmsRol() {
     }
 
+	
+    public SmsRol(String rolNombre) {
+        this.rolNombre = rolNombre;
+    }
     public SmsRol(String rolNombre, Set<SmsPermisos> smsPermisoses, Set<SmsUsuario> smsUsuarios) {
        this.rolNombre = rolNombre;
        this.smsPermisoses = smsPermisoses;

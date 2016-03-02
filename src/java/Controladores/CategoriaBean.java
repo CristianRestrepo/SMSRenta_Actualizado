@@ -6,8 +6,11 @@
 package Controladores;
 
 import DAO.ICategoriaDao;
+import DAO.IMercadoDao;
 import DAO.ImpCategoriaDao;
+import DAO.ImpMercadoDao;
 import Modelo.SmsCategoria;
+import Modelo.SmsMercado;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,8 @@ public class CategoriaBean implements Serializable {
     private SmsCategoria DCategoriaView;//La D hace alucion a delete, este objeto se usara para eliminar los registros de la BD
     private List<SmsCategoria> categoriasListView;
     private List<String> nombresCategoriasListView;
-
+    private List<String> mercadosSeleccionados;
+    private SmsMercado mercadoView;
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
@@ -28,18 +32,21 @@ public class CategoriaBean implements Serializable {
 
     //Conexion con el DAO
     ICategoriaDao catDao;
+    IMercadoDao mercadoDao;
 
     public CategoriaBean() {//CONSTRUCTOR
         categoriaView = new SmsCategoria();
         DCategoriaView = new SmsCategoria();
         categoriasListView = new ArrayList<>();
         nombresCategoriasListView = new ArrayList<>();
+        mercadoView = new SmsMercado();
 
         buscar = null;
         estado = 0;
         nombre = "Registrar Categoria";
 
         catDao = new ImpCategoriaDao();
+        mercadoDao = new ImpMercadoDao();
     }
 
     @PostConstruct
@@ -76,7 +83,7 @@ public class CategoriaBean implements Serializable {
     public void setNombresCategoriasListView(List<String> nombresCategoriasListView) {
         this.nombresCategoriasListView = nombresCategoriasListView;
     }
-  
+
     public String getNombre() {
         return nombre;
     }
@@ -101,6 +108,14 @@ public class CategoriaBean implements Serializable {
         this.DCategoriaView = DCategoriaView;
     }
 
+    public List<String> getMercadosSeleccionados() {
+        return mercadosSeleccionados;
+    }
+
+    public void setMercadosSeleccionados(List<String> mercadosSeleccionados) {
+        this.mercadosSeleccionados = mercadosSeleccionados;
+    }
+
     //METODOS QUE DEVUELVEN DATOS PARA VISTAS
     public void modificar() {
         //TRAER LA INFORMACION DE LA VISTA Y PASARLA AL PARAMETRO CORRESPODIENTE 
@@ -112,12 +127,20 @@ public class CategoriaBean implements Serializable {
     }
 
     public void registrar() {
-        //TRAER LA INFORMACION DE LA VISTA Y PASARLA AL PARAMETRO CORRESPODIENTE 
-        //DE LA CLASE DEL PAQUETE CONTROLADOR
-        catDao.registrarCategoria(categoriaView);
+        catDao.registrarCategoria(categoriaView);//Se registra la categoria        
+        categoriaView = catDao.consultarCategoria(categoriaView).get(0);//Consultamos la categoria recien registrada
+
+        for (int i = 0; i < mercadosSeleccionados.size(); i++) { //Relacionamos la categoria con los mercados seleccionados
+            mercadoView = mercadoDao.consultarMercado(mercadosSeleccionados.get(i)).get(0);
+            mercadoView.getSmsCategorias().add(categoriaView);//Se relaciona la categoria al mercado 
+            categoriaView.getSmsMercados().add(mercadoView);//Se relaciona el mercado a la categoria
+        }
+        catDao.agregarMercadosCategoria(categoriaView);//se registra la relacion entre la categoria y los mercados
+        
+        //Limpiamos objetos
         categoriaView = new SmsCategoria();
         categoriasListView = catDao.mostrarCategorias();
-
+        mercadosSeleccionados = new ArrayList<>();
     }
 
     public void eliminar() {
@@ -166,5 +189,6 @@ public class CategoriaBean implements Serializable {
             nombre = "Modificar Categoria";
         }
     }
-
+    
+    
 }

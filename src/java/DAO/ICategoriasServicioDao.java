@@ -5,10 +5,14 @@
  */
 package DAO;
 
+import Modelo.SmsCategoriasServicio;
+import java.util.List;
+
 /**
  *
  * @author Desarrollo_Planit
  */
 public interface ICategoriasServicioDao {
     
+    public List<SmsCategoriasServicio> consultarCategoriasServicios();
 }

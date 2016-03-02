@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class SmsMarca  implements java.io.Serializable {
 
      private Integer idMarca;
      private String marcaNombre;
-     private Set<SmsReferencia> smsReferencias = new HashSet<SmsReferencia>(0);
+     private Set<SmsReferencia> smsReferencias = new HashSet<>(0);
 
     public SmsMarca() {
     }

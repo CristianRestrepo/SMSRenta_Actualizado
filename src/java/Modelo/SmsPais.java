@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,16 +13,18 @@ public class SmsPais  implements java.io.Serializable {
 
      private Integer idPais;
      private String paisNombre;
-     private Set<SmsMunicipios> smsMunicipioses = new HashSet<SmsMunicipios>(0);
-     private Set<SmsCiudad> smsCiudads = new HashSet<SmsCiudad>(0);
+     private Set<SmsDepartamento> smsDepartamentos = new HashSet<>(0);
 
     public SmsPais() {
     }
 
-    public SmsPais(String paisNombre, Set<SmsMunicipios> smsMunicipioses, Set<SmsCiudad> smsCiudads) {
+	
+    public SmsPais(String paisNombre) {
+        this.paisNombre = paisNombre;
+    }
+    public SmsPais(String paisNombre, Set<SmsDepartamento> smsDepartamentos) {
        this.paisNombre = paisNombre;
-       this.smsMunicipioses = smsMunicipioses;
-       this.smsCiudads = smsCiudads;
+       this.smsDepartamentos = smsDepartamentos;
     }
    
     public Integer getIdPais() {
@@ -39,19 +41,12 @@ public class SmsPais  implements java.io.Serializable {
     public void setPaisNombre(String paisNombre) {
         this.paisNombre = paisNombre;
     }
-    public Set<SmsMunicipios> getSmsMunicipioses() {
-        return this.smsMunicipioses;
+    public Set<SmsDepartamento> getSmsDepartamentos() {
+        return this.smsDepartamentos;
     }
     
-    public void setSmsMunicipioses(Set<SmsMunicipios> smsMunicipioses) {
-        this.smsMunicipioses = smsMunicipioses;
-    }
-    public Set<SmsCiudad> getSmsCiudads() {
-        return this.smsCiudads;
-    }
-    
-    public void setSmsCiudads(Set<SmsCiudad> smsCiudads) {
-        this.smsCiudads = smsCiudads;
+    public void setSmsDepartamentos(Set<SmsDepartamento> smsDepartamentos) {
+        this.smsDepartamentos = smsDepartamentos;
     }
 
 

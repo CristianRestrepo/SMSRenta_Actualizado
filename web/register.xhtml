@@ -63,11 +63,11 @@
                                                     <div class="table-responsive">
                                                         <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="2" style="width: 100%;">
 
-                                                            <b:inputText maxlength="60" id="TNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.clienteView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
+                                                            <b:inputText maxlength="60" id="TNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.usuarioView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
                                                             <p:message for="TNombreApCli"/>
 
 
-                                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.clienteView.usuarioEmail}" style="width: 100%"/>
+                                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%"/>
                                                             <p:message for="TEmailCli"/>
 
 
@@ -88,17 +88,17 @@
                                                         <h:panelGrid cellpadding="5" columns="2" id="seccionDatosSesion" style="width: 100%">
 
 
-                                                            <b:inputText id="TLoginCli" maxlength="60" validator="regLoginValidator" style="width: 100%" value="#{clienteBean.clienteView.usuarioLogin}" placeholder="Nombre de sesion"/>
+                                                            <b:inputText id="TLoginCli" maxlength="60" validator="regLoginValidator" style="width: 100%" value="#{clienteBean.usuarioView.usuarioLogin}" placeholder="Nombre de sesion"/>
                                                             <p:message for="TLoginCli"/>
 
 
-                                                            <b:inputSecret label="Contraseña" id="TPassCli" binding="#{pass}"  maxlength="20" style="width: 100%" value="#{clienteBean.clienteView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                                            <b:inputSecret label="Contraseña" id="TPassCli" binding="#{pass}"  maxlength="20" style="width: 100%" value="#{clienteBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
                                                                 <f:validateLength minimum="6"/>
                                                             </b:inputSecret>
                                                             <p:message for="TPassCli"/>
 
 
-                                                            <b:inputSecret label="Repita contraseña" id="TRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.clienteView.usuarioRememberToken}" placeholder="Repita contraseña de sesion">
+                                                            <b:inputSecret label="Repita contraseña" id="TRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion">
                                                                 <f:validator validatorId="repeatPasswordValidator" />
                                                                 <f:attribute name="password" value="#{pass.value}"/>
                                                                 <f:validateLength minimum="6" />
@@ -108,7 +108,7 @@
                                                         </h:panelGrid>
                                                     </div><hr/>
                                                     <!--<p:commandLink value="Login" process="@this" immediate="true" action="#{pathBean.ir_Login()}"/>-->
-                                                    <p:commandButton id="BTCliente" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-success" ajax="true" action="#{clienteBean.registrar()}" value="Registrar" />
+                                                    <p:commandButton id="BTCliente" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-success" ajax="true" action="#{clienteBean.registrarCliente()}" value="Registrar" />
                                                     <script type="text/javascript">
                                                         function start() {
                                                             PF('statusDialog').show();

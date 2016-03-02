@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,7 +14,7 @@ public class SmsHojavida  implements java.io.Serializable {
      private Integer idHojaVida;
      private String hojaVidaNombre;
      private String hojaVidaRuta;
-     private Set<SmsEmpleado> smsEmpleados = new HashSet<SmsEmpleado>(0);
+     private Set<SmsEmpleado> smsEmpleados = new HashSet<>(0);
 
     public SmsHojavida() {
     }

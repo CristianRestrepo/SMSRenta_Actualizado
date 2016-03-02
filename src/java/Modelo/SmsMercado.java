@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,20 +14,26 @@ public class SmsMercado  implements java.io.Serializable {
      private Integer idMercado;
      private String mercadoNombre;
      private String mercadoDescripcion;
-     private Set<SmsServicios> smsServicioses = new HashSet<SmsServicios>(0);
-     private Set<SmsProveedor> smsProveedors = new HashSet<SmsProveedor>(0);
-     private Set<SmsCategoria> smsCategorias = new HashSet<SmsCategoria>(0);
+     private String mercadoFotoNombre;
+     private String mercadoFotoRuta;
+     private Set<SmsServicios> smsServicioses = new HashSet<>(0);
+     private Set<SmsProveedor> smsProveedors = new HashSet<>(0);
+     private Set<SmsCategoria> smsCategorias = new HashSet<>(0);
 
     public SmsMercado() {
     }
 
 	
-    public SmsMercado(String mercadoNombre) {
+    public SmsMercado(String mercadoNombre, String mercadoFotoNombre, String mercadoFotoRuta) {
         this.mercadoNombre = mercadoNombre;
+        this.mercadoFotoNombre = mercadoFotoNombre;
+        this.mercadoFotoRuta = mercadoFotoRuta;
     }
-    public SmsMercado(String mercadoNombre, String mercadoDescripcion, Set<SmsServicios> smsServicioses, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias) {
+    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsServicios> smsServicioses, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias) {
        this.mercadoNombre = mercadoNombre;
        this.mercadoDescripcion = mercadoDescripcion;
+       this.mercadoFotoNombre = mercadoFotoNombre;
+       this.mercadoFotoRuta = mercadoFotoRuta;
        this.smsServicioses = smsServicioses;
        this.smsProveedors = smsProveedors;
        this.smsCategorias = smsCategorias;
@@ -53,6 +59,20 @@ public class SmsMercado  implements java.io.Serializable {
     
     public void setMercadoDescripcion(String mercadoDescripcion) {
         this.mercadoDescripcion = mercadoDescripcion;
+    }
+    public String getMercadoFotoNombre() {
+        return this.mercadoFotoNombre;
+    }
+    
+    public void setMercadoFotoNombre(String mercadoFotoNombre) {
+        this.mercadoFotoNombre = mercadoFotoNombre;
+    }
+    public String getMercadoFotoRuta() {
+        return this.mercadoFotoRuta;
+    }
+    
+    public void setMercadoFotoRuta(String mercadoFotoRuta) {
+        this.mercadoFotoRuta = mercadoFotoRuta;
     }
     public Set<SmsServicios> getSmsServicioses() {
         return this.smsServicioses;

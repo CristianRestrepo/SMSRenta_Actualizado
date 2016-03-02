@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Modelo.SmsMercado" table="sms_mercado" catalog="smsrenta_actualizada" optimistic-lock="version">
         <id name="idMercado" type="java.lang.Integer">
@@ -13,6 +13,12 @@
         </property>
         <property name="mercadoDescripcion" type="string">
             <column name="Mercado_descripcion" length="65535" />
+        </property>
+        <property name="mercadoFotoNombre" type="string">
+            <column name="Mercado_foto_nombre" length="65535" not-null="true" />
+        </property>
+        <property name="mercadoFotoRuta" type="string">
+            <column name="Mercado_foto_ruta" length="65535" not-null="true" />
         </property>
         <set name="smsServicioses" table="sms_mercado_sms_servicios" inverse="false" lazy="true" fetch="select">
             <key>

@@ -5,9 +5,12 @@
  */
 package Controladores;
 
+import DAO.ICategoriaDao;
 import DAO.IServicioDao;
 import DAO.ImpServicioDao;
+import Modelo.SmsCategoria;
 import Modelo.SmsCategoriasServicio;
+import Modelo.SmsCostosservicios;
 import Modelo.SmsMercado;
 import Modelo.SmsServicios;
 import java.io.Serializable;
@@ -22,16 +25,27 @@ import javax.annotation.PostConstruct;
 public class ServiciosBean implements Serializable{
 
     //Objetos necesarios
-    protected SmsServicios servicioView;
-    protected SmsServicios DServicioView;
-    private SmsCategoriasServicio categoriaServicioView;
+    private SmsServicios servicioView;
+    private SmsServicios DServicioView;
+    
     private SmsMercado mercadoView;
-    protected List<SmsServicios> serviciosListView;
-    protected List<String> nombreServiciosListView;
+    private SmsCategoriasServicio categoriaServicioView;
+    private SmsCategoria categoriaView; //Categoria vehiculo
+    private SmsCostosservicios costoView;
+    
+    private List<SmsServicios> serviciosListView;
+    private List<String> nombreServiciosListView;
+    
+    private List<String> nombresCategoriasListView;
+    private List<SmsCategoria> categoriasListView;
+    
+    //Relacion con controladores
+    CostosServicioBean costosController; 
 
     //Conexion con el DAO
     IServicioDao servicioDao;
-
+    ICategoriaDao categoriaDao;
+    
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
@@ -48,6 +62,9 @@ public class ServiciosBean implements Serializable{
         nombre = "Registrar Servicio";
 
         servicioDao = new ImpServicioDao();
+        
+        costosController = new CostosServicioBean();
+
     }
 
     @PostConstruct
@@ -135,9 +152,40 @@ public class ServiciosBean implements Serializable{
     public void setMercadoView(SmsMercado mercadoView) {
         this.mercadoView = mercadoView;
     }
-    
-    
 
+    public SmsCategoria getCategoriaView() {
+        return categoriaView;
+    }
+
+    public void setCategoriaView(SmsCategoria categoriaView) {
+        this.categoriaView = categoriaView;
+    }
+
+    public SmsCostosservicios getCostoView() {
+        return costoView;
+    }
+
+    public void setCostoView(SmsCostosservicios costoView) {
+        this.costoView = costoView;
+    }
+
+    public List<String> getNombresCategoriasListView() {
+        return nombresCategoriasListView;
+    }
+
+    public void setNombresCategoriasListView(List<String> nombresCategoriasListView) {
+        this.nombresCategoriasListView = nombresCategoriasListView;
+    }
+
+    public List<SmsCategoria> getCategoriasListView() {
+        return categoriasListView;
+    }
+
+    public void setCategoriasListView(List<SmsCategoria> categoriasListView) {
+        this.categoriasListView = categoriasListView;
+    }    
+        
+      
     //Metodos Propios
     public void metodo() {
         if (estado == 0) {
@@ -190,6 +238,12 @@ public class ServiciosBean implements Serializable{
         } else {
             serviciosListView = servicioDao.filtrarServicios(buscar);
         }
+    }
+    
+    public void cargarCategoriasMercado(String Mercado){
+        
+        categoriasListView = categoriaDao.mostrarCategorias();
+        
     }
 
 }

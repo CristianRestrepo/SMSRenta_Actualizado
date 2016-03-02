@@ -8,15 +8,12 @@ package Controladores;
 import Funciones.MD5;
 import Funciones.Upload;
 import DAO.ICiudadDao;
-import DAO.IContraseñaUsuarioDao;
 import DAO.IRolDao;
 import DAO.IUsuarioDao;
 import DAO.ImpCiudadDao;
-import DAO.ImpContraseñaUsuarioDao;
 import DAO.ImpRolDao;
 import DAO.ImpUsuarioDao;
 import Modelo.SmsCiudad;
-import Modelo.SmsContraseñaUsuario;
 import Modelo.SmsEmpleado;
 import Modelo.SmsRol;
 import Modelo.SmsUsuario;
@@ -49,15 +46,13 @@ public class UsuarioBean implements Serializable {
     protected SmsCiudad ciudadUsuario;
     protected SmsCiudad ciudadView;
     protected SmsRol rolView;
-    protected SmsContraseñaUsuario contraseñaUsuarioView;
-
+    
     //Controles de componentes
     boolean habilitado;
 
     //Relacion con el controlador   
     protected Upload fileController;
-    protected ContraseñaUsuarioBean contraseñaController;
-
+    
     //Contexto
     private FacesMessage message;
 
@@ -67,9 +62,7 @@ public class UsuarioBean implements Serializable {
     //Conexion con el Dao
     ICiudadDao ciudadDao;
     IRolDao rolDao;
-    IUsuarioDao usuarioDao;
-    IContraseñaUsuarioDao contraUsuarioDao;
-
+    IUsuarioDao usuarioDao;   
     //Variables
     protected String password;
     protected String estadoFoto;
@@ -87,8 +80,7 @@ public class UsuarioBean implements Serializable {
         modEmpleadoView = new SmsEmpleado();
 
         fileController = new Upload();
-        contraseñaController = new ContraseñaUsuarioBean();
-
+       
         Usuario = new SmsUsuario();
         ciudadUsuario = new SmsCiudad();
         habilitado = true;
@@ -99,7 +91,7 @@ public class UsuarioBean implements Serializable {
         usuarioDao = new ImpUsuarioDao();
         ciudadDao = new ImpCiudadDao();
         rolDao = new ImpRolDao();
-        contraUsuarioDao = new ImpContraseñaUsuarioDao();
+      
     }
 
     //Getters & Setters
@@ -199,19 +191,15 @@ public class UsuarioBean implements Serializable {
 
         MD5 md = new MD5();        
         // en caso de modificar las contraseñas estas se encriptan de nuevo
-        if (!modUsuarioView.getUsuarioPassword().equalsIgnoreCase(md.getMD5(contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0).getPassword()))) {
             password = modUsuarioView.getUsuarioPassword();
             modUsuarioView.setUsuarioPassword(md.getMD5(modUsuarioView.getUsuarioPassword()));
             modUsuarioView.setUsuarioRememberToken(md.getMD5(modUsuarioView.getUsuarioRememberToken()));
-        }
+       
         ciudadView = ciudadDao.consultarCiudad(ciudadUsuario).get(0);
         modUsuarioView.setSmsCiudad(ciudadUsuario);//Asociamos una ciudad a un usuario
 
         usuarioDao.modificarUsuario(modUsuarioView);
-        if (!modUsuarioView.getUsuarioPassword().equalsIgnoreCase(md.getMD5(contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0).getPassword()))) {
-            contraseñaUsuarioView = contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0);
-            contraseñaController.modificarContraseña(contraseñaUsuarioView, password);
-        }
+        
     }
 
     //Metodos para iniciar Sesion

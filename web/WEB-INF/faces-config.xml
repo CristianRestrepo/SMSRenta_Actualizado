@@ -169,7 +169,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>AdminPReserva</from-outcome>
-            <to-view-id>/vistas/AdminP/reservas/PReserva.xhtml</to-view-id>
+            <to-view-id>/vistas/AdminP/reservas/PTipoServicio.xhtml</to-view-id>
             <redirect/>            
         </navigation-case>
         <navigation-case>
@@ -487,13 +487,13 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>contraseñaUsuarioBean</managed-bean-name>
-        <managed-bean-class>Controladores.ContraseñaUsuarioBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
         <managed-bean-name>mercadoBean</managed-bean-name>
         <managed-bean-class>Controladores.MercadoBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>categoriasServiciosBean</managed-bean-name>
+        <managed-bean-class>Controladores.CategoriasServiciosBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
 </faces-config>

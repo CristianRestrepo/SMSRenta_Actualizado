@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -26,10 +26,9 @@ public class SmsUsuario  implements java.io.Serializable {
      private Integer usuarioEstadoUsuario;
      private String usuarioFotoNombre;
      private String usuarioFotoRuta;
-     private Set<SmsEmpleado> smsEmpleados = new HashSet<SmsEmpleado>(0);
-     private Set<SmsProveedor> smsProveedors = new HashSet<SmsProveedor>(0);
-     private Set<SmsReservacion> smsReservacions = new HashSet<SmsReservacion>(0);
-     private Set<SmsContraseñaUsuario> smsContraseñaUsuarios = new HashSet<SmsContraseñaUsuario>(0);
+     private Set<SmsEmpleado> smsEmpleados = new HashSet<>(0);
+     private Set<SmsProveedor> smsProveedors = new HashSet<>(0);
+     private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
 
     public SmsUsuario() {
     }
@@ -41,7 +40,7 @@ public class SmsUsuario  implements java.io.Serializable {
         this.usuarioNombre = usuarioNombre;
         this.usuarioEmail = usuarioEmail;
     }
-    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, String usuarioNombre, String usuarioCc, String usuarioTelefono, String usuarioEmail, String usuarioRazonSocial, String usuarioNit, String usuarioLogin, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions, Set<SmsContraseñaUsuario> smsContraseñaUsuarios) {
+    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, String usuarioNombre, String usuarioCc, String usuarioTelefono, String usuarioEmail, String usuarioRazonSocial, String usuarioNit, String usuarioLogin, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions) {
        this.smsCiudad = smsCiudad;
        this.smsRol = smsRol;
        this.usuarioNombre = usuarioNombre;
@@ -59,7 +58,6 @@ public class SmsUsuario  implements java.io.Serializable {
        this.smsEmpleados = smsEmpleados;
        this.smsProveedors = smsProveedors;
        this.smsReservacions = smsReservacions;
-       this.smsContraseñaUsuarios = smsContraseñaUsuarios;
     }
    
     public Integer getIdUsuario() {
@@ -189,15 +187,7 @@ public class SmsUsuario  implements java.io.Serializable {
         this.smsReservacions = smsReservacions;
     }
 
-    public Set<SmsContraseñaUsuario> getSmsContraseñaUsuarios() {
-        return smsContraseñaUsuarios;
-    }
 
-    public void setSmsContraseñaUsuarios(Set<SmsContraseñaUsuario> smsContraseñaUsuarios) {
-        this.smsContraseñaUsuarios = smsContraseñaUsuarios;
-    }
-
-    
 
 
 }

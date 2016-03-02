@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.SmsEstado" table="sms_estado" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idEstado" type="java.lang.Integer">
+            <column name="idEstado" />
+            <generator class="identity" />
+        </id>
+        <property name="estadoNombre" type="string">
+            <column name="estado_nombre" length="45" not-null="true" />
+        </property>
+        <property name="estadoDescripcion" type="string">
+            <column name="Estado_descripcion" length="65535" />
+        </property>
+        <set name="smsReservacions" table="sms_reservacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idEstado" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsReservacion" />
+        </set>
+    </class>
+</hibernate-mapping>

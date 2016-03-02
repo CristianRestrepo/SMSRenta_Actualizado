@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Modelo.SmsPermisos" table="sms_permisos" catalog="smsrenta_actualizada" optimistic-lock="version">
         <id name="idPermisos" type="java.lang.Integer">
@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         <property name="permisosNombre" type="string">
-            <column name="Permisos_nombre" length="50" />
+            <column name="Permisos_nombre" length="50" not-null="true" />
         </property>
         <property name="permisosDescripcion" type="string">
             <column name="Permisos_descripcion" length="65535" />

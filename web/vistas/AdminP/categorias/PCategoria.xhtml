@@ -37,13 +37,17 @@
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid id="PCategoria" columns="3" style="width: 100%" cellpadding="5">
-                                            <p:outputLabel for="TNombreCat" value="Nombre de Categoria: "/>
-                                            <b:inputText maxlength="50" id="TNombreCat" required="true" requiredMessage="Ingrese nombre" placeholder="Nombre de categoria" value="#{categoriaBean.categoriaView.categoriaNombre}"/>
+                                        <h:panelGrid id="PCategoria" columns="2" style="width: 100%" cellpadding="5">
+
+                                            <p:selectManyCheckbox columns="3" layout="grid" id="SMMercado" required="true" value="#{categoriaBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
+                                                <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
+                                            </p:selectManyCheckbox>
+                                            <p:message for="SMMercado"/>
+                                            
+                                            <b:inputText maxlength="50" style="width: 100%" id="TNombreCat" required="true" requiredMessage="Ingrese nombre" placeholder="Nombre de categoria" value="#{categoriaBean.categoriaView.categoriaNombre}"/>
                                             <p:message for="TNombreCat"/>
 
-                                            <p:outputLabel for="TDescCat" value="Descripción de Categoria: "/>
-                                            <p:inputTextarea maxlength="150" style="width: 100%" id="TDescCat" placeholder="Descripcion" value="#{categoriaBean.categoriaView.categoriaDescripcion}"/>
+                                            <p:inputTextarea maxlength="150" rows="6" style="width: 100%" id="TDescCat" placeholder="Descripcion" value="#{categoriaBean.categoriaView.categoriaDescripcion}"/>
                                             <p:message for="TDescCat"/>
                                         </h:panelGrid>
                                     </div>
@@ -88,7 +92,7 @@
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>
-                                    
+
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                         <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
                                         <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />

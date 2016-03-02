@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23-feb-2016 11:25:08 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Modelo.SmsUsuario" table="sms_usuario" catalog="smsrenta_actualizada" optimistic-lock="version">
         <id name="idUsuario" type="java.lang.Integer">
             <column name="idUsuario" />
             <generator class="identity" />
         </id>
-        <many-to-one name="smsCiudad" class="Modelo.SmsCiudad" fetch="join">
+        <many-to-one name="smsCiudad" class="Modelo.SmsCiudad" fetch="select">
             <column name="idCiudad" not-null="true" />
         </many-to-one>
-        <many-to-one name="smsRol" class="Modelo.SmsRol" fetch="join">
+        <many-to-one name="smsRol" class="Modelo.SmsRol" fetch="select">
             <column name="idRol" not-null="true" />
         </many-to-one>
         <property name="usuarioNombre" type="string">
@@ -50,29 +50,23 @@
         <property name="usuarioFotoRuta" type="string">
             <column name="Usuario_foto_ruta" length="65535" />
         </property>
-        <set name="smsEmpleados" table="sms_empleado" inverse="true" fetch="join">
+        <set name="smsEmpleados" table="sms_empleado" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idUsuario" not-null="true" />
             </key>
             <one-to-many class="Modelo.SmsEmpleado" />
         </set>
-        <set name="smsProveedors" table="sms_proveedor" inverse="true" fetch="join">
+        <set name="smsProveedors" table="sms_proveedor" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idUsuario" not-null="true" />
             </key>
             <one-to-many class="Modelo.SmsProveedor" />
         </set>
-        <set name="smsReservacions" table="sms_reservacion" inverse="true" fetch="join">
+        <set name="smsReservacions" table="sms_reservacion" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idCliente" not-null="true" />
             </key>
             <one-to-many class="Modelo.SmsReservacion" />
-        </set>
-        <set name="smsContraseñaUsuarios" table="sms_contraseña_usuario" inverse="true" fetch="join">
-            <key>
-                <column name="idContraseñaUsuario" not-null="true" />
-            </key>
-            <one-to-many class="Modelo.SmsContraseñaUsuario" />
         </set>
     </class>
 </hibernate-mapping>

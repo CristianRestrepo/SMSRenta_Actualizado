@@ -6,7 +6,7 @@
 package DAO;
 
 import Modelo.SmsCategoria;
-import Modelo.SmsCostosserviciosRenta;
+import Modelo.SmsCostosservicios;
 import Modelo.SmsServicios;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +20,18 @@ import org.hibernate.Session;
  *
  * @author CristianCamilo
  */
-public class ImpCostosServiciosRentaDao implements ICostosServiciosRentaDao {
+public class ImpCostosServiciosDao implements ICostosServiciosDao {
 
     private FacesMessage message;
 
     @Override
-    public List<SmsCostosserviciosRenta> consultarCostos() {
+    public List<SmsCostosservicios> consultarCostos() {
         Session session = null;
-        List<SmsCostosserviciosRenta> Costos = new ArrayList<>();
+        List<SmsCostosservicios> Costos = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsCostosServicio as costo left join fetch costo.smsCategoria left join fetch costo.smsServicios as servicios");
-            Costos = (List<SmsCostosserviciosRenta>) query.list();
+            Costos = (List<SmsCostosservicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -43,13 +43,13 @@ public class ImpCostosServiciosRentaDao implements ICostosServiciosRentaDao {
     }
 
     @Override
-    public List<SmsCostosserviciosRenta> consultarCostoServicio(SmsServicios servicio, SmsCategoria categoria) {
+    public List<SmsCostosservicios> consultarCostoServicio(SmsServicios servicio, SmsCategoria categoria) {
         Session session = null;
-        List<SmsCostosserviciosRenta> Costos = new ArrayList<>();
+        List<SmsCostosservicios> Costos = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsCostosServicio as costo left join fetch costo.smsCategoria as categoria left join fetch costo.smsServicios as servicios where categoria = '" + categoria.getIdCategoria() + "' and servicios = '" + servicio.getIdServicio()+ "' ");
-            Costos = (List<SmsCostosserviciosRenta>) query.list();
+            Costos = (List<SmsCostosservicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -61,7 +61,7 @@ public class ImpCostosServiciosRentaDao implements ICostosServiciosRentaDao {
     }
 
     @Override
-    public void registrarCostoServicio(SmsCostosserviciosRenta costo) {
+    public void registrarCostoServicio(SmsCostosservicios costo) {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
@@ -82,7 +82,7 @@ public class ImpCostosServiciosRentaDao implements ICostosServiciosRentaDao {
     }
 
     @Override
-    public void modificarCostoServicio(SmsCostosserviciosRenta costo) {
+    public void modificarCostoServicio(SmsCostosservicios costo) {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
@@ -103,7 +103,7 @@ public class ImpCostosServiciosRentaDao implements ICostosServiciosRentaDao {
     }
 
     @Override
-    public void eliminarCostoServicio(SmsCostosserviciosRenta costo) {
+    public void eliminarCostoServicio(SmsCostosservicios costo) {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
@@ -124,13 +124,13 @@ public class ImpCostosServiciosRentaDao implements ICostosServiciosRentaDao {
     }
 
     @Override
-    public List<SmsCostosserviciosRenta> filtrarCostosServicios(String dato) {
+    public List<SmsCostosservicios> filtrarCostosServicios(String dato) {
         Session session = null;
-        List<SmsCostosserviciosRenta> Costos = new ArrayList<>();
+        List<SmsCostosservicios> Costos = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsCostosServicio as costo left join fetch costo.smsCategoria as categoria left join fetch costo.smsServicios as servicios where categoria.categoriaNombre LIKE '%" + dato + "%' or servicios.serviciosNombre LIKE '%" + dato + "%'");
-            Costos = (List<SmsCostosserviciosRenta>) query.list();
+            Costos = (List<SmsCostosservicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

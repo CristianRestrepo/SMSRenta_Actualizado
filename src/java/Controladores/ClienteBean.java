@@ -10,7 +10,6 @@ import DAO.ImpClienteDao;
 import Funciones.MD5;
 import Funciones.SendEmail;
 import Modelo.SmsCiudad;
-import Modelo.SmsContraseñaUsuario;
 import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.Serializable;
@@ -101,7 +100,6 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         usuarioDao.registrarUsuario(usuarioView);
         //Consultamos informacion usuario recien registrado y guardamos respaldo de su contraseña
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
-        contraseñaController.registrarContraseña(usuarioView, password);
         //Actualizamos la lista de clientes registrador en el sistema
         usuariosListView = clienteDao.consultarUsuariosClientes();
         emailController.sendEmailBienvenida(usuarioView);//enviamos correo de bienvenida
@@ -142,8 +140,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
         //Consultamos informacion usuario recien registrado y guardamos respaldo de su contraseña
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
-        contraseñaController.registrarContraseña(usuarioView, password);
-
+        
         //Actualizamos la lista de clientes registrador en el sistema
         usuariosListView = clienteDao.consultarUsuariosClientes();
 
@@ -161,11 +158,10 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         rolView.setRolNombre("Cliente");
 
         // en caso de modificar las contraseñas estas se encriptan de nuevo
-        if (!modUsuarioView.getUsuarioPassword().equalsIgnoreCase(md.getMD5(contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0).getPassword()))) {
             password = modUsuarioView.getUsuarioPassword();//guardamos un relpaldo de la contraseña antes de encriptar
             modUsuarioView.setUsuarioPassword(md.getMD5(modUsuarioView.getUsuarioPassword()));
             modUsuarioView.setUsuarioRememberToken(md.getMD5(modUsuarioView.getUsuarioRememberToken()));
-        }
+        
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
@@ -181,16 +177,12 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         usuarioDao.modificarUsuario(modUsuarioView);
         
         //Modificamos el respaldo de la contraseña si esta fue modificada
-        if (!modUsuarioView.getUsuarioPassword().equalsIgnoreCase(md.getMD5(contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0).getPassword()))) {
-            contraseñaUsuarioView = contraUsuarioDao.consultarContraseñaUsuario(modUsuarioView).get(0);
-            contraseñaController.modificarContraseña(contraseñaUsuarioView, password);
-        }
+        
 
         //Se modifica el usuario y se recarga la lista de clientes
         usuariosListView = clienteDao.consultarUsuariosClientes();
         //se limpian objetos
         modUsuarioView = new SmsUsuario();
-        contraseñaUsuarioView = new SmsContraseñaUsuario();
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
 

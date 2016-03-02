@@ -54,14 +54,14 @@ public class ImpMercadoDao implements IMercadoDao {
             e.getMessage();
             session.getTransaction().rollback();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Imposible realizar operacion", "");
-        
+
         } finally {
-            if(session != null){
+            if (session != null) {
                 session.close();
             }
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
-    
+
     }
 
     @Override
@@ -77,14 +77,14 @@ public class ImpMercadoDao implements IMercadoDao {
             e.getMessage();
             session.getTransaction().rollback();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Imposible realizar operacion", "");
-        
+
         } finally {
-            if(session != null){
+            if (session != null) {
                 session.close();
             }
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
-    
+
     }
 
     @Override
@@ -95,19 +95,19 @@ public class ImpMercadoDao implements IMercadoDao {
             session.beginTransaction();
             session.delete(mercado);
             session.getTransaction().commit();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Eliminar registrado", "" + mercado.getMercadoNombre());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mercado Eliminado", "" + mercado.getMercadoNombre());
         } catch (Exception e) {
             e.getMessage();
             session.getTransaction().rollback();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Imposible realizar operacion", "");
-        
+
         } finally {
-            if(session != null){
+            if (session != null) {
                 session.close();
             }
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
-    
+
     }
 
     @Override
@@ -116,7 +116,7 @@ public class ImpMercadoDao implements IMercadoDao {
         List<SmsMercado> mercados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsMercado as mercado where mercado.mercadoNombre LIKE '%"+ valor +"%' or mercado.mercadoDescripcion LIKE '%"+ valor +"%'");
+            Query query = session.createQuery("from SmsMercado as mercado where mercado.mercadoNombre LIKE '%" + valor + "%' or mercado.mercadoDescripcion LIKE '%" + valor + "%'");
             mercados = (List<SmsMercado>) query.list();
 
         } catch (HibernateException e) {
@@ -126,6 +126,26 @@ public class ImpMercadoDao implements IMercadoDao {
                 session.close();
             }
         }
-        return mercados;}
+        return mercados;
+    }
+
+    @Override
+    public List<SmsMercado> consultarMercado(String mercado) {
+        Session session = null;
+        List<SmsMercado> mercados = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsCategorias where mercado.mercadoNombre = '" + mercado + "'");
+            mercados = (List<SmsMercado>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return mercados;
+    }
 
 }

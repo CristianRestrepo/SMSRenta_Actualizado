@@ -1,5 +1,5 @@
 package Modelo;
-// Generated 23-feb-2016 11:25:04 by Hibernate Tools 4.3.1
+// Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,27 +12,28 @@ public class SmsCiudad  implements java.io.Serializable {
 
 
      private Integer idCiudad;
-     private SmsPais smsPais;
+     private SmsDepartamento smsDepartamento;
+     private SmsTipoLugar smsTipoLugar;
      private String ciudadNombre;
-     private Set<SmsMunicipios> smsMunicipioses = new HashSet<SmsMunicipios>(0);
-     private Set<SmsLugares> smsLugareses = new HashSet<SmsLugares>(0);
-     private Set<SmsReservacion> smsReservacionsForIdCiudadDestino = new HashSet<SmsReservacion>(0);
-     private Set<SmsVehiculo> smsVehiculos = new HashSet<SmsVehiculo>(0);
-     private Set<SmsUsuario> smsUsuarios = new HashSet<SmsUsuario>(0);
-     private Set<SmsReservacion> smsReservacionsForIdCiudadInicio = new HashSet<SmsReservacion>(0);
+     private Set<SmsLugares> smsLugareses = new HashSet<>(0);
+     private Set<SmsReservacion> smsReservacionsForIdCiudadDestino = new HashSet<>(0);
+     private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
+     private Set<SmsUsuario> smsUsuarios = new HashSet<>(0);
+     private Set<SmsReservacion> smsReservacionsForIdCiudadInicio = new HashSet<>(0);
 
     public SmsCiudad() {
     }
 
 	
-    public SmsCiudad(SmsPais smsPais, String ciudadNombre) {
-        this.smsPais = smsPais;
+    public SmsCiudad(SmsDepartamento smsDepartamento, SmsTipoLugar smsTipoLugar, String ciudadNombre) {
+        this.smsDepartamento = smsDepartamento;
+        this.smsTipoLugar = smsTipoLugar;
         this.ciudadNombre = ciudadNombre;
     }
-    public SmsCiudad(SmsPais smsPais, String ciudadNombre, Set<SmsMunicipios> smsMunicipioses, Set<SmsLugares> smsLugareses, Set<SmsReservacion> smsReservacionsForIdCiudadDestino, Set<SmsVehiculo> smsVehiculos, Set<SmsUsuario> smsUsuarios, Set<SmsReservacion> smsReservacionsForIdCiudadInicio) {
-       this.smsPais = smsPais;
+    public SmsCiudad(SmsDepartamento smsDepartamento, SmsTipoLugar smsTipoLugar, String ciudadNombre, Set<SmsLugares> smsLugareses, Set<SmsReservacion> smsReservacionsForIdCiudadDestino, Set<SmsVehiculo> smsVehiculos, Set<SmsUsuario> smsUsuarios, Set<SmsReservacion> smsReservacionsForIdCiudadInicio) {
+       this.smsDepartamento = smsDepartamento;
+       this.smsTipoLugar = smsTipoLugar;
        this.ciudadNombre = ciudadNombre;
-       this.smsMunicipioses = smsMunicipioses;
        this.smsLugareses = smsLugareses;
        this.smsReservacionsForIdCiudadDestino = smsReservacionsForIdCiudadDestino;
        this.smsVehiculos = smsVehiculos;
@@ -47,12 +48,19 @@ public class SmsCiudad  implements java.io.Serializable {
     public void setIdCiudad(Integer idCiudad) {
         this.idCiudad = idCiudad;
     }
-    public SmsPais getSmsPais() {
-        return this.smsPais;
+    public SmsDepartamento getSmsDepartamento() {
+        return this.smsDepartamento;
     }
     
-    public void setSmsPais(SmsPais smsPais) {
-        this.smsPais = smsPais;
+    public void setSmsDepartamento(SmsDepartamento smsDepartamento) {
+        this.smsDepartamento = smsDepartamento;
+    }
+    public SmsTipoLugar getSmsTipoLugar() {
+        return this.smsTipoLugar;
+    }
+    
+    public void setSmsTipoLugar(SmsTipoLugar smsTipoLugar) {
+        this.smsTipoLugar = smsTipoLugar;
     }
     public String getCiudadNombre() {
         return this.ciudadNombre;
@@ -60,13 +68,6 @@ public class SmsCiudad  implements java.io.Serializable {
     
     public void setCiudadNombre(String ciudadNombre) {
         this.ciudadNombre = ciudadNombre;
-    }
-    public Set<SmsMunicipios> getSmsMunicipioses() {
-        return this.smsMunicipioses;
-    }
-    
-    public void setSmsMunicipioses(Set<SmsMunicipios> smsMunicipioses) {
-        this.smsMunicipioses = smsMunicipioses;
     }
     public Set<SmsLugares> getSmsLugareses() {
         return this.smsLugareses;

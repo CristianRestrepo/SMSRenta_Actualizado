@@ -111,7 +111,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
         List<SmsCategoria> categorias = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoria as categoria where categoria.categoriaNombre='" + categoria.getCategoriaNombre() + "'");
+            Query query = session.createQuery("from SmsCategoria as categoria left join fetch categoria.smsMercados as mercados where categoria.categoriaNombre='" + categoria.getCategoriaNombre() + "'");
             categorias = (List<SmsCategoria>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -142,4 +142,23 @@ public class ImpCategoriaDao implements ICategoriaDao {
 
     }
 
+    @Override
+    public void agregarMercadosCategoria(SmsCategoria categoria) {
+        Session session = null;
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(categoria);
+            session.getTransaction().commit();
+           } catch (HibernateException e) {
+            e.getMessage();
+            session.getTransaction().rollback();
+           } finally {
+            if (session != null) {
+                session.close();
+            }
+        }        
+    }
+
+ 
 }
