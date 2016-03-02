@@ -29,6 +29,7 @@ public class MercadoBean implements Serializable {
 
     public MercadoBean() {
         mercadoDao = new ImpMercadoDao();
+        
         mercadoView = new SmsMercado();
         mercadoListView = new ArrayList<>();
         nombresMercadosListView = new ArrayList<>();

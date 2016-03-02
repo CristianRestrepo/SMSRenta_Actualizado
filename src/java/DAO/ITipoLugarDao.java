@@ -19,10 +19,5 @@ public interface ITipoLugarDao {
     public List<SmsTipoLugar> consultarTipoLugar(SmsTipoLugar tipoLugar);
     
     public List<SmsTipoLugar> filtrarTipoLugar(String valor);
-    
-    public void registrarTipoLugar(SmsTipoLugar tipoLugar);
-    
-    public void modificarTipoLugar(SmsTipoLugar tipoLugar);
-    
-    public void eliminarTipoLugar(SmsTipoLugar tipoLugar);
-}
+   
+ }

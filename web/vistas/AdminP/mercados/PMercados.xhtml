@@ -136,6 +136,19 @@
                                                     <p:inputTextarea rows="3" value="#{serviciosBean.servicioView.servicioDescripcion}" style="width: 100%" id="TDescripcionServicio" placeholder="Descripcion del servicio"/>
                                                     <p:message for="TDescripcionServicio"/>
 
+                                                    <b:selectOneMenu value="#{serviciosBean.categoriaView.categoriaNombre}" style="width: 100%" label="Lugar de inicio" id="SMLugarInicio"> 
+                                                        <f:selectItem itemLabel="Seleccione lugar de recojida" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
+                                                    </b:selectOneMenu>
+                                                    <p:message for="SMLugarInicio"/>
+
+                                                    <b:selectOneMenu value="#{serviciosBean.categoriaView.categoriaNombre}" style="width: 100%" label="Lugar de destino" id="SMLugarDestino"> 
+                                                        <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
+                                                    </b:selectOneMenu>
+                                                    <p:message for="SMLugarDestino"/>
+
+                                                    
                                                     <b:inputText id="TCostoServicio" value="#{serviciosBean.costoView.costoServicioPrecio}" style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
                                                     <p:message for="TNombreServicio"/>
                                                 </h:panelGrid>

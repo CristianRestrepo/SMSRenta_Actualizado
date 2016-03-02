@@ -35,16 +35,20 @@
                                 </div>      
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid id="PCiudad" columns="3" cellpadding="5" style="width: 100%">
-                                            <p:outputLabel for="SPaises" value="Pais:"/>
-                                            <b:selectOneMenu id="SPaises" required="true" requiredMessage="Seleccione Pais" value="#{ciudadBean.paisView.paisNombre}">
-                                                <f:selectItem itemLabel="Seleccione pais"/>
-                                                <f:selectItems value="#{paisBean.nombrePaisesListView}"/>
+                                        <h:panelGrid id="PCiudad" columns="2" cellpadding="5" style="width: 100%">
+                                            <b:selectOneMenu id="SPaises" tooltip="Departamento al que pertenece la ciudad o municipio" label="Departamento" required="true" requiredMessage="Seleccione departamento" value="#{ciudadBean.departamentoView.departamentoNombre}">
+                                                <f:selectItem itemLabel="Seleccione departamento"/>
+                                                <f:selectItems value="#{departamentoBean.nombresDepartamentoListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SPaises"/>
+                                            
+                                            <b:selectOneMenu id="STipos" tooltip="Municipio o ciudad" label="Ciudad o municipio" required="true" requiredMessage="Seleccione clasificacion" value="#{ciudadBean.tipoView.tipoLugarNombre}">
+                                                <f:selectItem itemLabel="Seleccione clasificacion"/>
+                                                <f:selectItems value="#{tipoLugarBean.nombresTipoLugarListView}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="STipos"/>
 
-                                            <p:outputLabel for="TNombreCiudad" value="Nombre de la ciudad:"/>
-                                            <b:inputText maxlength="50" id="TNombreCiudad" required="true" requiredMessage="Ingrese nombre de ciudad" placeholder="Nombre de la ciudad"  value="#{ciudadBean.ciudadView.ciudadNombre}" style="width: 100%"></b:inputText>                                            
+                                            <b:inputText maxlength="50" id="TNombreCiudad" required="true" requiredMessage="Ingrese nombre de ciudad o municipio" placeholder="Nombre de la ciudad o municipio"  value="#{ciudadBean.ciudadView.ciudadNombre}" style="width: 100%"></b:inputText>                                            
                                             <p:message for="TNombreCiudad"/>
                                         </h:panelGrid>
                                     </div><hr/>
@@ -73,8 +77,8 @@
                                             <h:outputText value="#{ciudades.ciudadNombre}"/>
                                         </p:column>
 
-                                        <p:column headerText="Pais">
-                                            <h:outputText value="#{ciudades.smsPais.paisNombre}"/>
+                                        <p:column headerText="Departamento">
+                                            <h:outputText value="#{ciudades.smsDepartamento.departamentoNombre}"/>
                                         </p:column>
 
                                         <p:column style="width: 35px">

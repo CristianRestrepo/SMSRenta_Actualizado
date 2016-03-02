@@ -496,4 +496,14 @@
         <managed-bean-class>Controladores.CategoriasServiciosBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>departamentoBean</managed-bean-name>
+        <managed-bean-class>Controladores.DepartamentoBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>tipoLugarBean</managed-bean-name>
+        <managed-bean-class>Controladores.TipoLugarBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>
