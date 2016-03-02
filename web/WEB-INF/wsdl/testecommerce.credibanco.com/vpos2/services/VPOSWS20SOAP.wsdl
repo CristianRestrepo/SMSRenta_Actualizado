@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.alignet.com/VPOSWS20/" xmlns:intf="http://www.alignet.com/VPOSWS20/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:impl="http://www.alignet.com/VPOSWS20/" xmlns:apachesoap="http://xml.apache.org/xml-soap">
+  <wsdl:types>
+    <schema targetNamespace="http://www.alignet.com/VPOSWS20/" xmlns="http://www.w3.org/2001/XMLSchema">
+  
+   <element name="authorize">
+    <complexType>
+     	<sequence>
+     		<element maxOccurs="1" minOccurs="0" name="commerceId" type="xsd:int"/>
+     		<element maxOccurs="1" minOccurs="0" name="acquirerId" type="xsd:int"/>
+     		<element maxOccurs="1" minOccurs="0" name="language" type="xsd:string"/>
+		    <element maxOccurs="1" minOccurs="0" name="ipAddress" type="xsd:string"/>     		
+     		<element maxOccurs="1" minOccurs="0" name="transactionTrace" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="fingerprint" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="additionalObservations" type="xsd:string"/>     		
+     		<element maxOccurs="1" minOccurs="0" name="purchaseData" type="impl:PurchaseData"/>
+     		<element maxOccurs="1" minOccurs="0" name="cardData" type="impl:CardData"/>
+     		<element maxOccurs="1" minOccurs="0" name="billingData" type="impl:Person"/>
+     		<element maxOccurs="1" minOccurs="0" name="shippingData" type="impl:ShippingData"/>
+     		<element maxOccurs="1" minOccurs="0" name="orderWeb" type="impl:OrderWeb"/>
+     		<element maxOccurs="1" minOccurs="0" name="flight" type="impl:Flight"/>
+     		<element maxOccurs="1" minOccurs="0" name="good" type="impl:Good"/>
+     		<element maxOccurs="1" minOccurs="0" name="administrativeRate" type="impl:AdministrativeRate"/>
+     		<element maxOccurs="unbounded" minOccurs="0" name="taxes" type="impl:Tax"/>
+     		<element maxOccurs="unbounded" minOccurs="0" name="reservedFields" type="impl:ReservedField"/>
+    	 </sequence>
+    </complexType>
+   </element>
+   
+   
+   <complexType name="OrderWeb">
+	<sequence>
+		<element maxOccurs="1" minOccurs="0" name="reference1" type="xsd:string"/>
+	    <element maxOccurs="1" minOccurs="0" name="reference2" type="xsd:string"/>
+	    <element maxOccurs="1" minOccurs="0" name="reference3" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="reference4" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="reference5" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="reference6" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="reference7" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="reference8" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="reference9" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="reference10" type="xsd:string"/>
+	</sequence>
+   </complexType>
+   
+   
+   <complexType name="PurchaseData">
+    	<sequence>
+     		<element name="currencyCode" type="xsd:int"/>    		
+     		<element name="purchaseCode" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="totalAmount" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="seller" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="callerPhoneNumber" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="terminalCode" type="xsd:string"/>
+    		<element maxOccurs="1" minOccurs="0" name="planId" type="xsd:int"/>
+     		<element maxOccurs="1" minOccurs="0" name="quotaId" type="xsd:int"/>
+     		<element maxOccurs="1" minOccurs="0" name="iva" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="ivaReturn" type="xsd:string"/>
+    	</sequence>
+   </complexType>
+   
+   
+   <complexType name="Tax">
+    	<sequence>
+     		<element maxOccurs="1" minOccurs="1" name="id" type="xsd:int"/>
+     		<element maxOccurs="1" minOccurs="0" name="name" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="1" name="amount" type="xsd:string"/>
+    	</sequence>
+   </complexType>
+  
+  
+   <complexType name="AdministrativeRate">
+    	<sequence>
+     		<element maxOccurs="1" minOccurs="1" name="administrativeRateAmount" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="administrativeRateIva" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="administrativeRateIvaReturn" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="administrativeRateCode" type="xsd:string"/>
+    	</sequence>
+   </complexType>
+   
+   
+    <complexType name="Product">
+        <sequence>
+            <element maxOccurs="1" minOccurs="0" name="item" type="xsd:int"/>
+            <element maxOccurs="1" minOccurs="0" name="code" type="xsd:string"/>
+            <element maxOccurs="1" minOccurs="0" name="amount" type="xsd:string"/>
+            <element maxOccurs="1" minOccurs="0" name="promotionCode" type="xsd:string"/>
+        </sequence>
+    </complexType>
+    
+    
+    <complexType name="Good">
+        <complexContent>
+            <extension base="impl:Product">
+                <sequence>
+                <element maxOccurs="1" minOccurs="1" name="name" type="xsd:string"/>
+                <element maxOccurs="1" minOccurs="0" name="description" type="xsd:string"/>
+                <element maxOccurs="1" minOccurs="0" name="quantity" type="xsd:int"/>
+                <element maxOccurs="1" minOccurs="0" name="unitPrice" type="xsd:string"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    
+    
+    <complexType name="Flight">
+        <complexContent>
+            <extension base="impl:Product">
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="airlineCode" type="xsd:string"/>
+                    <element maxOccurs="1" minOccurs="0" name="departureAirport" type="impl:Airport"/>
+                    <element maxOccurs="1" minOccurs="0" name="arriveAirport" type="impl:Airport"/>
+   		    		<element maxOccurs="1" minOccurs="0" name="departureDate" type="xsd:string"/>
+   		    		<element maxOccurs="1" minOccurs="0" name="departureTime" type="xsd:string"/>
+   		    		<element maxOccurs="1" minOccurs="0" name="arriveDate" type="xsd:string"/>
+   		    		<element maxOccurs="1" minOccurs="0" name="arriveTime" type="xsd:string"/>
+                    <element maxOccurs="unbounded" minOccurs="0" name="passengerList" type="impl:Passenger"/>                    
+                    <element maxOccurs="1" minOccurs="0" name="reservation" type="xsd:string"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    
+    
+
+   <complexType name="AddressData">
+    	<sequence>
+     		<element maxOccurs="1" minOccurs="1" name="address" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="city" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="state" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="postalCode" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="countryCode" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="phoneNumber" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="cellPhoneNumber" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="email" type="xsd:string"/>
+    	</sequence>
+   </complexType>
+   
+   
+    <complexType name="ShippingData">
+        <complexContent>
+            <extension base="impl:Person">
+                <sequence>
+					<element maxOccurs="1" minOccurs="0" name="receptionMethod" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="0" name="receiverName" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="0" name="receiverLastName" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="0" name="receiverIdentifier" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="0" name="shippingCode" type="xsd:string"/>
+     		        <element maxOccurs="1" minOccurs="0" name="shippingCharges" type="xsd:string"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>  
+    
+    
+   <complexType name="Person">
+    <sequence>
+     		<element maxOccurs="1" minOccurs="1" name="names" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="1" name="lastNames" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="numberIdentifier" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="gender" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="address" type="impl:AddressData"/>
+     		<element maxOccurs="1" minOccurs="0" name="birthday" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="outIdentifierCity" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="dateIdentifierDate" type="xsd:string"/>
+     		<element maxOccurs="1" minOccurs="0" name="nationality" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   
+   
+   <complexType name="ReservedField">
+    	<sequence>
+     		<element maxOccurs="1" minOccurs="1" name="id" type="xsd:int"/>
+     		<element maxOccurs="1" minOccurs="1" name="value" type="xsd:string"/>
+    	</sequence>
+   </complexType>
+   
+   
+   <complexType name="CardData">
+    <sequence>
+   	 	<element name="brand" type="xsd:string"/>
+     	<element name="number" type="xsd:string"/>
+     	<element name="expiryMonth" type="xsd:int"/>
+     	<element name="expiryYear" type="xsd:int"/>
+     	<element maxOccurs="1" minOccurs="0" name="financialId" type="xsd:int"/>
+     	<element maxOccurs="1" minOccurs="0" name="accountTypeId" type="xsd:int"/>
+     	<element maxOccurs="1" minOccurs="0" name="securityCode" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   
+   
+   <element name="authorizeResponse">
+    <complexType>
+     	<sequence>
+      		<element name="result" type="xsd:int"/>
+      		<element name="errorCode" type="xsd:string"/>
+      		<element name="errorMessage" type="xsd:string"/>
+      		<element name="additionalMessage" type="xsd:string"/>      		
+      		<element name="authorizationCode" type="xsd:string"/>
+      		<element name="authorizedAmount" type="xsd:string"/>
+      		<element name="fraudScore" type="xsd:int"/>
+      		<element name="fraudFactors" type="xsd:string"/>
+      		
+      		<element maxOccurs="1" minOccurs="0" name="resultAR" type="xsd:int"/>
+      		<element maxOccurs="1" minOccurs="0" name="errorCodeAR" type="xsd:string"/>
+      		<element maxOccurs="1" minOccurs="0" name="errorMessageAR" type="xsd:string"/>      		
+      		<element maxOccurs="1" minOccurs="0" name="authorizationCodeAR" type="xsd:string"/>
+      		<element maxOccurs="1" minOccurs="0" name="authorizedAmountAR" type="xsd:string"/>
+      		<element maxOccurs="1" minOccurs="0" name="fraudScoreAR" type="xsd:int"/>	  		     		
+     	</sequence>
+    </complexType>
+   </element>
+
+
+   <complexType name="Airport">
+        <sequence>
+		<element maxOccurs="1" minOccurs="1" name="code" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="city" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="country" type="xsd:string"/>
+	</sequence>
+   </complexType>
+   
+   
+   <complexType name="Passenger">
+        <sequence>
+		<element maxOccurs="1" minOccurs="1" name="firstName" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="1" name="lastName" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="documentType" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="documentNumber" type="xsd:string"/>
+		<element maxOccurs="1" minOccurs="0" name="agencyCode" type="xsd:string"/>
+	</sequence>
+   </complexType>  
+   
+		
+   <element name="reverse">
+    <complexType>
+    	 <sequence>
+      		<element name="acquirerId" type="xsd:int"/>
+      		<element name="commerceId" type="xsd:int"/>
+      		<element name="purchaseCode" type="xsd:string"/>
+     	</sequence>
+    </complexType>
+   </element>
+   
+   
+   
+   <element name="reverseResponse">
+    <complexType>
+     <sequence>
+      		<element name="result" type="xsd:int"/>
+      		<element name="errorCode" type="xsd:string"/>
+      		<element name="errorMessage" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   
+   
+  </schema>
+  </wsdl:types>
+  <wsdl:message name="reverseRequest">
+    <wsdl:part name="parameters" element="intf:reverse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authorizeResponse">
+    <wsdl:part name="parameters" element="intf:authorizeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="authorizeRequest">
+    <wsdl:part name="parameters" element="intf:authorize">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="reverseResponse">
+    <wsdl:part name="parameters" element="intf:reverseResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="VPOSWS20">
+    <wsdl:operation name="authorize">
+      <wsdl:input name="authorizeRequest" message="intf:authorizeRequest">
+    </wsdl:input>
+      <wsdl:output name="authorizeResponse" message="intf:authorizeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reverse">
+      <wsdl:input name="reverseRequest" message="intf:reverseRequest">
+    </wsdl:input>
+      <wsdl:output name="reverseResponse" message="intf:reverseResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VPOSWS20SOAPSoapBinding" type="intf:VPOSWS20">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="authorize">
+      <wsdlsoap:operation soapAction="http://www.alignet.com/VPOSWS20/authorize"/>
+      <wsdl:input name="authorizeRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="authorizeResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reverse">
+      <wsdlsoap:operation soapAction="http://www.alignet.com/VPOSWS20/reverse"/>
+      <wsdl:input name="reverseRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="reverseResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VPOSWS20SOAP">
+    <wsdl:port name="VPOSWS20SOAP" binding="intf:VPOSWS20SOAPSoapBinding">
+      <wsdlsoap:address location="http://172.19.202.5:9080/vpos2/services/VPOSWS20SOAP/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
