@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -29,7 +30,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsDepartamento");
             departamentos = (List<SmsDepartamento>) query.list();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.getMessage();
         } finally {
             if (session != null) {
@@ -47,7 +48,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsDepartamento as departamento where departamento.departamentoNombre = '" + departamento.getDepartamentoNombre() + "'");
             departamentos = (List<SmsDepartamento>) query.list();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.getMessage();
         } finally {
             if (session != null) {
@@ -66,7 +67,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsDepartamento as departamento where departamento.departamentoNombre LIKE '%" + valor + "%'");
             departamentos = (List<SmsDepartamento>) query.list();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.getMessage();
 
         } finally {
@@ -79,7 +80,6 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
 
     @Override
     public void registrarDepartamento(SmsDepartamento departamento) {
-        List<SmsDepartamento> departamentos = new ArrayList<>();
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
@@ -88,7 +88,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
             session.getTransaction().commit();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Departamento registrado", "" + departamento.getDepartamentoNombre());
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imposible realizar la operacion", null);
@@ -103,7 +103,6 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
 
     @Override
     public void modificarDepartamento(SmsDepartamento departamento) {
-        List<SmsDepartamento> departamentos = new ArrayList<>();
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
@@ -112,7 +111,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
             session.getTransaction().commit();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Departamento modificado", "" + departamento.getDepartamentoNombre());
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imposible realizar la operacion", null);
@@ -127,7 +126,6 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
 
     @Override
     public void eliminarDepartamento(SmsDepartamento departamento) {
-        List<SmsDepartamento> departamentos = new ArrayList<>();
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
@@ -136,7 +134,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
             session.getTransaction().commit();
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Departamento eliminado", "" + departamento.getDepartamentoNombre());
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imposible realizar la operacion", null);
