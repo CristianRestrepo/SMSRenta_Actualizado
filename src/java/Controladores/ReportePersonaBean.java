@@ -31,7 +31,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
  */
 public class ReportePersonaBean {
 
-    private List<Reporte_Persona> personas = new ArrayList<Reporte_Persona>();
+    private List<Reporte_Persona> personas = new ArrayList<>();
 
     /**
      * Creates a new instance of NewJSFManagedBean
