@@ -40,6 +40,9 @@ public class MercadoBean implements Serializable {
     //Relacion con el controlador   
     Upload fileController;
 
+    //Mensajes emergentes 
+    private FacesMessage message;
+
     public MercadoBean() {
         mercadoDao = new ImpMercadoDao();
 
@@ -105,15 +108,13 @@ public class MercadoBean implements Serializable {
     public void setEstadoFoto(String estadoFoto) {
         this.estadoFoto = estadoFoto;
     }
-    
-    
 
     //Metodos
     public void registrarMercado() {
-        mercadoDao.registrarMercado(mercadoView);
-        mercadoListView = mercadoDao.consultarMercados();
 
+        mercadoDao.registrarMercado(mercadoView);
         mercadoView = new SmsMercado();
+        mercadoListView = mercadoDao.consultarMercados();
     }
 
     public void modificarMercado() {

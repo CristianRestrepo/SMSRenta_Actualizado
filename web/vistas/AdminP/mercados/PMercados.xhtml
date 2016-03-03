@@ -39,13 +39,13 @@
                                         <div class="table-responsive">                                            
                                             <div class="form-group">
                                                 <h:panelGrid cellpadding="5" width="100%" columns="2" id="PMercado">
-                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
+                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" tooltip="Nombre del mercado" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
                                                     <p:message for="TNombreMrd"/>
 
                                                     <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
                                                     <p:message for="TDescripcionMrd"/>
                                                 </h:panelGrid>
-                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
+                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:msg :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
                                             </div>
                                         </div>
                                     </div>
