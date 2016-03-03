@@ -14,26 +14,34 @@
             <ui:define name="content">                
                 <b:container fluid="true">
                     <b:row>
-
-
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
-                            <div class="box box-info espacio-arriba">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-tag"/>
-                                    <h3 class="box-title">Mercados y Servicios SMS Renta</h3>
+                        <h:form id="formularioSubidaArchivos" enctype="multipart/form-data">   
+                            <p:messages id="msg" closable="true"/>
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <div class="box box-info espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Mercados y Servicios SMS Renta</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <p>En este panel podrá registrar los diferentes tipos de mercado existentes en SMS renta.</p>
+                                    </div>
                                 </div>
-                                <div class="box-body">
-                                    <p>En este panel podrá registrar los diferentes tipos de mercado existentes en SMS renta.</p>
-                                </div>
-                            </div>
-                        </b:column> 
+                            </b:column> 
 
-                        <h:form id="formularioSubidaArchivos" enctype="multipart/form-data">                           
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <ol class=" breadcrumb">
+                                    <li class="active">
+                                        <i class="fa fa-dashboard"></i> Mercados
+                                    </li>
+                                </ol>
+                            </b:column>
+
+
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-tag"/>
-                                        <h3 class="box-title">Fotografia de portada mercados SMSRenta</h3>
+                                        <h3 class="box-title">Fotografia de portada para mercados</h3>
                                     </div>
                                     <div class="box-body">
                                         <p>Por favor ingrese la fotografia que servira como portada para el mercado en el momento de realizar una reservacion.</p>
@@ -53,7 +61,7 @@
                                             <p:outputLabel id="TEstadoFoto" value="#{mercadoBean.estadoFoto}"/>
                                             <div class="table-responsive">
                                                 <p:fileUpload id="fileIdPhoto" fileUploadListener="#{mercadoBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
-                                                              process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formularioSubidaArchivos" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+                                                              process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formularioMercado:BTMercado :formularioSubidaArchivos" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
 
                                                 <p:messages id="messages" closable="true" />
                                             </div> 
@@ -64,7 +72,7 @@
                         </h:form>
 
                         <h:form id="formularioMercado">
-                            <p:messages id="msg" closable="true"/>
+
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
                                 <div class="box box-success">
                                     <div class="box-header with-border">
@@ -81,7 +89,7 @@
                                                     <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
                                                     <p:message for="TDescripcionMrd"/>
                                                 </h:panelGrid>
-                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:msg :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
+                                                <p:commandButton id="BTMercado" disabled="#{mercadoBean.habilitarRegistro}" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:BTMercado :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg  :formularioServicios:SMMercado" value="#{mercadoBean.nombre}" action="#{mercadoBean.metodo()}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +123,7 @@
                                                 </p:column>
 
                                                 <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" title="Modificar">
+                                                    <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" action="#{mercadoBean.seleccionarCrud(1)}" update=":formularioMercado :formularioSubidaArchivos" title="Modificar">
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
                                                     </p:commandLink>
                                                 </p:column>
@@ -138,6 +146,13 @@
                             </b:column> 
                         </h:form>
 
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <ol class=" breadcrumb">
+                                    <li class="active">
+                                        <i class="fa fa-dashboard"></i> Servicios
+                                    </li>
+                                </ol>
+                            </b:column>
 
 
                         <h:form id="formularioServicios">

@@ -40,6 +40,11 @@ public class MercadoBean implements Serializable {
     //Relacion con el controlador   
     Upload fileController;
 
+    //Variables
+    private boolean habilitarRegistro;
+    private int estado; //Controla la operacion a realizar
+    private String nombre;
+    
     //Mensajes emergentes 
     private FacesMessage message;
 
@@ -50,11 +55,15 @@ public class MercadoBean implements Serializable {
         mercadoListView = new ArrayList<>();
         nombresMercadosListView = new ArrayList<>();
 
-        buscar = null;
-
         fileController = new Upload();
 
+        buscar = null;
         estadoFoto = "";
+        buscar = null;
+        estado = 0;
+        nombre = "Registrar Ciudad";
+
+        habilitarRegistro = true;
 
     }
 
@@ -109,14 +118,41 @@ public class MercadoBean implements Serializable {
         this.estadoFoto = estadoFoto;
     }
 
+    public boolean isHabilitarRegistro() {
+        return habilitarRegistro;
+    }
+
+    public void setHabilitarRegistro(boolean habilitarRegistro) {
+        this.habilitarRegistro = habilitarRegistro;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
+
     //Metodos
     public void registrarMercado() {
 
         mercadoDao.registrarMercado(mercadoView);
         mercadoView = new SmsMercado();
         mercadoListView = mercadoDao.consultarMercados();
-        
+
         estadoFoto = "";
+        habilitarRegistro = true;
     }
 
     public void modificarMercado() {
@@ -124,6 +160,8 @@ public class MercadoBean implements Serializable {
         mercadoListView = mercadoDao.consultarMercados();
 
         mercadoView = new SmsMercado();
+        estadoFoto = "";
+        habilitarRegistro = true;
     }
 
     public void eliminarMercado() {
@@ -155,10 +193,32 @@ public class MercadoBean implements Serializable {
                 mercadoView.setMercadoFotoNombre(uploadedPhoto.getFileName());
                 mercadoView.setMercadoFotoRuta(map.get("url") + uploadedPhoto.getFileName());
                 estadoFoto = "Foto registrada con exito";
+
+                habilitarRegistro = false;
             }
             FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
         } catch (Exception ex) {
             ex.getMessage();
+        }
+    }
+    
+    //Metodos propios
+    public void seleccionarCrud(int i) {
+        estado = i;
+        if (estado == 1) {
+            estadoFoto = "Foto de portada:" + mercadoView.getMercadoFotoNombre();
+            nombre = "Modificar Mercado";
+            habilitarRegistro = false;
+        }
+    }
+
+    public void metodo() {
+        if (estado == 0) {
+            registrarMercado();
+        } else if (estado == 1) {
+            modificarMercado();
+            estado = 0;
+            nombre = "Registrar Mercado";
         }
     }
 
