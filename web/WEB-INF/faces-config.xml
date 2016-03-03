@@ -506,4 +506,10 @@
         <managed-bean-class>Controladores.TipoLugarBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    <navigation-case>
+            <from-outcome>AdminPReporte</from-outcome>
+            <to-view-id>/vistas/AdminP/Reportes/reporte_2.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>   
+
 </faces-config>
