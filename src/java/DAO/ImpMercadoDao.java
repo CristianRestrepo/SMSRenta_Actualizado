@@ -53,7 +53,7 @@ public class ImpMercadoDao implements IMercadoDao {
         } catch (Exception e) {
             e.getMessage();
             session.getTransaction().rollback();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Imposible realizar operacion", "");
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Imposible realizar operacion", "");
 
         } finally {
             if (session != null) {
@@ -76,7 +76,7 @@ public class ImpMercadoDao implements IMercadoDao {
         } catch (Exception e) {
             e.getMessage();
             session.getTransaction().rollback();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Imposible realizar operacion", "");
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Imposible realizar operacion", "");
 
         } finally {
             if (session != null) {
@@ -99,7 +99,7 @@ public class ImpMercadoDao implements IMercadoDao {
         } catch (Exception e) {
             e.getMessage();
             session.getTransaction().rollback();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Imposible realizar operacion", "");
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Imposible realizar operacion", "");
 
         } finally {
             if (session != null) {

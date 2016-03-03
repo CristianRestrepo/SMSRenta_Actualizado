@@ -14,60 +14,36 @@
             <ui:define name="content">                
                 <b:container fluid="true">
                     <b:row>
-                        <h:form id="formularioMercado">
-                            <p:messages id="msg" closable="true"/>
 
-                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
-                                <div class="box box-info espacio-arriba">
+
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                            <div class="box box-info espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-tag"/>
+                                    <h3 class="box-title">Mercados y Servicios SMS Renta</h3>
+                                </div>
+                                <div class="box-body">
+                                    <p>En este panel podrá registrar los diferentes tipos de mercado existentes en SMS renta.</p>
+                                </div>
+                            </div>
+                        </b:column> 
+
+                        <h:form id="formularioSubidaArchivos" enctype="multipart/form-data">                           
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
+                                <div class="box box-warning">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-tag"/>
-                                        <h3 class="box-title">Mercados y Servicios SMS Renta</h3>
+                                        <h3 class="box-title">Fotografia de portada mercados SMSRenta</h3>
                                     </div>
                                     <div class="box-body">
-                                        <p>En este panel podrá registrar los diferentes tipos de mercado existentes en SMS renta.</p>
+                                        <p>Por favor ingrese la fotografia que servira como portada para el mercado en el momento de realizar una reservacion.</p>
                                     </div>
                                 </div>
                             </b:column> 
 
-                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
-                                <div class="box box-success">
-                                    <div class="box-header with-border">
-                                        <i class="fa fa-2x fa-tag"/>
-                                        <h3 class="box-title">Registro Mercados SMS Renta</h3>
-                                    </div>
-                                    <div class="box-body">
-                                        <div class="table-responsive">                                            
-                                            <div class="form-group">
-                                                <h:panelGrid cellpadding="5" width="100%" columns="2" id="PMercado">
-                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" tooltip="Nombre del mercado" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
-                                                    <p:message for="TNombreMrd"/>
 
-                                                    <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
-                                                    <p:message for="TDescripcionMrd"/>
-                                                </h:panelGrid>
-                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:msg :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </b:column>
-                        </h:form>
-
-                        <h:form id="formularioSubidaArchivos" enctype="multipart/form-data">
-                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
-
-                                <div class="box box-success">
-                                    <div class="box-header with-border">
-                                        <i class="fa fa-2x fa-user-plus"/>
-                                        <h4 class="box-title">Fotografia de portada</h4>
-                                    </div>
-                                    <div class="box-body" style="width: 100%" align="center">
-                                        <p:graphicImage  width="320" height="220" value="#{mercadoBean.mercadoView.mercadoFotoRuta}"/> 
-                                    </div>
-                                </div>
-                            </b:column>
-                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                                <div class="box box-primary">
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                                <div class="box box-warning">
                                     <p:fragment autoUpdate="true">
                                         <div class="box-header with-border">    
                                             <i class="fa fa-2x fa-camera"/>
@@ -86,6 +62,34 @@
                                 </div>
                             </b:column>
                         </h:form>
+
+                        <h:form id="formularioMercado">
+                            <p:messages id="msg" closable="true"/>
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
+                                <div class="box box-success">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Registro Mercados SMS Renta</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="table-responsive">                                            
+                                            <div class="form-group">
+                                                <h:panelGrid cellpadding="5" width="100%" columns="2" id="PMercado">
+                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" tooltip="Nombre del mercado" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
+                                                    <p:message for="TNombreMrd"/>
+
+                                                    <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
+                                                    <p:message for="TDescripcionMrd"/>
+                                                </h:panelGrid>
+                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:msg :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </h:form>
+
+
 
                         <h:form id="formularioListaMercados">
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
@@ -148,7 +152,7 @@
                                             <div class="form-group">
                                                 <h:panelGrid width="100%" columns="2" id="PServicios" cellspacing="5">
 
-                                                    <b:selectOneMenu  tooltip="Mercado al que pertenece el servicio" id="SMMercado" value="#{serviciosBean.mercadoView.mercadoNombre}" label="Mercado" style="width: 100%">                                                            
+                                                    <b:selectOneMenu  tooltip="Mercado al que pertenece el servicio" id="SMMercado" value="#{serviciosBean.mercadoView.mercadoNombre}" style="width: 100%">                                                            
                                                         <f:selectItem itemLabel="Seleccione mercado" noSelectionOption="true"/>
                                                         <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
                                                         <p:ajax event="change" update="SMCatVehiculo"/> 

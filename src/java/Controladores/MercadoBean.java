@@ -115,6 +115,8 @@ public class MercadoBean implements Serializable {
         mercadoDao.registrarMercado(mercadoView);
         mercadoView = new SmsMercado();
         mercadoListView = mercadoDao.consultarMercados();
+        
+        estadoFoto = "";
     }
 
     public void modificarMercado() {
