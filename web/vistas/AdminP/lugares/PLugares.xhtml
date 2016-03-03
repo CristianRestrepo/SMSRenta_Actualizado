@@ -22,7 +22,7 @@
                                     </div> 
                                     <div class="box-body">
                                         <p style="text-justify: auto">En este panel de registro podrá registrar la 
-                                            información de los lugares más requeridos por los clientes: <em>Aeropuerto El Dorado, Unisentro, Centro Internacional, etc.</em></p> 
+                                            información de los lugares más requeridos por los clientes: <em>Aeropuerto El Dorado, Unicentro, Centro Internacional, etc.</em></p> 
                                     </div>
                                 </div>
                             </b:column>
@@ -35,20 +35,17 @@
                                     </div>      
                                     <div class="box-body">
                                         <div class="table-responsive">
-                                            <h:panelGrid id="PLugar" columns="3" cellpadding="5" style="width: 100%">
-                                                <p:outputLabel for="SPaises" value="Ciudad:"/>
-                                                <b:selectOneMenu id="SPaises" required="true" requiredMessage="Seleccione Pais" value="#{lugarBean.ciudadView.ciudadNombre}">
-                                                    <f:selectItem itemLabel="Seleccione Ciudad"/>
+                                            <h:panelGrid id="PLugar" columns="2" cellpadding="5" style="width: 100%">
+                                                <b:selectOneMenu id="SCiudades" tooltip="Selecciones Ciudad o municipio al que pertenece el lugar" required="true" requiredMessage="Seleccione Ciudad o municipio" value="#{lugarBean.ciudadView.ciudadNombre}">
+                                                    <f:selectItem itemLabel="Seleccione ciudad o municipio"/>
                                                     <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                                 </b:selectOneMenu>
-                                                <p:message for="SPaises"/>
+                                                <p:message for="SCiudades"/>
 
-                                                <p:outputLabel for="TNombreLugar" value="Nombre del lugar:"/>
-                                                <b:inputText maxlength="50" id="TNombreLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Nombre del lugar"  value="#{lugarBean.lugarView.lugarNombre}" style="width: 100%"></b:inputText>                                            
+                                                <b:inputText maxlength="50" label="Nombre del lugar" id="TNombreLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Nombre del lugar"  value="#{lugarBean.lugarView.lugarNombre}" style="width: 100%"></b:inputText>                                            
                                                 <p:message for="TNombreLugar"/>
                                                 
-                                                <p:outputLabel for="TDireccionLugar" value="Direccion del lugar:"/>
-                                                <b:inputText maxlength="50" id="TDireccionLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Direccion del lugar"  value="#{lugarBean.lugarView.lugarDireccion}" style="width: 100%"></b:inputText>                                            
+                                                <b:inputText maxlength="50" label="Direccion de lugar" id="TDireccionLugar" placeholder="Direccion del lugar"  value="#{lugarBean.lugarView.lugarDireccion}" style="width: 100%"></b:inputText>                                            
                                                 <p:message for="TDireccionLugar"/>
                                             </h:panelGrid>
                                         </div><hr/>

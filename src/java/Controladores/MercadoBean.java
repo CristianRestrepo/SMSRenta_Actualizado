@@ -7,11 +7,20 @@ package Controladores;
 
 import DAO.IMercadoDao;
 import DAO.ImpMercadoDao;
+import Funciones.Upload;
+import static Funciones.Upload.getMapPathFotosMercado;
 import Modelo.SmsMercado;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -25,16 +34,24 @@ public class MercadoBean implements Serializable {
     private List<String> nombresMercadosListView;
 
     private String buscar;
+    private String estadoFoto;
     IMercadoDao mercadoDao;
+
+    //Relacion con el controlador   
+    Upload fileController;
 
     public MercadoBean() {
         mercadoDao = new ImpMercadoDao();
-        
+
         mercadoView = new SmsMercado();
         mercadoListView = new ArrayList<>();
         nombresMercadosListView = new ArrayList<>();
 
         buscar = null;
+
+        fileController = new Upload();
+
+        estadoFoto = "";
 
     }
 
@@ -81,6 +98,16 @@ public class MercadoBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public String getEstadoFoto() {
+        return estadoFoto;
+    }
+
+    public void setEstadoFoto(String estadoFoto) {
+        this.estadoFoto = estadoFoto;
+    }
+    
+    
+
     //Metodos
     public void registrarMercado() {
         mercadoDao.registrarMercado(mercadoView);
@@ -111,7 +138,25 @@ public class MercadoBean implements Serializable {
             mercadoListView = mercadoDao.filtrarMercados(buscar);
         }
     }
-    
-    
+
+    //Subida de archivos
+    public void uploadPhoto(FileUploadEvent e) throws IOException {
+        try {
+            UploadedFile uploadedPhoto = e.getFile();
+            String destination;
+
+            HashMap<String, String> map = getMapPathFotosMercado();
+            destination = map.get("path");
+            if (null != uploadedPhoto) {
+                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
+                mercadoView.setMercadoFotoNombre(uploadedPhoto.getFileName());
+                mercadoView.setMercadoFotoRuta(map.get("url") + uploadedPhoto.getFileName());
+                estadoFoto = "Foto registrada con exito";
+            }
+            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }
 
 }

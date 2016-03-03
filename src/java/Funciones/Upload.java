@@ -70,6 +70,19 @@ public class Upload {
         }
         return null;
     }
+    
+    public static HashMap<String, String> getMapPathFotosMercado() {
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            String path = getPathFotosMercados();
+            map.put("path", path);
+            map.put("url", "/resources/images/upload/Mercados/");
+            return map;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
 
     public static HashMap<String, String> getMapPathHojasVida() {
         try {
@@ -175,6 +188,16 @@ public class Upload {
     public static String getPathHojasVida() {
         try {
             String path = getPath() + "/resources/images/upload/HojasVida/";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+    
+    public static String getPathFotosMercados() {
+        try {
+            String path = getPath() + "/resources/images/upload/Mercados/";
             return path;
         } catch (Exception e) {
             e.getMessage();

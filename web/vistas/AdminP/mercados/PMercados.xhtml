@@ -45,13 +45,49 @@
                                                     <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
                                                     <p:message for="TDescripcionMrd"/>
                                                 </h:panelGrid>
-                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:PMercado :formularioMercado:ListaMercados :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
+                                                <p:commandButton id="BTMercado" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioServicios:SMMercado" value="Registrar Mercado" action="#{mercadoBean.registrarMercado()}"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </b:column>
+                        </h:form>
 
+                        <h:form id="formularioSubidaArchivos" enctype="multipart/form-data">
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
+
+                                <div class="box box-success">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-user-plus"/>
+                                        <h4 class="box-title">Fotografia de portada</h4>
+                                    </div>
+                                    <div class="box-body" style="width: 100%" align="center">
+                                        <p:graphicImage  width="320" height="220" value="#{mercadoBean.mercadoView.mercadoFotoRuta}"/> 
+                                    </div>
+                                </div>
+                            </b:column>
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <div class="box box-primary">
+                                    <p:fragment autoUpdate="true">
+                                        <div class="box-header with-border">    
+                                            <i class="fa fa-2x fa-camera"/>
+                                            <h4 class="box-title">Ingreso de Fotografía</h4>
+                                        </div>
+                                        <div class="box-body">
+                                            <p:outputLabel id="TEstadoFoto" value="#{mercadoBean.estadoFoto}"/>
+                                            <div class="table-responsive">
+                                                <p:fileUpload id="fileIdPhoto" fileUploadListener="#{mercadoBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                              process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formularioSubidaArchivos" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+
+                                                <p:messages id="messages" closable="true" />
+                                            </div> 
+                                        </div>
+                                    </p:fragment>
+                                </div>
+                            </b:column>
+                        </h:form>
+
+                        <h:form id="formularioListaMercados">
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
@@ -81,7 +117,7 @@
                                                 </p:column>
 
                                                 <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update=":formularioMercado:ListaMercados :formularioServicios:SMMercado" title="Eliminar">
+                                                    <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update=":formularioListaMercados:ListaMercados :formularioServicios:SMMercado" title="Eliminar">
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
                                                         <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este mercado?" icon="ui-icon-alert" /> 
                                                     </p:commandLink>
@@ -97,6 +133,7 @@
                                 </div>
                             </b:column> 
                         </h:form>
+
 
 
                         <h:form id="formularioServicios">
@@ -148,7 +185,7 @@
                                                     </b:selectOneMenu>
                                                     <p:message for="SMLugarDestino"/>
 
-                                                    
+
                                                     <b:inputText id="TCostoServicio" value="#{serviciosBean.costoView.costoServicioPrecio}" style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
                                                     <p:message for="TNombreServicio"/>
                                                 </h:panelGrid>
