@@ -38,12 +38,15 @@
                                 <div class="box-body">
                                     <div class="table-responsive">
                                         <h:panelGrid id="PCategoria" columns="2" style="width: 100%" cellpadding="5">
-
+                                            
+                                            <p:outputLabel value="Mercados"/>
+                                            <p:outputLabel/>
+                                            
                                             <p:selectManyCheckbox columns="3" layout="grid" id="SMMercado" required="true" value="#{categoriaBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
                                                 <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
                                             </p:selectManyCheckbox>
                                             <p:message for="SMMercado"/>
-                                            
+                                                                                        
                                             <b:inputText maxlength="50" style="width: 100%" id="TNombreCat" required="true" requiredMessage="Ingrese nombre" placeholder="Nombre de categoria" value="#{categoriaBean.categoriaView.categoriaNombre}"/>
                                             <p:message for="TNombreCat"/>
 

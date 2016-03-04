@@ -28,7 +28,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
         List<SmsCategoria> categorias = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoria");
+            Query query = session.createQuery("from SmsCategoria as categoria left join fetch categoria.smsMercados");
             categorias = (List<SmsCategoria>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

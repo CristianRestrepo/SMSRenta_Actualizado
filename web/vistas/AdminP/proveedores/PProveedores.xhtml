@@ -23,36 +23,42 @@
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid  id="seccionDatosUsuario" columns="3" cellpadding="2" style="width: 100%;">
-                                            <p:outputLabel value="Nombre: *"/>
+                                        <h:panelGrid id="SeccionMercados" columns="2" style="width: 100%">
+
+                                            <p:outputLabel value="Mercados"/>
+                                            <p:outputLabel/>
+
+                                            <p:selectManyCheckbox columns="2" layout="grid" id="SMMercado" required="true" value="#{categoriaBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
+                                                <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
+                                            </p:selectManyCheckbox>
+                                            <p:message for="SMMercado"/>
+
+
+                                        </h:panelGrid>
+                                        <hr/>
+                                        <h:panelGrid  id="seccionDatosUsuario" columns="2" cellpadding="2" style="width: 100%;">
+                                            
                                             <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.usuarioView.usuarioNombre}"></b:inputText>                       
                                             <p:message for="TNombreApProv"/>
 
-                                            <p:outputLabel value="CC: " />
                                             <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
 
-                                            <p:outputLabel value="Teléfono: "/>
                                             <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioTelefono}"></b:inputText> 
                                             <p:message for="TTelProv"/>
 
-                                            <p:outputLabel value="Email: *"/>
                                             <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioEmail}"></b:inputText>
                                             <p:message for="TEmailProv"/>
 
-                                            <p:outputLabel value="Razón social: "/>
                                             <b:inputText maxlength="100" id="TRazSocProv" placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.usuarioView.usuarioRazonSocial}"></b:inputText>
                                             <p:message for="TRazSocProv"/>
 
-                                            <p:outputLabel value="Nit: "/>
                                             <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioNit}"></b:inputText>
                                             <p:message for="TNitProv"/>
 
-                                            <p:outputLabel value="Valor Ganancia: *"/>
-                                            <b:inputText id="TValorGProv" placeholder="Valor de ganancia" required="true" requiredMessage="Indique valor de ganancia acordado con el proveedor" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorValorGanancia}"></b:inputText>
+                                            <b:inputText id="TValorGProv" placeholder="Valor de ganancia" required="true" tooltip="Valor de ganancia del proveedor sobre el costo total" requiredMessage="Indique valor de ganancia acordado con el proveedor" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorValorGanancia}"></b:inputText>
                                             <p:message for="TValorGProv"/>
 
-                                            <p:outputLabel value="Ciudad: *"/>
                                             <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{proveedorBean.ciudadView.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
@@ -60,6 +66,8 @@
                                             <p:message for="SCiudades"/>
                                         </h:panelGrid>
                                     </div>
+                                    <hr/>
+
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-check-square"/>
                                         <h4 class="box-title">Datos de Sesión</h4>
@@ -69,8 +77,8 @@
                                         <div class="table-responsive"> 
                                             <h:panelGrid columns="2" id="seccionDatosSersion"  cellpadding="2"  style="width: 100%">
 
-                                                <p:outputLabel value="Login: "/>
-                                                <b:inputText style="width: 100%" maxlength="60" validator="regLoginValidator" placeholder="Login de sesion" value="#{proveedorBean.usuarioView.usuarioLogin}"></b:inputText>
+                                                <p:outputLabel value="Nombre de sesion: "/>
+                                                <b:inputText style="width: 100%" maxlength="60" validator="regLoginValidator" placeholder="Nombre de sesion" value="#{proveedorBean.usuarioView.usuarioLogin}"></b:inputText>
 
                                                 <p:outputLabel value="Contraseña: "/>
                                                 <b:inputSecret label="Contraseña" style="width: 100%" binding="#{ProvPass}" maxlength="20" placeholder="Contraseña de sesion" value="#{proveedorBean.usuarioView.usuarioPassword}">

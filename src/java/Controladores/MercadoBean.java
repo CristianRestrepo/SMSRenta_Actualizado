@@ -44,7 +44,7 @@ public class MercadoBean implements Serializable {
     private boolean habilitarRegistro;
     private int estado; //Controla la operacion a realizar
     private String nombre;
-    
+
     //Mensajes emergentes 
     private FacesMessage message;
 
@@ -141,8 +141,6 @@ public class MercadoBean implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    
 
     //Metodos
     public void registrarMercado() {
@@ -169,6 +167,9 @@ public class MercadoBean implements Serializable {
         mercadoListView = mercadoDao.consultarMercados();
 
         mercadoView = new SmsMercado();
+        estadoFoto = "";
+        nombre = "Registrar Mercado";
+        habilitarRegistro = true;
 
     }
 
@@ -201,7 +202,7 @@ public class MercadoBean implements Serializable {
             ex.getMessage();
         }
     }
-    
+
     //Metodos propios
     public void seleccionarCrud(int i) {
         estado = i;

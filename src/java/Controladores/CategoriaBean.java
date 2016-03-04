@@ -118,12 +118,22 @@ public class CategoriaBean implements Serializable {
 
     //METODOS QUE DEVUELVEN DATOS PARA VISTAS
     public void modificar() {
-        //TRAER LA INFORMACION DE LA VISTA Y PASARLA AL PARAMETRO CORRESPODIENTE 
-        //DE LA CLASE DEL PAQUETE CONTROLADOR
+        
+         for (SmsMercado mercado : categoriaView.getSmsMercados()) {
+                for (int j = 0; j < mercadosSeleccionados.size(); j++) {
+                    if (!mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
+                        mercadoView = mercadoDao.consultarMercado(mercadosSeleccionados.get(j)).get(0);
+                        mercadoView.getSmsCategorias().add(categoriaView);
+                        categoriaView.getSmsMercados().add(mercadoView);
+                    }
+                }
+            }
+       
         catDao.modificarCategoria(categoriaView);
+
         categoriaView = new SmsCategoria();
         categoriasListView = catDao.mostrarCategorias();
-
+        mercadosSeleccionados = new ArrayList<>();
     }
 
     public void registrar() {
@@ -136,7 +146,7 @@ public class CategoriaBean implements Serializable {
             categoriaView.getSmsMercados().add(mercadoView);//Se relaciona el mercado a la categoria
         }
         catDao.agregarMercadosCategoria(categoriaView);//se registra la relacion entre la categoria y los mercados
-        
+
         //Limpiamos objetos
         categoriaView = new SmsCategoria();
         categoriasListView = catDao.mostrarCategorias();
@@ -185,10 +195,21 @@ public class CategoriaBean implements Serializable {
 
     public void seleccionarCRUD(int i) {
         estado = i;
+        mercadosSeleccionados = new ArrayList<>();
         if (estado == 1) {
             nombre = "Modificar Categoria";
+            List<SmsMercado> mercadoList = new ArrayList<>();
+            mercadoList = mercadoDao.consultarMercados();
+
+            for (SmsMercado mercado : categoriaView.getSmsMercados()) {
+                for (int j = 0; j < mercadoList.size(); j++) {
+                    if (mercado.getMercadoNombre().equals(mercadoList.get(j).getMercadoNombre())) {
+                        mercadosSeleccionados.add(mercado.getMercadoNombre());
+                    }
+                }
+            }
+
         }
     }
-    
-    
+
 }

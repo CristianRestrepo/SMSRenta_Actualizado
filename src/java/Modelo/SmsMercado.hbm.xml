@@ -36,7 +36,7 @@
                 <column name="idProveedor" not-null="true" />
             </many-to-many>
         </set>
-        <set name="smsCategorias" table="sms_mercado_sms_categoria" inverse="false" lazy="true" fetch="select">
+        <set name="smsCategorias" cascade="save-update" table="sms_mercado_sms_categoria" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="idMercado" not-null="true" />
             </key>

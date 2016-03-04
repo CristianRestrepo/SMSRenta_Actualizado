@@ -89,7 +89,7 @@
                                                     <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
                                                     <p:message for="TDescripcionMrd"/>
                                                 </h:panelGrid>
-                                                <p:commandButton id="BTMercado" disabled="#{mercadoBean.habilitarRegistro}" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:BTMercado :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg  :formularioServicios:SMMercado" value="#{mercadoBean.nombre}" action="#{mercadoBean.metodo()}"/>
+                                                <p:commandButton id="BTMercado" disabled="#{mercadoBean.habilitarRegistro}" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:BTMercado :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg :formularioSubidaArchivos:messages :formularioServicios:SMMercado" value="#{mercadoBean.nombre}" action="#{mercadoBean.metodo()}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@
                                                 </p:column>
 
                                                 <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update=":formularioListaMercados:ListaMercados :formularioServicios:SMMercado" title="Eliminar">
+                                                    <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update=":formularioMercado :formularioSubidaArchivos:msg :formularioListaMercados:ListaMercados :formularioServicios:SMMercado" title="Eliminar">
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
                                                         <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este mercado?" icon="ui-icon-alert" /> 
                                                     </p:commandLink>
@@ -147,12 +147,12 @@
                         </h:form>
 
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
-                                <ol class=" breadcrumb">
-                                    <li class="active">
-                                        <i class="fa fa-dashboard"></i> Servicios
-                                    </li>
-                                </ol>
-                            </b:column>
+                            <ol class=" breadcrumb">
+                                <li class="active">
+                                    <i class="fa fa-dashboard"></i> Servicios
+                                </li>
+                            </ol>
+                        </b:column>
 
 
                         <h:form id="formularioServicios">
