@@ -118,17 +118,20 @@ public class CategoriaBean implements Serializable {
 
     //METODOS QUE DEVUELVEN DATOS PARA VISTAS
     public void modificar() {
-        
-         for (SmsMercado mercado : categoriaView.getSmsMercados()) {
-                for (int j = 0; j < mercadosSeleccionados.size(); j++) {
-                    if (!mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
-                        mercadoView = mercadoDao.consultarMercado(mercadosSeleccionados.get(j)).get(0);
-                        mercadoView.getSmsCategorias().add(categoriaView);
-                        categoriaView.getSmsMercados().add(mercadoView);
-                    }
+        boolean valor = false;
+        for (int j = 0; j < mercadosSeleccionados.size(); j++) {
+            for (SmsMercado mercado : categoriaView.getSmsMercados()) {
+                if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
+                    valor = true;
                 }
             }
-       
+            if (!valor) {
+                mercadoView = mercadoDao.consultarMercado(mercadosSeleccionados.get(j)).get(0);
+                mercadoView.getSmsCategorias().add(categoriaView);
+                categoriaView.getSmsMercados().add(mercadoView);
+            }
+        }
+
         catDao.modificarCategoria(categoriaView);
 
         categoriaView = new SmsCategoria();

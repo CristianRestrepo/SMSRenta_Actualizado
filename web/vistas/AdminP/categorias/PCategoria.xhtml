@@ -82,6 +82,7 @@
                                         <p:column headerText="Descripcion">
                                             <h:outputText value="#{Categorias.categoriaDescripcion}" />
                                         </p:column>
+                                                                                                                        
                                         <p:column style="width: 35px">
                                             <p:commandLink class="fa fa-pencil btn btn-block btn-success" style="color: white" process="@this" update="@form" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
