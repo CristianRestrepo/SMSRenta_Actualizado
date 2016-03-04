@@ -61,7 +61,7 @@ public class MercadoBean implements Serializable {
         estadoFoto = "";
         buscar = null;
         estado = 0;
-        nombre = "Registrar Ciudad";
+        nombre = "Registrar Mercado";
 
         habilitarRegistro = true;
 
