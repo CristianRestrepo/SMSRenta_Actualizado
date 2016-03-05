@@ -47,6 +47,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
     @PostConstruct
     public void init() {
         usuariosListView = clienteDao.consultarUsuariosClientes();
+//                clienteDao.consultarUsuariosClientes();
     }
 
     //Getters & Setters

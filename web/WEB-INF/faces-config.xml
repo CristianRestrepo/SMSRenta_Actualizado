@@ -247,6 +247,11 @@
             <from-outcome>AdminPLugares</from-outcome>
             <to-view-id>/vistas/AdminP/lugares/PLugares.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminPTipoServicio</from-outcome>
+            <to-view-id>/vistas/AdminP/reservas/PTipoServicio.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
                 
         
         
@@ -337,6 +342,7 @@
             <to-view-id>/vistas/AdminS/lugares/SLugares.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
          
         <!-- ADMIN SECUNDARIO -->
         <!-- CONDUCTOR -->
@@ -428,6 +434,7 @@
             <to-view-id>/vistas/AdminP/Reportes/reporte_2.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
     </navigation-rule>
     
     <!-- otras rutas admin principal-->

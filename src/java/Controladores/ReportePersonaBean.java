@@ -73,12 +73,13 @@ public class ReportePersonaBean {
         Map parametros = new HashMap();
         parametros.put("txtUsuario", "SMS Renta - PSP Pagos");
 
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes_SMS/reportePrueba.jasper"));
-//        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(persons));
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/Reportes_SMS/reportePrueba.jasper"));
+       
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(this.getPersonas()));
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition", "attachment;  filename=reportePrueba.pdf");
+//        ("Content-disposition", "attachment;  filename=reportePrueba.pdf");
         ServletOutputStream stream = response.getOutputStream();
 
         JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
@@ -88,7 +89,6 @@ public class ReportePersonaBean {
 
         FacesContext.getCurrentInstance().responseComplete();
 
-//       
     }
 
 }

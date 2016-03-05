@@ -101,6 +101,11 @@ public class PathBean implements Serializable {
      public String ir_AdminReporte(){
          return "AdminPReporte";
      }
+     
+     
+     public String ir_AdminPTipoReporte(){
+         return "AdminPTipoServicio";
+     }
         
     
     /* / ADMIN PRINCIPAL / */

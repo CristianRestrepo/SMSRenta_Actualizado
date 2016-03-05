@@ -424,7 +424,7 @@ td, th {
     border-color: rgb(58, 58, 58)!important;
 }
 
-/************************ Diseño de Thumberl noseque  *****************/
+/************************ Dise�o de Thumberl noseque  *****************/
 
 .thumbnail {
     display: block;
@@ -689,7 +689,8 @@ td, th {
 
 .panel-image img.panel-image-preview {
     width: 100%;
-	border-radius: 4px 4px 0px 0px;
+    max-height: 258px;
+    border-radius: 4px 4px 0px 0px;
 }
 
 .panel-heading ~ .panel-image img.panel-image-preview {
