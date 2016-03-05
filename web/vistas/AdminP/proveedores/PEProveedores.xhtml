@@ -28,7 +28,7 @@
                                             de ganancias y ademas podra crear una cuenta de sesion para el ingreso al sistema.</p> 
                                     </div>
                                 </div>
-                                
+
                                 <div class="box box-success espacio-arriba">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-user-plus"/>
@@ -38,7 +38,7 @@
                                         <p:graphicImage class="img-circle" width="160" height="180" value="#{proveedorBean.modUsuarioView.usuarioFotoRuta}"/> 
                                     </div>
                                 </div>
-                                
+
                             </b:column>
 
                             <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
@@ -50,6 +50,20 @@
                                     </div> 
                                     <div class="box-body">
                                         <div class="table-responsive">
+                                            <h:panelGrid id="SeccionMercados" columns="2" style="width: 100%">
+
+                                                <p:outputLabel value="Mercados"/>
+                                                <p:outputLabel/>
+
+                                                <p:selectManyCheckbox columns="2" layout="grid" id="SMMercado" required="true" value="#{proveedorBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
+                                                    <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
+                                                </p:selectManyCheckbox>
+                                                <p:message for="SMMercado"/>
+
+
+                                            </h:panelGrid>
+                                            <hr/>
+
                                             <h:panelGrid  id="seccionDatosUsuario" columns="3" cellpadding="2" style="width: 100%;">
                                                 <p:outputLabel value="Nombre: *"/>
                                                 <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.modUsuarioView.usuarioNombre}"></b:inputText>                       
@@ -90,14 +104,11 @@
                                         <div class="box-header with-border">
                                             <i class="fa fa-2x fa-check-square"/>
                                             <h4 class="box-title">Datos de Sesión</h4>
-                                            <br/><br/>                                        
-                                            <p:commandLink value="Editar datos de sesion">
-                                                <p:ajax listener="#{proveedorBean.habilitarEdicion()}" event="click" update="@form"/>
-                                            </p:commandLink>
+                                            <br/><br/>                                      
                                         </div>
                                         <div class="box-body">
                                             <div class="table-responsive"> 
-                                                <h:panelGrid columns="2" rendered="#{proveedorBean.habilitarEditarSesion}" id="seccionDatosSesion"  cellpadding="2"  style="width: 100%">
+                                                <h:panelGrid columns="2" id="seccionDatosSesion"  cellpadding="2"  style="width: 100%">
 
                                                     <p:outputLabel value="Login: "/>
                                                     <b:inputText style="width: 100%" maxlength="60" placeholder="Login de sesion" value="#{proveedorBean.modUsuarioView.usuarioLogin}"></b:inputText>
@@ -113,13 +124,10 @@
                                                         <f:validateLength minimum="6"/>
                                                     </b:inputSecret>
 
-                                                    <p:commandLink value="Cancelar Edicion">
-                                                        <p:ajax event="click" listener="#{proveedorBean.deshabilitarEdicion()}" update="@form"/>
-                                                    </p:commandLink>
                                                 </h:panelGrid>                                        
                                             </div><hr/>                                    
                                             <h:panelGrid columns="2" width="100%">
-                                                <p:commandButton style="width: 100%" id="BTModCliente" ajax="true" class="btn btn-block btn-success" update="@form" action="#{proveedorBean.modificar()}" value="Modificar Proveedor" />
+                                                <p:commandButton style="width: 100%" id="BTModCliente" ajax="true" class="btn btn-block btn-success" update="@form" action="#{proveedorBean.modificarProveedor()}" value="Modificar Proveedor" />
                                                 <p:commandButton style="width: 100%" id="BTCancel" ajax="true" class="btn btn-block btn-danger" action="#{proveedorBean.regresar()}" value="Regresar" />                                            
                                             </h:panelGrid>
                                         </div>

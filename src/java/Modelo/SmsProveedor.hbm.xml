@@ -14,7 +14,7 @@
         <property name="proveedorValorGanancia" type="int">
             <column name="Proveedor_ValorGanancia" not-null="true" />
         </property>
-        <set name="smsMercados" table="sms_mercado_sms_proveedor" inverse="true" lazy="true" fetch="select">
+        <set name="smsMercados" cascade="save-update" table="sms_mercado_sms_proveedor" inverse="true" lazy="true" fetch="join">
             <key>
                 <column name="idProveedor" not-null="true" />
             </key>

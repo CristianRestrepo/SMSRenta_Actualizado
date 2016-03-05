@@ -25,7 +25,7 @@ public interface IProveedorDao {
     public void registrarProveedor(SmsProveedor proveedor);
 
     public void modificarProveedor(SmsProveedor proveedor);
-
+    
     public void eliminarProveedor(SmsProveedor proveedor);
 
     public List<SmsUsuario> consultarUsuariosProveedores();

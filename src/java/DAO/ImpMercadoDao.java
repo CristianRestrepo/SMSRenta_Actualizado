@@ -135,7 +135,7 @@ public class ImpMercadoDao implements IMercadoDao {
         List<SmsMercado> mercados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsCategorias where mercado.mercadoNombre = '" + mercado + "'");
+            Query query = session.createQuery("from SmsMercado as mercado where mercado.mercadoNombre = '" + mercado + "'");
             mercados = (List<SmsMercado>) query.list();
 
         } catch (HibernateException e) {

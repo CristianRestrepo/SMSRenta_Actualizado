@@ -28,7 +28,7 @@
                                             <p:outputLabel value="Mercados"/>
                                             <p:outputLabel/>
 
-                                            <p:selectManyCheckbox columns="2" layout="grid" id="SMMercado" required="true" value="#{categoriaBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
+                                            <p:selectManyCheckbox columns="2" layout="grid" id="SMMercado" required="true" value="#{proveedorBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
                                                 <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
                                             </p:selectManyCheckbox>
                                             <p:message for="SMMercado"/>
@@ -70,7 +70,7 @@
 
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-check-square"/>
-                                        <h4 class="box-title">Datos de Sesión</h4>
+                                        <h4 class="box-title">Datos de Cuenta</h4>
 
                                     </div>
                                     <div class="box-body">
@@ -78,7 +78,7 @@
                                             <h:panelGrid columns="2" id="seccionDatosSersion"  cellpadding="2"  style="width: 100%">
 
                                                 <p:outputLabel value="Nombre de sesion: "/>
-                                                <b:inputText style="width: 100%" maxlength="60" validator="regLoginValidator" placeholder="Nombre de sesion" value="#{proveedorBean.usuarioView.usuarioLogin}"></b:inputText>
+                                                <b:inputText style="width: 100%" maxlength="60" required="true" requiredMessage="Ingrese un nombre de sesion" validator="regLoginValidator" placeholder="Nombre de sesion" value="#{proveedorBean.usuarioView.usuarioLogin}"></b:inputText>
 
                                                 <p:outputLabel value="Contraseña: "/>
                                                 <b:inputSecret label="Contraseña" style="width: 100%" binding="#{ProvPass}" maxlength="20" placeholder="Contraseña de sesion" value="#{proveedorBean.usuarioView.usuarioPassword}">
