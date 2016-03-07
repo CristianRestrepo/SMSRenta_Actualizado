@@ -252,6 +252,11 @@
             <to-view-id>/vistas/AdminP/reservas/PTipoServicio.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminPReservaTurismo</from-outcome>
+            <to-view-id>/vistas/AdminP/reservas/PReservaTurismo.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
                 
         
         
