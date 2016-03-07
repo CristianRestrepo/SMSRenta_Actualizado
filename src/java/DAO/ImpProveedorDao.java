@@ -99,7 +99,7 @@ public class ImpProveedorDao implements IProveedorDao {
         List<SmsProveedor> Proveedores = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsProveedor as proveedor left join fetch proveedor.smsUsuario left join fetch proveedor.smsMercados as usuario where usuario.idUsuario = '" + usuario.getIdUsuario() + "'");
+            Query query = session.createQuery("from SmsProveedor as proveedor left join fetch proveedor.smsUsuario as usuario left join fetch proveedor.smsMercados where usuario.idUsuario = '" + usuario.getIdUsuario() + "'");
             Proveedores = (List<SmsProveedor>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

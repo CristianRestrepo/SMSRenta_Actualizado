@@ -10,6 +10,8 @@ import Funciones.MD5;
 import DAO.IProveedorDao;
 import DAO.ImpMercadoDao;
 import DAO.ImpProveedorDao;
+import Funciones.GenerarPassword;
+import Funciones.SendEmail;
 import Modelo.SmsCiudad;
 import Modelo.SmsMercado;
 import Modelo.SmsProveedor;
@@ -27,32 +29,48 @@ import javax.annotation.PostConstruct;
 public class ProveedorBean extends UsuarioBean implements Serializable {
 
     //Objetos necesarios para vista  
-    private SmsProveedor proveedorView;   
+    private SmsProveedor proveedorView;
     private SmsMercado mercadoView;
     private List<String> mercadosSeleccionados;
+
     //lista de Id de proveedor
     private List<String> nombresProveedoresView;
 
     //Variables
     private String buscar;
-   
+    private int operacion; //Controla la operacion a realizar
+    private String nombreOperacion;
+
+    //Banderas
+    private boolean habilitarEdicion;
+    private boolean habilitarCancelar;
+    private String validator;
+    boolean contraseñaModificada;
+
     //Conexion con el dao
     IProveedorDao proveedorDao;
     IMercadoDao mercadoDao;
-    
 
-    public ProveedorBean() {  
+    public ProveedorBean() {
         super();
         proveedorView = new SmsProveedor();
         mercadosSeleccionados = new ArrayList<>();
-        mercadoView = new SmsMercado();        
-        
-        buscar = null;       
+        mercadoView = new SmsMercado();
+
+        buscar = null;
         proveedorDao = new ImpProveedorDao();
         mercadoDao = new ImpMercadoDao();
+
+        habilitarEdicion = true;
+        habilitarCancelar = true;
+        validator = "regLoginValidator";
+        contraseñaModificada = false;
+
+        operacion = 0;
+        nombreOperacion = "Registrar Proveedor";
     }
 
-    @PostConstruct 
+    @PostConstruct
     public void init() {
         usuariosListView = proveedorDao.consultarUsuariosProveedores();
     }
@@ -65,7 +83,6 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     public void setProveedorView(SmsProveedor proveedorView) {
         this.proveedorView = proveedorView;
     }
-   
 
     public List<String> getNombresProveedoresView() {
         nombresProveedoresView = new ArrayList<>();
@@ -79,7 +96,6 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     public void setNombresProveedoresView(List<String> nombresProveedoresView) {
         this.nombresProveedoresView = nombresProveedoresView;
     }
-    
 
     public String getBuscar() {
         return buscar;
@@ -96,8 +112,49 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     public void setMercadosSeleccionados(List<String> mercadosSeleccionados) {
         this.mercadosSeleccionados = mercadosSeleccionados;
     }
-    
-    //Metodos    
+
+    public String getNombreOperacion() {
+        return nombreOperacion;
+    }
+
+    public void setNombreOperacion(String nombreOperacion) {
+        this.nombreOperacion = nombreOperacion;
+    }
+
+    public boolean isHabilitarEdicion() {
+        return habilitarEdicion;
+    }
+
+    public void setHabilitarEdicion(boolean habilitarEdicion) {
+        this.habilitarEdicion = habilitarEdicion;
+    }
+
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+
+    public String getValidator() {
+        return validator;
+
+    }
+
+    public void setValidator(String validator) {
+        this.validator = validator;
+    }
+
+    public int getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(int operacion) {
+        this.operacion = operacion;
+    }
+
+    //Metodos
     public void registrarProveedor() {
         //asignamos un rol al usuario
         rolView.setRolNombre("Proveedor");
@@ -106,9 +163,18 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         usuarioView.setUsuarioFotoRuta(fileController.getPathDefaultUsuario());
         usuarioView.setUsuarioFotoNombre(fileController.getNameDefaultUsuario());
 
+        //Se genera un login y un pass aleatorio que se le envia al proveedor
         MD5 md = new MD5();
-        usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));//Se encripta la contreseña
-        usuarioView.setUsuarioRememberToken(md.getMD5(usuarioView.getUsuarioRememberToken()));
+        GenerarPassword pass = new GenerarPassword();
+        SendEmail email = new SendEmail();
+
+        password = pass.generarPass(6);//Generamos pass aleatorio
+        //Asignamos email como nombre de sesion
+        usuarioView.setUsuarioLogin(usuarioView.getUsuarioEmail());
+
+        //Encriptamos las contraseñas
+        usuarioView.setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
+        usuarioView.setUsuarioRememberToken(md.getMD5(password));
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
@@ -122,23 +188,22 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
 
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(usuarioView);
-        
+
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
         proveedorView.setSmsUsuario(usuarioView);
-               
+
         //Registramos al usuario como proveedor
         proveedorDao.registrarProveedor(proveedorView);
         proveedorView = proveedorDao.consultarProveedor(proveedorView).get(0);
-        
+
         for (int i = 0; i < mercadosSeleccionados.size(); i++) { //Relacionamos la categoria con los mercados seleccionados
             mercadoView = mercadoDao.consultarMercado(mercadosSeleccionados.get(i)).get(0);
             mercadoView.getSmsProveedors().add(proveedorView);//Se relaciona el proveedor al mercado 
             proveedorView.getSmsMercados().add(mercadoView);//Se relaciona el mercado a la categoria
         }
-        
+
         proveedorDao.modificarProveedor(proveedorView);//Modificamos el proveedor recien registrado para agregar los mercados a los que pertenece
-        
-        
+        email.sendEmailProveedor(usuarioView, password);//Enviamos correo al proveedor, confirmando su registro al sistema, y enviando datos de sesion
         usuariosListView = proveedorDao.consultarUsuariosProveedores();//Recargamos la lista de proveedores
 
         //Limpiamos objetos
@@ -146,31 +211,42 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         ciudadView = new SmsCiudad();
         proveedorView = new SmsProveedor();
         rolView = new SmsRol();
-
+        mercadosSeleccionados = new ArrayList<>();
+        password = null;
     }
 
-    public String modificarProveedor() {
-        MD5 md = new MD5();
+    public void modificarProveedor() {
 
         //se asigna un rol al usuario
         rolView.setRolNombre("Proveedor");
 
-        // en caso de modificar las contraseñas estas se encriptan de nuevo
-        modUsuarioView.setUsuarioPassword(md.getMD5(modUsuarioView.getUsuarioPassword()));
-        modUsuarioView.setUsuarioRememberToken(md.getMD5(modUsuarioView.getUsuarioRememberToken()));
-       
+        boolean valor = false;
+        for (int j = 0; j < mercadosSeleccionados.size(); j++) {
+            for (SmsMercado mercado : proveedorView.getSmsMercados()) {
+                if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
+                    valor = true;
+                }
+            }
+            if (!valor) {
+                mercadoView = mercadoDao.consultarMercado(mercadosSeleccionados.get(j)).get(0);
+                mercadoView.getSmsProveedors().add(proveedorView);
+                proveedorView.getSmsMercados().add(mercadoView);
+            }
+            valor = false;
+        }
+
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
         ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        modUsuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
+        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
 
         rolView = rolDao.consultarRol(rolView).get(0);
-        modUsuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
-        
+        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
+
         //Se modifica el usuario y se recarga la lista de proveedores
-        usuarioDao.modificarUsuario(modUsuarioView);
-        
-        proveedorView.setSmsUsuario(modUsuarioView);
+        usuarioDao.modificarUsuario(usuarioView);
+
+        proveedorView.setSmsUsuario(usuarioView);
         proveedorDao.modificarProveedor(proveedorView);
         usuariosListView = proveedorDao.consultarUsuariosProveedores();
 
@@ -178,22 +254,28 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         proveedorView = new SmsProveedor();
         usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
-        modUsuarioView = new SmsUsuario();
-
-        String ruta = "RAdminPProveedores";
-        return ruta;
+        rolView = new SmsRol();
+        mercadosSeleccionados = new ArrayList();
 
     }
 
     public void eliminarProveedor() {
 
-        usuarioDao.eliminarUsuario(DUsuarioView);
+        usuarioDao.eliminarUsuario(usuarioView);//Se elimina el objeto
+        //Se recarga la lista de proveedores
         usuariosListView = proveedorDao.consultarUsuariosProveedores();
-        if (usuarioView.equals(DUsuarioView)) {
-            usuarioView = new SmsUsuario();
-            proveedorView = new SmsProveedor();
-        }
-        DUsuarioView = new SmsUsuario();
+        
+        //Limpiamos objetos
+        proveedorView = new SmsProveedor();
+        usuarioView = new SmsUsuario();
+        ciudadView = new SmsCiudad();
+        rolView = new SmsRol();
+        mercadosSeleccionados = new ArrayList();
+        habilitarEdicion = true;
+        habilitarCancelar = true;
+        operacion = 0;
+        nombreOperacion = "Registrar Proveedor";
+        validator = "regLoginValidator";
     }
 
     public void filtrarProveedores() {
@@ -206,12 +288,48 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos propios
-    public String irModificarProveedores() {
-        proveedorView = proveedorDao.consultarProveedorUsuario(modUsuarioView).get(0);
-        ciudadView = modUsuarioView.getSmsCiudad();
-        rolView = modUsuarioView.getSmsRol();
+    public void irModificarProveedores() {
+        proveedorView = proveedorDao.consultarProveedorUsuario(usuarioView).get(0);
+        ciudadView = usuarioView.getSmsCiudad();
+        rolView = usuarioView.getSmsRol();
 
         List<SmsMercado> mercadoList = new ArrayList<>();
+        mercadoList = mercadoDao.consultarMercados();
+
+        for (SmsMercado mercado : proveedorView.getSmsMercados()) {
+            for (int j = 0; j < mercadoList.size(); j++) {
+                if (mercado.getMercadoNombre().equals(mercadoList.get(j).getMercadoNombre())) {
+                    mercadosSeleccionados.add(mercado.getMercadoNombre());
+                }
+            }
+        }
+    }
+
+    //Metodos Propios
+    public void metodo() {
+        if (operacion == 0) {
+            registrarProveedor();
+        } else if (operacion == 1) {
+            modificarProveedor();
+            //Reiniciamos banderas
+
+            habilitarEdicion = true;
+            habilitarCancelar = true;
+            operacion = 0;
+            nombreOperacion = "Registrar Proveedor";
+            validator = "regLoginValidator";
+        }
+    }
+
+    public void seleccionarCRUD(int i) {
+        operacion = i;
+        mercadosSeleccionados = new ArrayList<>();
+        if (operacion == 1) {
+            proveedorView = proveedorDao.consultarProveedorUsuario(usuarioView).get(0);
+            ciudadView = usuarioView.getSmsCiudad();
+            rolView = usuarioView.getSmsRol();
+
+            List<SmsMercado> mercadoList = new ArrayList<>();
             mercadoList = mercadoDao.consultarMercados();
 
             for (SmsMercado mercado : proveedorView.getSmsMercados()) {
@@ -221,15 +339,32 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
                     }
                 }
             }
-        
-        
-        String ruta = "AdminPEProveedores";
-        return ruta;
+
+            habilitarEdicion = false;
+            habilitarCancelar = false;
+            validator = "modLoginValidator";
+            nombreOperacion = "Modificar Proveedor";
+        }
     }
-  
-    public String regresar() {
-        modUsuarioView = new SmsUsuario();       
-        String ruta = "AdminPProveedores";
-        return ruta;
-    }  
+
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        usuarioView = new SmsUsuario();
+        proveedorView = new SmsProveedor();
+        ciudadView = new SmsCiudad();
+        rolView = new SmsRol();
+
+        //Reiniciamos los objetos
+        mercadosSeleccionados = new ArrayList<>();
+        contraseñaModificada = false;
+        habilitarEdicion = true;
+        habilitarCancelar = true;
+        validator = "regLoginValidator";
+        nombreOperacion = "Registrar Proveedor";
+
+    }
+
+    public void modificarContraseña() {
+        contraseñaModificada = true;
+    }
 }

@@ -29,19 +29,7 @@ public class modLoginValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         user = (String) value;
-        SmsUsuario usuario = (SmsUsuario) component.getAttributes().get("usuario");
-
-        IUsuarioDao userDao = new ImpUsuarioDao();
-        //SmsUsuario usuario = userDao.verificarLoginDisponible(user).get(0);
-        List<SmsUsuario> newLogin = new ArrayList<>();
-
-        if (!usuario.getUsuarioLogin().equalsIgnoreCase(user)) {
-            newLogin = userDao.verificarLoginDisponible(user);
-            if (!newLogin.isEmpty()) {
-                FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login invalido", "El nombre de usuario ya esta en uso");
-                throw new ValidatorException(fmsg);
-            }
-        }
+       
 
     }
 
