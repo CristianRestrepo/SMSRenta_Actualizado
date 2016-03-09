@@ -526,7 +526,7 @@
                                                                     <address>
                                                                         <strong>#{reservacionBean.mclienteView.usuarioNombre}</strong><br></br>
                                                                         <span class="label label-primary">Cc:</span> #{reservacionBean.mclienteView.usuarioCc}<br></br>
-                                                                        <span class="label label-primary">Razon Social:</span> #{reservacionBean.mclienteView.usuarioRazonSocial}<br></br>
+                                                                        <span class="label label-primary">Razon Social:</span> <br></br>
                                                                         <span class="label label-primary">Teléfono:</span> #{reservacionBean.mclienteView.usuarioTelefono}<br></br>
                                                                         <span class="label label-primary">Email:</span>  #{reservacionBean.mclienteView.usuarioEmail}
                                                                     </address>
@@ -538,7 +538,7 @@
                                                                         <address>
                                                                             <strong>Nombre: #{reservacionBean.MConductorView.usuarioNombre}</strong><br></br>
                                                                             Cc: #{reservacionBean.MConductorView.usuarioCc}<br></br>
-                                                                            Razon Social: #{reservacionBean.MConductorView.usuarioRazonSocial}<br></br>
+                                                                            Razon Social:<br></br>
                                                                             Teléfono: #{reservacionBean.MConductorView.usuarioTelefono}<br></br>
                                                                             Email: #{reservacionBean.MConductorView.usuarioEmail}
                                                                         </address>                                        
@@ -597,21 +597,21 @@
 
                                                             <div class="row">
                                                                 <!-- accepted payments column -->
-                                                                <div class="col-xs-6">
+                                                                <div class="col-xs-5">
                                                                     <h3 class="lead">Método de Pagos:</h3>
-                                                                    <div class="col-xs-7" style="padding-top: 38px">
+                                                                    <div class="col-xs-12" style="padding-top: 38px">
                                                                         <img src="../../../../resources/images/pago/visa.png" alt="Visa"></img>
                                                                         <img src="../../../../resources/images/pago/mastercard.png" alt="Mastercard"></img>
                                                                         <img src="../../../../resources/images/pago/american-express.png" alt="American Express"></img>
                                                                         <img src="../../../../resources/images/pago/paypal2.png" alt="Paypal" /> 
+                                                                        <h6><em>Código QR de Reservación</em></h6>
+                                                                        <img src="../../../../resources/images/pago/cod-q.png" class="img-bordered-sm center-block" alt="Código QR" style="max-width: 150px ; margin-bottom: 20px"/>                                         
 
                                                                     </div>
                                                                     <div class="col-xs-5 ">
-                                                                        <h6><em>Código QR de Reservación</em></h6>
-                                                                        <img src="../../../../resources/images/pago/cod-q.png" class="img-bordered-sm" alt="Código QR" style="max-width: 150px ; margin-bottom: 20px"/>                                         
                                                                     </div>
                                                                     <div class="col-xs-12">
-                                                                        <p class="text-muted well well-sm no-shadow text-justify" style="margin-top: 10px;">
+                                                                        <p class="text-muted well well-sm no-shadow text-justify" style="margin-top: 10px; font-size: 0.9em;">
                                                                             <em>                                            
                                                                                 Aplica condiciones y restricciones referentes a la reservacion, Al momento de realizar 
                                                                                 cambios en la reservacion como cambio de fechas, horas o lugares de recogida y entrega
@@ -621,7 +621,7 @@
 
                                                                     </div>
                                                                 </div><!-- /.col -->
-                                                                <div class="col-xs-6">
+                                                                <div class="col-xs-7">
                                                                     <p:graphicImage style="margin-left: 20%; margin-bottom: 10px" width="256" height="256" value="#{reservacionBean.mvehiculoView.vehFotoRuta}" alt="Vehiculo" class="img-thumbnail img-responsive"/>
 
                                                                     <div class="col-sm-12 invoice-col">
@@ -641,7 +641,7 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Color:</th>
-                                                                                    <td>#{reservacionBean.mvehiculoView.vehColor}</td>
+                                                                                    <td>#</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Personas:</th>
@@ -661,7 +661,7 @@
                                                                 </div><!-- /.col -->
                                                                 <hr/>
                                                                 <div class="col-xs-6">
-                                                                    <p class="lead">Valor a Pagar</p>
+                                                                    <h3 class="text-header-conf text-line-botton">Valor a Pagar</h3>
                                                                     <div class="table-responsive">
                                                                         <table class="table">
                                                                             <tr>
