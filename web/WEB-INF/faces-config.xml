@@ -249,7 +249,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>AdminPTipoServicio</from-outcome>
-            <to-view-id>/vistas/AdminP/reservas/PTipoServicio.xhtml</to-view-id>
+            <to-view-id>/vistas/AdminP/reservas/PReserva.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

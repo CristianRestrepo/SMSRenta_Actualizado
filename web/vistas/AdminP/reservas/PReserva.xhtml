@@ -76,7 +76,7 @@
 
                                             <h:panelGrid columns="2" cellpadding="5" width="60%">                                                  
                                                 <p:outputLabel for="SServicio" value="Tipo de servicio"/>
-                                                <p:selectOneMenu id="SServicio" style="width: 100%" binding="#{Servicio}" requiredMessage="Seleccione servicio" required="true" value="#{reservacionBean.servicioView.serviciosNombre}">
+                                                <p:selectOneMenu id="SServicio" style="width: 100%" binding="#{Servicio}" requiredMessage="Seleccione servicio" required="true" value="">
                                                     <f:selectItem itemLabel="Seleccione tipo de servicio" noSelectionOption="true" />
                                                     <f:selectItems value="#{serviciosBean.nombreServiciosListView}"/>
                                                 </p:selectOneMenu>

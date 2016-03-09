@@ -114,6 +114,10 @@ public class PathBean implements Serializable {
      public String ir_AdminPReservaTurismo(){
          return "AdminPReservaTurismo";
      }
+     
+     public String ir_AdminPReservaPRUEBA(){
+         return "AdminPTipoServicio";
+     }
         
     
     /* / ADMIN PRINCIPAL / */
