@@ -25,13 +25,7 @@
         </property>
         <property name="usuarioEmail" type="string">
             <column name="Usuario_email" length="100" not-null="true" />
-        </property>
-        <property name="usuarioRazonSocial" type="string">
-            <column name="Usuario_razonSocial" length="100" />
-        </property>
-        <property name="usuarioNit" type="string">
-            <column name="Usuario_nit" length="45" />
-        </property>
+        </property>        
         <property name="usuarioLogin" type="string">
             <column name="Usuario_login" length="45" />
         </property>

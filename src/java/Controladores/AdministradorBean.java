@@ -7,8 +7,14 @@ package Controladores;
 
 import DAO.IAdministradorDao;
 import DAO.ImpAdministradorDao;
+import Funciones.GenerarPassword;
 import Funciones.MD5;
+import Funciones.SendEmail;
+import static Funciones.Upload.getNameDefaultUsuario;
+import static Funciones.Upload.getPathDefaultUsuario;
 import Modelo.SmsCiudad;
+import Modelo.SmsEmpleado;
+import Modelo.SmsProveedor;
 import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.Serializable;
@@ -24,10 +30,21 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
     IAdministradorDao adminDao;
     private String buscar;
 
+    private int operacion; //Controla la operacion a realizar
+    private String nombreOperacion;
+
+    //Banderas    
+    private boolean habilitarCancelar;
+
     public AdministradorBean() {
         super();
         adminDao = new ImpAdministradorDao();
         buscar = null;
+
+        habilitarCancelar = true;
+
+        operacion = 0;
+        nombreOperacion = "Registrar Empleado";
 
     }
 
@@ -45,19 +62,42 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public String getNombreOperacion() {
+        return nombreOperacion;
+    }
+
+    public void setNombreOperacion(String nombreOperacion) {
+        this.nombreOperacion = nombreOperacion;
+    }
+
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+
     //Declaracion de metodos
     //Metodos CRUD
     public void registrarAdministrador() {
 
         //asignamos al usuario la imagen de perfil default
-        usuarioView.setUsuarioFotoRuta(fileController.getPathDefaultUsuario());
-        usuarioView.setUsuarioFotoNombre(fileController.getNameDefaultUsuario());
+        usuarioView.setUsuarioFotoRuta(getPathDefaultUsuario());
+        usuarioView.setUsuarioFotoNombre(getNameDefaultUsuario());
 
-        password = usuarioView.getUsuarioPassword();
-
+        //Se genera un login y un pass aleatorio que se le envia al proveedor
         MD5 md = new MD5();
-        usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));//Se encripta la contreseña
-        usuarioView.setUsuarioRememberToken(md.getMD5(usuarioView.getUsuarioRememberToken()));
+        GenerarPassword pass = new GenerarPassword();
+        SendEmail email = new SendEmail();
+
+        password = pass.generarPass(6);//Generamos pass aleatorio
+        //Asignamos email como nombre de sesion
+        usuarioView.setUsuarioLogin(usuarioView.getUsuarioEmail());
+
+        //Encriptamos las contraseñas
+        usuarioView.setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
+        usuarioView.setUsuarioRememberToken(md.getMD5(password));
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
@@ -73,9 +113,6 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         usuarioDao.registrarUsuario(usuarioView);
         usuariosListView = adminDao.consultarUsuariosAdministradores();
 
-        //Consultamos la informacion del usuario recien registrado y registramos un respaldo de su contraseña
-        usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
-        
         //limpiamos objetos
         usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
@@ -83,42 +120,32 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         password = "";
     }
 
-    public String modificarAdministrador() {
-        MD5 md = new MD5();
+    public void modificarAdministrador() {
 
-        // en caso de modificar las contraseñas estas se encriptan de nuevo
-            password = modUsuarioView.getUsuarioPassword();//guardamos un relpaldo de la contraseña antes de encriptar
-            modUsuarioView.setUsuarioPassword(md.getMD5(modUsuarioView.getUsuarioPassword()));
-            modUsuarioView.setUsuarioRememberToken(md.getMD5(modUsuarioView.getUsuarioRememberToken()));
-        
         ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        modUsuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
+        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
 
         rolView = rolDao.consultarRol(rolView).get(0);
-        modUsuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
+        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
 
-        usuarioDao.modificarUsuario(modUsuarioView);//modificamos la informacion de usuario
+        usuarioDao.modificarUsuario(usuarioView);//modificamos la informacion de usuario
         //Modificamos el respaldo de la contraseña si esta fue modificada
-        
 
         usuariosListView = adminDao.consultarUsuariosAdministradores();
 
         //limpiamos objetos
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
-        modUsuarioView = new SmsUsuario();
-
-        String ruta = "RAdminPUsuario";
-        return ruta;
+        usuarioView = new SmsUsuario();
     }
 
     public void eliminarAdministrador() {
-        usuarioDao.eliminarUsuario(DUsuarioView);
+        usuarioDao.eliminarUsuario(usuarioView);
         usuariosListView = adminDao.consultarUsuariosAdministradores();
-        if (usuarioView.equals(DUsuarioView)) {
-            usuarioView = new SmsUsuario();
-        }
-        DUsuarioView = new SmsUsuario();
+        //limpiamos objetos
+        ciudadView = new SmsCiudad();
+        rolView = new SmsRol();
+        usuarioView = new SmsUsuario();
     }
 
     public void filtrar() {
@@ -130,21 +157,45 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         }
     }
 
-    //Metodos propios
-    public String irModificarAdministrador() {
-        ciudadView = modUsuarioView.getSmsCiudad();
-        rolView = modUsuarioView.getSmsRol();
-        String ruta = "AdminPEUsuario";
-        return ruta;
+    //Metodos Propios
+    public void metodo() {
+        if (operacion == 0) {
+            registrarAdministrador();
+        } else if (operacion == 1) {
+            modificarAdministrador();
+            //Reiniciamos banderas
+
+            habilitarCancelar = true;
+            operacion = 0;
+
+            nombreOperacion = "Registrar Administrador";
+
+        }
     }
 
-    public String regresar() {
-        modUsuarioView = new SmsUsuario();
+    public void seleccionarCRUD(int i) {
+        operacion = i;
+        if (operacion == 1) {
+
+            ciudadView = usuarioView.getSmsCiudad();
+            rolView = usuarioView.getSmsRol();
+
+            habilitarCancelar = false;
+            nombreOperacion = "Modificar Administrador";
+
+        }
+    }
+
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+
+        usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
 
-        String ruta = "AdminPUsuario";
-        return ruta;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombreOperacion = "Registrar Proveedor";
     }
 
 }

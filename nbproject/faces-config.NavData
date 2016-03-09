@@ -6,14 +6,14 @@
         <Node id="vistas/Conductor/temp-conductor.xhtml" x="650" y="1200" zoom="true"/>
         <Node id="vistas/AdminP/categorias/PCategoria.xhtml" x="1150" y="900" zoom="true"/>
         <Node id="vistas/Cliente/temp-cliente.xhtml" x="1400" y="600" zoom="true"/>
-        <Node id="vistas/AdminP/pais/PPais.xhtml" x="983" y="163" zoom="true"/>
         <Node id="vistas/AdminP/clientes/PClientes.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="vistas/AdminP/pais/PPais.xhtml" x="983" y="163" zoom="true"/>
         <Node id="vistas/AdminS/temp-admin2.xhtml" x="2650" y="150" zoom="true"/>
         <Node id="vistas/AdminP/usuarios/PUsuario.xhtml" x="400" y="600" zoom="true"/>
         <Node id="vistas/AdminP/roles/PRol.xhtml" x="900" y="750" zoom="true"/>
         <Node id="vistas/Proveedor/temp-proveedor.xhtml" x="900" y="450" zoom="true"/>
-        <Node id="vistas/AdminP/empleados/PEmpleado.xhtml" x="1150" y="450" zoom="true"/>
         <Node id="vistas/AdminP/referencias/PReferencia.xhtml" x="2150" y="450" zoom="true"/>
+        <Node id="vistas/AdminP/empleados/PEmpleado.xhtml" x="1150" y="450" zoom="true"/>
         <Node id="vistas/Proveedor/general/Est-dash.xhtml" x="150" y="300" zoom="true"/>
         <Node id="vistas/AdminP/ciudad/PCiudad.xhtml" x="150" y="1200" zoom="true"/>
         <Node id="vistas/AdminS/general/Dashboard-Admin-Secundario.xhtml" x="1150" y="1050" zoom="true"/>

@@ -17,6 +17,14 @@
         <property name="lugarDireccion" type="string">
             <column name="Lugar_direccion" length="200" />
         </property>
+         <set name="smsVehiculos" table="sms_lugar_sms_vehiculo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idLugar" not-null="true" />
+            </key>
+            <many-to-many class="Modelo.SmsVehiculo">
+                <column name="idVehiculo" not-null="true" />
+            </many-to-many>
+        </set>
         <set name="smsCostosserviciosesForIdLugarInicio" table="sms_costosservicios" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idLugar_inicio" />

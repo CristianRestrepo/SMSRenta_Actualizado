@@ -23,32 +23,24 @@
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
-                                            <p:outputLabel value="Nombre: "/>
+                                        <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="2" style="width: 100%;">
+
                                             <b:inputText id="TNombreApUsu" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{administradorBean.usuarioView.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
                                             <p:message for="TNombreApUsu"/>
 
-                                            <p:outputLabel value="CC: " />
+
                                             <b:inputText id="TCcUsu" maxlength="45" placeholder="Cedula de ciudadania" value="#{administradorBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
                                             <p:message for="TCcUsu"/>
 
-                                            <p:outputLabel value="Teléfono: "/>
+
                                             <b:inputText id="TTelUsu" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{administradorBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelUsu"/>
 
-                                            <p:outputLabel value="Email: "/>
+
                                             <b:inputText id="TEmailProv" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{administradorBean.usuarioView.usuarioEmail}" style="width: 100%" ></b:inputText>
                                             <p:message for="TEmailProv"/>
 
-                                            <p:outputLabel value="Razón social: "/>
-                                            <b:inputText id="TRazSocUsu" maxlength="100" placeholder="Nombre de la empresa" value="#{administradorBean.usuarioView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
-                                            <p:message for="TRazSocUsu"/>
 
-                                            <p:outputLabel value="Nit: "/>
-                                            <b:inputText id="TNitUsu" maxlength="45" placeholder="Nit de la empresa" value="#{administradorBean.usuarioView.usuarioNit}" style="width: 100%" ></b:inputText>
-                                            <p:message for="TNitUsu"/>
-
-                                            <p:outputLabel value="Ciudad:* "/>
                                             <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{administradorBean.ciudadView.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
@@ -57,46 +49,25 @@
                                         </h:panelGrid>
                                     </div>
                                 </div>                                                               
+                                <hr/>
+                                <div class="box-body">                                    
+                                    <h:panelGrid columns="3" width="100%">
+                                        <p:outputLabel value="Perfil:* "/>
+                                        <b:selectOneMenu required="true" requiredMessage="Seleccion tipo de usuario" id="SPerfiles" style="width: 100%" value="#{administradorBean.rolView.rolNombre}">
+                                            <f:selectItem itemLabel="Seleccione tipo de perfil"/>
+                                            <f:selectItem itemLabel="Administrador Principal" itemValue="Administrador Principal"/>
+                                            <f:selectItem itemLabel="Administrador Secundario" itemValue="Administrador Secundario"/>
+                                        </b:selectOneMenu>
+                                        <p:message for="SPerfiles"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2" width="100%">
+                                        <p:commandButton class="btn btn-block btn-success" id="BTUsuario"  update="@form" action="#{administradorBean.metodo()}" value="#{administradorBean.nombreOperacion}" />
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{administradorBean.habilitarCancelar}" action="#{administradorBean.cancelar()}" update="@form" value="Cancelar" />
+                                    </h:panelGrid>
+                                </div><hr/>
 
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-check-circle"/>
-                                    <h4 class="box-title">Datos de sesion</h4>                                    
-                                </div>
-                                <div class="box-body">
-                                    <div class="table-responsive">                                       
-                                        <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
-
-                                            <p:outputLabel value="Login: "/>
-                                            <b:inputText id="TLoginUsu" validator="regLoginValidator" maxlength="60" style="width: 100%" value="#{administradorBean.usuarioView.usuarioLogin}" placeholder="Login de sesion"></b:inputText>
-                                            <p:message for="TLoginUsu"/>
-
-                                            <p:outputLabel value="Contraseña: "/>
-                                            <b:inputSecret label="Contraseña" binding="#{UsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{administradorBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
-                                                <f:validateLength minimum="6"/>
-                                            </b:inputSecret>
-                                            <p:message for="TPassUsu"/>
-
-                                            <p:outputLabel value="Repita contraseña: "/>
-                                            <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{administradorBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
-                                                <f:validateLength minimum="6"/>
-                                                <f:attribute name="password" value="#{UsuarioPass.value}"/>
-                                            </b:inputSecret>
-                                            <p:message for="TRemPassUsu"/>                                          
-
-                                        </h:panelGrid><hr/>
-                                        <h:panelGrid columns="3" width="100%">
-                                            <p:outputLabel value="Perfil:* "/>
-                                            <b:selectOneMenu required="true" requiredMessage="Seleccion tipo de usuario" id="SPerfiles" style="width: 100%" value="#{administradorBean.rolView.rolNombre}">
-                                                <f:selectItem itemLabel="Seleccione tipo de perfil"/>
-                                                <f:selectItem itemLabel="Administrador Principal" itemValue="Administrador Principal"/>
-                                                <f:selectItem itemLabel="Administrador Secundario" itemValue="Administrador Secundario"/>
-                                            </b:selectOneMenu>
-                                            <p:message for="SPerfiles"/>
-                                        </h:panelGrid>
-                                    </div><hr/>
-                                    <p:commandButton class="btn btn-block btn-danger" id="BTUsuario"  update="@form" action="#{administradorBean.registrarAdministrador()}" value="Registrar Administrador" />
-                                </div>
                             </div>
+
                         </b:column>  
 
                         <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" class="espacio-arriba">
@@ -137,14 +108,14 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" action="#{administradorBean.irModificarAdministrador()}" title="Modificar">
-                                                <f:setPropertyActionListener value="#{usuario}" target="#{administradorBean.modUsuarioView}"/>
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this"  update="@form"  action="#{administradorBean.seleccionarCRUD(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{usuario}" target="#{administradorBean.usuarioView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{administradorBean.eliminarAdministrador()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{usuario}" target="#{administradorBean.DUsuarioView}"/>
+                                                <f:setPropertyActionListener value="#{usuario}" target="#{administradorBean.usuarioView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este administrador?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>

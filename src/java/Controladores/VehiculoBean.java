@@ -18,6 +18,7 @@ import DAO.ImpProveedorDao;
 import DAO.ImpReferenciaDao;
 import DAO.ImpUsuarioDao;
 import DAO.ImpVehiculoDao;
+import static Funciones.Upload.getPathDefaultVehiculo;
 import Modelo.SmsCategoria;
 import Modelo.SmsCiudad;
 import Modelo.SmsEstadovehiculo;
@@ -306,7 +307,7 @@ public class VehiculoBean {
 
         //En caso de subir NO una fotografia del vehiculo, el sistema asigna al vehiculo una fotografia default
         if (vehiculoView.getVehFotoRuta() == null && vehiculoView.getVehFotoNombre() == null) {
-            String ruta = fileController.getPathDefaultVehiculo();
+            String ruta = getPathDefaultVehiculo();
             vehiculoView.setVehFotoRuta(ruta);
             vehiculoView.setVehFotoNombre("Default.png");
         }
@@ -318,7 +319,7 @@ public class VehiculoBean {
         vehiculoView.setSmsCategoria(categoriaView);//Reasigna Categoria
 
         //Consulta proveedor        
-        proveedorView = provDao.consultarProveedorUsuario(usuarioView).get(0);
+        proveedorView = provDao.consultarProveedor(proveedorView).get(0);
         vehiculoView.setSmsProveedor(proveedorView);//Reasigna Proveedor
 
         //Consulta ciudad        

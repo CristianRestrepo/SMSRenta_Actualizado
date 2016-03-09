@@ -17,7 +17,8 @@ public class SmsLugares  implements java.io.Serializable {
      private String lugarDireccion;
      private Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio = new HashSet<>(0);
      private Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino = new HashSet<>(0);
-
+     private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
+     
     public SmsLugares() {
     }
 
@@ -26,12 +27,13 @@ public class SmsLugares  implements java.io.Serializable {
         this.smsCiudad = smsCiudad;
         this.lugarNombre = lugarNombre;
     }
-    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, String lugarDireccion, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino) {
+    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, String lugarDireccion, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino, Set<SmsVehiculo> smsVehiculos) {
        this.smsCiudad = smsCiudad;
        this.lugarNombre = lugarNombre;
        this.lugarDireccion = lugarDireccion;
        this.smsCostosserviciosesForIdLugarInicio = smsCostosserviciosesForIdLugarInicio;
        this.smsCostosserviciosesForIdLugarDestino = smsCostosserviciosesForIdLugarDestino;
+       this.smsVehiculos = smsVehiculos;
     }
    
     public Integer getIdLugar() {
@@ -77,6 +79,15 @@ public class SmsLugares  implements java.io.Serializable {
         this.smsCostosserviciosesForIdLugarDestino = smsCostosserviciosesForIdLugarDestino;
     }
 
+    public Set<SmsVehiculo> getSmsVehiculos() {
+        return smsVehiculos;
+    }
+
+    public void setSmsVehiculos(Set<SmsVehiculo> smsVehiculos) {
+        this.smsVehiculos = smsVehiculos;
+    }
+
+    
 
 
 

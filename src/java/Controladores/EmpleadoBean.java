@@ -11,7 +11,14 @@ import DAO.IProveedorDao;
 import DAO.ImpEmpleadoDao;
 import DAO.ImpHojaVidaDao;
 import DAO.ImpProveedorDao;
+import Funciones.GenerarPassword;
 import Funciones.MD5;
+import Funciones.SendEmail;
+import static Funciones.Upload.getMapPathHojasVida;
+import static Funciones.Upload.getNameDefaultHojasVida;
+import static Funciones.Upload.getNameDefaultUsuario;
+import static Funciones.Upload.getPathDefaultHojasVida;
+import static Funciones.Upload.getPathDefaultUsuario;
 import Modelo.SmsCiudad;
 import Modelo.SmsEmpleado;
 import Modelo.SmsHojavida;
@@ -45,18 +52,23 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     private SmsEmpleado empleadoView;
     private SmsProveedor proveedorView;
 
-    private SmsHojavida hojavidaView;   
+    private SmsHojavida hojavidaView;
     private List<SmsEmpleado> empleadosListView;
 
-    //Variables
-    private int estado; //Controla la operacion a realizar  
-    private String buscar;    
+    //Variables   
+    private String buscar;
     private StreamedContent file;//Variable que permite descargar la hoja de vida del empleado
     private UploadedFile archivo;
     private UploadedFile foto;
-  
+
     private String estadoArchivo;
-    private Boolean registroHojaVida;
+
+    private int operacion; //Controla la operacion a realizar
+    private String nombreOperacion;
+
+    //Banderas    
+    private boolean habilitarCancelar;
+    private boolean hojavidaActualizada;
 
     //Conexion con el dao
     IEmpleadoDao empleadoDao;
@@ -64,17 +76,21 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     IProveedorDao proveedorDao;
 
     public EmpleadoBean() {
-        super();        
+        super();
         hojavidaView = new SmsHojavida();
         proveedorView = new SmsProveedor();
-         
-        buscar = null;        
-        estado = 0;
-       
-        estadoFoto = "Foto sin subir";       
-        estadoArchivo = "Hoja de vida sin subir";
+        empleadoView = new SmsEmpleado();
+        empleadosListView = new ArrayList<>();
 
-        registroHojaVida = false;       
+        buscar = null;
+        habilitarCancelar = true;
+        hojavidaActualizada = false;
+
+        operacion = 0;
+        nombreOperacion = "Registrar Empleado";
+
+        estadoFoto = "Foto sin subir";
+        estadoArchivo = "Hoja de vida sin subir";
 
         empleadoDao = new ImpEmpleadoDao();
         hojaDao = new ImpHojaVidaDao();
@@ -83,7 +99,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
     @PostConstruct
     public void init() {
-      usuariosListView = empleadoDao.consultarUsuariosEmpleados();
+        empleadosListView = empleadoDao.mostrarEmpleados();
     }
 
     //Getters & Setters   
@@ -103,14 +119,6 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         this.hojavidaView = hojavidaView;
     }
 
-    public Boolean getRegistroHojaVida() {
-        return registroHojaVida;
-    }
-
-    public void setRegistroHojaVida(Boolean registroHojaVida) {
-        this.registroHojaVida = registroHojaVida;
-    }
-
     public UploadedFile getArchivo() {
         return archivo;
     }
@@ -119,29 +127,21 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         this.archivo = archivo;
     }
 
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
-   
     public UploadedFile getFoto() {
         return foto;
     }
 
     public void setFoto(UploadedFile foto) {
         this.foto = foto;
-    }  
- 
+    }
+
     public List<SmsEmpleado> getEmpleadosListView() {
         return empleadosListView;
     }
 
     public void setEmpleadosListView(List<SmsEmpleado> empleadosListView) {
         this.empleadosListView = empleadosListView;
-    }    
+    }
 
     public SmsProveedor getProveedorView() {
         return proveedorView;
@@ -166,24 +166,51 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     public void setEstadoArchivo(String estadoArchivo) {
         this.estadoArchivo = estadoArchivo;
     }
-    
-    
-         
+
+    public String getNombreOperacion() {
+        return nombreOperacion;
+    }
+
+    public void setNombreOperacion(String nombreOperacion) {
+        this.nombreOperacion = nombreOperacion;
+    }
+
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
 
     //Metodos que se comunican con el controlador    
     public void registrarEmpleado() {
-       rolView.setRolNombre("Empleado");
-       
-       if (usuarioView.getUsuarioFotoRuta() == null && hojavidaView.getHojaVidaRuta() == null) {
+        rolView.setRolNombre("Conductor");
+
+        //Si el usuario no registra foto y hoja de vida se asignas unas default
+        if (usuarioView.getUsuarioFotoRuta() == null && hojavidaView.getHojaVidaRuta() == null) {
             //asignamos al usuario la imagen de perfil default
-            usuarioView.setUsuarioFotoRuta(fileController.getPathDefaultUsuario());
-            usuarioView.setUsuarioFotoNombre(fileController.getNameDefaultUsuario());
-            hojavidaView.setHojaVidaNombre(fileController.getNameDefaultHojasVida());
-            hojavidaView.setHojaVidaRuta(fileController.getPathDefaultHojasVida());
+            usuarioView.setUsuarioFotoRuta(getPathDefaultUsuario());
+            usuarioView.setUsuarioFotoNombre(getNameDefaultUsuario());
+            hojavidaView.setHojaVidaNombre(getNameDefaultHojasVida());
+            hojavidaView.setHojaVidaRuta(getPathDefaultHojasVida());
         }
 
+        //Se genera un login y un pass aleatorio que se le envia al proveedor
+        MD5 md = new MD5();
+        GenerarPassword pass = new GenerarPassword();
+        SendEmail email = new SendEmail();
+
+        password = pass.generarPass(6);//Generamos pass aleatorio
+        //Asignamos email como nombre de sesion
+        usuarioView.setUsuarioLogin(usuarioView.getUsuarioEmail());
+
+        //Encriptamos las contraseñas
+        usuarioView.setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
+        usuarioView.setUsuarioRememberToken(md.getMD5(password));
+
         registrarHojaVida(hojavidaView);
-        
+
         ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
         usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
 
@@ -192,97 +219,100 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
 
-        //registramos el usuario y recargamos la lista de clientes
+        //registramos el usuario
         usuarioDao.registrarUsuario(usuarioView);
-        
-        //Se consulta toda la informacion de usuario y se relaciona al empleado
+
+        //Se consulta toda la informacion de usuario y proveedor y se relaciona al empleado
+        proveedorView = proveedorDao.consultarProveedor(proveedorView).get(0);
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
-        proveedorView.setSmsUsuario(usuarioDao.consultarUsuario(proveedorView.getSmsUsuario()).get(0));
+       
+
         empleadoView.setSmsUsuario(usuarioView);
-        
+        empleadoView.setSmsProveedor(proveedorView);
+
+        //se verifica si se registro una hoja de vida
+        if (hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null) {
+            hojavidaView = hojaDao.consultarHojaVida(hojavidaView).get(0);
+            empleadoView.setSmsHojavida(hojavidaView);//se relaciona la hoja de vida al empleado
+        }
+
+        empleadoDao.registrarEmpleado(empleadoView);//Registramos al usuario como empleado
+        email.sendEmailConductor(usuarioView, password);//Se envia correo con datos de sesion a conductor
+
+        //Se limpian objetos y se reinician banderas
+        estadoFoto = "Foto sin subir";
+        estadoArchivo = "Hoja de vida sin subir";
+
+        usuarioView = new SmsUsuario();
+        proveedorView = new SmsProveedor();
+        ciudadView = new SmsCiudad();
+        rolView = new SmsRol();
+        empleadoView = new SmsEmpleado();
+        hojavidaView = new SmsHojavida();
+        empleadosListView = empleadoDao.mostrarEmpleados();
+    }
+
+    public void modificarPerfilEmpleado() {
+        MD5 md = new MD5();
+
+        usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
+        usuarioView.setUsuarioRememberToken(md.getMD5(usuarioView.getUsuarioRememberToken()));
+
+        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
+        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
+
+        usuarioDao.modificarUsuario(usuarioView);
+        modEmpleadoView.setSmsUsuario(usuarioView);
+
         if (hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null) {
 
             hojavidaView = hojaDao.consultarHojaVida(hojavidaView).get(0);
+            modEmpleadoView.setSmsHojavida(hojavidaView);
+        }
+
+        empleadoDao.modificarEmpleado(modEmpleadoView);
+        estadoArchivo = "Hoja subida:" + hojavidaView.getHojaVidaNombre();
+
+    }
+
+    public void modificarEmpleado() {
+        rolView.setRolNombre("Empleado");
+
+        usuarioDao.modificarUsuario(usuarioView);
+        empleadoView.setSmsUsuario(usuarioView);
+
+        if (hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null) {
+            hojavidaView = hojaDao.consultarHojaVida(hojavidaView).get(0);
             empleadoView.setSmsHojavida(hojavidaView);
         }
+
+        empleadoDao.modificarEmpleado(empleadoView);
+
+        estadoFoto = "Foto sin subir";
+        estadoArchivo = "Hoja de vida sin subir";
+
+        usuarioView = new SmsUsuario();
+        ciudadView = new SmsCiudad();
+        rolView = new SmsRol();
+        hojavidaView = new SmsHojavida();
+        proveedorView = new SmsProveedor();
+        empleadosListView = empleadoDao.mostrarEmpleados();
+    }
+
+    public void eliminarEmpleado() {
+        usuarioView = empleadoView.getSmsUsuario();
+        hojavidaView = empleadoView.getSmsHojavida();
         
-        empleadoDao.registrarEmpleado(empleadoView);//Registramos al usuario como empleado
-
-        estadoFoto = "Foto sin subir";     
-        estadoArchivo = "Hoja de vida sin subir";        
-        registroHojaVida = false;
-
+        usuarioDao.eliminarUsuario(usuarioView);
+        hojaDao.eliminarHojaVida(hojavidaView);
+        
         usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
         empleadoView = new SmsEmpleado();
         hojavidaView = new SmsHojavida();
-        usuariosListView = empleadoDao.consultarUsuariosEmpleados();
-    }
-
-    public void modificarPerfilEmpleado() {
-        MD5 md = new MD5();
-        
-        modUsuarioView.setUsuarioPassword(md.getMD5(modUsuarioView.getUsuarioPassword()));
-        modUsuarioView.setUsuarioRememberToken(md.getMD5(modUsuarioView.getUsuarioRememberToken()));
-      
-        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        modUsuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
-
-        usuarioDao.modificarUsuario(modUsuarioView);
-        modEmpleadoView.setSmsUsuario(usuarioView);
-
-        if (hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null) {
-            
-            hojavidaView = hojaDao.consultarHojaVida(hojavidaView).get(0);
-            modEmpleadoView.setSmsHojavida(hojavidaView);
-        } 
-        
-        empleadoDao.modificarEmpleado(modEmpleadoView);
-        estadoArchivo = "Hoja subida:" + hojavidaView.getHojaVidaNombre();
-        
-    }
-
-    public String modificarEmpleado() {
-        rolView.setRolNombre("Empleado");
-        
-        modEmpleadoView.setSmsUsuario(modUsuarioView);
-       // modificar();        
-        
-        
-        if(hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null){
-            hojavidaView = hojaDao.consultarHojaVida(hojavidaView).get(0);
-            modEmpleadoView.setSmsHojavida(hojavidaView);
-        }
-                        
-        empleadoDao.modificarEmpleado(modEmpleadoView);
-
-        estadoFoto = "Foto sin subir";       
-
-        estadoArchivo = "Hoja de vida sin subir";       
-        registroHojaVida = false;
-
-        modUsuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
-        hojavidaView = new SmsHojavida();
-
-        usuariosListView = empleadoDao.consultarUsuariosEmpleados();
-        estado = 0;
-        String ruta = "RAdminPEmpleado";
-        return ruta;
-    }
-
-    public void eliminarEmpleado() {
-        usuarioDao.eliminarUsuario(DUsuarioView);
-
-        DUsuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
-        empleadoView = new SmsEmpleado();
-        hojavidaView = new SmsHojavida();
-
-        usuariosListView = empleadoDao.consultarUsuariosEmpleados();
+        proveedorView = new SmsProveedor();
+        empleadosListView = empleadoDao.mostrarEmpleados();
     }
 
     public void filtrarEmpleados() {
@@ -298,63 +328,90 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         hojaDao.registrarHojaVida(h);
     }
 
-    //Metodos propios
-    public String irModificarEmpleados() {
-        estado = 1;
+    //Metodos Propios
+    public void metodo() {
+        if (operacion == 0) {
+            registrarEmpleado();
+        } else if (operacion == 1) {
+            modificarEmpleado();
+            //Reiniciamos banderas
 
-        ciudadView = modUsuarioView.getSmsCiudad();
-        rolView = modUsuarioView.getSmsRol();
-        empleadoView = empleadoDao.consultarEmpleado(modUsuarioView).get(0);
+            habilitarCancelar = true;
+            operacion = 0;
+            hojavidaActualizada = false;
+            nombreOperacion = "Registrar Empleado";
 
-        if (empleadoView.getSmsHojavida() != null) {
-            hojavidaView = empleadoView.getSmsHojavida();
         }
-
-        if (modUsuarioView.getUsuarioFotoNombre() != null || modUsuarioView.getUsuarioFotoRuta() != null) {           
-            estadoFoto = "Foto subida:" + modUsuarioView.getUsuarioFotoNombre();           
-        } 
-
-        if (hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null) {
-            estadoArchivo = "Hoja subida:" + hojavidaView.getHojaVidaNombre();            
-        } 
-        String ruta = "AdminPEEmpleado";
-        return ruta;
     }
 
-    public String regresar_Empleado() {
-        modUsuarioView = new SmsUsuario();
+    public void seleccionarCRUD(int i) {
+        operacion = i;
+        if (operacion == 1) {
+
+            usuarioView = empleadoView.getSmsUsuario();
+            usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
+            if (empleadoView.getSmsHojavida() != null) {
+                hojavidaView = empleadoView.getSmsHojavida();
+            }
+
+            if (usuarioView.getUsuarioFotoNombre() != null || usuarioView.getUsuarioFotoRuta() != null) {
+                estadoFoto = "Foto subida:" + usuarioView.getUsuarioFotoNombre();
+            }
+
+            if (hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null) {
+                estadoArchivo = "Hoja subida:" + hojavidaView.getHojaVidaNombre();
+            }
+
+            proveedorView = empleadoView.getSmsProveedor();
+            ciudadView = usuarioView.getSmsCiudad();
+            rolView = usuarioView.getSmsRol();
+
+            habilitarCancelar = false;
+            nombreOperacion = "Modificar Empleado";
+
+        }
+    }
+
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        proveedorView = new SmsProveedor();
+        empleadoView = new SmsEmpleado();
+        usuarioView = new SmsUsuario();
+        usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
-        hojavidaView = new SmsHojavida();
+        rolView = new SmsRol();
 
-        estadoFoto = "Foto sin subir";      
-        estadoArchivo = "Hoja de vida sin subir";       
-        registroHojaVida = false;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombreOperacion = "Registrar Proveedor";
+        estadoFoto = "Foto sin subir";
+        estadoArchivo = "Hoja de vida sin subir";
 
-       
-        String ruta = "AdminPEmpleado";
-        return ruta;
-    }   
-   
+    }
+
     //Subida de archivos
     public void uploadDoc(FileUploadEvent e) throws IOException {
         try {
             UploadedFile uploadedDoc = e.getFile();
             String destination;
 
-            HashMap<String, String> map = fileController.getMapPathHojasVida();
+            HashMap<String, String> map = getMapPathHojasVida();
             destination = map.get("path");
             if (null != uploadedDoc) {
                 fileController.uploadFile(IOUtils.toByteArray(uploadedDoc.getInputstream()), uploadedDoc.getFileName(), destination);
                 hojavidaView.setHojaVidaNombre(uploadedDoc.getFileName());
                 hojavidaView.setHojaVidaRuta(map.get("url") + uploadedDoc.getFileName());
-                if (estado == 0) {
+                if (operacion == 0) {
                     estadoArchivo = "Hoja de vida subida con exito";
-                } else if (estado == 1) {
+                } else if (operacion == 1) {
                     estadoArchivo = "Hoja de vida actualizada con exito";
+                    hojavidaActualizada = true;
                 }
-
+                
+            if(hojavidaActualizada){
                 registrarHojaVida(hojavidaView);
-                registroHojaVida = true;
+            }
+                
             }
 
             FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Hoja de vida (" + uploadedDoc.getFileName() + ")  se ha guardado con exito.", ""));
@@ -362,22 +419,21 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
             ex.getMessage();
         }
     }
-    
-    
+
     public List<SmsEmpleado> consultarEmpleadosDisponibles(SmsReservacion reserva, SmsCiudad ciudad) {
-        
+
         empleadosListView = new ArrayList<>();
-        
+
         SimpleDateFormat formatDate;
         SimpleDateFormat formatTime;
         formatDate = new SimpleDateFormat("yyyy-MM-dd");
         formatTime = new SimpleDateFormat("HH:mm:ss");
-        
+
         String FechaInicio = formatDate.format(reserva.getReservacionFechaInicio());
         String FechaLlegada = formatDate.format(reserva.getReservacionFechaLlegada());
         String HoraInicio = formatTime.format(reserva.getReservacionHoraInicio());
         String HoraLlegada = formatTime.format(reserva.getReservacionHoraLlegada());
-        
+
         Calendar calInicio = Calendar.getInstance();
         calInicio.setTime(reserva.getReservacionHoraInicio());
         calInicio.add(Calendar.HOUR, -1);
@@ -387,17 +443,17 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         calLlegada.setTime(reserva.getReservacionHoraLlegada());
         calLlegada.add(Calendar.HOUR, 1);
         calLlegada.add(Calendar.MINUTE, 59);
-        
+
         Date hespacioInicio = calInicio.getTime();
         Date hespacioLlegada = calLlegada.getTime();
 
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
-     
+
         empleadosListView = empleadoDao.consultarEmpleadosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudad.getCiudadNombre(), espacioinicio, espacioLlegada);
         List<SmsEmpleado> lista = new ArrayList<>();
-        for(int i = 0; i<empleadosListView.size() ; i++){
-        lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));
+        for (int i = 0; i < empleadosListView.size(); i++) {
+            lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));
         }
         return lista;
     }

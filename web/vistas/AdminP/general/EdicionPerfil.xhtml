@@ -26,29 +26,21 @@
                                 <div class="table-responsive">
                                     <h:panelGrid  id="seccionDatosUsuario" columns="3" cellpadding="2" style="width: 100%;">
                                         <p:outputLabel value="Nombre: *"/>
-                                        <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombre y apellido" style="width: 100%;" maxlength="60" value="#{usuarioBean.modUsuarioView.usuarioNombre}"></b:inputText>                       
+                                        <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombre y apellido" style="width: 100%;" maxlength="60" value="#{usuarioBean.usuarioView.usuarioNombre}"></b:inputText>                       
                                         <p:message for="TNombreApProv"/>
 
                                         <p:outputLabel value="CC: " />
-                                        <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioCc}"></b:inputText>
+                                        <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioCc}"></b:inputText>
                                         <p:message for="TCcProv"/>
 
                                         <p:outputLabel value="Telefono: "/>
-                                        <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioTelefono}"></b:inputText> 
+                                        <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioTelefono}"></b:inputText> 
                                         <p:message for="TTelProv"/>
 
                                         <p:outputLabel value="Email: *"/>
-                                        <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioEmail}"></b:inputText>
+                                        <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioEmail}"></b:inputText>
                                         <p:message for="TEmailProv"/>
-
-                                        <p:outputLabel value="Razon social: "/>
-                                        <b:inputText maxlength="100" id="TRazSocProv" placeholder="Nombre de la empresa" style="width: 100%"  value="#{usuarioBean.modUsuarioView.usuarioRazonSocial}"></b:inputText>
-                                        <p:message for="TRazSocProv"/>
-
-                                        <p:outputLabel value="Nit: "/>
-                                        <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioNit}"></b:inputText>
-                                        <p:message for="TNitProv"/>
-
+                                        
                                         <p:outputLabel value="Ciudad: *"/>
                                         <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{usuarioBean.ciudadUsuario.ciudadNombre}" style="width: 100%">
                                             <f:selectItem itemLabel="Seleccione Ciudad"/>
@@ -68,19 +60,19 @@
                                         <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
 
                                             <p:outputLabel value="Login: "/>
-                                            <b:inputText id="TLoginUsu" maxlength="60" validator="modLoginValidator" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioLogin}" placeholder="Login de sesion">
-                                                <f:attribute name="usuario" value="#{usuarioBean.modUsuarioView}"/>
+                                            <b:inputText id="TLoginUsu" maxlength="60" validator="modLoginValidator" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioLogin}" placeholder="Login de sesion">
+                                                <f:attribute name="usuario" value="#{usuarioBean.usuarioView}"/>
                                             </b:inputText>
                                             <p:message for="TLoginUsu"/>
 
                                             <p:outputLabel value="Contraseña: "/>
-                                            <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                            <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
                                                 <f:validateLength minimum="6"/>
                                             </b:inputSecret>
                                             <p:message for="TPassUsu"/>
 
                                             <p:outputLabel value="Repita contraseña: "/>
-                                            <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
+                                            <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
                                                 <f:validateLength minimum="6"/>
                                                 <f:attribute name="password" value="#{MUsuarioPass.value}"/>
                                             </b:inputSecret>
@@ -126,7 +118,7 @@
                                         <h4 class="box-title">Fotografia de perfil</h4>
                                     </div>
                                     <div class="box-body" style="width: 100%" align="center">
-                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.modUsuarioView.usuarioFotoRuta}"/> 
+                                        <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.usuarioView.usuarioFotoRuta}"/> 
                                     </div>
                                 </div>
 

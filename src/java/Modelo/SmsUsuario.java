@@ -17,9 +17,7 @@ public class SmsUsuario  implements java.io.Serializable {
      private String usuarioNombre;
      private String usuarioCc;
      private String usuarioTelefono;
-     private String usuarioEmail;
-     private String usuarioRazonSocial;
-     private String usuarioNit;
+     private String usuarioEmail;    
      private String usuarioLogin;
      private String usuarioPassword;
      private String usuarioRememberToken;
@@ -40,15 +38,13 @@ public class SmsUsuario  implements java.io.Serializable {
         this.usuarioNombre = usuarioNombre;
         this.usuarioEmail = usuarioEmail;
     }
-    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, String usuarioNombre, String usuarioCc, String usuarioTelefono, String usuarioEmail, String usuarioRazonSocial, String usuarioNit, String usuarioLogin, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions) {
+    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, String usuarioNombre, String usuarioCc, String usuarioTelefono, String usuarioEmail, String usuarioLogin, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions) {
        this.smsCiudad = smsCiudad;
        this.smsRol = smsRol;
        this.usuarioNombre = usuarioNombre;
        this.usuarioCc = usuarioCc;
        this.usuarioTelefono = usuarioTelefono;
-       this.usuarioEmail = usuarioEmail;
-       this.usuarioRazonSocial = usuarioRazonSocial;
-       this.usuarioNit = usuarioNit;
+       this.usuarioEmail = usuarioEmail;      
        this.usuarioLogin = usuarioLogin;
        this.usuarioPassword = usuarioPassword;
        this.usuarioRememberToken = usuarioRememberToken;
@@ -109,20 +105,7 @@ public class SmsUsuario  implements java.io.Serializable {
     public void setUsuarioEmail(String usuarioEmail) {
         this.usuarioEmail = usuarioEmail;
     }
-    public String getUsuarioRazonSocial() {
-        return this.usuarioRazonSocial;
-    }
     
-    public void setUsuarioRazonSocial(String usuarioRazonSocial) {
-        this.usuarioRazonSocial = usuarioRazonSocial;
-    }
-    public String getUsuarioNit() {
-        return this.usuarioNit;
-    }
-    
-    public void setUsuarioNit(String usuarioNit) {
-        this.usuarioNit = usuarioNit;
-    }
     public String getUsuarioLogin() {
         return this.usuarioLogin;
     }

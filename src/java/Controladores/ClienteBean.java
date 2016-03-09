@@ -7,9 +7,12 @@ package Controladores;
 
 import DAO.IClienteDao;
 import DAO.ImpClienteDao;
+import Funciones.GenerarPassword;
 import Funciones.MD5;
 import Funciones.SendEmail;
 import Modelo.SmsCiudad;
+import Modelo.SmsMercado;
+import Modelo.SmsProveedor;
 import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.Serializable;
@@ -34,14 +37,23 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     //Variables   
     private String buscar;
+    private int operacion; //Controla la operacion a realizar
+    private String nombreOperacion;
+
+    //Banderas    
+    private boolean habilitarCancelar;
 
     public ClienteBean() {
         super();
         nombresClientesListView = new ArrayList<>();
         emailController = new SendEmail();
         clienteDao = new ImpClienteDao();
-        
+
         buscar = null;
+        habilitarCancelar = true;       
+
+        operacion = 0;
+        nombreOperacion = "Registrar Cliente";
     }
 
     @PostConstruct
@@ -73,6 +85,24 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public String getNombreOperacion() {
+        return nombreOperacion;
+    }
+
+    public void setNombreOperacion(String nombreOperacion) {
+        this.nombreOperacion = nombreOperacion;
+    }
+
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+    
+    
+
     //Metodos     
     public String registrarCliente() {
         //asignamos un rol al usuario
@@ -103,7 +133,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
         //Actualizamos la lista de clientes registrador en el sistema
         usuariosListView = clienteDao.consultarUsuariosClientes();
-        emailController.sendEmailBienvenida(usuarioView);//enviamos correo de bienvenida
+        emailController.sendEmailCliente(usuarioView, password);//enviamos correo de bienvenida
         //limpiamos objetos
         usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
@@ -121,10 +151,17 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         usuarioView.setUsuarioFotoRuta(fileController.getPathDefaultUsuario());
         usuarioView.setUsuarioFotoNombre(fileController.getNameDefaultUsuario());
 
-        password = usuarioView.getUsuarioPassword();
+        //Se genera un login y un pass aleatorio que se le envia al proveedor
         MD5 md = new MD5();
-        usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));//Se encripta la contreseña
-        usuarioView.setUsuarioRememberToken(md.getMD5(usuarioView.getUsuarioRememberToken()));
+        GenerarPassword pass = new GenerarPassword();//Generamos un password aleatorio
+
+        password = pass.generarPass(6);//Generamos pass aleatorio
+        //Asignamos email como nombre de sesion
+        usuarioView.setUsuarioLogin(usuarioView.getUsuarioEmail());
+
+        //Encriptamos las contraseñas
+        usuarioView.setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
+        usuarioView.setUsuarioRememberToken(md.getMD5(password));
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
@@ -141,73 +178,52 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
         //Consultamos informacion usuario recien registrado y guardamos respaldo de su contraseña
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
-        
+
         //Actualizamos la lista de clientes registrador en el sistema
         usuariosListView = clienteDao.consultarUsuariosClientes();
 
-        emailController.sendEmailBienvenida(usuarioView);//enviamos correo de bienvenida
+        emailController.sendEmailCliente(usuarioView, password);//enviamos correo de bienvenida
         //limpiamos objetos
         usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
     }
 
-    public String modificarCliente() {
+    public void modificarCliente() {
         MD5 md = new MD5();
-
-        //se asigna un rol al usuario
-        rolView.setRolNombre("Cliente");
-
-        // en caso de modificar las contraseñas estas se encriptan de nuevo
-            password = modUsuarioView.getUsuarioPassword();//guardamos un relpaldo de la contraseña antes de encriptar
-            modUsuarioView.setUsuarioPassword(md.getMD5(modUsuarioView.getUsuarioPassword()));
-            modUsuarioView.setUsuarioRememberToken(md.getMD5(modUsuarioView.getUsuarioRememberToken()));
-        
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
         ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        modUsuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
+        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
 
         rolView = rolDao.consultarRol(rolView).get(0);
-        modUsuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
+        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
 
-        modUsuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
+        usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
 
-        //registramos el usuario y recargamos la lista de clientes
-        usuarioDao.modificarUsuario(modUsuarioView);
-        
-        //Modificamos el respaldo de la contraseña si esta fue modificada
-        
-
-        //Se modifica el usuario y se recarga la lista de clientes
+        //modificamos el usuario y recargamos la lista de clientes
+        usuarioDao.modificarUsuario(usuarioView);
         usuariosListView = clienteDao.consultarUsuariosClientes();
         //se limpian objetos
-        modUsuarioView = new SmsUsuario();
+        usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
-
-        //Nos retorna a la vista de registro de clientes
-        String ruta = "RAdminPCliente";
-        return ruta;
     }
 
     public void eliminarCliente() {
-        //Ejecutamos la eliminacion del usuario
-        usuarioDao.eliminarUsuario(DUsuarioView);
-        //Recargamos la lista de clientes
+        usuarioDao.eliminarUsuario(usuarioView);//Se elimina el objeto
+        //Se recarga la lista de clientes
         usuariosListView = clienteDao.consultarUsuariosClientes();
 
-        if (usuarioView.equals(DUsuarioView)) {//Validamos si el cliente a eliminar, esta en proceso de modificacion
-            //si es correcto, limpiamos los objetos donde esta guardado este cliente que se acabo de eliminar
-            usuarioView = new SmsUsuario();
-            ciudadView = new SmsCiudad();
-            rolView = new SmsRol();
-        }
+        //Limpiamos objetos
+        usuarioView = new SmsUsuario();
+        ciudadView = new SmsCiudad();
+        rolView = new SmsRol();
 
-        //Limpiamos los objetos que contenian el cliente a eliminar
-        DUsuarioView = new SmsUsuario();
-        modUsuarioView = new SmsUsuario();
+        habilitarCancelar = true;
+        operacion = 0;
+        nombreOperacion = "Registrar Proveedor";
     }
 
     public void filtrarClientes() {
@@ -219,21 +235,40 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         }
     }
 
-    //Metodos propios
-    public String irModificarCliente() {
-        //Asigna a ciudad y rol los valores correspondientes segun el cliente elegido a modificar
-        ciudadView = modUsuarioView.getSmsCiudad();
-        rolView = modUsuarioView.getSmsRol();
+    //Metodos Propios
+    public void metodo() {
+        if (operacion == 0) {
+            registrarClienteAdmin();
+        } else if (operacion == 1) {
+            modificarCliente();
+            //Reiniciamos banderas
 
-        //Nos direcciona a las vista de modificacion
-        String ruta = "AdminPECliente";
-        return ruta;
+            habilitarCancelar = true;
+            operacion = 0;
+            nombreOperacion = "Registrar Cliente";
+
+        }
     }
 
-    public String regresar() {
-        //Resetea los datos que se muestran en la vista, retorna al panel del cliente.
-        modUsuarioView = new SmsUsuario();
-        String ruta = "AdminPCliente";
-        return ruta;
+    public void seleccionarCRUD(int i) {
+        operacion = i;
+        if (operacion == 1) {
+            ciudadView = usuarioView.getSmsCiudad();
+            rolView = usuarioView.getSmsRol();
+            habilitarCancelar = false;
+            nombreOperacion = "Modificar Cliente";
+        }
+    }
+
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        usuarioView = new SmsUsuario();
+        ciudadView = new SmsCiudad();
+        rolView = new SmsRol();
+
+        //Reiniciamos los objetos       
+        habilitarCancelar = true;
+        nombreOperacion = "Registrar Cliente";
+
     }
 }

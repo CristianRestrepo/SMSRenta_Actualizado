@@ -50,15 +50,14 @@
                                         <hr/>
                                         <p:outputLabel value="Datos de la empresa"/>
                                         <h:panelGrid  id="seccionDatosEmpresa" columns="2" cellpadding="2" style="width: 100%;">
-                                            <b:inputText maxlength="100" id="TRazSocProv" placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.usuarioView.usuarioRazonSocial}"></b:inputText>
+                                            <b:inputText maxlength="100" id="TRazSocProv" required="true" requiredMessage="Ingrese razon social de la empresa" placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.proveedorView.proveedorRazonSocial}"></b:inputText>
                                             <p:message for="TRazSocProv"/>
 
-                                            <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioNit}"></b:inputText>
+                                            <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorNit}"></b:inputText>
                                             <p:message for="TNitProv"/>
 
                                             <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioEmail}"></b:inputText>
                                             <p:message for="TEmailProv"/>
-
 
                                             <b:inputText id="TValorGProv" placeholder="Valor de ganancia" required="true" tooltip="Valor de ganancia del proveedor sobre el costo total" requiredMessage="Indique valor de ganancia acordado con el proveedor" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorValorGanancia}"></b:inputText>
                                             <p:message for="TValorGProv"/>
@@ -109,21 +108,21 @@
                                     <b:inputText placeholder="Buscar" value="#{proveedorBean.buscar}" style=" width: 100%">
                                         <p:ajax event="keyup" listener="#{proveedorBean.filtrarProveedores()}" process="@this" update="DTProveedores"/>
                                     </b:inputText>
-                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.usuariosListView}">
+                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.proveedorListView}">
 
                                         <p:column headerText="Razon Social">
-                                            <p:outputLabel value="#{proveedor.usuarioRazonSocial}"/>
+                                            <p:outputLabel value="#{proveedor.proveedorRazonSocial}"/>
                                         </p:column>
 
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form"  action="#{proveedorBean.seleccionarCRUD(1)}" title="Modificar">
-                                                <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.usuarioView}"/>
+                                                <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{proveedorBean.eliminarProveedor()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.usuarioView}"/>
+                                                <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este Proveedor?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>

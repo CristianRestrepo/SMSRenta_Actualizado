@@ -15,10 +15,10 @@ import java.util.List;
  */
 public interface IProveedorDao {
 
-    //Definicion de metodos CRUD
-    public List<SmsProveedor> consultarProveedorUsuario(SmsUsuario usuario);
-
+    //Definicion de metodos CRUD    
     public List<SmsProveedor> consultarProveedor(SmsProveedor proveedor);
+    
+     public List<SmsUsuario> consultarUsuariosProveedores();
 
     public List<SmsProveedor> mostrarProveedores();
 
@@ -26,11 +26,7 @@ public interface IProveedorDao {
 
     public void modificarProveedor(SmsProveedor proveedor);
     
-    public void eliminarProveedor(SmsProveedor proveedor);
-
-    public List<SmsUsuario> consultarUsuariosProveedores();
-
-    public List<SmsUsuario> filtrarUsuariosProveedores(String valor);
-
+    public void eliminarProveedor(SmsProveedor proveedor);    
+    
     public List<SmsProveedor> filtrarProveedor(String dato);
 }

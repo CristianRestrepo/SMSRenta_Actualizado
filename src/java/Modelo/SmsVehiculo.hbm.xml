@@ -14,6 +14,9 @@
         <many-to-one name="smsCiudad" class="Modelo.SmsCiudad" fetch="select">
             <column name="idCiudad" not-null="true" />
         </many-to-one>
+         <many-to-one name="smsColor" class="Modelo.SmsColor" fetch="select">
+            <column name="idColor" not-null="true" />
+        </many-to-one>
         <many-to-one name="smsProveedor" class="Modelo.SmsProveedor" fetch="select">
             <column name="idProveedor" not-null="true" />
         </many-to-one>
@@ -25,10 +28,7 @@
         </property>
         <property name="vehModelo" type="string">
             <column name="Veh_modelo" length="50" not-null="true" />
-        </property>
-        <property name="vehColor" type="string">
-            <column name="Veh_color" length="50" />
-        </property>
+        </property>        
         <property name="vehNumPersonas" type="java.lang.Integer">
             <column name="Veh_num_personas" />
         </property>
@@ -56,6 +56,14 @@
             </key>
             <many-to-many class="Modelo.SmsCategoriasServicio">
                 <column name="idCategoria_Servicio" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="smsLugares" table="sms_lugar_sms_vehiculo" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idVehiculo" not-null="true" />
+            </key>
+            <many-to-many class="Modelo.SmsLugares">
+                <column name="idLugar" not-null="true" />
             </many-to-many>
         </set>
         <set name="smsReservacions" table="sms_reservacion" inverse="true" lazy="true" fetch="select">

@@ -166,8 +166,7 @@
             <from-outcome>AdminPEmpleado</from-outcome>
             <to-view-id>/vistas/AdminP/empleados/PEmpleado.xhtml</to-view-id>
             <redirect/>            
-        </navigation-case>
-        
+        </navigation-case>        
         <navigation-case>
             <from-outcome>AdminPEstadisticas</from-outcome>
             <to-view-id>/vistas/AdminP/estadisticas/PEstadisticas.xhtml</to-view-id>
@@ -223,11 +222,8 @@
             <to-view-id>/login.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        <navigation-case>
-            <from-outcome>AdminPEdicionPerfil</from-outcome>
-            <to-view-id>/vistas/AdminP/general/EdicionPerfil.xhtml</to-view-id>            
-            <redirect/>
-        </navigation-case>
+        
+        
         <navigation-case>
             <from-outcome>AdminPEUsuario</from-outcome>
             <to-view-id>/vistas/AdminP/usuarios/PEUsuario.xhtml</to-view-id>
@@ -445,7 +441,26 @@
             <to-view-id>/vistas/AdminP/Reportes/reporte_2.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        
+        <navigation-case>
+            <from-outcome>EditarPerfil</from-outcome>
+            <to-view-id>/vistas/AdminP/general/EditarPerfil.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminEditarPerfil</from-outcome>
+            <to-view-id>/vistas/AdminP/general/EditarPerfil.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>InformacionPersonal</from-outcome>
+            <to-view-id>/vistas/AdminP/general/PInformacionPersonal.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>InformacionSesion</from-outcome>
+            <to-view-id>/vistas/AdminP/general/PInformacionSesion.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     
     <!-- otras rutas admin principal-->
