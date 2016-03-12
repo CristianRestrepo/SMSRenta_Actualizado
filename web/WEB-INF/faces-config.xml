@@ -440,14 +440,9 @@
             <from-outcome>AdminPReporte</from-outcome>
             <to-view-id>/vistas/AdminP/Reportes/reporte_2.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>
+        </navigation-case>        
         <navigation-case>
-            <from-outcome>EditarPerfil</from-outcome>
-            <to-view-id>/vistas/AdminP/general/EditarPerfil.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>AdminEditarPerfil</from-outcome>
+            <from-outcome>AdminPEditarPerfil</from-outcome>
             <to-view-id>/vistas/AdminP/general/EditarPerfil.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
@@ -547,6 +542,14 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
-    
-
+    <managed-bean>
+        <managed-bean-name>facturaBean</managed-bean-name>
+        <managed-bean-class>Controladores.FacturaBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>colorBean</managed-bean-name>
+        <managed-bean-class>Controladores.ColorBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

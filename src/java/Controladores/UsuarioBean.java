@@ -15,7 +15,6 @@ import DAO.ImpRolDao;
 import DAO.ImpUsuarioDao;
 import static Funciones.Upload.getMapPathFotosUsuario;
 import Modelo.SmsCiudad;
-import Modelo.SmsEmpleado;
 import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.IOException;
@@ -38,20 +37,20 @@ public class UsuarioBean implements Serializable {
 
     //Instanciacion de los objetos    
     protected SmsUsuario usuarioView;
-    
-    protected SmsEmpleado modEmpleadoView;
     protected List<SmsUsuario> usuariosListView;
 
-    protected SmsCiudad ciudadUsuario;
     protected SmsCiudad ciudadView;
     protected SmsRol rolView;
-    
+
+    private String nuevaContraseña;
+    private String repitaContraseña;
+
     //Controles de componentes
     boolean habilitado;
 
     //Relacion con el controlador   
     protected Upload fileController;
-    
+
     //Contexto
     private FacesMessage message;
 
@@ -61,46 +60,36 @@ public class UsuarioBean implements Serializable {
     //Conexion con el Dao
     ICiudadDao ciudadDao;
     IRolDao rolDao;
-    IUsuarioDao usuarioDao;   
+    IUsuarioDao usuarioDao;
+    
     //Variables
     protected String password;
     protected String estadoFoto;
-   
 
     //Contexto y sesion
     private HttpSession httpSession;
 
     public UsuarioBean() {
-        
-        usuarioView = new SmsUsuario();        
+
+        usuarioView = new SmsUsuario();
         ciudadView = new SmsCiudad();
         rolView = new SmsRol();
-        modEmpleadoView = new SmsEmpleado();
+
+        nuevaContraseña = "";
+        repitaContraseña = "";
+
+        Usuario = new SmsUsuario();
+        estadoFoto = "";
 
         fileController = new Upload();
-       
-        Usuario = new SmsUsuario();
-        ciudadUsuario = new SmsCiudad();
-        habilitado = true;
-
-        estadoFoto = "";
-        estadoFoto = "";
 
         usuarioDao = new ImpUsuarioDao();
         ciudadDao = new ImpCiudadDao();
         rolDao = new ImpRolDao();
-      
+
     }
 
-    //Getters & Setters
-    public SmsCiudad getCiudadUsuario() {
-        return ciudadUsuario;
-    }
-
-    public void setCiudadUsuario(SmsCiudad ciudadUsuario) {
-        this.ciudadUsuario = ciudadUsuario;
-    }
-
+    //Getters & Setters  
     public List<SmsUsuario> getUsuariosListView() {
         return usuariosListView;
     }
@@ -147,14 +136,6 @@ public class UsuarioBean implements Serializable {
 
     public void setUsuario(SmsUsuario Usuario) {
         this.Usuario = Usuario;
-    }   
-
-    public SmsEmpleado getModEmpleadoView() {
-        return modEmpleadoView;
-    }
-
-    public void setModEmpleadoView(SmsEmpleado modEmpleadoView) {
-        this.modEmpleadoView = modEmpleadoView;
     }
 
     public String getEstadoFoto() {
@@ -165,27 +146,45 @@ public class UsuarioBean implements Serializable {
         this.estadoFoto = estadoFoto;
     }
 
-   
+    public String getNuevaContraseña() {
+        return nuevaContraseña;
+    }
+
+    public void setNuevaContraseña(String nuevaContraseña) {
+        this.nuevaContraseña = nuevaContraseña;
+    }
+
+    public String getRepitaContraseña() {
+        return repitaContraseña;
+    }
+
+    public void setRepitaContraseña(String repitaContraseña) {
+        this.repitaContraseña = repitaContraseña;
+    }
 
     //Declaracion de metodos
     //Metodos CRUD
     public void modificarPerfil() {
 
-        MD5 md = new MD5();        
+     
+        MD5 md = new MD5();
         // en caso de modificar las contraseñas estas se encriptan de nuevo
-            password = usuarioView.getUsuarioPassword();
-            usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
-            usuarioView.setUsuarioRememberToken(md.getMD5(usuarioView.getUsuarioRememberToken()));
-       
-        ciudadView = ciudadDao.consultarCiudad(ciudadUsuario).get(0);
-        usuarioView.setSmsCiudad(ciudadUsuario);//Asociamos una ciudad a un usuario
+        if (!nuevaContraseña.isEmpty()) {
+            Usuario.setUsuarioPassword(md.getMD5(nuevaContraseña));
+            Usuario.setUsuarioRememberToken(md.getMD5(repitaContraseña));
+        }
 
-        usuarioDao.modificarUsuario(usuarioView);
-        
+        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
+        Usuario.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
+
+        usuarioDao.modificarUsuario(Usuario);
+        estadoFoto = "Foto subida:" + Usuario.getUsuarioFotoNombre();
+
+        nuevaContraseña = "";
+        repitaContraseña = "";
     }
 
     //Metodos para iniciar Sesion
-
     public String iniciarSesion() {
         String ruta = "/login.xhtml";
         MD5 md = new MD5();
@@ -222,7 +221,6 @@ public class UsuarioBean implements Serializable {
 
                     Usuario = (SmsUsuario) httpSession.getAttribute("Sesion");
                     message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Acceso Correcto", "Bienvenid@: " + Usuario.getUsuarioNombre());
-                    FacesContext.getCurrentInstance().addMessage(null, message);
                 } else {
                     message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario o contraseña incorrecto", null);
                     usuarioView = new SmsUsuario();
@@ -236,7 +234,7 @@ public class UsuarioBean implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
         usuarioView = new SmsUsuario();
-
+        
         return ruta;
     }
 
@@ -248,14 +246,14 @@ public class UsuarioBean implements Serializable {
     }
 
     public String ir_editarPerfil() {
-        usuarioView = Usuario;
-        ciudadUsuario = Usuario.getSmsCiudad();
-        estadoFoto = "Foto subida:" + usuarioView.getUsuarioFotoNombre();
+        //usuarioView = Usuario;
+        ciudadView = Usuario.getSmsCiudad();
+        estadoFoto = "Foto subida:" + Usuario.getUsuarioFotoNombre();
 
         String ruta = "";
         switch (Usuario.getSmsRol().getIdRol()) {
             case 1:
-                ruta = "AdminEditarPerfil";
+                ruta = "AdminPEditarPerfil";
                 break;
             case 2:
                 ruta = "AdminSEdicionPerfil";
@@ -277,7 +275,7 @@ public class UsuarioBean implements Serializable {
     }
 
     //Subida de archivos
-    public void uploadPhoto(FileUploadEvent e) throws IOException {
+    public void upload(FileUploadEvent e) throws IOException {
         try {
             UploadedFile uploadedPhoto = e.getFile();
             String destination;
@@ -286,8 +284,8 @@ public class UsuarioBean implements Serializable {
             destination = map.get("path");
             if (null != uploadedPhoto) {
                 fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
-                usuarioView.setUsuarioFotoNombre(uploadedPhoto.getFileName());
-                usuarioView.setUsuarioFotoRuta(map.get("url") + uploadedPhoto.getFileName());
+                Usuario.setUsuarioFotoNombre(uploadedPhoto.getFileName());
+                Usuario.setUsuarioFotoRuta(map.get("url") + uploadedPhoto.getFileName());
                 estadoFoto = "Foto actualizada con exito";
             }
             FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));

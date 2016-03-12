@@ -159,4 +159,21 @@ public class ImpUsuarioDao implements IUsuarioDao {
         }
         return usuarios;
     }
+    
+    @Override
+    public List<SmsUsuario> verificarEmailDisponible(String valor) {
+        Session session = null;
+        List<SmsUsuario> usuarios = null;
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsUsuario as usuario where usuario.usuarioEmail = '" + valor + "'");
+            usuarios = (List<SmsUsuario>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return usuarios;}
 }

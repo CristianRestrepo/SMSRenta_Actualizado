@@ -20,6 +20,12 @@
         <property name="usuarioCc" type="string">
             <column name="Usuario_CC" length="45" />
         </property>
+        <property name="usuarioCcExtranjeria" type="string">
+            <column name="Usuario_CC_extranjeria" length="45" />
+        </property>
+        <property name="usuarioPasaporte" type="string">
+            <column name="Usuario_pasaporte" length="45" />
+        </property>
         <property name="usuarioTelefono" type="string">
             <column name="Usuario_telefono" length="45" />
         </property>

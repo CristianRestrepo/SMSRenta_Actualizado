@@ -14,6 +14,7 @@ import DAO.ImpProveedorDao;
 import Funciones.GenerarPassword;
 import Funciones.MD5;
 import Funciones.SendEmail;
+import static Funciones.Upload.getMapPathFotosUsuario;
 import static Funciones.Upload.getMapPathHojasVida;
 import static Funciones.Upload.getNameDefaultHojasVida;
 import static Funciones.Upload.getNameDefaultUsuario;
@@ -262,15 +263,15 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
 
         usuarioDao.modificarUsuario(usuarioView);
-        modEmpleadoView.setSmsUsuario(usuarioView);
+        empleadoView.setSmsUsuario(usuarioView);
 
         if (hojavidaView.getHojaVidaNombre() != null && hojavidaView.getHojaVidaRuta() != null) {
 
             hojavidaView = hojaDao.consultarHojaVida(hojavidaView).get(0);
-            modEmpleadoView.setSmsHojavida(hojavidaView);
+            empleadoView.setSmsHojavida(hojavidaView);
         }
 
-        empleadoDao.modificarEmpleado(modEmpleadoView);
+        empleadoDao.modificarEmpleado(empleadoView);
         estadoArchivo = "Hoja subida:" + hojavidaView.getHojaVidaNombre();
 
     }
@@ -415,6 +416,26 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
             }
 
             FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su Hoja de vida (" + uploadedDoc.getFileName() + ")  se ha guardado con exito.", ""));
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }
+    
+    //Subida de archivos
+    public void uploadPhoto(FileUploadEvent e) throws IOException {
+        try {
+            UploadedFile uploadedPhoto = e.getFile();
+            String destination;
+
+            HashMap<String, String> map = getMapPathFotosUsuario();
+            destination = map.get("path");
+            if (null != uploadedPhoto) {
+                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
+                usuarioView.setUsuarioFotoNombre(uploadedPhoto.getFileName());
+                usuarioView.setUsuarioFotoRuta(map.get("url") + uploadedPhoto.getFileName());
+                estadoFoto = "Foto actualizada con exito";
+            }
+            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
         } catch (Exception ex) {
             ex.getMessage();
         }

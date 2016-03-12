@@ -38,8 +38,8 @@
                                     <div class=" table-responsive">
                                         <h4>Proveedor</h4>
                                         <h:panelGrid id="seccionProveedor" columns="1" style="width: 100%">
-                                            <b:selectOneMenu id="proveedor" tooltip="Proveedor al que pertenece el vehiculo" required="true"  value="#{vehiculoBean.usuarioView.usuarioNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar Proveedor" itemValue="" noSelectionOption="true" />
+                                            <b:selectOneMenu id="proveedor" tooltip="Proveedor al que pertenece el vehiculo" required="true"  value="#{vehiculoBean.vehiculoView.smsProveedor.proveedorRazonSocial}" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccionar proveedor" itemValue="" noSelectionOption="true" />
                                                 <f:selectItems value="#{proveedorBean.nombresProveedoresView}" />
                                             </b:selectOneMenu>
                                         </h:panelGrid>
@@ -47,25 +47,27 @@
                                         <h4>Descripcion del vehiculo</h4>
                                         <h:panelGrid id="seccionDatosVehiculo" columns="2" columnClasses="grid,grid" style="width: 100%;">                                     
                                             
-                                            <b:selectOneMenu id="referencia"  required="true" value="#{vehiculoBean.referenciaView.referenciaNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar Referencia" itemValue="" noSelectionOption="true" />
+                                            <b:selectOneMenu id="referencia"  required="true" value="#{vehiculoBean.vehiculoView.smsReferencia.referenciaNombre}" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccionar referencia" itemValue="" noSelectionOption="true" />
                                                 <f:selectItems value="#{referenciaBean.nombresReferenciaListView}" />
                                             </b:selectOneMenu>
 
 
-                                            <b:selectOneMenu id="ciudad"  required="true" value="#{vehiculoBean.ciudadView.ciudadNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar Ciudad" itemValue="" noSelectionOption="true" />
+                                            <b:selectOneMenu id="ciudad"  required="true" value="#{vehiculoBean.vehiculoView.smsCiudad.ciudadNombre}" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccionar ciudad" itemValue="" noSelectionOption="true" />
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}" />
                                             </b:selectOneMenu>
 
-
-                                            <b:selectOneMenu id="categoria" required="true" value="#{vehiculoBean.categoriaView.categoriaNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar Categoria del vehiculo" itemValue="" noSelectionOption="true" />
+                                            <b:selectOneMenu id="categoria" required="true" value="#{vehiculoBean.vehiculoView.smsCategoria.categoriaNombre}" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccionar categoria del vehiculo" itemValue="" noSelectionOption="true" />
                                                 <f:selectItems value="#{categoriaBean.nombresCategoriasListView}" />
                                             </b:selectOneMenu>                                           
-                                          
-                                            <b:inputText id="TVehColor" required="true" requiredMessage="Ingrese color " placeholder="Color del vehiculo" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehColor}"/>
-
+                                            
+                                            <b:selectOneMenu id="color" required="true" value="#{vehiculoBean.vehiculoView.smsColor.colorNombre}" style="width: 100%">
+                                                <f:selectItem itemLabel="Seleccionar color del vehiculo" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{colorBean.nombresColores}" />
+                                            </b:selectOneMenu> 
+                                           
                                             <b:inputText id="TVehModelo" required="true" requiredMessage="Ingrese modelo del vehiculo" placeholder="Modelo del vehiculo" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehModelo}"/>
 
                                             <b:inputText id="TVehMalP" placeholder="Cant. maletas pequeñas" style="width: 100%"  value="#{vehiculoBean.vehiculoView.vehNumMalPequeña}"/>
@@ -202,19 +204,19 @@
                                         </p:column>
 
                                         <p:column headerText="Proveedor">
-                                            <h:outputText value="#{vehiculo.smsProveedor.smsUsuario.usuarioRazonSocial}" />
+                                            <h:outputText value="#{vehiculo.smsProveedor.proveedorRazonSocial}" />
                                         </p:column>
 
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this"  ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" action="#{vehiculoBean.irModificarVehiculo()}" title="Modificar">
-                                                <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.mvehiculoView}"/>
+                                                <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea editar este vehiculo?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formA:msg :formC:DTVehiculos" action="#{vehiculoBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.DVehiculoView}"/>
+                                                <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
                                                 <p:confirm header="Confirmacion"  message="Esta seguro que desea eliminar este vehiculo?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>  

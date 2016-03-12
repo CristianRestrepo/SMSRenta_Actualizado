@@ -3,15 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
-          
+
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./../template-admin-p.xhtml">
-
             <ui:define name="content">
                 <b:container fluid="true">
                     <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
@@ -29,60 +27,55 @@
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid columns="2" cellpadding="5" id="seccionInformacionUsuario" style="width: 100%">
-                                             <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.usuarioView.usuarioFotoRuta}"/> 
-                                             <h:panelGrid columns="1" width="100%">
-                                                 <p:outputLabel value="#{usuarioBean.usuarioView.usuarioNombre}"/>
-                                                 <p:outputLabel value="#{usuarioBean.usuarioView.usuarioCc}"/>
-                                                 <p:outputLabel value="#{usuarioBean.usuarioView.usuarioEmail}"/>
-                                                 <p:outputLabel value="#{usuarioBean.usuarioView.usuarioTelefono}"/>
-                                             </h:panelGrid>
-                                        </h:panelGrid>
-                                        
-                                       <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
-
-                                            <p:outputLabel value="Login: "/>
-                                            <b:inputText id="TLoginUsu" maxlength="60" validator="modLoginValidator" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioLogin}" placeholder="Login de sesion">
-                                                <f:attribute name="usuario" value="#{usuarioBean.usuarioView}"/>
-                                            </b:inputText>
-                                            <p:message for="TLoginUsu"/>
+                                        <div align="center"> 
+                                            <h:panelGrid columns="2" cellpadding="5" id="seccionInformacionUsuario" style="width: 80%">
+                                                <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.usuario.usuarioFotoRuta}"/> 
+                                                <h:panelGrid columns="1" width="100%">
+                                                    <p:outputLabel style="width: 100%" value="#{usuarioBean.usuario.usuarioNombre}"/>
+                                                    <p:outputLabel style="width: 100%" value="#{usuarioBean.usuario.usuarioCc}"/>
+                                                    <p:outputLabel style="width: 100%" value="#{usuarioBean.usuario.usuarioEmail}"/>
+                                                    <p:outputLabel style="width: 100%" value="#{usuarioBean.usuario.usuarioTelefono}"/>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                        </div>
+                                        <hr/><br/>
+                                        <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
 
                                             <p:outputLabel value="Contraseña: "/>
-                                            <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                            <b:inputSecret label="Contraseña" binding="#{MUsuarioPass}" id="TPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.nuevaContraseña}" placeholder="Contraseña de sesion">
                                                 <f:validateLength minimum="6"/>
                                             </b:inputSecret>
                                             <p:message for="TPassUsu"/>
 
                                             <p:outputLabel value="Repita contraseña: "/>
-                                            <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion" >
+                                            <b:inputSecret label="Repita Contraseña" validator="repeatPasswordValidator" id="TRemPassUsu" maxlength="20" style="width: 100%" value="#{usuarioBean.repitaContraseña}" placeholder="Repita contraseña de sesion" >
                                                 <f:validateLength minimum="6"/>
                                                 <f:attribute name="password" value="#{MUsuarioPass.value}"/>
                                             </b:inputSecret>
                                             <p:message for="TRemPassUsu"/>
                                         </h:panelGrid>
+                                        <p:messages id="msg" closable="true"/>
                                     </div>
                                 </div>
                                 <div align="center" class="box-footer">
                                     <h:panelGrid columns="1" width="80%">                                        
-                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-primary" action="#{usuarioBean.modificarPerfil()}" value="Modificar datos personales" />
+                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-primary" update="@form" action="#{usuarioBean.modificarPerfil()}" value="Modificar datos de sesion" />
                                     </h:panelGrid>
                                 </div>
                             </div>
                         </h:form>
                     </b:column>
-                   
-                    <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
+
+                    <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset-lg="2">
                         <h:form>
                             <div class="espacio-arriba" style="text-align: right" align="center">
-                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" look="success" value="Regresar"/>
+                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" look="success" action="AdminPEditarPerfil" value="Regresar"/>
                             </div>
                         </h:form>
                     </b:column> 
 
                 </b:container>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

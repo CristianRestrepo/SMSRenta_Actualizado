@@ -24,41 +24,47 @@
                             <div class="box box-danger espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-file-text"/>
-                                    <h4 class="box-title"> Edicion de Perfil</h4>                                   
+                                    <h4 class="box-title"> Información personal</h4>                                   
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
                                         <h:panelGrid  id="seccionDatosUsuario" columns="2" cellpadding="2" style="width: 100%;">
 
-                                            <b:inputText id="TNombreApProv" tooltip="Nombre y apellidos" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombre y apellido" style="width: 100%;" maxlength="60" value="#{usuarioBean.usuarioView.usuarioNombre}"></b:inputText>                       
+                                            <b:inputText id="TNombreApProv" tooltip="Nombre y apellidos" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombre y apellido" style="width: 100%;" maxlength="60" value="#{usuarioBean.usuario.usuarioNombre}"></b:inputText>                       
                                             <p:message for="TNombreApProv"/>
 
-
-                                            <b:inputText maxlength="45" id="TCcProv" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioCc}"></b:inputText>
+                                            <b:inputText maxlength="45" id="TCcProv" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.usuario.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
 
+                                            <b:inputText maxlength="45" id="TCcExtProv" tooltip="Numero de cedula de extranjería" placeholder="Cedula de extrajeria" style="width: 100%" value="#{usuarioBean.usuario.usuarioCcExtranjeria}"></b:inputText>
+                                            <p:message for="TCcExtProv"/>
 
-                                            <b:inputText maxlength="45" id="TTelProv" tooltip="Numero de telefono" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioTelefono}"></b:inputText> 
+                                            <b:inputText maxlength="45" id="TPasaporteProv" tooltip="Numero pasaporte" placeholder="Numero de pasaporte" style="width: 100%" value="#{usuarioBean.usuario.usuarioPasaporte}"></b:inputText>
+                                            <p:message for="TPasaporteProv"/>                                            
+                                                                                                                                  
+                                            <b:inputText maxlength="45" id="TTelProv" tooltip="Numero de telefono" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{usuarioBean.usuario.usuarioTelefono}"></b:inputText> 
                                             <p:message for="TTelProv"/>
 
-
-                                            <b:inputText maxlength="100" validator="emailValidator" tooltip="Correo Electronico" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{usuarioBean.usuarioView.usuarioEmail}"></b:inputText>
+                                            <b:inputText maxlength="100" validator="modEmailValidator" tooltip="Correo Electronico" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{usuarioBean.usuario.usuarioEmail}">
+                                                <f:attribute name="usuario" value="#{usuarioBean.usuario}"/>
+                                            </b:inputText>
                                             <p:message for="TEmailProv"/>
 
-
-                                            <b:selectOneMenu id="SCiudades" tooltip="Ciudad donde recide" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{usuarioBean.ciudadUsuario.ciudadNombre}" style="width: 100%">
+                                            <b:selectOneMenu id="SCiudades" tooltip="Ciudad donde recide" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{usuarioBean.ciudadView.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione Ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SCiudades"/>
 
                                         </h:panelGrid>
+
                                     </div>
-                                </div>
-                                <div align="center" class="box-footer">
-                                    <h:panelGrid columns="1" width="80%">                                        
-                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-primary" action="#{usuarioBean.modificarPerfil()}" value="Modificar datos personales" />
+                                </div>   
+                                <div class="box-footer">
+                                    <h:panelGrid columns="1" width="100%">                                        
+                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-primary" update=":formularioDatosPersonales :formB:TEstadoFoto :formB:fileIdPhoto :formularioDatosPersonales:msg" action="#{usuarioBean.modificarPerfil()}" value="Modificar datos personales" />
                                     </h:panelGrid>
+                                    <p:messages closable="true" id="msg" />
                                 </div>
                             </div>
                         </h:form>
@@ -73,38 +79,35 @@
                                     <h4 class="box-title">Fotografia de perfil</h4>
                                 </div>
                                 <div class="box-body" style="width: 100%" align="center">
-                                    <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.usuarioView.usuarioFotoRuta}"/> 
+                                    <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.usuario.usuarioFotoRuta}"/> 
                                     <hr/>
                                     <p:fragment autoUpdate="true">                                    
                                         <div class="box-body">
                                             <p:outputLabel id="TEstadoFoto" value="#{usuarioBean.estadoFoto}"/>
                                             <div class="table-responsive">
-                                                <p:fileUpload id="fileIdPhoto" fileUploadListener="#{usuarioBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                <p:fileUpload id="fileIdPhoto" fileUploadListener="#{usuarioBean.upload}" mode="advanced" dragDropSupport="false"
                                                               process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formB" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
 
                                                 <p:messages id="messages" closable="true" /></div> 
                                         </div>
                                     </p:fragment>
+
                                 </div>
-                                <div align="center" class="box-footer">
-                                    <p:commandButton id="BTModUsuario"  class="btn btn-block btn-primary" style="width: 80%" action="#{usuarioBean.modificarPerfil()}" value="Guardar fotografia" />
-                                </div>
+
                             </div>
                         </h:form>
-                    </b:column>
+                    </b:column>                    
 
                     <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
                         <h:form>
                             <div class="espacio-arriba" style="text-align: right" align="center">
-                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" look="success" value="Regresar"/>
+                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="AdminPEditarPerfil" look="success" value="Regresar"/>
                             </div>
                         </h:form>
                     </b:column> 
 
                 </b:container>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

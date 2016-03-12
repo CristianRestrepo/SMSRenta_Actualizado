@@ -32,6 +32,11 @@ public class SmsVehiculo  implements java.io.Serializable {
      private Set<SmsLugares> smsLugares = new HashSet<>(0);
 
     public SmsVehiculo() {
+        this.smsCategoria = new SmsCategoria();
+        this.smsCiudad = new SmsCiudad();
+        this.smsColor = new SmsColor();
+        this.smsProveedor = new SmsProveedor();
+        this.smsReferencia = new SmsReferencia();
     }
 
     public SmsVehiculo(SmsCategoria smsCategoria, SmsCiudad smsCiudad, SmsProveedor smsProveedor, SmsReferencia smsReferencia, SmsColor smsColor, String vehPlaca, String vehModelo, Integer vehNumPersonas, Integer vehNumMalGrande, Integer vehNumMalPequeña, String vehFotoNombre, String vehFotoRuta, String vehFoto2Nombre, String vehFoto2Ruta) {
