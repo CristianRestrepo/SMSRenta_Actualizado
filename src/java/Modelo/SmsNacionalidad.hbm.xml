@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+ <class name="Modelo.SmsNacionalidad" table="sms_nacionalidad" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idNacionalidad" type="java.lang.Integer">
+            <column name="idNacionalidad" />
+            <generator class="identity" />
+        </id>
+        <property name="nacionalidadNombre" type="string">
+            <column name="Nacionalidad_nombre" length="45" not-null="true" />
+        </property>
+        <set name="smsUsuarios" table="sms_usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idNacionalidad" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsUsuario" />
+        </set>  
+
+</hibernate-mapping>

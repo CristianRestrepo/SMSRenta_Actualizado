@@ -24,7 +24,7 @@ public class ImpColorDao implements IColorDao {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from smsColor");
+            Query query = session.createQuery("from SmsColor");
             colores = (List<SmsColor>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -42,7 +42,7 @@ public class ImpColorDao implements IColorDao {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from smsColor as color where color.colorNombre = '" + color.getColorNombre() + "'");
+            Query query = session.createQuery("from SmsColor as color where color.colorNombre = '" + color.getColorNombre() + "'");
             colores = (List<SmsColor>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

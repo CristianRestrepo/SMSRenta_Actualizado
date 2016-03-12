@@ -14,15 +14,15 @@
         <many-to-one name="smsRol" class="Modelo.SmsRol" fetch="join">
             <column name="idRol" not-null="true" />
         </many-to-one>
+        <many-to-one name="smsNacionalidad" class="Modelo.SmsNacionalidad" fetch="join">
+            <column name="idNacionalidad" not-null="true" />
+        </many-to-one>
         <property name="usuarioNombre" type="string">
             <column name="Usuario_nombre" length="100" not-null="true" />
         </property>
         <property name="usuarioCc" type="string">
             <column name="Usuario_CC" length="45" />
-        </property>
-        <property name="usuarioCcExtranjeria" type="string">
-            <column name="Usuario_CC_extranjeria" length="45" />
-        </property>
+        </property>       
         <property name="usuarioPasaporte" type="string">
             <column name="Usuario_pasaporte" length="45" />
         </property>

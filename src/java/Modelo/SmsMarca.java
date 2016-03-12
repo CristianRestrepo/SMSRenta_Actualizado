@@ -13,11 +13,12 @@ public class SmsMarca  implements java.io.Serializable {
 
      private Integer idMarca;
      private String marcaNombre;
+     private String marcaFotoNombre;
+     private String marcaFotoRuta;
      private Set<SmsReferencia> smsReferencias = new HashSet<>(0);
 
     public SmsMarca() {
     }
-
 	
     public SmsMarca(String marcaNombre) {
         this.marcaNombre = marcaNombre;
@@ -49,7 +50,23 @@ public class SmsMarca  implements java.io.Serializable {
         this.smsReferencias = smsReferencias;
     }
 
+    public String getMarcaFotoNombre() {
+        return marcaFotoNombre;
+    }
 
+    public void setMarcaFotoNombre(String marcaFotoNombre) {
+        this.marcaFotoNombre = marcaFotoNombre;
+    }
+
+    public String getMarcaFotoRuta() {
+        return marcaFotoRuta;
+    }
+
+    public void setMarcaFotoRuta(String marcaFotoRuta) {
+        this.marcaFotoRuta = marcaFotoRuta;
+    }
+
+    
 
 
 }

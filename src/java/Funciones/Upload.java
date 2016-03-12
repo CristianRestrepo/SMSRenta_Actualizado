@@ -83,6 +83,19 @@ public class Upload {
         }
         return null;
     }
+    
+     public static HashMap<String, String> getMapPathFotosMarcas() {
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            String path = getPathFotosMarcas();
+            map.put("path", path);
+            map.put("url", "/resources/images/upload/Marcas/");
+            return map;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
 
     public static HashMap<String, String> getMapPathHojasVida() {
         try {
@@ -96,17 +109,10 @@ public class Upload {
         }
         return null;
     }
+    
+    
 
-    public static String getPathDefaultUsuario() {
-
-        try {
-            String path = "/resources/images/upload/Usuario/Default.png";
-            return path;
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return null;
-    }
+    
 
     public static String getNameDefaultUsuario() {
 
@@ -134,6 +140,17 @@ public class Upload {
 
         try {
             String path = "Default.pdf";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+    
+    public static String getPathDefaultUsuario() {
+
+        try {
+            String path = "/resources/images/upload/Usuario/Default.png";
             return path;
         } catch (Exception e) {
             e.getMessage();
@@ -184,6 +201,26 @@ public class Upload {
         }
         return null;
     }
+    
+    public static String getPathFotosMercados() {
+        try {
+            String path = getPath() + "/resources/images/upload/Mercados/";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+    
+      public static String getPathFotosMarcas() {
+        try {
+            String path = getPath() + "/resources/images/upload/Marcas/";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
 
     public static String getPathHojasVida() {
         try {
@@ -195,15 +232,8 @@ public class Upload {
         return null;
     }
     
-    public static String getPathFotosMercados() {
-        try {
-            String path = getPath() + "/resources/images/upload/Mercados/";
-            return path;
-        } catch (Exception e) {
-            e.getMessage();
-        }
-        return null;
-    }
+    
+
 
     public void uploadFile(byte[] b, String nombre, String destino) throws IOException {
 

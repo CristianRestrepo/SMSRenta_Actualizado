@@ -18,6 +18,7 @@ import DAO.ImpProveedorDao;
 import DAO.ImpReferenciaDao;
 import DAO.ImpUsuarioDao;
 import DAO.ImpVehiculoDao;
+import static Funciones.Upload.getMapPathFotosVehiculos;
 import static Funciones.Upload.getPathDefaultVehiculo;
 import Modelo.SmsCategoria;
 import Modelo.SmsCiudad;
@@ -165,6 +166,8 @@ public class VehiculoBean {
             String ruta = getPathDefaultVehiculo();
             vehiculoView.setVehFotoRuta(ruta);
             vehiculoView.setVehFotoNombre("Default.png");
+            vehiculoView.setVehFoto2Ruta(ruta);
+            vehiculoView.setVehFoto2Nombre("Default.png");
         }
         vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()).get(0));
 
@@ -267,7 +270,7 @@ public class VehiculoBean {
             UploadedFile uploadedPhoto = e.getFile();
             String destination;
 
-            HashMap<String, String> map = fileController.getMapPathFotosVehiculos();
+            HashMap<String, String> map = getMapPathFotosVehiculos();
             destination = map.get("path");
             if (null != uploadedPhoto) {
                 fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);

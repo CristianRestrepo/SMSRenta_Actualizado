@@ -11,6 +11,12 @@
         <property name="marcaNombre" type="string">
             <column name="Marca_nombre" length="45" not-null="true" />
         </property>
+        <property name="marcaFotoNombre" type="string">
+            <column name="Marca_foto_nombre" length="65535" />
+        </property>
+        <property name="marcaFotoRuta" type="string">
+            <column name="Marca_foto_ruta" length="65535" />
+        </property>
         <set name="smsReferencias" table="sms_referencia" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="Referencia_idMarca" not-null="true" />

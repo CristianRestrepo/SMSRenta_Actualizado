@@ -11,8 +11,6 @@ import Funciones.GenerarPassword;
 import Funciones.MD5;
 import Funciones.SendEmail;
 import Modelo.SmsCiudad;
-import Modelo.SmsMercado;
-import Modelo.SmsProveedor;
 import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.Serializable;

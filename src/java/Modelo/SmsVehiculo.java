@@ -213,10 +213,7 @@ public class SmsVehiculo  implements java.io.Serializable {
     public void setSmsLugares(Set<SmsLugares> smsLugares) {
         this.smsLugares = smsLugares;
     }
-
-    
-
-
+   
 }
 
 

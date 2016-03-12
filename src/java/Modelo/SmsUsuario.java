@@ -12,9 +12,9 @@ public class SmsUsuario implements java.io.Serializable {
     private Integer idUsuario;
     private SmsCiudad smsCiudad;
     private SmsRol smsRol;
+    private SmsNacionalidad smsNacionalidad;
     private String usuarioNombre;
-    private String usuarioCc;
-    private String usuarioCcExtranjeria;
+    private String usuarioCc;   
     private String usuarioPasaporte;
     private String usuarioTelefono;
     private String usuarioEmail;
@@ -31,19 +31,20 @@ public class SmsUsuario implements java.io.Serializable {
     public SmsUsuario() {
     }
 
-    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, String usuarioNombre, String usuarioEmail) {
+    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, SmsNacionalidad smsNacionalidad, String usuarioNombre, String usuarioEmail) {
         this.smsCiudad = smsCiudad;
         this.smsRol = smsRol;
+        this.smsNacionalidad = smsNacionalidad;
         this.usuarioNombre = usuarioNombre;
         this.usuarioEmail = usuarioEmail;
     }
 
-    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, String usuarioNombre, String usuarioCc, String usuarioCcExtranjeria, String usuarioPasaporte, String usuarioTelefono, String usuarioEmail, String usuarioLogin, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions) {
+    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol,  SmsNacionalidad smsNacionalidad, String usuarioNombre, String usuarioCc, String usuarioPasaporte, String usuarioTelefono, String usuarioEmail, String usuarioLogin, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions) {
         this.smsCiudad = smsCiudad;
         this.smsRol = smsRol;
+        this.smsNacionalidad = smsNacionalidad;
         this.usuarioNombre = usuarioNombre;
-        this.usuarioCc = usuarioCc;
-        this.usuarioCcExtranjeria = usuarioCcExtranjeria;
+        this.usuarioCc = usuarioCc;       
         this.usuarioPasaporte = usuarioPasaporte;
         this.usuarioTelefono = usuarioTelefono;
         this.usuarioEmail = usuarioEmail;
@@ -185,15 +186,7 @@ public class SmsUsuario implements java.io.Serializable {
     public void setSmsReservacions(Set<SmsReservacion> smsReservacions) {
         this.smsReservacions = smsReservacions;
     }
-
-    public String getUsuarioCcExtranjeria() {
-        return usuarioCcExtranjeria;
-    }
-
-    public void setUsuarioCcExtranjeria(String usuarioCcExtranjeria) {
-        this.usuarioCcExtranjeria = usuarioCcExtranjeria;
-    }
-
+   
     public String getUsuarioPasaporte() {
         return usuarioPasaporte;
     }
@@ -201,5 +194,14 @@ public class SmsUsuario implements java.io.Serializable {
     public void setUsuarioPasaporte(String usuarioPasaporte) {
         this.usuarioPasaporte = usuarioPasaporte;
     }
+
+    public SmsNacionalidad getSmsNacionalidad() {
+        return smsNacionalidad;
+    }
+
+    public void setSmsNacionalidad(SmsNacionalidad smsNacionalidad) {
+        this.smsNacionalidad = smsNacionalidad;
+    }
+    
 
 }
