@@ -14,6 +14,12 @@
                 <b:row>
                     <h:form>
                         <p:messages id="messages" closable="true"/>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">CIUDADES Y DEPARTAMENTOS</h4><br/>
+                                <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre} (#{usuarioBean.usuario.usuarioLogin})</p>
+                            </div>
+                        </b:column>
 
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="box box-info espacio-arriba">
@@ -90,7 +96,7 @@
                             </div>
                         </b:column>
                     </h:form>
-                    
+
                     <h:form>
                         <p:messages id="messages" closable="true"/>
 
@@ -123,7 +129,7 @@
                                                 <f:selectItems value="#{paisBean.nombrePaisesListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SMPais"/>
-                                            
+
                                             <b:inputText tooltip="Nombre del departamento" id="TDepartamentoNombre" placeholder="Nombre del departamento" required="true" requiredMessage="Ingrese nombre del pais"  value="#{departamentoBean.departamentoView.departamentoNombre}" style="width: 100%"/>                                         
                                             <p:message for="TDepartamentoNombre"/>
                                         </h:panelGrid>
