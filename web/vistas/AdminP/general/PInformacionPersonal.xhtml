@@ -33,12 +33,15 @@
                                             <b:inputText id="TNombreApProv" tooltip="Nombre y apellidos" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombre y apellido" style="width: 100%;" maxlength="60" value="#{usuarioBean.usuario.usuarioNombre}"></b:inputText>                       
                                             <p:message for="TNombreApProv"/>
 
+                                            <b:selectOneMenu id="SNacionalidad" value="#{usuarioBean.usuario.smsNacionalidad.nacionalidadNombre}">
+                                                <f:selectItem itemLabel="Seleccione nacionalidad" noSelectionOption="true"/>
+                                                <f:selectItems value="#{nacionalidadBean.nombresNacionalidades}"/>                                               
+                                            </b:selectOneMenu>
+                                            <p:message for="SNacionalidad"/>
+                                            
                                             <b:inputText maxlength="45" id="TCcProv" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.usuario.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
-
-                                            <b:inputText maxlength="45" id="TCcExtProv" tooltip="Numero de cedula de extranjería" placeholder="Cedula de extrajeria" style="width: 100%" value="#{usuarioBean.usuario.usuarioCcExtranjeria}"></b:inputText>
-                                            <p:message for="TCcExtProv"/>
-
+                                            
                                             <b:inputText maxlength="45" id="TPasaporteProv" tooltip="Numero pasaporte" placeholder="Numero de pasaporte" style="width: 100%" value="#{usuarioBean.usuario.usuarioPasaporte}"></b:inputText>
                                             <p:message for="TPasaporteProv"/>                                            
                                                                                                                                   
@@ -50,7 +53,7 @@
                                             </b:inputText>
                                             <p:message for="TEmailProv"/>
 
-                                            <b:selectOneMenu id="SCiudades" tooltip="Ciudad donde recide" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{usuarioBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                            <b:selectOneMenu id="SCiudades" tooltip="Ciudad donde recide" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{usuarioBean.usuario.smsCiudad.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione Ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>

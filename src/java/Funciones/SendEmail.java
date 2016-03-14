@@ -5,10 +5,8 @@
  */
 package Funciones;
 
-import DAO.IEmpleadoDao;
 import DAO.IReservacionDao;
 import DAO.IUsuarioDao;
-import DAO.ImpEmpleadoDao;
 import DAO.ImpReservacionDao;
 import DAO.ImpUsuarioDao;
 import Modelo.SmsEmpleado;
@@ -29,8 +27,7 @@ public class SendEmail {
 
     private final Properties properties = new Properties();   
     private Session session;
-
-    IEmpleadoDao empDao = new ImpEmpleadoDao();
+   
     IReservacionDao resDao = new ImpReservacionDao();
     IUsuarioDao usuDao = new ImpUsuarioDao();   
 

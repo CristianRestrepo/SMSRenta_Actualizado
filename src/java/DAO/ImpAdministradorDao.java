@@ -24,7 +24,7 @@ public class ImpAdministradorDao implements IAdministradorDao{
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where rol.rolNombre = 'Administrador Principal' or rol.rolNombre = 'Administrador Secundario'");
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad left join fetch usuario.smsNacionalidad where rol.rolNombre = 'Administrador Principal' or rol.rolNombre = 'Administrador Secundario'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

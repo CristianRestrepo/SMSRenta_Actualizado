@@ -8,7 +8,6 @@ package Validacion;
 import DAO.IUsuarioDao;
 import DAO.ImpUsuarioDao;
 import Modelo.SmsUsuario;
-import static com.sun.codemodel.JExpr.component;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;

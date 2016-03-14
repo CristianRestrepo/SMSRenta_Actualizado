@@ -552,4 +552,9 @@
         <managed-bean-class>Controladores.ColorBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>nacionalidadBean</managed-bean-name>
+        <managed-bean-class>Controladores.NacionalidadBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

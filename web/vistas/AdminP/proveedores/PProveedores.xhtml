@@ -36,13 +36,19 @@
                                         <p:outputLabel value="Datos del Representante"/>
                                         <h:panelGrid  id="seccionDatosUsuario" columns="2" cellpadding="2" style="width: 100%;">
 
-                                            <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.usuarioView.usuarioNombre}"></b:inputText>                       
+                                            <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.proveedorView.smsUsuario.usuarioNombre}"></b:inputText>                       
                                             <p:message for="TNombreApProv"/>
 
-                                            <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioCc}"></b:inputText>
+                                            <b:selectOneMenu value="#{proveedorBean.proveedorView.smsUsuario.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
+                                                <f:selectItem itemLabel="Seleccione nacionalidad" noSelectionOption="true"/>
+                                                <f:selectItems value="#{nacionalidadBean.nombresNacionalidades}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SNacionalidad"/>
+
+                                            <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
 
-                                            <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioTelefono}"></b:inputText> 
+                                            <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioTelefono}"></b:inputText> 
                                             <p:message for="TTelProv"/>
 
 
@@ -56,13 +62,16 @@
                                             <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorNit}"></b:inputText>
                                             <p:message for="TNitProv"/>
 
-                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioEmail}"></b:inputText>
+                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioEmail}">
+                                                <f:attribute name="operacion" value="#{proveedorBean.operacion}"/>
+                                                <f:attribute name="usuario" value="#{proveedorBean.proveedorView.smsUsuario}"/>
+                                            </b:inputText>
                                             <p:message for="TEmailProv"/>
 
                                             <b:inputText id="TValorGProv" placeholder="Valor de ganancia" required="true" tooltip="Valor de ganancia del proveedor sobre el costo total" requiredMessage="Indique valor de ganancia acordado con el proveedor" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorValorGanancia}"></b:inputText>
                                             <p:message for="TValorGProv"/>
 
-                                            <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{proveedorBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                            <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{proveedorBean.proveedorView.smsUsuario.smsCiudad.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>
@@ -70,13 +79,24 @@
 
                                         </h:panelGrid>
                                     </div>                                   
-                                   
+
                                     <div class="box-body">                                      
-                                        
+
                                         <h:panelGrid columns="2" width="100%">
-                                            <p:commandButton id="BTProveedor" style="width: 100%" class="btn btn-block btn-success" update="@form" action="#{proveedorBean.metodo()}" value="#{proveedorBean.nombreOperacion}" />
+                                            <p:commandButton id="BTProveedor" style="width: 100%" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" update="@form" action="#{proveedorBean.metodo()}" value="#{proveedorBean.nombreOperacion}" />
                                             <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{proveedorBean.habilitarCancelar}" action="#{proveedorBean.cancelar()}" update="@form" value="Cancelar" />
                                         </h:panelGrid>
+                                        <script type="text/javascript">
+                                            function start() {
+                                                PF('statusDialog').show();
+                                            }
+                                            function stop() {
+                                                PF('statusDialog').hide();
+                                            }
+                                        </script>
+                                        <p:dialog modal="true" widgetVar="statusDialog" header="" draggable="false" closable="false" resizable="false">
+                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                        </p:dialog>
                                     </div>                                        
                                 </div>
                             </div>

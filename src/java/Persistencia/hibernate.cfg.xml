@@ -34,6 +34,5 @@
     <mapping resource="Modelo/SmsCategoria.hbm.xml"/>
     <mapping resource="Modelo/SmsColor.hbm.xml"/>
     <mapping resource="Modelo/SmsNacionalidad.hbm.xml"/>
-    <mapping/>
   </session-factory>
 </hibernate-configuration>

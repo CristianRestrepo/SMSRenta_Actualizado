@@ -28,7 +28,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
         List<SmsUsuario> usuarios = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad");
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -110,7 +110,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where usuario.usuarioLogin = '" + usuario.getUsuarioLogin() + "' or usuario.usuarioEmail = '" + usuario.getUsuarioLogin() + "'");
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where usuario.usuarioLogin = '" + usuario.getUsuarioLogin() + "' or usuario.usuarioEmail = '" + usuario.getUsuarioLogin() + "'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

@@ -24,14 +24,11 @@ public class ImpClienteDao implements IClienteDao{
     public List<SmsUsuario> consultarUsuariosClientes() {
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();
-//                new ArrayList<>();
+
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-//                    NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where rol.rolNombre = 'Cliente'");
-//                    session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where rol.rolNombre = 'Cliente'");
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where rol.rolNombre = 'Cliente'");
             usuarios = (List<SmsUsuario>) query.list();
-//                    query.list();
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -45,12 +42,10 @@ public class ImpClienteDao implements IClienteDao{
     @Override
     public List<SmsUsuario> filtrarUsuariosClientes(String valor) {
         Session session = null;
-        List<SmsUsuario> usuarios = new ArrayList<>();
-//                new ArrayList<>();
+        List<SmsUsuario> usuarios = new ArrayList<>();            
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-//                    NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where "
+            session = NewHibernateUtil.getSessionFactory().openSession();                   
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where "
                     + "(usuario.usuarioNombre LIKE '%" + valor + "%' or usuario.usuarioCc LIKE '%" + valor + "%' or usuario.usuarioEmail LIKE '%" + valor + "%' or usuario.usuarioTelefono LIKE '%" + valor + "%' or "
                     + "ciudad.ciudadNombre LIKE '%" + valor + "%') and rol.rolNombre = 'Cliente'");
             usuarios = (List<SmsUsuario>) query.list();

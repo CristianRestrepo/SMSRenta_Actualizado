@@ -8,9 +8,11 @@ package Controladores;
 import Funciones.MD5;
 import Funciones.Upload;
 import DAO.ICiudadDao;
+import DAO.INacionalidadDao;
 import DAO.IRolDao;
 import DAO.IUsuarioDao;
 import DAO.ImpCiudadDao;
+import DAO.ImpNacionalidadDao;
 import DAO.ImpRolDao;
 import DAO.ImpUsuarioDao;
 import static Funciones.Upload.getMapPathFotosUsuario;
@@ -39,9 +41,6 @@ public class UsuarioBean implements Serializable {
     protected SmsUsuario usuarioView;
     protected List<SmsUsuario> usuariosListView;
 
-    protected SmsCiudad ciudadView;
-    protected SmsRol rolView;
-
     private String nuevaContraseña;
     private String repitaContraseña;
 
@@ -61,6 +60,7 @@ public class UsuarioBean implements Serializable {
     ICiudadDao ciudadDao;
     IRolDao rolDao;
     IUsuarioDao usuarioDao;
+    INacionalidadDao nacionalidadDao;
     
     //Variables
     protected String password;
@@ -71,9 +71,7 @@ public class UsuarioBean implements Serializable {
 
     public UsuarioBean() {
 
-        usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
+        usuarioView = new SmsUsuario();      
 
         nuevaContraseña = "";
         repitaContraseña = "";
@@ -86,6 +84,7 @@ public class UsuarioBean implements Serializable {
         usuarioDao = new ImpUsuarioDao();
         ciudadDao = new ImpCiudadDao();
         rolDao = new ImpRolDao();
+        nacionalidadDao = new ImpNacionalidadDao();
 
     }
 
@@ -105,23 +104,7 @@ public class UsuarioBean implements Serializable {
     public void setUsuarioView(SmsUsuario usuarioView) {
         this.usuarioView = usuarioView;
     }
-
-    public SmsCiudad getCiudadView() {
-        return ciudadView;
-    }
-
-    public void setCiudadView(SmsCiudad ciudadView) {
-        this.ciudadView = ciudadView;
-    }
-
-    public SmsRol getRolView() {
-        return rolView;
-    }
-
-    public void setRolView(SmsRol rolView) {
-        this.rolView = rolView;
-    }
-
+    
     public boolean isHabilitado() {
         return habilitado;
     }
@@ -174,9 +157,8 @@ public class UsuarioBean implements Serializable {
             Usuario.setUsuarioRememberToken(md.getMD5(repitaContraseña));
         }
 
-        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        Usuario.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
-
+        Usuario.setSmsCiudad(ciudadDao.consultarCiudad(Usuario.getSmsCiudad()).get(0));
+        
         usuarioDao.modificarUsuario(Usuario);
         estadoFoto = "Foto subida:" + Usuario.getUsuarioFotoNombre();
 
@@ -197,11 +179,11 @@ public class UsuarioBean implements Serializable {
                 if (user.getUsuarioPassword() != null && (user.getUsuarioLogin().equalsIgnoreCase(usuarioView.getUsuarioLogin()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword())) || (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioLogin()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword()))) {
                     //ruta = usuarioController.iniciarSesion(user.get(0));//envia el objeto usuarioBean al metodo iniciarSesion para tomar este objeto como atributo de sesion
 
-                    rolView = user.getSmsRol();
+                    usuarioView.setSmsRol(user.getSmsRol());
                     httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     httpSession.setAttribute("Sesion", user);
 
-                    switch (rolView.getRolNombre()) {
+                    switch (usuarioView.getSmsRol().getRolNombre()) {
                         case "Administrador Principal":
                             ruta = "AdminPPrincipal";
                             break;
@@ -246,8 +228,6 @@ public class UsuarioBean implements Serializable {
     }
 
     public String ir_editarPerfil() {
-        //usuarioView = Usuario;
-        ciudadView = Usuario.getSmsCiudad();
         estadoFoto = "Foto subida:" + Usuario.getUsuarioFotoNombre();
 
         String ruta = "";

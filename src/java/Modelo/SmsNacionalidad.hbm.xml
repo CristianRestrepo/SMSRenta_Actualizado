@@ -5,7 +5,7 @@
   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
- <class name="Modelo.SmsNacionalidad" table="sms_nacionalidad" catalog="smsrenta_actualizada" optimistic-lock="version">
+    <class name="Modelo.SmsNacionalidad" table="sms_nacionalidad" catalog="smsrenta_actualizada" optimistic-lock="version">
         <id name="idNacionalidad" type="java.lang.Integer">
             <column name="idNacionalidad" />
             <generator class="identity" />
@@ -13,11 +13,11 @@
         <property name="nacionalidadNombre" type="string">
             <column name="Nacionalidad_nombre" length="45" not-null="true" />
         </property>
-        <set name="smsUsuarios" table="sms_usuario" inverse="true" lazy="true" fetch="select">
+        <set name="smsUsuarios" table="sms_usuario" inverse="true" fetch="join">
             <key>
                 <column name="idNacionalidad" not-null="true" />
             </key>
             <one-to-many class="Modelo.SmsUsuario" />
         </set>  
-
+    </class>
 </hibernate-mapping>

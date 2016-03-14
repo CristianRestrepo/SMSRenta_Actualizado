@@ -12,10 +12,6 @@ import Funciones.MD5;
 import Funciones.SendEmail;
 import static Funciones.Upload.getNameDefaultUsuario;
 import static Funciones.Upload.getPathDefaultUsuario;
-import Modelo.SmsCiudad;
-import Modelo.SmsEmpleado;
-import Modelo.SmsProveedor;
-import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,7 +26,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
     IAdministradorDao adminDao;
     private String buscar;
 
-    private int operacion; //Controla la operacion a realizar
+    protected int operacion; //Controla la operacion a realizar
     private String nombreOperacion;
 
     //Banderas    
@@ -78,6 +74,16 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         this.habilitarCancelar = habilitarCancelar;
     }
 
+    public int getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(int operacion) {
+        this.operacion = operacion;
+    }
+    
+    
+
     //Declaracion de metodos
     //Metodos CRUD
     public void registrarAdministrador() {
@@ -101,41 +107,33 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
-        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
-
-        rolView = rolDao.consultarRol(rolView).get(0);
-        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
-
+        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
+        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
-
+        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
+       
+        
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(usuarioView);
         usuariosListView = adminDao.consultarUsuariosAdministradores();
 
         //limpiamos objetos
         usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
         password = "";
     }
 
     public void modificarAdministrador() {
 
-        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
-
-        rolView = rolDao.consultarRol(rolView).get(0);
-        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
-
+        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
+        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
+        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
+       
         usuarioDao.modificarUsuario(usuarioView);//modificamos la informacion de usuario
         //Modificamos el respaldo de la contraseña si esta fue modificada
 
         usuariosListView = adminDao.consultarUsuariosAdministradores();
 
-        //limpiamos objetos
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
+        //limpiamos objetos        
         usuarioView = new SmsUsuario();
     }
 
@@ -143,8 +141,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         usuarioDao.eliminarUsuario(usuarioView);
         usuariosListView = adminDao.consultarUsuariosAdministradores();
         //limpiamos objetos
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
+      
         usuarioView = new SmsUsuario();
     }
 
@@ -176,10 +173,6 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
     public void seleccionarCRUD(int i) {
         operacion = i;
         if (operacion == 1) {
-
-            ciudadView = usuarioView.getSmsCiudad();
-            rolView = usuarioView.getSmsRol();
-
             habilitarCancelar = false;
             nombreOperacion = "Modificar Administrador";
 
@@ -188,11 +181,8 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
 
     public void cancelar() {
         //Limpiamos objetos utilizados
-
         usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
-
+        
         //Reiniciamos los objetos
         habilitarCancelar = true;
         nombreOperacion = "Registrar Proveedor";

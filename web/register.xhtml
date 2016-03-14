@@ -70,8 +70,16 @@
                                                             <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%"/>
                                                             <p:message for="TEmailCli"/>
 
+                                                            <b:selectOneMenu value="#{clienteBean.usuarioView.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
+                                                                <f:selectItem itemLabel="Seleccione nacionalidad" noSelectionOption="true"/>
+                                                                <f:selectItems value="#{nacionalidadBean.nombresNacionalidades}"/>
+                                                            </b:selectOneMenu>
+                                                             <p:message for="SNacionalidad"/>
 
-                                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{clienteBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                                            <b:inputText maxlength="45" id="TCcCli" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" value="#{clienteBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                                            <p:message for="TCcCli"/>
+
+                                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{clienteBean.usuarioView.smsCiudad.ciudadNombre}" style="width: 100%">
                                                                 <f:selectItem itemLabel="Seleccione ciudad"/>
                                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                                             </b:selectOneMenu>

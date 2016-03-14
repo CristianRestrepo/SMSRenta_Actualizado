@@ -10,10 +10,6 @@ import Modelo.SmsEmpleado;
 import Modelo.SmsUsuario;
 import java.util.List;
 
-/**
- *
- * @author Desarrollo_Planit
- */
 public interface IEmpleadoDao {
 
     //Definicion metodos CRUD

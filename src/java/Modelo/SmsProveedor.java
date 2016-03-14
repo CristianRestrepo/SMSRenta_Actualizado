@@ -19,6 +19,7 @@ public class SmsProveedor implements java.io.Serializable {
     private Set<SmsEmpleado> smsEmpleados = new HashSet<>(0);
 
     public SmsProveedor() {
+        this.smsUsuario = new SmsUsuario();
     }
 
     public SmsProveedor(SmsUsuario smsUsuario, int proveedorValorGanancia, String proveedorRazonSocial, String proveedorNit) {

@@ -10,8 +10,8 @@ import DAO.ImpClienteDao;
 import Funciones.GenerarPassword;
 import Funciones.MD5;
 import Funciones.SendEmail;
-import Modelo.SmsCiudad;
-import Modelo.SmsRol;
+import static Funciones.Upload.getNameDefaultUsuario;
+import static Funciones.Upload.getPathDefaultUsuario;
 import Modelo.SmsUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     //Variables   
     private String buscar;
-    private int operacion; //Controla la operacion a realizar
+    protected int operacion; //Controla la operacion a realizar
     private String nombreOperacion;
 
     //Banderas    
@@ -48,7 +48,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         clienteDao = new ImpClienteDao();
 
         buscar = null;
-        habilitarCancelar = true;       
+        habilitarCancelar = true;
 
         operacion = 0;
         nombreOperacion = "Registrar Cliente";
@@ -98,17 +98,25 @@ public class ClienteBean extends UsuarioBean implements Serializable {
     public void setHabilitarCancelar(boolean habilitarCancelar) {
         this.habilitarCancelar = habilitarCancelar;
     }
+
+    public int getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(int operacion) {
+        this.operacion = operacion;
+    }
     
     
 
     //Metodos     
     public String registrarCliente() {
         //asignamos un rol al usuario
-        rolView.setRolNombre("Cliente");
+        usuarioView.getSmsRol().setRolNombre("Cliente");
 
         //asignamos al usuario la imagen de perfil default
-        usuarioView.setUsuarioFotoRuta(fileController.getPathDefaultUsuario());
-        usuarioView.setUsuarioFotoNombre(fileController.getNameDefaultUsuario());
+        usuarioView.setUsuarioFotoRuta(getPathDefaultUsuario());
+        usuarioView.setUsuarioFotoNombre(getNameDefaultUsuario());
 
         password = usuarioView.getUsuarioPassword();
         MD5 md = new MD5();
@@ -117,25 +125,18 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
-        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
-
-        rolView = rolDao.consultarRol(rolView).get(0);
-        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
-
+        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
+        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
-
+        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(usuarioView);
-        //Consultamos informacion usuario recien registrado y guardamos respaldo de su contraseña
-        usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
+
         //Actualizamos la lista de clientes registrador en el sistema
         usuariosListView = clienteDao.consultarUsuariosClientes();
         emailController.sendEmailCliente(usuarioView, password);//enviamos correo de bienvenida
         //limpiamos objetos
         usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
 
         return "Login";
 
@@ -143,17 +144,18 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     public void registrarClienteAdmin() {
         //asignamos un rol al usuario
-        rolView.setRolNombre("Cliente");
+        usuarioView.getSmsRol().setRolNombre("Cliente");
 
         //asignamos al usuario la imagen de perfil default
-        usuarioView.setUsuarioFotoRuta(fileController.getPathDefaultUsuario());
-        usuarioView.setUsuarioFotoNombre(fileController.getNameDefaultUsuario());
+        usuarioView.setUsuarioFotoRuta(getPathDefaultUsuario());
+        usuarioView.setUsuarioFotoNombre(getNameDefaultUsuario());
 
         //Se genera un login y un pass aleatorio que se le envia al proveedor
         MD5 md = new MD5();
         GenerarPassword pass = new GenerarPassword();//Generamos un password aleatorio
 
         password = pass.generarPass(6);//Generamos pass aleatorio
+
         //Asignamos email como nombre de sesion
         usuarioView.setUsuarioLogin(usuarioView.getUsuarioEmail());
 
@@ -163,19 +165,14 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
-        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
-
-        rolView = rolDao.consultarRol(rolView).get(0);
-        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
-
+        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
+        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
+        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
+       
 
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(usuarioView);
-
-        //Consultamos informacion usuario recien registrado y guardamos respaldo de su contraseña
-        usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
 
         //Actualizamos la lista de clientes registrador en el sistema
         usuariosListView = clienteDao.consultarUsuariosClientes();
@@ -183,8 +180,6 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         emailController.sendEmailCliente(usuarioView, password);//enviamos correo de bienvenida
         //limpiamos objetos
         usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
     }
 
     public void modificarCliente() {
@@ -192,32 +187,27 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
-        ciudadView = ciudadDao.consultarCiudad(ciudadView).get(0);
-        usuarioView.setSmsCiudad(ciudadView);//Asociamos una ciudad a un usuario
-
-        rolView = rolDao.consultarRol(rolView).get(0);
-        usuarioView.setSmsRol(rolView);//Asociamos un rol a un usuario
-
+        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
+        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
-
+        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
+       
+        
         //modificamos el usuario y recargamos la lista de clientes
         usuarioDao.modificarUsuario(usuarioView);
         usuariosListView = clienteDao.consultarUsuariosClientes();
         //se limpian objetos
         usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
     }
 
     public void eliminarCliente() {
         usuarioDao.eliminarUsuario(usuarioView);//Se elimina el objeto
+
         //Se recarga la lista de clientes
         usuariosListView = clienteDao.consultarUsuariosClientes();
 
         //Limpiamos objetos
         usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
 
         habilitarCancelar = true;
         operacion = 0;
@@ -250,9 +240,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     public void seleccionarCRUD(int i) {
         operacion = i;
-        if (operacion == 1) {
-            ciudadView = usuarioView.getSmsCiudad();
-            rolView = usuarioView.getSmsRol();
+        if (operacion == 1) {           
             habilitarCancelar = false;
             nombreOperacion = "Modificar Cliente";
         }
@@ -260,9 +248,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     public void cancelar() {
         //Limpiamos objetos utilizados
-        usuarioView = new SmsUsuario();
-        ciudadView = new SmsCiudad();
-        rolView = new SmsRol();
+        usuarioView = new SmsUsuario();       
 
         //Reiniciamos los objetos       
         habilitarCancelar = true;
