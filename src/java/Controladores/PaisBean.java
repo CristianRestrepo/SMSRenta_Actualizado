@@ -5,7 +5,6 @@
  */
 package Controladores;
 
-
 import DAO.IPaisDao;
 import DAO.ImpPaisDao;
 import Modelo.SmsPais;
@@ -14,17 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
-public class PaisBean implements Serializable{
+public class PaisBean implements Serializable {
 
     //Objetos de vista
     protected SmsPais paisView;
-    protected SmsPais DPaisView;
     protected List<SmsPais> paisesListView;
     protected List<String> nombrePaisesListView;
-    
+
     //Conexion con el DAO
-     IPaisDao paisDao = new ImpPaisDao();
-    
+    IPaisDao paisDao = new ImpPaisDao();
+
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
@@ -32,7 +30,6 @@ public class PaisBean implements Serializable{
 
     public PaisBean() {
         paisView = new SmsPais();
-        DPaisView = new SmsPais();
         paisesListView = new ArrayList<>();
         nombrePaisesListView = new ArrayList<>();
         buscar = null;
@@ -100,14 +97,6 @@ public class PaisBean implements Serializable{
         this.buscar = buscar;
     }
 
-    public SmsPais getDPaisView() {
-        return DPaisView;
-    }
-
-    public void setDPaisView(SmsPais DPaisView) {
-        this.DPaisView = DPaisView;
-    }
-
     //Metodos que se comunicar con el controlador    
     public void registrar() {
         paisDao.registrarPais(paisView);
@@ -122,15 +111,11 @@ public class PaisBean implements Serializable{
     }
 
     public void eliminar() {
-        paisDao.eliminarPais(DPaisView);
-        if (paisView.equals(DPaisView)) {
-            paisView = new SmsPais();
-            nombre = "Registrar Pais";
-            estado = 0;
-        }
+        paisDao.eliminarPais(paisView);
 
-        paisesListView = paisDao.mostrarPaises();
-        DPaisView = new SmsPais();
+        paisView = new SmsPais();
+        nombre = "Registrar Pais";
+        estado = 0;
     }
 
     public void filtrar() {

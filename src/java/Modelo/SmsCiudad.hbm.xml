@@ -8,10 +8,10 @@
             <column name="idCiudad" />
             <generator class="identity" />
         </id>
-        <many-to-one name="smsDepartamento" class="Modelo.SmsDepartamento" fetch="select">
+        <many-to-one name="smsDepartamento" class="Modelo.SmsDepartamento" fetch="join">
             <column name="idDepartamento" not-null="true" />
         </many-to-one>
-        <many-to-one name="smsTipoLugar" class="Modelo.SmsTipoLugar" fetch="select">
+        <many-to-one name="smsTipoLugar" class="Modelo.SmsTipoLugar" fetch="join">
             <column name="idTipoLugar" not-null="true" />
         </many-to-one>
         <property name="ciudadNombre" type="string">

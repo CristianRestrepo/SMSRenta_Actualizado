@@ -17,6 +17,7 @@ public class SmsReferencia  implements java.io.Serializable {
      private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
 
     public SmsReferencia() {
+        this.smsMarca = new SmsMarca();
     }
 
 	

@@ -28,7 +28,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsDepartamento");
+            Query query = session.createQuery("from SmsDepartamento as departamento left join fetch departamento.smsPais");
             departamentos = (List<SmsDepartamento>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

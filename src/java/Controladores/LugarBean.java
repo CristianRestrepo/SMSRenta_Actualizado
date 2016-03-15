@@ -24,11 +24,8 @@ public class LugarBean implements Serializable {
 
     //Objetos necesarios en vista
     private SmsLugares LugarView;
-    private SmsLugares DLugarView;
     private List<SmsLugares> LugaresListView;
     private List<String> nombresLugaresListView;
-    //Relaciones con otras clases
-    private SmsCiudad CiudadView;
 
     //Conexion con el DAO
     ICiudadDao ciudadDao;
@@ -41,10 +38,8 @@ public class LugarBean implements Serializable {
 
     public LugarBean() {
         LugarView = new SmsLugares();
-        DLugarView = new SmsLugares();
         LugaresListView = new ArrayList<>();
         nombresLugaresListView = new ArrayList<>();
-        CiudadView = new SmsCiudad();
 
         buscar = null;
         estado = 0;
@@ -76,28 +71,12 @@ public class LugarBean implements Serializable {
         this.LugaresListView = LugaresListView;
     }
 
-    public SmsCiudad getCiudadView() {
-        return CiudadView;
-    }
-
-    public void setCiudadView(SmsCiudad CiudadView) {
-        this.CiudadView = CiudadView;
-    }
-
     public List<String> getNombresLugaresListView() {
         return nombresLugaresListView;
     }
 
     public void setNombresLugaresListView(List<String> nombresLugaresListView) {
         this.nombresLugaresListView = nombresLugaresListView;
-    }
-
-    public SmsLugares getDLugarView() {
-        return DLugarView;
-    }
-
-    public void setDLugarView(SmsLugares DLugarView) {
-        this.DLugarView = DLugarView;
     }
 
     public String getNombre() {
@@ -119,37 +98,29 @@ public class LugarBean implements Serializable {
     //Metodos CRUD
     public void registrar() {
 
-        CiudadView = ciudadDao.consultarCiudad(CiudadView).get(0);
-        LugarView.setSmsCiudad(CiudadView);
-        
+        LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()).get(0));
+
         lugarDao.registrarLugar(LugarView);
         LugaresListView = lugarDao.consultarLugares();
         LugarView = new SmsLugares();
-        CiudadView = new SmsCiudad();
     }
 
     public void modificar() {
 
-        CiudadView = ciudadDao.consultarCiudad(CiudadView).get(0);
-        LugarView.setSmsCiudad(CiudadView);
-        
+        LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()).get(0));
+
         lugarDao.modificarLugar(LugarView);
         LugaresListView = lugarDao.consultarLugares();
 
         LugarView = new SmsLugares();
-        CiudadView = new SmsCiudad();
     }
 
     public void eliminar() {
-        lugarDao.eliminarLugar(DLugarView);
+        lugarDao.eliminarLugar(LugarView);
 
-        if (LugarView.equals(DLugarView)) {
-            LugarView = new SmsLugares();
-            CiudadView = new SmsCiudad();
-            nombre = "Registrar Lugar";
-            estado = 0;
-        }
-        DLugarView = new SmsLugares();
+        LugarView = new SmsLugares();
+        nombre = "Registrar Lugar";
+        estado = 0;
         LugaresListView = lugarDao.consultarLugares();
     }
 
@@ -157,7 +128,6 @@ public class LugarBean implements Serializable {
     public void seleccionarCrud(int i) {
         estado = i;
         if (estado == 1) {
-            CiudadView.setCiudadNombre(LugarView.getSmsCiudad().getCiudadNombre());
             nombre = "Modificar Lugar";
         }
     }

@@ -21,8 +21,7 @@ import javax.annotation.PostConstruct;
  */
 public class DepartamentoBean {
 
-    private SmsDepartamento departamentoView;
-    private SmsDepartamento EDepartamentoView;//Objeto para eliminar el registro
+    private SmsDepartamento departamentoView;   
     
     private List<SmsDepartamento> departamentoListView;
     private List<String> nombresDepartamentoListView;
@@ -41,8 +40,7 @@ public class DepartamentoBean {
         departamentoDao = new ImpDepartamentoDao();
         paisDao = new ImpPaisDao();
 
-        departamentoView = new SmsDepartamento();
-        EDepartamentoView = new SmsDepartamento();
+        departamentoView = new SmsDepartamento();       
         departamentoListView = new ArrayList<>();
         nombresDepartamentoListView = new ArrayList<>();
         
@@ -94,15 +92,7 @@ public class DepartamentoBean {
     public void setPaisView(SmsPais paisView) {
         this.paisView = paisView;
     }
-
-    public SmsDepartamento getEDepartamentoView() {
-        return EDepartamentoView;
-    }
-
-    public void setEDepartamentoView(SmsDepartamento EDepartamentoView) {
-        this.EDepartamentoView = EDepartamentoView;
-    }
-
+   
     public int getEstado() {
         return estado;
     }
@@ -133,10 +123,8 @@ public class DepartamentoBean {
     public void registrarDepartamento(){
         
         //Se consulta la informacion completa del pais al que pertenece el departamento
-        paisView = paisDao.consultarPais(paisView).get(0);
-        //Se relaciona al departamento
-        departamentoView.setSmsPais(paisView);
-        
+        departamentoView.setSmsPais(paisDao.consultarPais(departamentoView.getSmsPais()).get(0));
+                
         //Se registra el departamento
         departamentoDao.registrarDepartamento(departamentoView);
         
@@ -150,11 +138,9 @@ public class DepartamentoBean {
     
     public void ModificarDepartamento(){
         
-        //Se consulta la informacion completa del pais al que pertenece el departamento
-        paisView = paisDao.consultarPais(paisView).get(0);
-        //Se relaciona al departamento
-        departamentoView.setSmsPais(paisView);
-        
+          //Se consulta la informacion completa del pais al que pertenece el departamento
+        departamentoView.setSmsPais(paisDao.consultarPais(departamentoView.getSmsPais()).get(0));
+                  
         //Se modifica el departamento
         departamentoDao.modificarDepartamento(departamentoView);
         
@@ -168,12 +154,8 @@ public class DepartamentoBean {
     
     public void eliminarDepartamento(){
         //Se registra el departamento
-        departamentoDao.eliminarDepartamento(EDepartamentoView);
-        
-        if(departamentoView.equals(EDepartamentoView)){
-        departamentoView = new SmsDepartamento();
-        paisView = new SmsPais();
-        }
+        departamentoDao.eliminarDepartamento(departamentoView);
+                
         //Recargamos la lista de departamentos
         departamentoListView = departamentoDao.consultarDepartamentos();
         
@@ -197,6 +179,15 @@ public class DepartamentoBean {
             ModificarDepartamento();
             estado = 0;
             nombre = "Registrar departamento";
+        }
+    }
+    
+     public void filtrar() {
+        departamentoListView = new ArrayList<>();
+        if (buscar == null) {
+            departamentoListView = departamentoDao.consultarDepartamento(departamentoView);
+        } else {
+            departamentoListView = departamentoDao.filtrarDepartamentos(buscar);
         }
     }
 }

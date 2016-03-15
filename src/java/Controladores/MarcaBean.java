@@ -21,14 +21,12 @@ public class MarcaBean implements Serializable {
 
     //Objetos de vista
     private SmsMarca marcaView;
-    private SmsMarca DMarcaView;
     private List<SmsMarca> marcasListView;
     private List<String> nombresMarcaView;
 
-        
     //Conexion con el DAO
     IMarcaDao marcaDao;
-    
+
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
@@ -36,14 +34,13 @@ public class MarcaBean implements Serializable {
 
     public MarcaBean() {
         marcaView = new SmsMarca();
-        DMarcaView = new SmsMarca();
         marcasListView = new ArrayList<>();
         nombresMarcaView = new ArrayList<>();
-      
+
         buscar = "";
         estado = 0;
         nombre = "Registrar Marca";
-        
+
         marcaDao = new ImpMarcaDao();
     }
 
@@ -106,29 +103,20 @@ public class MarcaBean implements Serializable {
         this.buscar = buscar;
     }
 
-    public SmsMarca getDMarcaView() {
-        return DMarcaView;
-    }
-
-    public void setDMarcaView(SmsMarca DMarcaView) {
-        this.DMarcaView = DMarcaView;
-    }
-    
-   //Metodos
-   public void modificar() {
+    //Metodos
+    public void modificar() {
         marcaDao.modificarMarca(marcaView);
         marcaView = new SmsMarca();
         marcasListView = marcaDao.mostrarMarcas();
     }
 
     public void eliminar() {
-        marcaDao.eliminarMarca(DMarcaView);
-        if (marcaView.equals(DMarcaView)) {
-            marcaView = new SmsMarca();
-            nombre = "Registrar Marca";
-            estado = 0;
-        }
-        DMarcaView = new SmsMarca();
+        marcaDao.eliminarMarca(marcaView);
+
+        marcaView = new SmsMarca();
+        nombre = "Registrar Marca";
+        estado = 0;
+
         marcasListView = marcaDao.mostrarMarcas();
     }
 
@@ -147,8 +135,8 @@ public class MarcaBean implements Serializable {
             marcaView = new SmsMarca();
         }
     }
-    
-    public List<SmsMarca> consultarMarca(SmsMarca marca){
+
+    public List<SmsMarca> consultarMarca(SmsMarca marca) {
         marcasListView = new ArrayList<>();
         marcasListView = marcaDao.consultarMarca(marca);
         return marcasListView;

@@ -11,7 +11,7 @@
         <property name="paisNombre" type="string">
             <column name="Pais_nombre" length="50" not-null="true" />
         </property>
-        <set name="smsDepartamentos" table="sms_departamento" inverse="true" lazy="true" fetch="select">
+        <set name="smsDepartamentos" table="sms_departamento" inverse="true" fetch="join">
             <key>
                 <column name="idPais" not-null="true" />
             </key>

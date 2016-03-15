@@ -184,7 +184,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
         password = pass.generarPass(6);//Generamos pass aleatorio
         //Asignamos email como nombre de sesion
-        empleadoView.getSmsUsuario().setUsuarioLogin(usuarioView.getUsuarioEmail());
+        empleadoView.getSmsUsuario().setUsuarioLogin(empleadoView.getSmsUsuario().getUsuarioEmail());
 
         //Encriptamos las contraseñas
         empleadoView.getSmsUsuario().setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
@@ -233,18 +233,12 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     }
 
     public void modificarEmpleado() {
-        empleadoView.getSmsUsuario().getSmsRol().setRolNombre("Conductor");
         
         empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()).get(0));
         empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
         empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()).get(0));
-        empleadoView.getSmsUsuario().setSmsRol(rolDao.consultarRol(empleadoView.getSmsUsuario().getSmsRol()).get(0));//Asociamos un rol a un usuario
-                
-        usuarioDao.modificarUsuario(empleadoView.getSmsUsuario());
-
-        //Consultamos informacion del proveedor
-        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
-
+              
+        usuarioDao.modificarUsuario(empleadoView.getSmsUsuario());        
         empleadoDao.modificarEmpleado(empleadoView);//Se modifica el empleado
         estadoFoto = "Foto sin subir";
         estadoArchivo = "Hoja de vida sin subir";

@@ -12,13 +12,16 @@
         <ui:define name="content">
             <b:container fluid="true">
                 <b:row>
-                    <h:form>
-                        <p:messages id="messages" closable="true"/>
+                    <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                        <div class="espacio-arriba" style="text-align: center" align="center">
+                            <h4 style="font-size: x-large">PAISES Y DEPARTAMENTOS</h4><br/>
+                            <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre} (#{usuarioBean.usuario.usuarioLogin})</p>
+                        </div>
+                    </b:column>
+                    
+                    <h:form id="formularioPais">                        
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <div class="espacio-arriba" style="text-align: center" align="center">
-                                <h4 style="font-size: x-large">CIUDADES Y DEPARTAMENTOS</h4><br/>
-                                <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre} (#{usuarioBean.usuario.usuarioLogin})</p>
-                            </div>
+                            <p:messages id="messages" closable="true"/>
                         </b:column>
 
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
@@ -49,7 +52,7 @@
                                             <p:message for="TPaisNombre"/>
                                         </h:panelGrid>
                                     </div> <br/>
-                                    <p:commandButton class="btn btn-block btn-danger" id="BTPais" action="#{paisBean.metodo()}" update="messages PPais BTPais DTPaises" value="#{paisBean.nombre}"/>                                       
+                                    <p:commandButton class="btn btn-block btn-danger" id="BTPais" action="#{paisBean.metodo()}" update=":formularioPais :formularioDepartamentos:SMPais" value="#{paisBean.nombre}"/>                                       
                                 </div>
                             </div>
                         </b:column>
@@ -81,8 +84,8 @@
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{paisBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{paises}" target="#{paisBean.DPaisView}"/>
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formularioPais :formularioDepartamentos:SMPais" action="#{paisBean.eliminar()}" title="Eliminar">
+                                                <f:setPropertyActionListener value="#{paises}" target="#{paisBean.paisView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este cliente?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
@@ -97,9 +100,11 @@
                         </b:column>
                     </h:form>
 
-                    <h:form>
-                        <p:messages id="messages" closable="true"/>
-
+                    <h:form id="formularioDepartamentos">
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <p:messages id="messages" closable="true"/>
+                        </b:column>
+                        
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border">
@@ -119,13 +124,13 @@
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-globe"/>
-                                    <h4 class="box-title">Datos de pais</h4>
+                                    <h4 class="box-title">Datos del departamento</h4>
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
                                         <h:panelGrid id="PDepartamento" columns="2" style="width: 100%">                                          
-                                            <b:selectOneMenu id="SMPais" required="true" style="width: 100%" tooltip="Pais al que pertenece el departamento a registrar o modificar" requiredMessage="Seleccion el pais" >
-                                                <f:selectItem noSelectionOption="true" itemValue="Seleccione pais"/>
+                                            <b:selectOneMenu id="SMPais" required="true" style="width: 100%" value="#{departamentoBean.departamentoView.smsPais.paisNombre}" tooltip="Pais al que pertenece el departamento a registrar o modificar" requiredMessage="Seleccion el pais" >
+                                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione pais"/>
                                                 <f:selectItems value="#{paisBean.nombrePaisesListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SMPais"/>
@@ -134,7 +139,7 @@
                                             <p:message for="TDepartamentoNombre"/>
                                         </h:panelGrid>
                                     </div> <br/>
-                                    <p:commandButton class="btn btn-block btn-danger" id="BTPais" action="#{departamentoBean.metodo()}" update="messages PPais BTPais DTPaises" value="#{departamentoBean.nombre}"/>                                       
+                                    <p:commandButton class="btn btn-block btn-danger" id="BTPais" action="#{departamentoBean.metodo()}" update=":formularioDepartamentos" value="#{departamentoBean.nombre}"/>                                       
                                 </div>
                             </div>
                         </b:column>
@@ -146,28 +151,32 @@
                                     <h4 class="box-title">Lista de Paises</h4>
                                 </div> 
                                 <div class="box-body">
-                                    <b:inputText placeholder="Buscar" value="#{paisBean.buscar}" style="width: 100%">
-                                        <p:ajax event="keyup" listener="#{paisBean.filtrar()}" process="@this" update="DTPaises"/>                                    
+                                    <b:inputText placeholder="Buscar" value="#{departamentoBean.buscar}" style="width: 100%">
+                                        <p:ajax event="keyup" listener="#{departamentoBean.filtrar()}" process="@this" update="DTDepartamentos"/>                                    
                                     </b:inputText>
                                     <hr/>
-                                    <p:dataTable id="DTPaises" emptyMessage="Ciudades no registradas" var="paises" value="#{paisBean.paisesListView}" 
+                                    <p:dataTable id="DTDepartamentos" emptyMessage="Ciudades no registradas" var="departamento" value="#{departamentoBean.departamentoListView}" 
                                                  rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  rowsPerPageTemplate="5,10,15">
                                         <p:column headerText="Nombre">
-                                            <h:outputText value="#{paises.paisNombre}"/>
+                                            <h:outputText value="#{departamento.departamentoNombre}"/>
                                         </p:column>
 
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{departamento.smsPais.paisNombre}"/>
+                                        </p:column>
+                                        
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{paisBean.seleccionarCrud(1)}" title="Modificar">
-                                                <f:setPropertyActionListener value="#{paises}" target="#{paisBean.paisView}"/>
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formularioDepartamentos" action="#{departamentoBean.seleccionarCrud(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{departamento}" target="#{departamentoBean.departamentoView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{paisBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{paises}" target="#{paisBean.DPaisView}"/>
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formularioDepartamentos" action="#{departamentoBean.eliminarDepartamento()}" title="Eliminar">
+                                                <f:setPropertyActionListener value="#{departamento}" target="#{departamentoBean.departamentoView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este cliente?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>

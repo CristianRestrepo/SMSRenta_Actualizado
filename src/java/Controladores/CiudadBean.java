@@ -5,7 +5,6 @@
  */
 package Controladores;
 
-
 import DAO.ICiudadDao;
 import DAO.IDepartamentoDao;
 import DAO.ITipoLugarDao;
@@ -13,8 +12,6 @@ import DAO.ImpCiudadDao;
 import DAO.ImpDepartamentoDao;
 import DAO.ImpTipoLugarDao;
 import Modelo.SmsCiudad;
-import Modelo.SmsDepartamento;
-import Modelo.SmsTipoLugar;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +25,9 @@ public class CiudadBean implements Serializable {
 
     //Objetos de vista
     private SmsCiudad ciudadView;
-    private SmsCiudad DCiudadView;
     private List<SmsCiudad> ciudadesListView;
     private List<String> nombresCiudadesListView;
-    private SmsDepartamento departamentoView;
-    private SmsTipoLugar tipoView;
-    
- 
+
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
@@ -44,19 +37,16 @@ public class CiudadBean implements Serializable {
     IDepartamentoDao departamentoDao;
     ITipoLugarDao tipoLugarDao;
     ICiudadDao ciudadDao;
-    
+
     public CiudadBean() {
         ciudadView = new SmsCiudad();
-        DCiudadView = new SmsCiudad();
         ciudadesListView = new ArrayList<>();
         nombresCiudadesListView = new ArrayList<>();
-        departamentoView = new SmsDepartamento();
-        tipoView = new SmsTipoLugar();
-        
+
         buscar = null;
         estado = 0;
-        nombre = "Registrar Ciudad";        
-       
+        nombre = "Registrar Ciudad";
+
         ciudadDao = new ImpCiudadDao();
         departamentoDao = new ImpDepartamentoDao();
         tipoLugarDao = new ImpTipoLugarDao();
@@ -84,22 +74,6 @@ public class CiudadBean implements Serializable {
         this.ciudadesListView = ciudades;
     }
 
-    public SmsDepartamento getDepartamentoView() {
-        return departamentoView;
-    }
-
-    public void setDepartamentoView(SmsDepartamento departamentoView) {
-        this.departamentoView = departamentoView;
-    }
-
-    public SmsTipoLugar getTipoView() {
-        return tipoView;
-    }
-
-    public void setTipoView(SmsTipoLugar tipoView) {
-        this.tipoView = tipoView;
-    }
-    
     public List<String> getNombresCiudadesListView() {
         nombresCiudadesListView = new ArrayList<>();
         ciudadesListView = ciudadDao.mostrarCiudades();
@@ -137,20 +111,10 @@ public class CiudadBean implements Serializable {
         this.buscar = buscar;
     }
 
-    public SmsCiudad getDCiudadView() {
-        return DCiudadView;
-    }
-
-    public void setDCiudadView(SmsCiudad DCiudadView) {
-        this.DCiudadView = DCiudadView;
-    }
-
     //Metodos propios
     public void seleccionarCrud(int i) {
         estado = i;
         if (estado == 1) {
-            departamentoView.setDepartamentoNombre(ciudadView.getSmsDepartamento().getDepartamentoNombre());
-            tipoView.setTipoLugarNombre(ciudadView.getSmsTipoLugar().getTipoLugarNombre());
             nombre = "Modificar Ciudad";
         }
     }
@@ -168,55 +132,41 @@ public class CiudadBean implements Serializable {
     //Definicion Metodos CRUD
     public void registrar() {
         //Consultamos los objetos completos del departamento y el tipo de lugar para asignarlos a nuestra ciudad
-        departamentoView = departamentoDao.consultarDepartamento(departamentoView).get(0);
-        ciudadView.setSmsDepartamento(departamentoView);
-        tipoView = tipoLugarDao.consultarTipoLugar(tipoView).get(0);
-        ciudadView.setSmsTipoLugar(tipoView);
-        
+        ciudadView.setSmsDepartamento(departamentoDao.consultarDepartamento(ciudadView.getSmsDepartamento()).get(0));
+        ciudadView.setSmsTipoLugar(tipoLugarDao.consultarTipoLugar(ciudadView.getSmsTipoLugar()).get(0));
+
         //Se registra la ciudad
         ciudadDao.registrarCiudad(ciudadView);
-        
+
         //Limpiamos objetos
         ciudadView = new SmsCiudad();
-        departamentoView = new SmsDepartamento();
-        tipoView = new SmsTipoLugar();
-        
+
         //Recargamos lista de ciudades
         ciudadesListView = ciudadDao.mostrarCiudades();
     }
 
     public void modificar() {
-        //COnsultamos los objetos completos del departamento y el tipo de lugar para asignarlos a nuestra ciudad
-        departamentoView = departamentoDao.consultarDepartamento(departamentoView).get(0);
-        ciudadView.setSmsDepartamento(departamentoView);
-        tipoView = tipoLugarDao.consultarTipoLugar(tipoView).get(0);
-        ciudadView.setSmsTipoLugar(tipoView);
-        
+        //Consultamos los objetos completos del departamento y el tipo de lugar para asignarlos a nuestra ciudad
+        ciudadView.setSmsDepartamento(departamentoDao.consultarDepartamento(ciudadView.getSmsDepartamento()).get(0));
+        ciudadView.setSmsTipoLugar(tipoLugarDao.consultarTipoLugar(ciudadView.getSmsTipoLugar()).get(0));
+
         //Se modifica la ciudad
         ciudadDao.modificarCiudad(ciudadView);
-        
+
         //Limpiamos objetos
         ciudadView = new SmsCiudad();
-        departamentoView = new SmsDepartamento();
-        tipoView = new SmsTipoLugar();
-        
+
         //Recargamos lista de ciudades
         ciudadesListView = ciudadDao.mostrarCiudades();
     }
 
     public void eliminar() {
-        ciudadDao.eliminarCiudad(DCiudadView);
-        
-        if(ciudadView.equals(DCiudadView)){
-        ciudadView = new SmsCiudad();
-        departamentoView = new SmsDepartamento();
-        tipoView = new SmsTipoLugar();
-        
+        ciudadDao.eliminarCiudad(ciudadView);
+
         nombre = "Registrar Ciudad";
         estado = 0;
-        }
-        
-        DCiudadView = new SmsCiudad();
+
+        ciudadView = new SmsCiudad();
         ciudadesListView = ciudadDao.mostrarCiudades();
     }
 

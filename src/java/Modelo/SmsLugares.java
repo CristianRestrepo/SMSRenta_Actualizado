@@ -20,6 +20,7 @@ public class SmsLugares  implements java.io.Serializable {
      private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
      
     public SmsLugares() {
+        this.smsCiudad = new SmsCiudad();
     }
 
 	

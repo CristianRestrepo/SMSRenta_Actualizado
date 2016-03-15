@@ -17,6 +17,7 @@ public class SmsDepartamento  implements java.io.Serializable {
      private Set<SmsCiudad> smsCiudads = new HashSet<>(0);
 
     public SmsDepartamento() {
+        this.smsPais = new SmsPais();
     }
 
 	
