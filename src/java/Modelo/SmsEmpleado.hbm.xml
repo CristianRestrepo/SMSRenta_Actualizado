@@ -17,6 +17,9 @@
         <many-to-one name="smsUsuario" class="Modelo.SmsUsuario" fetch="join">
             <column name="idUsuario" not-null="true" />
         </many-to-one>
+        <many-to-one name="smsEstado" class="Modelo.SmsEstado" fetch="join">
+            <column name="idEstado" not-null="true" />
+        </many-to-one>
         <set name="smsCategoriasServicios" table="sms_empleado_sms_categorias_servicio" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="idEmpleado" not-null="true" />

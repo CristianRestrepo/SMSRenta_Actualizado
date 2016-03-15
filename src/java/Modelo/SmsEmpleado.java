@@ -13,6 +13,7 @@ public class SmsEmpleado implements java.io.Serializable {
     private SmsHojavida smsHojavida;
     private SmsProveedor smsProveedor;
     private SmsUsuario smsUsuario;
+    private SmsEstado smsEstado;
     private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>(0);
     private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
 
@@ -20,6 +21,7 @@ public class SmsEmpleado implements java.io.Serializable {
         this.smsHojavida = new SmsHojavida();
         this.smsProveedor = new SmsProveedor();
         this.smsUsuario = new SmsUsuario();
+        this.smsEstado = new SmsEstado();
     }
 
     public SmsEmpleado(SmsProveedor smsProveedor, SmsUsuario smsUsuario) {
@@ -27,10 +29,11 @@ public class SmsEmpleado implements java.io.Serializable {
         this.smsUsuario = smsUsuario;
     }
 
-    public SmsEmpleado(SmsHojavida smsHojavida, SmsProveedor smsProveedor, SmsUsuario smsUsuario, Set<SmsCategoriasServicio> smsCategoriasServicios, Set<SmsReservacion> smsReservacions) {
+    public SmsEmpleado(SmsHojavida smsHojavida, SmsEstado smsEstado, SmsProveedor smsProveedor, SmsUsuario smsUsuario, Set<SmsCategoriasServicio> smsCategoriasServicios, Set<SmsReservacion> smsReservacions) {
         this.smsHojavida = smsHojavida;
         this.smsProveedor = smsProveedor;
         this.smsUsuario = smsUsuario;
+        this.smsEstado = smsEstado;
         this.smsCategoriasServicios = smsCategoriasServicios;
         this.smsReservacions = smsReservacions;
     }
@@ -83,4 +86,13 @@ public class SmsEmpleado implements java.io.Serializable {
         this.smsReservacions = smsReservacions;
     }
 
+    public SmsEstado getSmsEstado() {
+        return smsEstado;
+    }
+
+    public void setSmsEstado(SmsEstado smsEstado) {
+        this.smsEstado = smsEstado;
+    }
+
+    
 }

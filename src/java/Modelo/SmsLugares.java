@@ -18,6 +18,7 @@ public class SmsLugares  implements java.io.Serializable {
      private Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio = new HashSet<>(0);
      private Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino = new HashSet<>(0);
      private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
+     private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>(0);
      
     public SmsLugares() {
         this.smsCiudad = new SmsCiudad();
@@ -28,12 +29,14 @@ public class SmsLugares  implements java.io.Serializable {
         this.smsCiudad = smsCiudad;
         this.lugarNombre = lugarNombre;
     }
-    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, String lugarDireccion, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino, Set<SmsVehiculo> smsVehiculos) {
+    
+    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, String lugarDireccion, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino, Set<SmsVehiculo> smsVehiculos, Set<SmsCategoriasServicio> smsCategoriasServicios) {
        this.smsCiudad = smsCiudad;
        this.lugarNombre = lugarNombre;
        this.lugarDireccion = lugarDireccion;
        this.smsCostosserviciosesForIdLugarInicio = smsCostosserviciosesForIdLugarInicio;
        this.smsCostosserviciosesForIdLugarDestino = smsCostosserviciosesForIdLugarDestino;
+       this.smsCategoriasServicios = smsCategoriasServicios;
        this.smsVehiculos = smsVehiculos;
     }
    
@@ -88,6 +91,15 @@ public class SmsLugares  implements java.io.Serializable {
         this.smsVehiculos = smsVehiculos;
     }
 
+    public Set<SmsCategoriasServicio> getSmsCategoriasServicios() {
+        return smsCategoriasServicios;
+    }
+
+    public void setSmsCategoriasServicios(Set<SmsCategoriasServicio> smsCategoriasServicios) {
+        this.smsCategoriasServicios = smsCategoriasServicios;
+    }
+
+    
     
 
 

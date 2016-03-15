@@ -8,20 +8,23 @@
             <column name="idVehiculo" />
             <generator class="identity" />
         </id>
-        <many-to-one name="smsCategoria" class="Modelo.SmsCategoria" fetch="select">
+        <many-to-one name="smsCategoria" class="Modelo.SmsCategoria" fetch="join">
             <column name="idCategoria" not-null="true" />
         </many-to-one>
-        <many-to-one name="smsCiudad" class="Modelo.SmsCiudad" fetch="select">
+        <many-to-one name="smsCiudad" class="Modelo.SmsCiudad" fetch="join">
             <column name="idCiudad" not-null="true" />
         </many-to-one>
-         <many-to-one name="smsColor" class="Modelo.SmsColor" fetch="select">
+        <many-to-one name="smsColor" class="Modelo.SmsColor" fetch="join">
             <column name="idColor" not-null="true" />
         </many-to-one>
-        <many-to-one name="smsProveedor" class="Modelo.SmsProveedor" fetch="select">
+        <many-to-one name="smsProveedor" class="Modelo.SmsProveedor" fetch="join">
             <column name="idProveedor" not-null="true" />
         </many-to-one>
-        <many-to-one name="smsReferencia" class="Modelo.SmsReferencia" fetch="select">
+        <many-to-one name="smsReferencia" class="Modelo.SmsReferencia" fetch="join">
             <column name="idReferencia" not-null="true" />
+        </many-to-one>
+        <many-to-one name="smsEstado" class="Modelo.SmsEstado" fetch="join">
+            <column name="idEstado" not-null="true" />
         </many-to-one>
         <property name="vehPlaca" type="string">
             <column name="Veh_placa" length="50" not-null="true" />

@@ -7,10 +7,13 @@ package Controladores;
 
 import DAO.ICategoriaDao;
 import DAO.IMercadoDao;
+import DAO.IProveedorDao;
 import DAO.ImpCategoriaDao;
 import DAO.ImpMercadoDao;
+import DAO.ImpProveedorDao;
 import Modelo.SmsCategoria;
 import Modelo.SmsMercado;
+import Modelo.SmsProveedor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,6 @@ public class CategoriaBean implements Serializable {
 
     public CategoriaBean() {//CONSTRUCTOR
         categoriaView = new SmsCategoria();
-        DCategoriaView = new SmsCategoria();
         categoriasListView = new ArrayList<>();
         nombresCategoriasListView = new ArrayList<>();
         mercadoView = new SmsMercado();
@@ -159,13 +161,10 @@ public class CategoriaBean implements Serializable {
     public void eliminar() {
         //TRAER LA INFORMACION DE LA VISTA Y PASARLA AL PARAMETRO CORRESPODIENTE 
         //DE LA CLASE DEL PAQUETE CONTROLADOR
-        catDao.eliminarCategoria(DCategoriaView);
-        if (categoriaView.equals(DCategoriaView)) {
-            categoriaView = new SmsCategoria();
-            nombre = "Registrar Categoria";
-            estado = 0;
-        }
-        DCategoriaView = new SmsCategoria();
+        catDao.eliminarCategoria(categoriaView);
+        categoriaView = new SmsCategoria();
+        nombre = "Registrar Categoria";
+        estado = 0;
         categoriasListView = catDao.mostrarCategorias();
     }
 
@@ -183,6 +182,43 @@ public class CategoriaBean implements Serializable {
         } else {
             categoriasListView = catDao.filtrarCategorias(buscar);
         }
+    }
+
+    public List<String> CategoriasSegunMercado(String prov) {
+
+        if (prov.isEmpty()) {
+            nombresCategoriasListView = new ArrayList<>();
+        } else {
+            SmsProveedor proveedor = new SmsProveedor();
+            IProveedorDao provDao = new ImpProveedorDao();
+
+            proveedor.setProveedorRazonSocial(prov);
+            proveedor = provDao.consultarProveedor(proveedor).get(0);
+
+            List<SmsMercado> mercados = mercadoDao.consultarMercados();
+            List<SmsMercado> m = new ArrayList<>();
+
+            for (SmsMercado mercado : mercados) {
+                for (SmsMercado mercadoProv : proveedor.getSmsMercados()) {
+                    if (mercadoProv.getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
+                        m.add(mercado);
+                    }
+                }
+            }
+
+            categoriasListView = catDao.mostrarCategorias();
+
+            for (int i = 0; i < m.size(); i++) {
+                for (int j = 0; j < categoriasListView.size(); j++) {
+                    if (categoriasListView.get(j).getSmsMercados().contains(m.get(i))) {
+                        if (!nombresCategoriasListView.contains(categoriasListView.get(j).getCategoriaNombre())) {
+                            nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
+                        }
+                    }
+                }
+            }
+        }
+        return nombresCategoriasListView;
     }
 
     //Metodos Propios

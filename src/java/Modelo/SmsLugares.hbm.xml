@@ -37,5 +37,13 @@
             </key>
             <one-to-many class="Modelo.SmsCostosservicios" />
         </set>
+        <set name="smsCategoriasServicios" table="sms_lugares_sms_categorias_servicio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idLugar" not-null="true" />
+            </key>
+            <many-to-many class="Modelo.SmsCategoriasServicio">
+                <column name="idCategorias_Servicio" not-null="true" />
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>

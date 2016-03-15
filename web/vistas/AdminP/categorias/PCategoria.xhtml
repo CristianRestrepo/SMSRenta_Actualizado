@@ -91,7 +91,7 @@
 
                                         <p:column style="width: 35px">
                                             <p:commandLink class="fa fa-close btn btn-block btn-danger" style="color: white" process="@this" update="@form" action="#{categoriaBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.DCategoriaView}"/>
+                                                <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta categoria?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>

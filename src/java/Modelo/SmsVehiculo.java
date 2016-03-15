@@ -14,6 +14,7 @@ public class SmsVehiculo  implements java.io.Serializable {
      private Integer idVehiculo;
      private SmsCategoria smsCategoria;
      private SmsCiudad smsCiudad;
+     private SmsEstado smsEstado;
      private SmsProveedor smsProveedor;
      private SmsReferencia smsReferencia;
      private SmsColor smsColor;
@@ -37,10 +38,12 @@ public class SmsVehiculo  implements java.io.Serializable {
         this.smsColor = new SmsColor();
         this.smsProveedor = new SmsProveedor();
         this.smsReferencia = new SmsReferencia();
+        this.smsEstado = new SmsEstado();
     }
 
-    public SmsVehiculo(SmsCategoria smsCategoria, SmsCiudad smsCiudad, SmsProveedor smsProveedor, SmsReferencia smsReferencia, SmsColor smsColor, String vehPlaca, String vehModelo, Integer vehNumPersonas, Integer vehNumMalGrande, Integer vehNumMalPequeña, String vehFotoNombre, String vehFotoRuta, String vehFoto2Nombre, String vehFoto2Ruta) {
+    public SmsVehiculo(SmsCategoria smsCategoria,SmsEstado smsEstado ,SmsCiudad smsCiudad, SmsProveedor smsProveedor, SmsReferencia smsReferencia, SmsColor smsColor, String vehPlaca, String vehModelo, Integer vehNumPersonas, Integer vehNumMalGrande, Integer vehNumMalPequeña, String vehFotoNombre, String vehFotoRuta, String vehFoto2Nombre, String vehFoto2Ruta) {
         this.smsCategoria = smsCategoria;
+        this.smsEstado = smsEstado;
         this.smsCiudad = smsCiudad;
         this.smsProveedor = smsProveedor;
         this.smsReferencia = smsReferencia;
@@ -213,7 +216,16 @@ public class SmsVehiculo  implements java.io.Serializable {
     public void setSmsLugares(Set<SmsLugares> smsLugares) {
         this.smsLugares = smsLugares;
     }
+
+    public SmsEstado getSmsEstado() {
+        return smsEstado;
+    }
+
+    public void setSmsEstado(SmsEstado smsEstado) {
+        this.smsEstado = smsEstado;
+    }
    
+    
 }
 
 
