@@ -155,10 +155,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         GenerarPassword pass = new GenerarPassword();//Generamos un password aleatorio
 
         password = pass.generarPass(6);//Generamos pass aleatorio
-
-        //Asignamos email como nombre de sesion
-        usuarioView.setUsuarioLogin(usuarioView.getUsuarioEmail());
-
+      
         //Encriptamos las contraseñas
         usuarioView.setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
         usuarioView.setUsuarioRememberToken(md.getMD5(password));

@@ -17,8 +17,7 @@ public class SmsUsuario implements java.io.Serializable {
     private String usuarioCc;
     private String usuarioPasaporte;
     private String usuarioTelefono;
-    private String usuarioEmail;
-    private String usuarioLogin;
+    private String usuarioEmail;  
     private String usuarioPassword;
     private String usuarioRememberToken;
     private Integer usuarioEstadoUsuario;
@@ -42,7 +41,7 @@ public class SmsUsuario implements java.io.Serializable {
         this.usuarioEmail = usuarioEmail;
     }
 
-    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, SmsNacionalidad smsNacionalidad, String usuarioNombre, String usuarioCc, String usuarioPasaporte, String usuarioTelefono, String usuarioEmail, String usuarioLogin, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions) {
+    public SmsUsuario(SmsCiudad smsCiudad, SmsRol smsRol, SmsNacionalidad smsNacionalidad, String usuarioNombre, String usuarioCc, String usuarioPasaporte, String usuarioTelefono, String usuarioEmail, String usuarioPassword, String usuarioRememberToken, Integer usuarioEstadoUsuario, String usuarioFotoNombre, String usuarioFotoRuta, Set<SmsEmpleado> smsEmpleados, Set<SmsProveedor> smsProveedors, Set<SmsReservacion> smsReservacions) {
         this.smsCiudad = smsCiudad;
         this.smsRol = smsRol;
         this.smsNacionalidad = smsNacionalidad;
@@ -50,8 +49,7 @@ public class SmsUsuario implements java.io.Serializable {
         this.usuarioCc = usuarioCc;
         this.usuarioPasaporte = usuarioPasaporte;
         this.usuarioTelefono = usuarioTelefono;
-        this.usuarioEmail = usuarioEmail;
-        this.usuarioLogin = usuarioLogin;
+        this.usuarioEmail = usuarioEmail;       
         this.usuarioPassword = usuarioPassword;
         this.usuarioRememberToken = usuarioRememberToken;
         this.usuarioEstadoUsuario = usuarioEstadoUsuario;
@@ -117,15 +115,7 @@ public class SmsUsuario implements java.io.Serializable {
     public void setUsuarioEmail(String usuarioEmail) {
         this.usuarioEmail = usuarioEmail;
     }
-
-    public String getUsuarioLogin() {
-        return this.usuarioLogin;
-    }
-
-    public void setUsuarioLogin(String usuarioLogin) {
-        this.usuarioLogin = usuarioLogin;
-    }
-
+  
     public String getUsuarioPassword() {
         return this.usuarioPassword;
     }

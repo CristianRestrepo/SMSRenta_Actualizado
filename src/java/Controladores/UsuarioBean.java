@@ -176,7 +176,7 @@ public class UsuarioBean implements Serializable {
         if (!usuarioDao.consultarDatosSesionUsuario(usuarioView).isEmpty()) {//valida si el usuario existe en la BD
             user = usuarioDao.consultarDatosSesionUsuario(usuarioView).get(0);
             if (user.getUsuarioEstadoUsuario() == 1) {//Evalua el estado de la cuenta de usuario, si esta activa o inactiva
-                if (user.getUsuarioPassword() != null && (user.getUsuarioLogin().equalsIgnoreCase(usuarioView.getUsuarioLogin()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword())) || (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioLogin()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword()))) {
+                if (user.getUsuarioPassword() != null && (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword()))) {
                     //ruta = usuarioController.iniciarSesion(user.get(0));//envia el objeto usuarioBean al metodo iniciarSesion para tomar este objeto como atributo de sesion
 
                     usuarioView.setSmsRol(user.getSmsRol());

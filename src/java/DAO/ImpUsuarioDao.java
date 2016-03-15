@@ -70,7 +70,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
             session.beginTransaction();
             session.update(usuario);
             session.getTransaction().commit();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario modificado", "" + usuario.getUsuarioLogin());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario modificado", "" + usuario.getUsuarioNombre());
         } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
@@ -110,7 +110,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where usuario.usuarioLogin = '" + usuario.getUsuarioLogin() + "' or usuario.usuarioEmail = '" + usuario.getUsuarioLogin() + "'");
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where usuario.usuarioEmail = '" + usuario.getUsuarioEmail() + "'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

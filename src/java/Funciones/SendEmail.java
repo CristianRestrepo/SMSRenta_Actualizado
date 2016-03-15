@@ -282,7 +282,7 @@ public class SendEmail {
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
                     + "Esperamos que nuestro servicio sea de su total agrado.\n"
                     + "Los datos de sesion para acceder al sistema son:.\n"
-                    + "Nombre de sesion o email: "+ Cliente.getUsuarioLogin()+"\n"
+                    + "Nombre de sesion o email: "+ Cliente.getUsuarioEmail()+"\n"
                     + "Contraseña: "+ password +"\n"
                     + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
                     + "Atentamente, SMS Renta");
@@ -319,7 +319,7 @@ public class SendEmail {
                     + "\n"
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
                     + "Los datos de sesion para acceder al sistema y administrar sus vehiculos y conductores son:\n"
-                    + "Nombre de sesion o email: "+ usuario.getUsuarioLogin()+"\n"
+                    + "Nombre de sesion o email: "+ usuario.getUsuarioEmail()+"\n"
                     + "Contraseña: "+ password +"\n"
                     + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
                     + "Atentamente, SMS Renta");
@@ -356,7 +356,7 @@ public class SendEmail {
                     + "\n"
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
                     + "Los datos de sesion para acceder al sistema y ver los servicios que tiene agendados son:\n"
-                    + "Nombre de sesion o email: "+ conductor.getUsuarioLogin()+"\n"
+                    + "Nombre de sesion o email: "+ conductor.getUsuarioEmail()+"\n"
                     + "Contraseña: "+ password +"\n"
                     + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
                     + "Atentamente, SMS Renta");

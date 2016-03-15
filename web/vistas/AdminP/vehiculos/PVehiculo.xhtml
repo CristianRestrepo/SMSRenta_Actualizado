@@ -39,7 +39,7 @@
                                         <h4>Proveedor</h4>
                                         <h:panelGrid id="seccionProveedor" columns="1" style="width: 100%">
                                             <p:selectOneMenu id="proveedor" required="true"  value="#{vehiculoBean.vehiculoView.smsProveedor.proveedorRazonSocial}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar proveedor" itemValue="" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Seleccionar proveedor" itemValue=""/>
                                                 <f:selectItems value="#{proveedorBean.nombresProveedoresView}" />
                                                 <p:ajax event="change" update="categoria"/>
                                             </p:selectOneMenu>

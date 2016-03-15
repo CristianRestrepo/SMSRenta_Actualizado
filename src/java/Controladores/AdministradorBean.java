@@ -98,9 +98,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         SendEmail email = new SendEmail();
 
         password = pass.generarPass(6);//Generamos pass aleatorio
-        //Asignamos email como nombre de sesion
-        usuarioView.setUsuarioLogin(usuarioView.getUsuarioEmail());
-
+        
         //Encriptamos las contraseñas
         usuarioView.setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
         usuarioView.setUsuarioRememberToken(md.getMD5(password));

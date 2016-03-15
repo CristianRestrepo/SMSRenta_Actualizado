@@ -207,14 +207,24 @@ public class CategoriaBean implements Serializable {
             }
 
             categoriasListView = catDao.mostrarCategorias();
-
+            boolean bandera = false;
             for (int i = 0; i < m.size(); i++) {
                 for (int j = 0; j < categoriasListView.size(); j++) {
-                    if (categoriasListView.get(j).getSmsMercados().contains(m.get(i))) {
-                        if (!nombresCategoriasListView.contains(categoriasListView.get(j).getCategoriaNombre())) {
-                            nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
+                    for (SmsMercado mercado : categoriasListView.get(j).getSmsMercados()) {
+                        if (m.get(i).getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
+                            for (int k = 0; k < nombresCategoriasListView.size(); k++) {
+                                if (nombresCategoriasListView.get(k).equalsIgnoreCase(categoriasListView.get(j).getCategoriaNombre())) {
+                                    bandera = true;
+                                }
+                            }
+                            if (!bandera) {
+                                nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
+                            }
+                            bandera = false;
                         }
+
                     }
+
                 }
             }
         }

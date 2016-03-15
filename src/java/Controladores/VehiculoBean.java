@@ -8,12 +8,14 @@ package Controladores;
 import Funciones.Upload;
 import DAO.ICategoriaDao;
 import DAO.ICiudadDao;
+import DAO.IEstadoDao;
 import DAO.IProveedorDao;
 import DAO.IReferenciaDao;
 import DAO.IUsuarioDao;
 import DAO.IVehiculoDao;
 import DAO.ImpCategoriaDao;
 import DAO.ImpCiudadDao;
+import DAO.ImpEstadoDao;
 import DAO.ImpProveedorDao;
 import DAO.ImpReferenciaDao;
 import DAO.ImpUsuarioDao;
@@ -65,6 +67,7 @@ public class VehiculoBean {
     IReferenciaDao refDao;
     IVehiculoDao vehDao;
     IUsuarioDao usuDao;
+    IEstadoDao estadoDao;
     
     public VehiculoBean() {       
         
@@ -81,6 +84,8 @@ public class VehiculoBean {
         refDao = new ImpReferenciaDao();
         vehDao = new ImpVehiculoDao();
         usuDao = new ImpUsuarioDao();
+        estadoDao = new ImpEstadoDao();
+        
 
         nombre = "Registrar Vehiculo";
         modEstadoArchivo = "Foto sin subir";
@@ -169,6 +174,9 @@ public class VehiculoBean {
             vehiculoView.setVehFoto2Ruta(ruta);
             vehiculoView.setVehFoto2Nombre("Default.png");
         }
+        vehiculoView.getSmsEstado().setEstadoNombre("Disponible");
+        vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()).get(0));
+        
         vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()).get(0));
 
         //Consulta categoria      

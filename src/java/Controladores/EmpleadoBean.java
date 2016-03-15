@@ -1,9 +1,11 @@
 package Controladores;
 
 import DAO.IEmpleadoDao;
+import DAO.IEstadoDao;
 import DAO.IHojaVidaDao;
 import DAO.IProveedorDao;
 import DAO.ImpEmpleadoDao;
+import DAO.ImpEstadoDao;
 import DAO.ImpHojaVidaDao;
 import DAO.ImpProveedorDao;
 import Funciones.GenerarPassword;
@@ -64,6 +66,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     IEmpleadoDao empleadoDao;
     IHojaVidaDao hojaDao;
     IProveedorDao proveedorDao;
+    IEstadoDao estadoDao;
 
     public EmpleadoBean() {
         super();
@@ -83,6 +86,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         empleadoDao = new ImpEmpleadoDao();
         hojaDao = new ImpHojaVidaDao();
         proveedorDao = new ImpProveedorDao();
+        estadoDao = new ImpEstadoDao();
     }
 
     @PostConstruct
@@ -167,7 +171,10 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     //Metodos que se comunican con el controlador    
     public void registrarEmpleado() {
         empleadoView.getSmsUsuario().getSmsRol().setRolNombre("Conductor");
-
+        //Asignamos un estado al conductor
+        empleadoView.getSmsEstado().setEstadoNombre("Disponible");
+        empleadoView.setSmsEstado(estadoDao.consultarEstado(empleadoView.getSmsEstado()).get(0));
+        
         //Si el usuario no registra foto y hoja de vida se asignas unas default
         if (empleadoView.getSmsUsuario().getUsuarioFotoRuta() == null && empleadoView.getSmsHojavida().getHojaVidaRuta() == null) {
             //asignamos al usuario la imagen de perfil default
@@ -183,9 +190,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         SendEmail email = new SendEmail();
 
         password = pass.generarPass(6);//Generamos pass aleatorio
-        //Asignamos email como nombre de sesion
-        empleadoView.getSmsUsuario().setUsuarioLogin(empleadoView.getSmsUsuario().getUsuarioEmail());
-
+        
         //Encriptamos las contraseñas
         empleadoView.getSmsUsuario().setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
         empleadoView.getSmsUsuario().setUsuarioRememberToken(md.getMD5(password));
@@ -197,6 +202,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         empleadoView.getSmsUsuario().setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
         empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
         empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()).get(0));
+        
         //registramos el usuario
         usuarioDao.registrarUsuario(empleadoView.getSmsUsuario());
 
