@@ -147,6 +147,17 @@ public class Upload {
         return null;
     }
     
+    public static String getNameDefaultMarca() {
+
+        try {
+            String path = "Default.pdf";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+    
     public static String getPathDefaultUsuario() {
 
         try {
@@ -158,6 +169,17 @@ public class Upload {
         return null;
     }
 
+    public static String getPathDefaultMarca() {
+
+        try {
+            String path = "/resources/images/upload/Marcas/Default.png";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
+    
     public static String getPathDefaultHojasVida() {
 
         try {

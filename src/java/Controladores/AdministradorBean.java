@@ -177,13 +177,13 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         }
     }
 
-    public void cancelar() {
-        //Limpiamos objetos utilizados
-        usuarioView = new SmsUsuario();
-        
-        //Reiniciamos los objetos
-        habilitarCancelar = true;
-        nombreOperacion = "Registrar Proveedor";
-    }
+        public void cancelar() {
+            //Limpiamos objetos utilizados
+            usuarioView = new SmsUsuario();
+
+            //Reiniciamos los objetos
+            habilitarCancelar = true;
+            nombreOperacion = "Registrar Proveedor";
+        }
 
 }

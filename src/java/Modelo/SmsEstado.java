@@ -15,18 +15,21 @@ public class SmsEstado  implements java.io.Serializable {
      private String estadoNombre;
      private String estadoDescripcion;
      private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
+     private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
+     private Set<SmsEmpleado> smsEmpleados = new HashSet<>(0);
 
     public SmsEstado() {
     }
-
 	
     public SmsEstado(String estadoNombre) {
         this.estadoNombre = estadoNombre;
     }
-    public SmsEstado(String estadoNombre, String estadoDescripcion, Set<SmsReservacion> smsReservacions) {
+    public SmsEstado(String estadoNombre, String estadoDescripcion, Set<SmsReservacion> smsReservacions, Set<SmsEmpleado> smsEmpleados,  Set<SmsVehiculo> smsVehiculos) {
        this.estadoNombre = estadoNombre;
        this.estadoDescripcion = estadoDescripcion;
        this.smsReservacions = smsReservacions;
+       this.smsVehiculos = smsVehiculos;
+       this.smsEmpleados = smsEmpleados;
     }
    
     public Integer getIdEstado() {
@@ -58,6 +61,23 @@ public class SmsEstado  implements java.io.Serializable {
         this.smsReservacions = smsReservacions;
     }
 
+    public Set<SmsVehiculo> getSmsVehiculos() {
+        return smsVehiculos;
+    }
+
+    public void setSmsVehiculos(Set<SmsVehiculo> smsVehiculos) {
+        this.smsVehiculos = smsVehiculos;
+    }
+
+    public Set<SmsEmpleado> getSmsEmpleados() {
+        return smsEmpleados;
+    }
+
+    public void setSmsEmpleados(Set<SmsEmpleado> smsEmpleados) {
+        this.smsEmpleados = smsEmpleados;
+    }
+
+    
 
 
 

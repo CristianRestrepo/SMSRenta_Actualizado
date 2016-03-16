@@ -8,6 +8,7 @@ package Controladores;
 import Funciones.Upload;
 import DAO.ICategoriaDao;
 import DAO.ICiudadDao;
+import DAO.IColorDao;
 import DAO.IEstadoDao;
 import DAO.IProveedorDao;
 import DAO.IReferenciaDao;
@@ -15,6 +16,7 @@ import DAO.IUsuarioDao;
 import DAO.IVehiculoDao;
 import DAO.ImpCategoriaDao;
 import DAO.ImpCiudadDao;
+import DAO.ImpColorDao;
 import DAO.ImpEstadoDao;
 import DAO.ImpProveedorDao;
 import DAO.ImpReferenciaDao;
@@ -47,18 +49,20 @@ public class VehiculoBean {
     private SmsVehiculo vehiculoView;
     private SmsEstadovehiculo estadoVehiculoView;
     private List<SmsVehiculo> vehiculosListView;
-      
-    
+
     //Relacion con el controlador   
     Upload fileController;
     EstadoVehiculoBean estadoVehiculoController;
-    
+
     //Variables   
     private String nombre;
     private String buscar;
-    private String modEstadoArchivo;
-    private String estadoArchivo;
-    private UploadedFile archivo;
+    private String estadoArchivo1;
+    private String estadoArchivo2;
+    private int operacion;
+
+    //Banderas    
+    private boolean habilitarCancelar;
 
     //Conexion con el DAO
     ICategoriaDao cateDao;
@@ -68,16 +72,19 @@ public class VehiculoBean {
     IVehiculoDao vehDao;
     IUsuarioDao usuDao;
     IEstadoDao estadoDao;
-    
-    public VehiculoBean() {       
-        
-        vehiculoView = new SmsVehiculo();    
+    IColorDao colorDao;
+
+    public VehiculoBean() {
+
+        vehiculoView = new SmsVehiculo();
         estadoVehiculoView = new SmsEstadovehiculo();
-       
+
+        habilitarCancelar = true;
+
         estadoVehiculoController = new EstadoVehiculoBean();
-        fileController = new Upload();        
+        fileController = new Upload();
         buscar = null;
-        
+
         cateDao = new ImpCategoriaDao();
         provDao = new ImpProveedorDao();
         ciuDao = new ImpCiudadDao();
@@ -85,11 +92,12 @@ public class VehiculoBean {
         vehDao = new ImpVehiculoDao();
         usuDao = new ImpUsuarioDao();
         estadoDao = new ImpEstadoDao();
-        
+        colorDao = new ImpColorDao();
 
         nombre = "Registrar Vehiculo";
-        modEstadoArchivo = "Foto sin subir";
-        estadoArchivo = "Foto sin subir";
+        operacion = 0;
+        estadoArchivo1 = "Foto sin subir";
+        estadoArchivo2 = "Foto sin subir";
         vehDao = new ImpVehiculoDao();
     }
 
@@ -105,6 +113,14 @@ public class VehiculoBean {
 
     public void setEstadoVehiculoView(SmsEstadovehiculo estadoVehiculoView) {
         this.estadoVehiculoView = estadoVehiculoView;
+    }
+
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
     }
 
     public List<SmsVehiculo> getVehiculosListView() {
@@ -139,30 +155,30 @@ public class VehiculoBean {
         this.buscar = buscar;
     }
 
-    public String getModEstadoArchivo() {
-        return modEstadoArchivo;
+    public int getOperacion() {
+        return operacion;
     }
 
-    public void setModEstadoArchivo(String modEstadoArchivo) {
-        this.modEstadoArchivo = modEstadoArchivo;
+    public void setOperacion(int operacion) {
+        this.operacion = operacion;
     }
 
-    public String getEstadoArchivo() {
-        return estadoArchivo;
+    public String getEstadoArchivo1() {
+        return estadoArchivo1;
     }
 
-    public void setEstadoArchivo(String estadoArchivo) {
-        this.estadoArchivo = estadoArchivo;
+    public void setEstadoArchivo1(String estadoArchivo1) {
+        this.estadoArchivo1 = estadoArchivo1;
     }
 
-    public UploadedFile getArchivo() {
-        return archivo;
+    public String getEstadoArchivo2() {
+        return estadoArchivo2;
     }
 
-    public void setArchivo(UploadedFile archivo) {
-        this.archivo = archivo;
-    }    
-    
+    public void setEstadoArchivo2(String estadoArchivo2) {
+        this.estadoArchivo2 = estadoArchivo2;
+    }
+
     //Definicion de metodos VEHICULO
     public void registrar() {
 
@@ -174,23 +190,30 @@ public class VehiculoBean {
             vehiculoView.setVehFoto2Ruta(ruta);
             vehiculoView.setVehFoto2Nombre("Default.png");
         }
+
         vehiculoView.getSmsEstado().setEstadoNombre("Disponible");
+
+        //Consulta estado
         vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()).get(0));
-        
+
+        //Consulta proveedor    
         vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()).get(0));
 
         //Consulta categoria      
         vehiculoView.setSmsCategoria(cateDao.consultarCategoria(vehiculoView.getSmsCategoria()).get(0));
-                
+
         //Consulta ciudad        
         vehiculoView.setSmsCiudad(ciuDao.consultarCiudad(vehiculoView.getSmsCiudad()).get(0));
-        
+
         //Consulta referencia      
         vehiculoView.setSmsReferencia(refDao.consultarReferencias(vehiculoView.getSmsReferencia()).get(0));
 
+        //Consultar color
+        vehiculoView.setSmsColor(colorDao.consultarColor(vehiculoView.getSmsColor()).get(0));
+
         //Registramos el vehiculo
         vehDao.registrarVehiculo(vehiculoView);//Registra el Vehiculo
-        
+
         //consultamos el vehiculo recien registrado
         vehiculoView = vehDao.consultarVehiculo(vehiculoView).get(0);
         estadoVehiculoView.setSmsVehiculo(vehiculoView); //relacionamos el vehiculo con los valores asignados en la seccion de estado
@@ -198,47 +221,51 @@ public class VehiculoBean {
         estadoVehiculoController.registrarEstVeh(estadoVehiculoView);//registramos el estado
 
         //Reiniciamos valores para las variables llamadas desde las vista
-        estadoArchivo = "Foto sin subir";
+        estadoArchivo1 = "Foto sin subir";
+        estadoArchivo2 = "Foto sin subir";
 
         //limpiamos objetos        
-        vehiculoView = new SmsVehiculo();        
+        vehiculoView = new SmsVehiculo();
         estadoVehiculoView = new SmsEstadovehiculo();
 
         //Actualizamos la lista que muestra los vehiculos registrados en el sistema
         vehiculosListView = vehDao.mostrarVehiculo();
     }
 
-    public String modificar() {
-        //Consulta proveedor
+    public void modificar() {
+      //Consulta estado
+        vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()).get(0));
+
+        //Consulta proveedor    
         vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()).get(0));
 
         //Consulta categoria      
         vehiculoView.setSmsCategoria(cateDao.consultarCategoria(vehiculoView.getSmsCategoria()).get(0));
-                
+
         //Consulta ciudad        
         vehiculoView.setSmsCiudad(ciuDao.consultarCiudad(vehiculoView.getSmsCiudad()).get(0));
-        
+
         //Consulta referencia      
         vehiculoView.setSmsReferencia(refDao.consultarReferencias(vehiculoView.getSmsReferencia()).get(0));
 
+        //Consultar color
+        vehiculoView.setSmsColor(colorDao.consultarColor(vehiculoView.getSmsColor()).get(0));
         
         vehDao.modificarVehiculo(vehiculoView);//Se modifica el vehiculo
-        
-        //Consultamos el vehiculo recien modificado
-        vehiculoView = vehDao.consultarVehiculo(vehiculoView).get(0);
+
+        //Consultamos el vehiculo recien modificado       
         estadoVehiculoView.setSmsVehiculo(vehiculoView); //Relacionamos el estado de vehiculo con el vehiculo.
         estadoVehiculoController.registrarEstVeh(estadoVehiculoView);//Registramos el estado del vehiculo
 
         //Reiniciamos valores para las variables llamadas desde las vista
-        modEstadoArchivo = "Foto sin subir";
+        estadoArchivo2 = "Foto sin subir";
+        estadoArchivo1 = "Foto sin subir";
 
-        
-        vehiculoView = new SmsVehiculo();        
+        vehiculoView = new SmsVehiculo();
         estadoVehiculoView = new SmsEstadovehiculo();
 
         //Actualizamos la lista que muestra los vehiculos registrados en el sistema
-        vehiculosListView = vehDao.mostrarVehiculo();
-        return "AdminPVehiculos";
+        vehiculosListView = vehDao.mostrarVehiculo();       
     }
 
     public void eliminar() {
@@ -249,31 +276,58 @@ public class VehiculoBean {
         vehiculosListView = vehDao.mostrarVehiculo();
     }
 
-    //Metodos propios
-    public String irModificarVehiculo() {
-        //Asignamos a cada componente su correspondiente valor extraido del vehiculo seleccionado
-        
-        //Consultamos el estado del vehiculo
-        estadoVehiculoView = estadoVehiculoController.consultarEstado(vehiculoView).get(0);
-
-        //Si el vehiculo tiene una foto asignada damos valores a nuestras variables para mostrar que foto esta asignada
-        if (vehiculoView.getVehFotoNombre() != null && vehiculoView.getVehFotoRuta() != null) {
-            modEstadoArchivo = "Foto subida:" + vehiculoView.getVehFotoNombre();
-
-        } else { //En caso de no existir fotografia, indicamos en la vista la posibilidad de subir una foto para el vehiculo
-            modEstadoArchivo = "Foto sin subir";
+    //Metodos Propios
+    public void metodo() {
+        if (operacion == 0) {
+            registrar();
+        } else if (operacion == 1) {
+            modificar();
+            operacion = 0;
+            habilitarCancelar = true;
+            nombre = "Registrar Vehiculo";
         }
-        return "AdminPEVehiculo";
     }
 
-    public String regresar() {
+    public void seleccionarCRUD(int i) {
+        operacion = i;
+        if (operacion == 1) {
+            habilitarCancelar = false;
+            nombre = "Editar Vehiculo";
+            //Consultamos el estado del vehiculo
+            estadoVehiculoView = estadoVehiculoController.consultarEstado(vehiculoView).get(0);
+
+            //Si el vehiculo tiene una foto asignada damos valores a nuestras variables para mostrar que foto esta asignada
+            if (vehiculoView.getVehFotoNombre() != null && vehiculoView.getVehFotoRuta() != null) {
+                estadoArchivo1 = "Foto subida:" + vehiculoView.getVehFotoNombre();
+
+            } else { //En caso de no existir fotografia, indicamos en la vista la posibilidad de subir una foto para el vehiculo
+                estadoArchivo1 = "Foto sin subir";
+            }
+
+            if (vehiculoView.getVehFoto2Nombre() != null && vehiculoView.getVehFoto2Ruta() != null) {
+                estadoArchivo2 = "Foto subida:" + vehiculoView.getVehFotoNombre();
+
+            } else { //En caso de no existir fotografia, indicamos en la vista la posibilidad de subir una foto para el vehiculo
+                estadoArchivo2 = "Foto sin subir";
+            }
+
+        }
+    }
+
+    //Metodos propios
+    public void cancelar() {
+        //Limpiamos objetos utilizados
         vehiculoView = new SmsVehiculo();
-        estadoVehiculoView = new SmsEstadovehiculo();      
-        modEstadoArchivo = "Foto sin subir";
-        return "AdminPVehiculos";
+        estadoVehiculoView = new SmsEstadovehiculo();
+        estadoArchivo1 = "Foto sin subir";
+        estadoArchivo2 = "Foto sin subir";
+
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombre = "Registrar Vehiculo";
     }
 
-    public void uploadPhoto(FileUploadEvent e) throws IOException {
+    public void uploadPhoto1(FileUploadEvent e) throws IOException {
         try {
             UploadedFile uploadedPhoto = e.getFile();
             String destination;
@@ -283,23 +337,51 @@ public class VehiculoBean {
             if (null != uploadedPhoto) {
                 fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
                 vehiculoView.setVehFotoNombre(uploadedPhoto.getFileName());
-                vehiculoView.setVehFotoRuta(map.get("url") + uploadedPhoto.getFileName());                
+                vehiculoView.setVehFotoRuta(map.get("url") + uploadedPhoto.getFileName());
 
-                estadoArchivo = "Foto Subida con exito";
-                modEstadoArchivo = "Foto actualizada con exito";
+                if (operacion == 0) {
+                    estadoArchivo1 = "Foto Subida con exito";
+                } else if (operacion == 1) {
+                    estadoArchivo1 = "Foto actualizada con exito";
+
+                }
+            }
+            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }
+
+    public void uploadPhoto2(FileUploadEvent e) throws IOException {
+        try {
+            UploadedFile uploadedPhoto = e.getFile();
+            String destination;
+
+            HashMap<String, String> map = getMapPathFotosVehiculos();
+            destination = map.get("path");
+            if (null != uploadedPhoto) {
+                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
+                vehiculoView.setVehFoto2Nombre(uploadedPhoto.getFileName());
+                vehiculoView.setVehFoto2Ruta(map.get("url") + uploadedPhoto.getFileName());
+
+                if (operacion == 0) {
+                    estadoArchivo2 = "Foto Subida con exito";
+                } else if (operacion == 1) {
+                    estadoArchivo2 = "Foto actualizada con exito";
+
+                }
             }
 
             FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
         } catch (Exception ex) {
             ex.getMessage();
         }
-    }       
-      
+    }
 
     public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva, SmsCiudad ciudad) {
         vehiculosListView = new ArrayList<>();
         String ciudadVeh = ciudad.getCiudadNombre();
-        
+
         Calendar calInicio = Calendar.getInstance();
         calInicio.setTime(reserva.getReservacionHoraInicio());
         calInicio.add(Calendar.HOUR, -1);
@@ -330,7 +412,7 @@ public class VehiculoBean {
 
     public List<SmsVehiculo> consultarVehiculosCiudad(SmsCiudad c) {
         vehiculosListView = new ArrayList<>();
-        vehiculoView.setSmsCiudad(c); 
+        vehiculoView.setSmsCiudad(c);
         vehiculosListView = vehDao.consultarVehiculosCiudad(vehiculoView.getSmsCiudad());
         return vehiculosListView;
     }
@@ -344,7 +426,7 @@ public class VehiculoBean {
     }
 
     public List<SmsVehiculo> filtrarVehiculosDisponibles(SmsReservacion reserva, SmsCategoria cat) {
-        vehiculosListView = new ArrayList<>();        
+        vehiculosListView = new ArrayList<>();
         String categoriaVeh = cat.getCategoriaNombre();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
 
@@ -372,7 +454,6 @@ public class VehiculoBean {
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
 
-        
         vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada);
         return vehiculosListView;
     }

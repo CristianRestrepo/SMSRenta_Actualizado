@@ -5,7 +5,9 @@
  */
 package Controladores;
 
+import DAO.IMarcaDao;
 import DAO.IReferenciaDao;
+import DAO.ImpMarcaDao;
 import DAO.ImpReferenciaDao;
 import Modelo.SmsMarca;
 import Modelo.SmsReferencia;
@@ -22,13 +24,9 @@ public class ReferenciaBean implements Serializable {
 
     //Objetos de vista
     private SmsReferencia referenciaView;
-    private SmsReferencia DReferenciaView;
     private List<SmsReferencia> referenciasListView;
     private List<String> nombresReferenciaListView;
-    private SmsMarca marcaView;
-
-    //Relacion con el controlador
-    MarcaBean marcaController;
+   
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
@@ -36,22 +34,20 @@ public class ReferenciaBean implements Serializable {
 
     //Conexion con el DAO
     IReferenciaDao referenciaDao;
+    IMarcaDao marcaDao;
 
     public ReferenciaBean() {
-        DReferenciaView = new SmsReferencia();
         referenciaView = new SmsReferencia();
         referenciasListView = new ArrayList<>();
-       
+
         nombresReferenciaListView = new ArrayList<>();
-        marcaView = new SmsMarca();
 
         buscar = null;
         estado = 0;
         nombre = "Registrar Referencia";
-
-        marcaController = new MarcaBean();
-
+     
         referenciaDao = new ImpReferenciaDao();
+        marcaDao = new ImpMarcaDao();
     }
 
     @PostConstruct
@@ -60,14 +56,6 @@ public class ReferenciaBean implements Serializable {
     }
 
     //Getters & Setters
-    public SmsMarca getMarcaView() {
-        return marcaView;
-    }
-
-    public void setMarcaView(SmsMarca marcaView) {
-        this.marcaView = marcaView;
-    }
-
     public SmsReferencia getReferenciaView() {
         return referenciaView;
     }
@@ -97,14 +85,6 @@ public class ReferenciaBean implements Serializable {
         this.nombresReferenciaListView = nombresReferenciaListView;
     }
 
-    public SmsMarca getMarcasView() {
-        return marcaView;
-    }
-
-    public void setMarcasView(SmsMarca marcaView) {
-        this.marcaView = marcaView;
-    }
-
     public int getEstado() {
         return estado;
     }
@@ -129,54 +109,37 @@ public class ReferenciaBean implements Serializable {
         this.buscar = buscar;
     }
 
-    public SmsReferencia getDReferenciaView() {
-        return DReferenciaView;
-    }
-
-    public void setDReferenciaView(SmsReferencia DReferenciaView) {
-        this.DReferenciaView = DReferenciaView;
-    }
-
     //Metodos
     public void modificar() {
 
         //Consultamos la informacion completa de la marca seleccionada
-        marcaView = marcaController.consultarMarca(marcaView).get(0);
-        referenciaView.setSmsMarca(marcaView);//relacionamos la referencia con la marca
+        referenciaView.setSmsMarca(marcaDao.consultarMarca(referenciaView.getSmsMarca()).get(0));//relacionamos la referencia con la marca
 
         referenciaDao.modificarReferencia(referenciaView);//modificar la referencia
 
         referenciaView = new SmsReferencia();//limpiamos objetos
-        marcaView = new SmsMarca();
         referenciasListView = referenciaDao.mostrarReferencias();//recargamos lista de referencias
     }
 
     public void eliminar() {
         //Eliminamos la referencia
-        referenciaDao.eliminarReferencia(DReferenciaView);
+        referenciaDao.eliminarReferencia(referenciaView);
 
-        //Verificamos que el objeto a eliminar no este en proceso de edicion
-        if (referenciaView.equals(DReferenciaView)) {
-            //si es asi, elimina el objeto y limpia el objeto que contenia la referencia a eliminar
-            referenciaView = new SmsReferencia();
-            nombre = "Registrar Referencia";
-            estado = 0;
-        }
+        //Limpia objetos
+        referenciaView = new SmsReferencia();
+        nombre = "Registrar Referencia";
+        estado = 0;
 
-        DReferenciaView = new SmsReferencia();//limpiamos objetos
         referenciasListView = referenciaDao.mostrarReferencias(); //recargamos lista de referencias
     }
 
     public void registrar() {
-        
-         //Consultamos la informacion completa de la marca seleccionada
-        marcaView = marcaController.consultarMarca(marcaView).get(0);
-        referenciaView.setSmsMarca(marcaView);//relacionamos la referencia con la marca
 
+        //Consultamos la informacion completa de la marca seleccionada
+        referenciaView.setSmsMarca(marcaDao.consultarMarca(referenciaView.getSmsMarca()).get(0));//relacionamos la referencia con la marca
         referenciaDao.registrarReferencia(referenciaView);//Registramos la referencia
 
         referenciaView = new SmsReferencia();//Limpiamos objetos
-        marcaView = new SmsMarca();
         referenciasListView = referenciaDao.mostrarReferencias();//recargamos la lista de referencias
     }
 
@@ -203,11 +166,8 @@ public class ReferenciaBean implements Serializable {
     public void seleccionarCRUD(int i) {
         estado = i;
         if (estado == 1) {
-            marcaView = referenciaView.getSmsMarca();
             nombre = "Modificar Referencia";
         }
     }
-    
-   
 
 }

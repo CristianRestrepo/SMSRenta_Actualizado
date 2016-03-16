@@ -51,7 +51,7 @@
             <column name="Veh_foto2_nombre" length="65535" />
         </property>
         <property name="vehFoto2Ruta" type="string">
-            <column name="Veh_foto2_ruta" length="45" />
+            <column name="Veh_foto2_ruta" length="65535" />
         </property>
         <set name="smsCategoriasServicios" table="sms_vehiculo_sms_categorias_servicio" inverse="false" lazy="true" fetch="select">
             <key>

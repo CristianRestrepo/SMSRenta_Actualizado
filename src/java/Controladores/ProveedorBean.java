@@ -70,7 +70,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        proveedorListView = proveedorDao.mostrarProveedores();
+       proveedorListView = proveedorDao.mostrarProveedores();
     }
 
     //Getters & Setters

@@ -42,7 +42,7 @@ public class ImpEstadoDao implements IEstadoDao {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEstado where smsEstado.estadoNombre = '" + estado.getEstadoNombre() + "'");
+            Query query = session.createQuery("from SmsEstado as estado where estado.estadoNombre = '" + estado.getEstadoNombre() + "'");
             estados = (List<SmsEstado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

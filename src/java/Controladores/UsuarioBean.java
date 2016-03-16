@@ -16,8 +16,6 @@ import DAO.ImpNacionalidadDao;
 import DAO.ImpRolDao;
 import DAO.ImpUsuarioDao;
 import static Funciones.Upload.getMapPathFotosUsuario;
-import Modelo.SmsCiudad;
-import Modelo.SmsRol;
 import Modelo.SmsUsuario;
 import java.io.IOException;
 import java.io.Serializable;

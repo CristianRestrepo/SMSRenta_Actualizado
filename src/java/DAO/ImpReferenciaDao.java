@@ -105,9 +105,6 @@ public class ImpReferenciaDao implements IReferenciaDao {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    /**
-     * @param referencia*
-     * @return ************************************************************************************/
     @Override
     public List<SmsReferencia> consultarReferencias(SmsReferencia referencia) {
         Session session = null;

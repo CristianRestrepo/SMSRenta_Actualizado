@@ -7,11 +7,22 @@ package Controladores;
 
 import DAO.IMarcaDao;
 import DAO.ImpMarcaDao;
+import Funciones.Upload;
+import static Funciones.Upload.getMapPathFotosMarcas;
+import static Funciones.Upload.getNameDefaultMarca;
+import static Funciones.Upload.getPathDefaultMarca;
 import Modelo.SmsMarca;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -27,10 +38,14 @@ public class MarcaBean implements Serializable {
     //Conexion con el DAO
     IMarcaDao marcaDao;
 
+    //Controladores
+    Upload fileController;
+
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
     private String buscar;
+    protected String estadoFoto;
 
     public MarcaBean() {
         marcaView = new SmsMarca();
@@ -42,6 +57,8 @@ public class MarcaBean implements Serializable {
         nombre = "Registrar Marca";
 
         marcaDao = new ImpMarcaDao();
+        fileController = new Upload();
+        estadoFoto = "Foto sin subir";
     }
 
     @PostConstruct
@@ -103,6 +120,14 @@ public class MarcaBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public String getEstadoFoto() {
+        return estadoFoto;
+    }
+
+    public void setEstadoFoto(String estadoFoto) {
+        this.estadoFoto = estadoFoto;
+    }
+
     //Metodos
     public void modificar() {
         marcaDao.modificarMarca(marcaView);
@@ -115,12 +140,18 @@ public class MarcaBean implements Serializable {
 
         marcaView = new SmsMarca();
         nombre = "Registrar Marca";
+        estadoFoto = "Foto sin subir";
         estado = 0;
 
         marcasListView = marcaDao.mostrarMarcas();
     }
 
     public void registrar() {
+        if(marcaView.getMarcaFotoRuta() == null){
+            marcaView.setMarcaFotoRuta(getPathDefaultMarca());
+            marcaView.setMarcaFotoNombre(getNameDefaultMarca());
+        }
+        
         marcaDao.registrarMarca(marcaView);
         marcaView = new SmsMarca();
         marcasListView = marcaDao.mostrarMarcas();
@@ -157,6 +188,28 @@ public class MarcaBean implements Serializable {
         estado = i;
         if (estado == 1) {
             nombre = "Modificar Marca";
+            estadoFoto = "Foto subida:" + marcaView.getMarcaFotoNombre();
         }
     }
+
+    //Subida de archivos
+    public void uploadPhoto(FileUploadEvent e) throws IOException {
+        try {
+            UploadedFile uploadedPhoto = e.getFile();
+            String destination;
+
+            HashMap<String, String> map = getMapPathFotosMarcas();
+            destination = map.get("path");
+            if (null != uploadedPhoto) {
+                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
+                marcaView.setMarcaFotoNombre(uploadedPhoto.getFileName());
+                marcaView.setMarcaFotoRuta(map.get("url") + uploadedPhoto.getFileName());
+                estadoFoto = "Foto actualizada con exito";
+            }
+            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }
+
 }

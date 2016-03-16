@@ -14,11 +14,23 @@
         <property name="estadoDescripcion" type="string">
             <column name="Estado_descripcion" length="65535" />
         </property>
-        <set name="smsReservacions" table="sms_reservacion" inverse="true" lazy="true" fetch="select">
+        <set name="smsReservacions" table="sms_reservacion" inverse="true" fetch="join">
             <key>
                 <column name="idEstado" not-null="true" />
             </key>
             <one-to-many class="Modelo.SmsReservacion" />
+        </set>
+         <set name="smsVehiculos" table="sms_vehiculo" inverse="true" fetch="join">
+            <key>
+                <column name="idEstado" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsVehiculo" />
+        </set>
+         <set name="smsEmpleados" table="sms_empleado" inverse="true" fetch="join">
+            <key>
+                <column name="idEstado" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.SmsEmpleado" />
         </set>
     </class>
 </hibernate-mapping>

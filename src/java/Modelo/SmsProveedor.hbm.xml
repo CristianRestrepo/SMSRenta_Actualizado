@@ -20,7 +20,7 @@
         <property name="proveedorNit" type="string">
             <column name="Proveedor_nit" length="45" />
         </property>
-        <set name="smsMercados" cascade="save-update" table="sms_mercado_sms_proveedor" inverse="true" lazy="true" fetch="join">
+        <set name="smsMercados" cascade="save-update" table="sms_mercado_sms_proveedor" inverse="true" fetch="select">
             <key>
                 <column name="idProveedor" not-null="true" />
             </key>

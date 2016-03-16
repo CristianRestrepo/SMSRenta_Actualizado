@@ -22,8 +22,7 @@ import javax.annotation.PostConstruct;
 public class CategoriaBean implements Serializable {
 
     //Objeto de vista
-    private SmsCategoria categoriaView;
-    private SmsCategoria DCategoriaView;//La D hace alucion a delete, este objeto se usara para eliminar los registros de la BD
+    private SmsCategoria categoriaView; 
     private List<SmsCategoria> categoriasListView;
     private List<String> nombresCategoriasListView;
     private List<String> mercadosSeleccionados;
@@ -49,6 +48,7 @@ public class CategoriaBean implements Serializable {
 
         catDao = new ImpCategoriaDao();
         mercadoDao = new ImpMercadoDao();
+
     }
 
     @PostConstruct
@@ -101,15 +101,7 @@ public class CategoriaBean implements Serializable {
     public void setBuscar(String buscar) {
         this.buscar = buscar;
     }
-
-    public SmsCategoria getDCategoriaView() {
-        return DCategoriaView;
-    }
-
-    public void setDCategoriaView(SmsCategoria DCategoriaView) {
-        this.DCategoriaView = DCategoriaView;
-    }
-
+    
     public List<String> getMercadosSeleccionados() {
         return mercadosSeleccionados;
     }
@@ -185,10 +177,9 @@ public class CategoriaBean implements Serializable {
     }
 
     public List<String> CategoriasSegunMercado(String prov) {
+        nombresCategoriasListView = new ArrayList<>();
 
-        if (prov.isEmpty()) {
-            nombresCategoriasListView = new ArrayList<>();
-        } else {
+        if (!prov.isEmpty()) {
             SmsProveedor proveedor = new SmsProveedor();
             IProveedorDao provDao = new ImpProveedorDao();
 
@@ -231,7 +222,7 @@ public class CategoriaBean implements Serializable {
         return nombresCategoriasListView;
     }
 
-    //Metodos Propios
+//Metodos Propios
     public void metodo() {
         if (estado == 0) {
             registrar();

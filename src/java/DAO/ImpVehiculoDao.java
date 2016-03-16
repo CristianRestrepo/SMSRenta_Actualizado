@@ -28,8 +28,8 @@ public class ImpVehiculoDao implements IVehiculoDao {
         List<SmsVehiculo> vehiculos = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria as categoria left join fetch vehiculo.smsCiudad as ciudad "
-                    + "left join fetch vehiculo.smsProveedor as proveedor left join fetch proveedor.smsUsuario as usuario left join fetch vehiculo.smsReferencia as referencia");
+            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor");
             vehiculos = (List<SmsVehiculo>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

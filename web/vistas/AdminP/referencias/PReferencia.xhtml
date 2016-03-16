@@ -37,7 +37,7 @@
                                     <div class="table-responsive">                                        
                                         <h:panelGrid id="PReferencias" columns="3" cellpadding="5" style="width: 100%">
                                             <p:outputLabel value="Marca"/>
-                                            <b:selectOneMenu value="#{referenciaBean.marcaView.marcaNombre}">
+                                            <b:selectOneMenu value="#{referenciaBean.referenciaView.smsMarca.marcaNombre}">
                                                 <f:selectItem id="SMarcas" itemLabel="Seleccione Marca"/>
                                                 <f:selectItems value="#{marcaBean.nombresMarcaView}"/>
                                             </b:selectOneMenu>
@@ -49,7 +49,7 @@
                                         </h:panelGrid>
                                     </div> 
                                     <hr/>
-                                    <p:commandButton  id="BTReferencia" update="@form" class="btn btn-block btn-danger" value="#{referenciaBean.nombre}" action="#{referenciaBean.metodo()}"/>                                   
+                                    <p:commandButton  id="BTReferencia" update="msg BTReferencia PReferencias DTReferencias" class="btn btn-block btn-danger" value="#{referenciaBean.nombre}" action="#{referenciaBean.metodo()}"/>                                   
                                 </div>                                  
                             </div>
                         </b:column>
@@ -85,7 +85,7 @@
 
                                         <p:column style="width: 35px">                                                    
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{referenciaBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.DReferenciaView}"/>
+                                                <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.referenciaView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este referencia de vehiculos?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
