@@ -16,7 +16,7 @@ import org.hibernate.Session;
  *
  * @author Desarrollo_Planit
  */
-public class ImpCategoriasServicioDao implements ICategoriasServicioDao{
+public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
 
     @Override
     public List<SmsCategoriasServicio> consultarCategoriasServicios() {
@@ -24,15 +24,34 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao{
         List<SmsCategoriasServicio> categorias = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query =session.createQuery("from SmsCategoriasServicio");
+            Query query = session.createQuery("from SmsCategoriasServicio");
             categorias = (List<SmsCategoriasServicio>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
-        }finally{
-            if(session != null)
+        } finally {
+            if (session != null) {
                 session.close();
+            }
         }
         return categorias;
     }
-    
+
+    @Override
+    public List<SmsCategoriasServicio> consultarCategoriasServicios(SmsCategoriasServicio catServicio) {
+        Session session = null;
+        List<SmsCategoriasServicio> categorias = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsCategoriasServicio as catServicio where catServicio.catNombre = '" + catServicio.getCatNombre() + "'");
+            categorias = (List<SmsCategoriasServicio>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return categorias;
+    }
+
 }

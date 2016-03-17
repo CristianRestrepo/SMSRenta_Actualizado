@@ -49,18 +49,18 @@
                                         <h:panelGrid id="seccionDatosVehiculo" columns="2" columnClasses="grid,grid" style="width: 100%;">                                     
 
                                             <b:selectOneMenu id="referencia"  required="true" value="#{vehiculoBean.vehiculoView.smsReferencia.referenciaNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar referencia" itemValue=""/>
+                                                <f:selectItem itemLabel="Seleccionar referencia" noSelectionOption="true"/>
                                                 <f:selectItems value="#{referenciaBean.nombresReferenciaListView}" />
                                             </b:selectOneMenu>
 
                                             <b:selectOneMenu id="ciudad"  required="true" value="#{vehiculoBean.vehiculoView.smsCiudad.ciudadNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar ciudad" itemValue="" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Seleccionar ciudad" noSelectionOption="true" />
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}" />
                                             </b:selectOneMenu>
 
                                             <b:selectOneMenu id="categoria" required="true" value="#{vehiculoBean.vehiculoView.smsCategoria.categoriaNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccionar categoria del vehiculo" itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{categoriaBean.CategoriasSegunMercado(vehiculoBean.vehiculoView.smsProveedor.proveedorRazonSocial)}" />
+                                                <f:selectItems value="#{categoriaBean.CategoriasSegunMercadoProv(vehiculoBean.vehiculoView.smsProveedor.proveedorRazonSocial)}" />
                                             </b:selectOneMenu>                                           
 
                                             <b:selectOneMenu id="color" required="true" value="#{vehiculoBean.vehiculoView.smsColor.colorNombre}" style="width: 100%">
@@ -122,9 +122,20 @@
 
                                     </div><hr/>
                                     <h:panelGrid columns="2" width="100%">
-                                        <p:commandButton id="BTVehiculo"  class="btn btn-block btn-danger"  value="#{vehiculoBean.nombre}"  action="#{vehiculoBean.metodo()}"/>
-                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{vehiculoBean.habilitarCancelar}" action="#{vehiculoBean.cancelar()}" update="@form" value="Cancelar" />
+                                        <p:commandButton id="BTVehiculo" onclick="PrimeFaces.monitorDownload(start, stop);" update=":formA :formB :formD :formC:DTVehiculos" class="btn btn-block btn-success"  value="#{vehiculoBean.nombre}"  action="#{vehiculoBean.metodo()}"/>
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{vehiculoBean.habilitarCancelar}" action="#{vehiculoBean.cancelar()}" update=":formA :formB :formC :formD" value="Cancelar" />
                                     </h:panelGrid>
+                                    <script type="text/javascript">
+                                        function start() {
+                                            PF('statusDialog').show();
+                                        }
+                                        function stop() {
+                                            PF('statusDialog').hide();
+                                        }
+                                    </script>
+                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                    </p:dialog>
                                 </div>
                             </div>
                         </b:column>  
@@ -211,7 +222,7 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this"  ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" action="#{vehiculoBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formA :formB :formD" action="#{vehiculoBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
                                             </p:commandLink>
                                         </p:column>
@@ -222,23 +233,11 @@
                                                 <p:confirm header="Confirmacion"  message="Esta seguro que desea eliminar este vehiculo?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>  
-                                    </p:dataTable> 
-                                    <script type="text/javascript">
-                                        function start() {
-                                            PF('statusDialog').show();
-                                        }
-
-                                        function stop() {
-                                            PF('statusDialog').hide();
-                                        }
-                                    </script>
-                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando Informacion" draggable="false" closable="false" resizable="false">
-                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
-                                    </p:dialog>
+                                    </p:dataTable>                                     
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                         <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
                                         <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                    </p:confirmDialog>
+                                    </p:confirmDialog>                                   
                                 </div>
                             </div>
                         </b:column>

@@ -11,7 +11,7 @@
         <ui:define name="content">
             <b:container fluid="true">
                 <b:row>
-                    <h:form>                        
+                    <h:form id="formularioServicios">                        
                         <p:messages id="msg" closable="true"/>
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="box box-info espacio-arriba">
@@ -26,34 +26,68 @@
                                 </div>
                             </div>                            
                         </b:column>
-                        
-                        
 
-                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
                             <div class="box box-danger">
-                                <div class="box-header with-border">                              
-                                    <i class="fa fa-2x fa-list-alt"/>
-                                    <h4 class="box-title">Datos de Servicios</h4>
-                                </div> 
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-tag"/>
+                                    <h3 class="box-title">Servicios SMS Renta</h3>
+                                </div>
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid id="PServicios" columns="3" cellpadding="5" style="width: 100%">
-                                            <p:outputLabel value="Nombre:"/>
-                                            <b:inputText id="TNombreServ" style="width: 100%" required="true" requiredMessage="Ingrese nombre del servicio" value="#{serviciosBean.servicioView.serviciosNombre}" placeholder="Nombre del servicio">                                            
-                                            </b:inputText>
-                                            <p:message for="TNombreServ"/>
+                                        <div class="form-group">
+                                            <h:panelGrid width="100%" columns="2" id="PServicios" cellspacing="5">
+                                                <p:selectOneMenu  label="Mercado al que pertenece el servicio" id="SMMercado" value="#{serviciosBean.mercadoView.mercadoNombre}" style="width: 100%">                                                            
+                                                    <f:selectItem itemLabel="Seleccione Mercado" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>
+                                                    <p:ajax event="change" update="@form"/> 
+                                                </p:selectOneMenu>
+                                                <p:message for="SMMercado"/>
 
-                                            <p:outputLabel value="Descripción: "/>
-                                            <p:inputTextarea id="TDescServ" placeholder="Descripcion del servicio" value="#{serviciosBean.servicioView.serviciosDescripcion}" style="width: 100%" rows="3"></p:inputTextarea>
-                                            <p:message for="TDescServ"/>
-                                        </h:panelGrid>
+                                                <p:selectOneMenu value="#{serviciosBean.servicioView.smsCategoriasServicio.catNombre}" label="Categoria del servicio" style="width: 100%" id="SMCatServicio"> 
+                                                    <f:selectItem itemLabel="Seleccione categoria" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
+                                                    <p:ajax event="change" listener="#{serviciosBean.habilitarLugar()}" update="@form" />
+                                                </p:selectOneMenu>
+                                                <p:message for="SMCatServicio"/>
+
+                                                <b:selectOneMenu value="#{serviciosBean.costoView.smsCategoria.categoriaNombre}"  style="width: 100%" label="Categoria del vehiculo" id="SMCatVehiculo"> 
+                                                    <f:selectItem itemLabel="Seleccione categoria del vehiculo" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{categoriaBean.CategoriasSegunMercado(serviciosBean.mercadoView.mercadoNombre)}"/>                                                
+                                                </b:selectOneMenu>
+                                                <p:message for="SMCatVehiculo"/>
+
+                                                <b:inputText id="TNombreServicio" value="#{serviciosBean.servicioView.servicioNombre}" style="width: 100%" required="true" requiredMessage="Ingrese nombre de servicio" placeholder="Nombre del servicio"/>
+                                                <p:message for="TNombreServicio"/>
+
+                                                <p:inputTextarea rows="3" value="#{serviciosBean.servicioView.servicioDescripcion}" style="width: 100%" id="TDescripcionServicio" placeholder="Descripcion del servicio"/>
+                                                <p:message for="TDescripcionServicio"/>
+
+                                                <b:selectOneMenu rendered="#{serviciosBean.habilitarLugar}" value="#{serviciosBean.costoView.smsLugaresByIdLugarInicio.lugarNombre}" style="width: 100%" label="Lugar de inicio" id="SMLugarInicio"> 
+                                                    <f:selectItem itemLabel="Seleccione lugar de recojida" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
+                                                </b:selectOneMenu>
+                                                <p:message rendered="#{serviciosBean.habilitarLugar}" for="SMLugarInicio"/>
+
+                                                <b:selectOneMenu rendered="#{serviciosBean.habilitarLugar}" value="#{serviciosBean.costoView.smsLugaresByIdLugarDestino.lugarNombre}" style="width: 100%" label="Lugar de destino" id="SMLugarDestino"> 
+                                                    <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
+                                                </b:selectOneMenu>
+                                                <p:message rendered="#{serviciosBean.habilitarLugar}" for="SMLugarDestino"/>
+
+
+                                                <b:inputText id="TCostoServicio" value="#{serviciosBean.costoView.costoServicioPrecio}" style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
+                                                <p:message for="TNombreServicio"/>
+                                            </h:panelGrid>
+
+                                            <p:commandButton class="btn btn-block btn-danger" ajax="false" update="@form" action="#{serviciosBean.registrar()}" value="Registrar servicio" style="width: 100%"/>
+                                        </div>
+
                                     </div>
-                                    <hr/>
-                                    <p:commandButton id="BTServicio" update="@form" action="#{serviciosBean.metodo()}" class="btn btn-block btn-danger" value="#{serviciosBean.nombre}"/>                           
-                                </div>                               
+                                </div>
                             </div>
-                        </b:column>
-                        
+                        </b:column> 
+
                         <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
                             <div class="box box-success">
                                 <div class="box-header with-border">
@@ -71,11 +105,11 @@
                                                  rowsPerPageTemplate="5,10,15" emptyMessage="Servicios no registrados">
 
                                         <p:column headerText="Nombre">
-                                            <h:outputText value="#{servicio.serviciosNombre}"/>
+                                            <h:outputText value="#{servicio.servicioNombre}"/>
                                         </p:column>
 
                                         <p:column headerText="Descripcion del servicio">
-                                            <h:outputText value="#{servicio.serviciosDescripcion}"/>
+                                            <h:outputText value="#{servicio.servicioDescripcion}"/>
                                         </p:column>
 
                                         <p:column style="width: 35px">
@@ -86,7 +120,7 @@
 
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{serviciosBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{servicio}" target="#{serviciosBean.DServicioView}"/>
+                                                <f:setPropertyActionListener value="#{servicio}" target="#{serviciosBean.servicioView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este Servicio?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
@@ -99,7 +133,7 @@
                                 </div>                             
                             </div>
                         </b:column>                      
-                                                
+
                     </h:form> 
                 </b:row>
             </b:container>

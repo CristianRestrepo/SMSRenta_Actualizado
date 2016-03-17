@@ -13,6 +13,8 @@ import java.util.List;
  * @author Desarrollo_Planit
  */
 public interface ICategoriasServicioDao {
-    
+
     public List<SmsCategoriasServicio> consultarCategoriasServicios();
+
+    public List<SmsCategoriasServicio> consultarCategoriasServicios(SmsCategoriasServicio catServicio);
 }

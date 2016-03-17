@@ -32,6 +32,14 @@ public class SmsReservacion  implements java.io.Serializable {
      private Set<SmsCalificacion> smsCalificacions = new HashSet<>(0);
 
     public SmsReservacion() {
+        this.smsCategoriasServicio = new SmsCategoriasServicio();
+        this.smsCiudadByIdCiudadInicio = new SmsCiudad();
+        this.smsCiudadByIdCiudadDestino = new SmsCiudad();
+        this.smsEmpleado = new SmsEmpleado();
+        this.smsEstado = new SmsEstado();
+        this.smsVehiculo = new SmsVehiculo();
+        this.smsUsuario = new SmsUsuario();
+        this.smsServicios = new SmsServicios();
     }
 
 	

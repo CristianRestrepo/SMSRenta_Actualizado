@@ -145,4 +145,23 @@ public class ImpLugarDao implements ILugarDao {
         return lugares;
     }
 
+     @Override
+    public List<SmsLugares> consultarLugar(SmsLugares lugar) {
+        Session session = null;
+        List<SmsLugares> lugares = new ArrayList<>();
+
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsLugares as lugar where lugar.lugarNombre = '" + lugar.getLugarNombre()+ "'");
+            lugares = (List<SmsLugares>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lugares;
+    }
 }

@@ -65,7 +65,7 @@
                                 </div>   
                                 <div class="box-footer">
                                     <h:panelGrid columns="1" width="100%">                                        
-                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-primary" update=":formularioDatosPersonales :formB:TEstadoFoto :formB:fileIdPhoto :formularioDatosPersonales:msg" action="#{usuarioBean.modificarPerfil()}" value="Modificar datos personales" />
+                                        <p:commandButton id="BTModUsuario"  class="btn btn-block btn-primary" ajax="false" update=":formularioDatosPersonales :formB:TEstadoFoto :formB:fileIdPhoto :formularioDatosPersonales:msg" action="#{usuarioBean.modificarPerfil()}" value="Modificar datos personales" />
                                     </h:panelGrid>
                                     <p:messages closable="true" id="msg" />
                                 </div>

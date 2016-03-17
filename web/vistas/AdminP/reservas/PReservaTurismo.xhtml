@@ -5,7 +5,8 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -15,8 +16,8 @@
 
                 <b:container fluid="true" >
 
-
                     <b:row>
+
 
                         <section class="content-header">
                             <h1>
@@ -36,7 +37,7 @@
                                             <ul class="nav nav-tabs" id="myTab">
                                                 <div class="liner"></div>
                                                 <li class="active ">
-                                                    <a href="#home" data-toggle="tab"   class="btn-reserva-select">
+                                                    <a href="#home" data-toggle="tab" class="btn-reserva-select">
                                                         <div data-toggle="tooltip" data-placement="top" title="Agendamiento">
                                                             <span class="round-tabs one">
                                                                 <i class="fa  fa-th-list ico-reserva-nav-agen"></i>
@@ -54,6 +55,7 @@
                                                         </div>
                                                     </a>
                                                 </li>
+
                                                 <li>
                                                     <a href="#messages" data-toggle="tab"  class="btn-reserva-select">
                                                         <div data-toggle="tooltip" data-placement="top" title="Conductor">
@@ -72,180 +74,99 @@
                                                             </span> 
                                                         </div>
                                                     </a>
-
                                                 </li>
-
                                             </ul>
                                         </div>
 
                                         <div class="tab-content">
-
                                             <!--tab de agendamiento-->                                            
                                             <div class="tab-pane fade in active" id="home">
                                                 <b:row>
                                                     <h3 class="head text-center">Agendamiento
                                                         <small>Define el lugar y la hora de reserva</small>
                                                     </h3>
-                                                    <b:column col-lg="8">
-                                                        <form class="form-horizontal">
-                                                            <div class="form-group">
-                                                                <label for="inputEmail3" class="col-sm-4 control-label">Ciudad</label>
-                                                                <div class="col-sm-8">
-                                                                    <select class="form-control select-reserva">
-                                                                        <option>1</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
-                                                                        <option>4</option>
-                                                                        <option>5</option>
-                                                                    </select>
-                                                                </div>
+                                                    <b:column col-lg="8" offset-lg="2">
+                                                        <h:form class="form-horizontal">
+                                                            <div class="form-group" align="left">
+                                                                <b:selectOneMenu label="Ciudad" style="width: 100%">
+                                                                    <f:selectItem itemLabel="Seleccione ciudad" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                                </b:selectOneMenu>
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <label for="inputEmail3" class="col-sm-4 control-label">Lugar de Recogida</label>
-                                                                <div class="col-sm-8">
-                                                                    <select class="form-control select-reserva">
-                                                                        <option>1</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
-                                                                        <option>4</option>
-                                                                        <option>5</option>
-                                                                    </select>
-                                                                </div>
+                                                            <div class="form-group" align="left">
+                                                                <b:selectOneMenu label="Lugar de recogida" style="width: 100%">
+                                                                    <f:selectItem itemLabel="Seleccione lugar de recogida" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
+                                                                </b:selectOneMenu>         
                                                             </div>
 
-                                                            <div class="form-group">
-                                                                <label for="inputEmail3" class="col-sm-4 control-label">Lugar de Destino</label>
-                                                                <div class="col-sm-8">
-                                                                    <select class="form-control select-reserva">
-                                                                        <option>1</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
-                                                                        <option>4</option>
-                                                                        <option>5</option>
-                                                                    </select>
-                                                                </div>
+                                                            <div class="form-group" align="left">
+                                                                <b:selectOneMenu label="Lugar de destino" style="width: 100%">
+                                                                    <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
+                                                                </b:selectOneMenu>       
                                                             </div>
-                                                        </form>
-
-
-                                                        <!--<h3 class="head text-center">Welcome to Bootsnipp<sup>™</sup> 
-                                                            <span style="color:#f48260;">♥</span></h3>
-                                                        <p class="narrow text-center">
-                                                            Lorem ipsum dolor sit amet, his ea mollis fabellas principes. 
-                                                            Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
-                                                        </p>-->
-
-                                                    </b:column>
-                                                    <b:column col-lg="4">
-                                                        <p class="text-center">
-                                                            <a href="" class="btn btn-success btn-outline-rounded green"> 
-                                                                start using bootsnipp 
-                                                                <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
-                                                        </p>                                                    
-                                                    </b:column>
-
-
+                                                        </h:form>             
+                                                    </b:column>                                                       
                                                 </b:row>
                                                 <hr/>
-                                                <b:row>
-                                                    <b:column col-lg="4">
-                                                        <p class="text-center">
-                                                            <a href="" class="btn btn-success btn-outline-rounded green"> 
-                                                                start using bootsnipp 
-                                                                <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span>
-                                                            </a>
-                                                        </p>                                                    
-
-                                                    </b:column>
-                                                    <b:column col-lg="8">
-
-                                                        <form class="form-horizontal">
+                                                <b:row>                                                        
+                                                    <b:column col-lg="8"  offset-lg="2">
+                                                        <h:form class="form-horizontal">                                                            
                                                             <div class="form-group">
-                                                                <label for="inputEmail3" class="col-sm-4 control-label">Tipo de Servicio</label>
-                                                                <div class="col-sm-8 col-md-8">
-                                                                    <select class="form-control select-reserva">
-                                                                        <option>1</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
-                                                                        <option>4</option>
-                                                                        <option>5</option>
-                                                                    </select>
-                                                                </div>
+                                                                <b:selectOneMenu label="Tipo de servicio" style="width: 100%">
+                                                                    <f:selectItem itemLabel="Seleccione tipo de servicio" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
+                                                                </b:selectOneMenu>      
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="inputEmail3" class="col-sm-4 control-label">Fecha de Inicio</label>
-                                                                <div class="col-sm-8 col-md-8">
-                                                                    <h:panelGrid>
-                                                                        <p:calendar id="CFechaInicio" style="width: 100%" 
-                                                                                    styleClass="dateTimeField" placeholder="Seleccione fecha de inicio"  
-                                                                                    binding="#{FInicio}" pattern="yyyy-MM-dd" 
-                                                                                    value="#{reservacionBean.reservaView.reservacionFechaInicio}" 
-                                                                                    required="true"/>
-                                                                    </h:panelGrid>
-                                                                </div>
+                                                                <h:panelGrid columns="2" border="1" width="100%"> 
+                                                                    <p:outputLabel class="col-sm-4 control-label"
+                                                                        <p:outputLabel for="inputEmail3" class="col-sm-4 control-label">Fecha de Entrega</label>
+                                                                    <p:calendar id="CFechaEntrega" style="width: 100%" 
+                                                                                styleClass="dateTimeField" placeholder="Seleccione fecha de inicio"  
+                                                                                binding="#{FEntrega}" pattern="yyyy-MM-dd" 
+                                                                                value="#{reservacionBean.reservaView.reservacionFechaLlegada}" 
+                                                                                required="true"/>                                                                    
+                                                                </h:panelGrid>
                                                             </div>
-
-                                                            <div class="form-group">
-                                                                <label for="inputEmail3" class="col-sm-4 control-label">Fecha de Enterga</label>
-                                                                <div class="col-sm-8 col-md-8">
-                                                                    <h:panelGrid>
-                                                                        <p:calendar id="CFechaEntrega" style="width: 100%" 
-                                                                                    styleClass="dateTimeField" placeholder="Seleccione fecha de inicio"  
-                                                                                    binding="#{FEntrega}" pattern="yyyy-MM-dd" 
-                                                                                    value="#{reservacionBean.reservaView.reservacionFechaLlegada}" 
-                                                                                    required="true"/>
-                                                                    </h:panelGrid>
-                                                                </div>
-                                                            </div>
+                                                            
                                                             <div class="form-inline mrg-reserva-form" >
                                                                 <div class="form-group" style="    display: block;">
                                                                     <div class="col-sm-12 col-md-12"  style="margin: 7px">
                                                                         <label for="inputEmail3" class="mrg-reserva-1">Hora de Inicio</label>
-                                                                        <select class="form-control mrg-reserva-select">
-                                                                            <option>1</option>
-                                                                            <option>2</option>
-                                                                            <option>3</option>
-                                                                            <option>4</option>
-                                                                            <option>5</option>
-                                                                        </select>
+                                                                        <h:panelGrid columns="2" width="100%">
+                                                                            <b:selectOneMenu style="width: 100%">
 
-                                                                        <select class="form-control mrg-reserva-select">
-                                                                            <option>1</option>
-                                                                            <option>2</option>
-                                                                            <option>3</option>
-                                                                            <option>4</option>
-                                                                            <option>5</option>
-                                                                        </select>
+                                                                            </b:selectOneMenu>
+                                                                            <b:selectOneMenu style="width: 100%">
+
+                                                                            </b:selectOneMenu>
+                                                                        </h:panelGrid>
                                                                     </div>
                                                                 </div>
                                                                 <br/>
                                                                 <div class="form-group" style="    display: block;">
                                                                     <div class="col-sm-12 col-md-12" style="margin: 7px">
                                                                         <label for="inputEmail3" class="mrg-reserva-2" >Hora de Entrega</label>
-                                                                        <select class="form-control mrg-reserva-select">
-                                                                            <option>1</option>
-                                                                            <option>2</option>
-                                                                            <option>3</option>
-                                                                            <option>4</option>
-                                                                            <option>5</option>
-                                                                        </select>
+                                                                        <h:panelGrid columns="2" width="100%">
+                                                                            <b:selectOneMenu class="form-control mrg-reserva-select">
 
-                                                                        <select class="form-control mrg-reserva-select">
-                                                                            <option>1</option>
-                                                                            <option>2</option>
-                                                                            <option>3</option>
-                                                                            <option>4</option>
-                                                                            <option>5</option>
-                                                                        </select>
+                                                                            </b:selectOneMenu>
+                                                                            <b:selectOneMenu class="form-control mrg-reserva-select">
+
+                                                                            </b:selectOneMenu>
+
+                                                                        </h:panelGrid>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </form>
+                                                        </h:form>
 
                                                         <hr/>
-                                                        <a href="" class="btn btn-primary btn-next-reserva" >
+                                                        <a href="#profile" class="btn btn-primary btn-next-reserva" >
                                                             Siguiente
                                                             <span class="fa fa-check"></span>
                                                         </a>
@@ -264,7 +185,7 @@
 
                                                     <b:column col-lg="10" offset-lg="1">
 
-                                                        <form class="form-horizontal" style="margin-bottom: 64px">
+                                                        <h:form class="form-horizontal" style="margin-bottom: 64px">
 
                                                             <div class="form-group">
                                                                 <label for="inputEmail3" class="col-sm-4 control-label">Categoría de Vehículo</label>
@@ -278,7 +199,7 @@
                                                                     </select>
                                                                 </div>
                                                             </div> 
-                                                        </form>
+                                                        </h:form>
 
 
                                                         <div class="box box-widget widget-user-2" style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
@@ -487,7 +408,7 @@
                                             <div class="tab-pane fade" id="doner">
                                                 <h:form>
                                                     <p:growl id="msg" autoUpdate="true" showDetail="true" life="3000"/>
-                                                    
+
                                                     <div class="col-md-12">
                                                         <div class="col-md-4">
                                                             <img class="img-responsive center-block img-rounded" 
@@ -499,7 +420,7 @@
                                                             </h3>                                                                
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                                                         <!-- Content Header (Page header) -->
 
@@ -507,7 +428,7 @@
 
                                                         <!-- Main content -->
                                                         <section class="invoice">
-                                                            
+
                                                             <!-- info row -->
                                                             <div class="row invoice-info">
                                                                 <div class="col-sm-3 invoice-col">
@@ -524,11 +445,10 @@
                                                                 <div class="col-sm-3 invoice-col">
                                                                     Para:<br/>
                                                                     <address>
-                                                                        <strong>#{reservacionBean.mclienteView.usuarioNombre}</strong><br></br>
-                                                                        <span class="label label-primary">Cc:</span> #{reservacionBean.mclienteView.usuarioCc}<br></br>
-                                                                        <span class="label label-primary">Razon Social:</span> <br></br>
-                                                                        <span class="label label-primary">Teléfono:</span> #{reservacionBean.mclienteView.usuarioTelefono}<br></br>
-                                                                        <span class="label label-primary">Email:</span>  #{reservacionBean.mclienteView.usuarioEmail}
+                                                                        <strong>#{reservacionBean.reservaView.smsUsuario.usuarioNombre}</strong><br></br>
+                                                                        <span class="label label-primary">Cc:</span> #{reservacionBean.reservaView.smsUsuario.usuarioCc}<br></br>
+                                                                        <span class="label label-primary">Teléfono:</span> #{reservacionBean.reservaView.smsUsuario.usuarioTelefono}<br></br>
+                                                                        <span class="label label-primary">Email:</span>  #{reservacionBean.reservaView.smsUsuario.usuarioEmail}
                                                                     </address>
                                                                 </div><!-- /.col -->
 
@@ -536,15 +456,15 @@
                                                                     <h3 class="text-header-conf text-line-botton">Conductor elegido para Servicio</h3>
                                                                     <div class="col-sm-6">
                                                                         <address>
-                                                                            <strong>Nombre: #{reservacionBean.MConductorView.usuarioNombre}</strong><br></br>
-                                                                            Cc: #{reservacionBean.MConductorView.usuarioCc}<br></br>
+                                                                            <strong>Nombre: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioNombre}</strong><br></br>
+                                                                            Cc: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioCc}<br></br>
                                                                             Razon Social:<br></br>
-                                                                            Teléfono: #{reservacionBean.MConductorView.usuarioTelefono}<br></br>
-                                                                            Email: #{reservacionBean.MConductorView.usuarioEmail}
+                                                                            Teléfono: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioTelefono}<br></br>
+                                                                            Email: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioEmail}
                                                                         </address>                                        
                                                                     </div>
                                                                     <div class="col-sm-6">
-                                                                        <p:graphicImage width="150" height="150" value="#{reservacionBean.MConductorView.usuarioFotoRuta}" alt="Conductor" class="img-thumbnail img-responsive"/>
+                                                                        <p:graphicImage width="150" height="150" value="#{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioFotoRuta}" alt="Conductor" class="img-thumbnail img-responsive"/>
                                                                     </div>
 
                                                                 </div><!-- /.col -->
@@ -567,21 +487,21 @@
                                                                         <tbody>
                                                                             <tr>
                                                                                 <th>Recogida</th>
-                                                                                <td>#{reservacionBean.mciudadView.ciudadNombre}</td>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionLugarLlegada}</td>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionFechaInicio}</td>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionHoraInicio}</td>
+                                                                                <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}</td>
+                                                                                <td>#{reservacionBean.reservaView.reservacionLugarLlegada}</td>
+                                                                                <td>#{reservacionBean.reservaView.reservacionFechaInicio}</td>
+                                                                                <td>#{reservacionBean.reservaView.reservacionHoraInicio}</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Entrega</th>
-                                                                                <td>#{reservacionBean.mciudadView.ciudadNombre}</td>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionLugarDestino}</td>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionFechaLlegada}</td>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionHoraLlegada}</td>
+                                                                                <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}</td>
+                                                                                <td>#{reservacionBean.reservaView.reservacionLugarDestino}</td>
+                                                                                <td>#{reservacionBean.reservaView.reservacionFechaLlegada}</td>
+                                                                                <td>#{reservacionBean.reservaView.reservacionHoraLlegada}</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Observaciones</th>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionNotas}</td>                                                
+                                                                                <td>#{reservacionBean.reservaView.reservacionNotas}</td>                                                
                                                                             </tr>
                                                                             <!--<tr>
                                                                                 <td>1</td>
@@ -622,22 +542,22 @@
                                                                     </div>
                                                                 </div><!-- /.col -->
                                                                 <div class="col-xs-7">
-                                                                    <p:graphicImage style="margin-left: 20%; margin-bottom: 10px" width="256" height="256" value="#{reservacionBean.mvehiculoView.vehFotoRuta}" alt="Vehiculo" class="img-thumbnail img-responsive"/>
+                                                                    <p:graphicImage style="margin-left: 20%; margin-bottom: 10px" width="256" height="256" value="#{reservacionBean.reservaView.smsVehiculo.vehFotoRuta}" alt="Vehiculo" class="img-thumbnail img-responsive"/>
 
                                                                     <div class="col-sm-12 invoice-col">
                                                                         <div class="table-responsive">
                                                                             <table class="table">
                                                                                 <tr>
                                                                                     <th style="width:50%">Marca:</th>
-                                                                                    <td>#{reservacionBean.mvehiculoView.smsReferencia.smsMarca.marcaNombre}</td>
+                                                                                    <td>#{reservacionBean.reservaView.smsVehiculo.smsReferencia.smsMarca.marcaNombre}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Referencia:</th>
-                                                                                    <td>#{reservacionBean.mvehiculoView.smsReferencia.referenciaNombre}</td>
+                                                                                    <td>#{reservacionBean.reservaView.smsVehiculo.smsReferencia.referenciaNombre}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Placa:</th>
-                                                                                    <td>#{reservacionBean.mvehiculoView.vehPlaca}</td>
+                                                                                    <td>#{reservacionBean.reservaView.smsVehiculo.vehPlaca}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Color:</th>
@@ -645,15 +565,15 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Personas:</th>
-                                                                                    <td>#{reservacionBean.mvehiculoView.vehNumPersonas}</td>
+                                                                                    <td>#{reservacionBean.reservaView.smsVehiculo.vehNumPersonas}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Maletas Grandes:</th>
-                                                                                    <td>#{reservacionBean.mvehiculoView.vehNumMalGrande}</td>
+                                                                                    <td>#{reservacionBean.reservaView.smsVehiculo.vehNumMalGrande}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Maletas Pequeñas:</th>
-                                                                                    <td>#{reservacionBean.mvehiculoView.vehNumMalPequeña}</td>
+                                                                                    <td>#{reservacionBean.reservaView.smsVehiculo.vehNumMalPequeña}</td>
                                                                                 </tr>
                                                                             </table>
                                                                         </div>
@@ -678,7 +598,7 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Total:</th>
-                                                                                <td>#{reservacionBean.mreservaView.reservacionCosto}</td>
+                                                                                <td>#{reservacionBean.reservaView.reservacionCosto}</td>
                                                                             </tr>
                                                                         </table>
                                                                     </div>

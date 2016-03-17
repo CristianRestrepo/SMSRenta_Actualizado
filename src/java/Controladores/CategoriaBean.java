@@ -22,7 +22,7 @@ import javax.annotation.PostConstruct;
 public class CategoriaBean implements Serializable {
 
     //Objeto de vista
-    private SmsCategoria categoriaView; 
+    private SmsCategoria categoriaView;
     private List<SmsCategoria> categoriasListView;
     private List<String> nombresCategoriasListView;
     private List<String> mercadosSeleccionados;
@@ -101,7 +101,7 @@ public class CategoriaBean implements Serializable {
     public void setBuscar(String buscar) {
         this.buscar = buscar;
     }
-    
+
     public List<String> getMercadosSeleccionados() {
         return mercadosSeleccionados;
     }
@@ -176,7 +176,7 @@ public class CategoriaBean implements Serializable {
         }
     }
 
-    public List<String> CategoriasSegunMercado(String prov) {
+    public List<String> CategoriasSegunMercadoProv(String prov) {
         nombresCategoriasListView = new ArrayList<>();
 
         if (!prov.isEmpty()) {
@@ -217,6 +217,35 @@ public class CategoriaBean implements Serializable {
                     }
 
                 }
+            }
+        }
+        return nombresCategoriasListView;
+    }
+
+    public List<String> CategoriasSegunMercado(String merc) {
+        nombresCategoriasListView = new ArrayList<>();
+
+        if (!merc.isEmpty()) {
+            SmsMercado m = mercadoDao.consultarMercado(merc).get(0);
+
+            categoriasListView = catDao.mostrarCategorias();
+            boolean bandera = false;
+            for (int j = 0; j < categoriasListView.size(); j++) {
+                for (SmsMercado mercado : categoriasListView.get(j).getSmsMercados()) {
+                    if (m.getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
+                        for (int k = 0; k < nombresCategoriasListView.size(); k++) {
+                            if (nombresCategoriasListView.get(k).equalsIgnoreCase(categoriasListView.get(j).getCategoriaNombre())) {
+                                bandera = true;
+                            }
+                        }
+                        if (!bandera) {
+                            nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
+                        }
+                        bandera = false;
+                    }
+
+                }
+
             }
         }
         return nombresCategoriasListView;

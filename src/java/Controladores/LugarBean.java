@@ -72,6 +72,15 @@ public class LugarBean implements Serializable {
     }
 
     public List<String> getNombresLugaresListView() {
+        LugaresListView = new ArrayList<>();
+        nombresLugaresListView = new ArrayList<>();
+        
+        LugaresListView = lugarDao.consultarLugares();
+        for (int i = 0; i < LugaresListView.size(); i++) {
+            nombresLugaresListView.add(LugaresListView.get(i).getLugarNombre());
+        }
+        
+        
         return nombresLugaresListView;
     }
 

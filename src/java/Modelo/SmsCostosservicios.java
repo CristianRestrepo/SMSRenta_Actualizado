@@ -17,6 +17,11 @@ public class SmsCostosservicios  implements java.io.Serializable {
      private int costoServicioPrecio;
 
     public SmsCostosservicios() {
+        this.smsCategoria = new SmsCategoria();
+        this.smsLugaresByIdLugarInicio = new SmsLugares();
+        this.smsLugaresByIdLugarDestino = new SmsLugares();
+        this.smsServicios = new SmsServicios();
+        this.costoServicioPrecio = 0;
     }
 
 	

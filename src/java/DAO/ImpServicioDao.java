@@ -109,7 +109,7 @@ public class ImpServicioDao implements IServicioDao {
         List<SmsServicios> servicios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsServicios as servicios where servicios.serviciosNombre LIKE '%" + dato + "%' or servicios.serviciosDescripcion LIKE '%" + dato + "%'");
+            Query query = session.createQuery("from SmsServicios as servicios where servicios.serviciosNombre LIKE '%" + dato + "%' or servicios.servicioDescripcion LIKE '%" + dato + "%'");
             servicios = (List<SmsServicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -127,7 +127,7 @@ public class ImpServicioDao implements IServicioDao {
         List<SmsServicios> servicios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsServicios as servicio where servicio.serviciosNombre = '" + servicio.getServicioNombre() + "' or servicio.idServicios = '" + servicio.getIdServicio()+ "'");
+            Query query = session.createQuery("from SmsServicios as servicio where servicio.servicioNombre = '" + servicio.getServicioNombre() + "' or servicio.idServicio = '" + servicio.getIdServicio()+ "'");
             servicios = (List<SmsServicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

@@ -6,10 +6,16 @@
 package Controladores;
 
 import DAO.ICategoriaDao;
+import DAO.ICategoriasServicioDao;
+import DAO.ICostosServiciosDao;
+import DAO.ILugarDao;
 import DAO.IServicioDao;
+import DAO.ImpCategoriaDao;
+import DAO.ImpCategoriasServicioDao;
+import DAO.ImpCostosServiciosDao;
+import DAO.ImpLugarDao;
 import DAO.ImpServicioDao;
 import Modelo.SmsCategoria;
-import Modelo.SmsCategoriasServicio;
 import Modelo.SmsCostosservicios;
 import Modelo.SmsMercado;
 import Modelo.SmsServicios;
@@ -22,47 +28,56 @@ import javax.annotation.PostConstruct;
  *
  * @author Desarrollo_Planit
  */
-public class ServiciosBean implements Serializable{
+public class ServiciosBean implements Serializable {
 
     //Objetos necesarios
     private SmsServicios servicioView;
-    private SmsServicios DServicioView;
-    
+
     private SmsMercado mercadoView;
-    private SmsCategoriasServicio categoriaServicioView;
-    private SmsCategoria categoriaView; //Categoria vehiculo
     private SmsCostosservicios costoView;
-    
+
     private List<SmsServicios> serviciosListView;
     private List<String> nombreServiciosListView;
-    
+
     private List<String> nombresCategoriasListView;
     private List<SmsCategoria> categoriasListView;
-    
+
     //Relacion con controladores
-    CostosServicioBean costosController; 
+    CostosServicioBean costosController;
 
     //Conexion con el DAO
     IServicioDao servicioDao;
     ICategoriaDao categoriaDao;
-    
+    ILugarDao lugarDao;
+    ICategoriasServicioDao catServicioDao;
+    ICostosServiciosDao costoDao;
+
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
     private String buscar;
 
+    //banderas
+    private boolean habilitarLugar;
+
     public ServiciosBean() {
         servicioView = new SmsServicios();
         serviciosListView = new ArrayList<>();
-        categoriaServicioView = new SmsCategoriasServicio();
         nombreServiciosListView = new ArrayList<>();
-        DServicioView = new SmsServicios();
+        costoView = new SmsCostosservicios();
+        mercadoView = new SmsMercado();
+
         buscar = null;
         estado = 0;
         nombre = "Registrar Servicio";
 
         servicioDao = new ImpServicioDao();
-        
+        categoriaDao = new ImpCategoriaDao();
+        catServicioDao = new ImpCategoriasServicioDao();
+        costoDao = new ImpCostosServiciosDao();
+        lugarDao = new ImpLugarDao();
+
+        habilitarLugar = false;
         costosController = new CostosServicioBean();
 
     }
@@ -129,36 +144,12 @@ public class ServiciosBean implements Serializable{
         this.buscar = buscar;
     }
 
-    public SmsServicios getDServicioView() {
-        return DServicioView;
-    }
-
-    public void setDServicioView(SmsServicios DServicioView) {
-        this.DServicioView = DServicioView;
-    }
-
-    public SmsCategoriasServicio getCategoriaServicioView() {
-        return categoriaServicioView;
-    }
-
-    public void setCategoriaServicioView(SmsCategoriasServicio categoriaServicioView) {
-        this.categoriaServicioView = categoriaServicioView;
-    }
-
     public SmsMercado getMercadoView() {
         return mercadoView;
     }
 
     public void setMercadoView(SmsMercado mercadoView) {
         this.mercadoView = mercadoView;
-    }
-
-    public SmsCategoria getCategoriaView() {
-        return categoriaView;
-    }
-
-    public void setCategoriaView(SmsCategoria categoriaView) {
-        this.categoriaView = categoriaView;
     }
 
     public SmsCostosservicios getCostoView() {
@@ -183,9 +174,16 @@ public class ServiciosBean implements Serializable{
 
     public void setCategoriasListView(List<SmsCategoria> categoriasListView) {
         this.categoriasListView = categoriasListView;
-    }    
-        
-      
+    }
+
+    public boolean isHabilitarLugar() {
+        return habilitarLugar;
+    }
+
+    public void setHabilitarLugar(boolean habilitarLugar) {
+        this.habilitarLugar = habilitarLugar;
+    }
+
     //Metodos Propios
     public void metodo() {
         if (estado == 0) {
@@ -207,8 +205,25 @@ public class ServiciosBean implements Serializable{
 
     //Metodos que se comunican con el controlador    
     public void registrar() {
+
+        //Se consulta la informacion de la categoria del servicio seleccionado
+        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriasServicios(servicioView.getSmsCategoriasServicio()).get(0));
+
         servicioDao.registrarServicio(servicioView);
+
+        costoView.setSmsServicios(servicioDao.ConsultarServicio(servicioView).get(0));
+        costoView.setSmsCategoria(categoriaDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
+
+        if (costoView.getSmsLugaresByIdLugarDestino().getLugarNombre() != null  && costoView.getSmsLugaresByIdLugarDestino().getLugarNombre() != null) {
+            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarInicio()).get(0));
+            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarDestino()).get(0));
+        }
+        costoDao.registrarCostoServicio(costoView);
+
         servicioView = new SmsServicios();
+        costoView = new SmsCostosservicios();
+        mercadoView = new SmsMercado();
+
         serviciosListView = servicioDao.mostrarServicios();
     }
 
@@ -219,14 +234,11 @@ public class ServiciosBean implements Serializable{
     }
 
     public void eliminar() {
-        servicioDao.eliminarServicio(DServicioView);
+        servicioDao.eliminarServicio(servicioView);
 
-        if (servicioView.equals(DServicioView)) {
-            nombre = "Modificar Servicio";
-            estado = 0;
-            servicioView = new SmsServicios();
-        }
-        DServicioView = new SmsServicios();
+        nombre = "Modificar Servicio";
+        estado = 0;
+        servicioView = new SmsServicios();
 
         serviciosListView = servicioDao.mostrarServicios();
     }
@@ -239,11 +251,13 @@ public class ServiciosBean implements Serializable{
             serviciosListView = servicioDao.filtrarServicios(buscar);
         }
     }
-    
-    public void cargarCategoriasMercado(String Mercado){
-        
-        categoriasListView = categoriaDao.mostrarCategorias();
-        
+
+    public void habilitarLugar() {
+        if (servicioView.getSmsCategoriasServicio().getCatNombre().equalsIgnoreCase("Traslado")) {
+            habilitarLugar = true;
+        } else {
+            habilitarLugar = false;
+        }
     }
 
 }
