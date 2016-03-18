@@ -47,7 +47,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#profile" data-toggle="tab"  class="btn-reserva-select">
+                                                    <a data-toggle="tab" href="#profile" class="btn-reserva-select">
                                                         <div data-toggle="tooltip" data-placement="top" title="Vehículo">
                                                             <span class="round-tabs one">
                                                                 <i class="fa  fa-car ico-reserva-nav-veh"></i>
@@ -80,13 +80,13 @@
 
                                         <div class="tab-content">
                                             <!--tab de agendamiento-->                                            
-                                            <div class="tab-pane fade in active" id="home">
+                                            <div class="table-responsive tab-pane fade in active" id="home">
                                                 <b:row>
                                                     <h3 class="head text-center">Agendamiento
                                                         <small>Define el lugar y la hora de reserva</small>
                                                     </h3>
                                                     <b:column col-lg="8" offset-lg="2">
-                                                        <h:form class="form-horizontal">
+                                                        <h:form>
                                                             <div class="form-group" align="left">
                                                                 <b:selectOneMenu label="Ciudad" style="width: 100%">
                                                                     <f:selectItem itemLabel="Seleccione ciudad" noSelectionOption="true"/>
@@ -113,7 +113,7 @@
                                                 <hr/>
                                                 <b:row>                                                        
                                                     <b:column col-lg="8"  offset-lg="2">
-                                                        <h:form class="form-horizontal">                                                            
+                                                        <h:form>                                                            
                                                             <div class="form-group">
                                                                 <b:selectOneMenu label="Tipo de servicio" style="width: 100%">
                                                                     <f:selectItem itemLabel="Seleccione tipo de servicio" noSelectionOption="true"/>
@@ -122,9 +122,8 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <h:panelGrid columns="2" border="1" width="100%"> 
-                                                                    <p:outputLabel class="col-sm-4 control-label"
-                                                                        <p:outputLabel for="inputEmail3" class="col-sm-4 control-label">Fecha de Entrega</label>
+                                                                <h:panelGrid columns="2" width="100%"> 
+                                                                    <label class="col-sm-12 control-label" >Fecha de Inicio</label>
                                                                     <p:calendar id="CFechaEntrega" style="width: 100%" 
                                                                                 styleClass="dateTimeField" placeholder="Seleccione fecha de inicio"  
                                                                                 binding="#{FEntrega}" pattern="yyyy-MM-dd" 
@@ -132,43 +131,90 @@
                                                                                 required="true"/>                                                                    
                                                                 </h:panelGrid>
                                                             </div>
-                                                            
-                                                            <div class="form-inline mrg-reserva-form" >
-                                                                <div class="form-group" style="    display: block;">
-                                                                    <div class="col-sm-12 col-md-12"  style="margin: 7px">
-                                                                        <label for="inputEmail3" class="mrg-reserva-1">Hora de Inicio</label>
-                                                                        <h:panelGrid columns="2" width="100%">
-                                                                            <b:selectOneMenu style="width: 100%">
 
-                                                                            </b:selectOneMenu>
-                                                                            <b:selectOneMenu style="width: 100%">
-
-                                                                            </b:selectOneMenu>
-                                                                        </h:panelGrid>
-                                                                    </div>
-                                                                </div>
-                                                                <br/>
-                                                                <div class="form-group" style="    display: block;">
-                                                                    <div class="col-sm-12 col-md-12" style="margin: 7px">
-                                                                        <label for="inputEmail3" class="mrg-reserva-2" >Hora de Entrega</label>
-                                                                        <h:panelGrid columns="2" width="100%">
-                                                                            <b:selectOneMenu class="form-control mrg-reserva-select">
-
-                                                                            </b:selectOneMenu>
-                                                                            <b:selectOneMenu class="form-control mrg-reserva-select">
-
-                                                                            </b:selectOneMenu>
-
-                                                                        </h:panelGrid>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="form-group">                                                                   
+                                                                <label class="mrg-reserva-1">Hora de Inicio</label>
+                                                                <h:panelGrid  columns="2" width="100%">
+                                                                    <b:selectOneMenu style="width: 100%">
+                                                                        <f:selectItem itemLabel="00" itemValue="01"/>
+                                                                        <f:selectItem itemLabel="01" itemValue="01"/>
+                                                                        <f:selectItem itemLabel="02" itemValue="02"/>
+                                                                        <f:selectItem itemLabel="03" itemValue="03"/>
+                                                                        <f:selectItem itemLabel="04" itemValue="04"/>
+                                                                        <f:selectItem itemLabel="05" itemValue="05"/>
+                                                                        <f:selectItem itemLabel="06" itemValue="06"/>
+                                                                        <f:selectItem itemLabel="07" itemValue="07"/>
+                                                                        <f:selectItem itemLabel="08" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="10" itemValue="10"/>
+                                                                        <f:selectItem itemLabel="11" itemValue="11"/>
+                                                                        <f:selectItem itemLabel="12" itemValue="12"/>
+                                                                        <f:selectItem itemLabel="13" itemValue="13"/> 
+                                                                        <f:selectItem itemLabel="14" itemValue="14"/>                                                     
+                                                                        <f:selectItem itemLabel="15" itemValue="15"/> 
+                                                                        <f:selectItem itemLabel="16" itemValue="16"/> 
+                                                                        <f:selectItem itemLabel="17" itemValue="17"/> 
+                                                                        <f:selectItem itemLabel="18" itemValue="18"/> 
+                                                                        <f:selectItem itemLabel="19" itemValue="19"/> 
+                                                                        <f:selectItem itemLabel="20" itemValue="20"/> 
+                                                                        <f:selectItem itemLabel="21" itemValue="21"/> 
+                                                                        <f:selectItem itemLabel="22" itemValue="22"/>
+                                                                        <f:selectItem itemLabel="23" itemValue="23"/>
+                                                                    </b:selectOneMenu>
+                                                                    <b:selectOneMenu style="width: 100%">
+                                                                        <f:selectItem itemLabel="00:00" itemValue="00:00"/>
+                                                                        <f:selectItem itemLabel="15:00" itemValue="15:00"/>
+                                                                        <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
+                                                                        <f:selectItem itemLabel="45:00" itemValue="45:00"/>            
+                                                                    </b:selectOneMenu>
+                                                                </h:panelGrid>
                                                             </div>
+                                                            <br/>
+                                                            <div style="width: 100%" >                                                                    
+                                                                <label class="mrg-reserva-2" >Hora de Entrega</label>
+                                                                <h:panelGrid columns="2" columnClasses="grid,grid" width="100%">
+                                                                    <b:selectOneMenu style="width: 100%">
+                                                                        <f:selectItem itemLabel="00" itemValue="01"/>
+                                                                        <f:selectItem itemLabel="01" itemValue="01"/>
+                                                                        <f:selectItem itemLabel="02" itemValue="02"/>
+                                                                        <f:selectItem itemLabel="03" itemValue="03"/>
+                                                                        <f:selectItem itemLabel="04" itemValue="04"/>
+                                                                        <f:selectItem itemLabel="05" itemValue="05"/>
+                                                                        <f:selectItem itemLabel="06" itemValue="06"/>
+                                                                        <f:selectItem itemLabel="07" itemValue="07"/>
+                                                                        <f:selectItem itemLabel="08" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="10" itemValue="10"/>
+                                                                        <f:selectItem itemLabel="11" itemValue="11"/>
+                                                                        <f:selectItem itemLabel="12" itemValue="12"/>
+                                                                        <f:selectItem itemLabel="13" itemValue="13"/> 
+                                                                        <f:selectItem itemLabel="14" itemValue="14"/>                                                     
+                                                                        <f:selectItem itemLabel="15" itemValue="15"/> 
+                                                                        <f:selectItem itemLabel="16" itemValue="16"/> 
+                                                                        <f:selectItem itemLabel="17" itemValue="17"/> 
+                                                                        <f:selectItem itemLabel="18" itemValue="18"/> 
+                                                                        <f:selectItem itemLabel="19" itemValue="19"/> 
+                                                                        <f:selectItem itemLabel="20" itemValue="20"/> 
+                                                                        <f:selectItem itemLabel="21" itemValue="21"/> 
+                                                                        <f:selectItem itemLabel="22" itemValue="22"/>
+                                                                        <f:selectItem itemLabel="23" itemValue="23"/>
+                                                                    </b:selectOneMenu>
+                                                                    <b:selectOneMenu style="width: 100%">
+                                                                        <f:selectItem itemLabel="00:00" itemValue="00:00"/>
+                                                                        <f:selectItem itemLabel="15:00" itemValue="15:00"/>
+                                                                        <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
+                                                                        <f:selectItem itemLabel="45:00" itemValue="45:00"/>            
+                                                                    </b:selectOneMenu>
+                                                                </h:panelGrid>                                                                     
+                                                            </div>
+
                                                         </h:form>
 
-                                                        <hr/>
-                                                        <a href="#profile" class="btn btn-primary btn-next-reserva" >
-                                                            Siguiente
-                                                            <span class="fa fa-check"></span>
+                                                        <hr/>                                                        
+                                                        <a href="#profile" data-toggle="tab" class="btn-reserva-select">                                                           
+                                                            <div data-toggle="tooltip" data-placement="top" title="Vehículo">
+                                                                <span  class="fa fa-check">
+                                                                    siguiente                                                                    
+                                                                </span>                                                                                                                               
+                                                            </div>
                                                         </a>
                                                     </b:column>
                                                 </b:row>
