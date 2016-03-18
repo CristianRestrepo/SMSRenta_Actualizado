@@ -96,14 +96,14 @@
 
                                                             <div class="form-group" align="left">
                                                                 <b:selectOneMenu label="Lugar de recogida" style="width: 100%">
-                                                                    <f:selectItem itemLabel="Seleccione lugar de recogida" noSelectionOption="true"/>
+                                                                    <f:selectItem itemLabel="Seleccione lugar de recogida del vehiculo" noSelectionOption="true"/>
                                                                     <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
                                                                 </b:selectOneMenu>         
                                                             </div>
 
                                                             <div class="form-group" align="left">
                                                                 <b:selectOneMenu label="Lugar de destino" style="width: 100%">
-                                                                    <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
+                                                                    <f:selectItem itemLabel="Seleccione lugar de entrega del vehiculo" noSelectionOption="true"/>
                                                                     <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
                                                                 </b:selectOneMenu>       
                                                             </div>
@@ -113,12 +113,12 @@
                                                 <hr/>
                                                 <b:row>                                                        
                                                     <b:column col-lg="8"  offset-lg="2">
-                                                        <h:form>                                                            
-                                                            <div class="form-group">
-                                                                <b:selectOneMenu label="Tipo de servicio" style="width: 100%">
-                                                                    <f:selectItem itemLabel="Seleccione tipo de servicio" noSelectionOption="true"/>
-                                                                    <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
-                                                                </b:selectOneMenu>      
+                                                        <h:form>  
+                                                            <div class="form-group" align="left">
+                                                                <b:selectOneMenu label="Tipo de Servicio" style="width: 100%">
+                                                                    <f:selectItem itemLabel="Seleccione servicio de reservacion" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{serviciosBean.nombreServiciosListView}"/>
+                                                                </b:selectOneMenu>         
                                                             </div>
 
                                                             <div class="form-group">
@@ -135,7 +135,7 @@
                                                             <div class="form-group">                                                                   
                                                                 <label class="mrg-reserva-1">Hora de Inicio</label>
                                                                 <h:panelGrid  columns="2" width="100%">
-                                                                    <b:selectOneMenu style="width: 100%">
+                                                                    <b:selectOneMenu style="width: 100%" value="#{reservacionBean.horaInicio}">
                                                                         <f:selectItem itemLabel="00" itemValue="01"/>
                                                                         <f:selectItem itemLabel="01" itemValue="01"/>
                                                                         <f:selectItem itemLabel="02" itemValue="02"/>
@@ -160,7 +160,7 @@
                                                                         <f:selectItem itemLabel="22" itemValue="22"/>
                                                                         <f:selectItem itemLabel="23" itemValue="23"/>
                                                                     </b:selectOneMenu>
-                                                                    <b:selectOneMenu style="width: 100%">
+                                                                    <b:selectOneMenu style="width: 100%" value="#{reservacionBean.minutosInicio}">
                                                                         <f:selectItem itemLabel="00:00" itemValue="00:00"/>
                                                                         <f:selectItem itemLabel="15:00" itemValue="15:00"/>
                                                                         <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
@@ -168,44 +168,7 @@
                                                                     </b:selectOneMenu>
                                                                 </h:panelGrid>
                                                             </div>
-                                                            <br/>
-                                                            <div style="width: 100%" >                                                                    
-                                                                <label class="mrg-reserva-2" >Hora de Entrega</label>
-                                                                <h:panelGrid columns="2" columnClasses="grid,grid" width="100%">
-                                                                    <b:selectOneMenu style="width: 100%">
-                                                                        <f:selectItem itemLabel="00" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="01" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="02" itemValue="02"/>
-                                                                        <f:selectItem itemLabel="03" itemValue="03"/>
-                                                                        <f:selectItem itemLabel="04" itemValue="04"/>
-                                                                        <f:selectItem itemLabel="05" itemValue="05"/>
-                                                                        <f:selectItem itemLabel="06" itemValue="06"/>
-                                                                        <f:selectItem itemLabel="07" itemValue="07"/>
-                                                                        <f:selectItem itemLabel="08" itemValue="08"/>
-                                                                        <f:selectItem itemLabel="10" itemValue="10"/>
-                                                                        <f:selectItem itemLabel="11" itemValue="11"/>
-                                                                        <f:selectItem itemLabel="12" itemValue="12"/>
-                                                                        <f:selectItem itemLabel="13" itemValue="13"/> 
-                                                                        <f:selectItem itemLabel="14" itemValue="14"/>                                                     
-                                                                        <f:selectItem itemLabel="15" itemValue="15"/> 
-                                                                        <f:selectItem itemLabel="16" itemValue="16"/> 
-                                                                        <f:selectItem itemLabel="17" itemValue="17"/> 
-                                                                        <f:selectItem itemLabel="18" itemValue="18"/> 
-                                                                        <f:selectItem itemLabel="19" itemValue="19"/> 
-                                                                        <f:selectItem itemLabel="20" itemValue="20"/> 
-                                                                        <f:selectItem itemLabel="21" itemValue="21"/> 
-                                                                        <f:selectItem itemLabel="22" itemValue="22"/>
-                                                                        <f:selectItem itemLabel="23" itemValue="23"/>
-                                                                    </b:selectOneMenu>
-                                                                    <b:selectOneMenu style="width: 100%">
-                                                                        <f:selectItem itemLabel="00:00" itemValue="00:00"/>
-                                                                        <f:selectItem itemLabel="15:00" itemValue="15:00"/>
-                                                                        <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
-                                                                        <f:selectItem itemLabel="45:00" itemValue="45:00"/>            
-                                                                    </b:selectOneMenu>
-                                                                </h:panelGrid>                                                                     
-                                                            </div>
-
+                                                            <br/>                                                          
                                                         </h:form>
 
                                                         <hr/>                                                        
@@ -236,18 +199,15 @@
                                                             <div class="form-group">
                                                                 <label for="inputEmail3" class="col-sm-4 control-label">Categoría de Vehículo</label>
                                                                 <div class="col-sm-5">
-                                                                    <select class="form-control select-reserva">
-                                                                        <option>1</option>
-                                                                        <option>2</option>
-                                                                        <option>3</option>
-                                                                        <option>4</option>
-                                                                        <option>5</option>
-                                                                    </select>
+                                                                    <b:selectOneMenu value="#{reservacionBean.categoriaView.categoriaNombre}">
+                                                                        <f:selectItem itemLabel="Seleccione Categoria"/>
+                                                                        <f:selectItems value="#{categoriaBean.nombresCategoriasListView}"/>
+                                                                    </b:selectOneMenu>>
                                                                 </div>
                                                             </div> 
                                                         </h:form>
 
-
+                                                        <!--                                                        Segmento a repetir segun cantidad de vehiculos-->
                                                         <div class="box box-widget widget-user-2" style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
                                                             <div class="widget-user-header bg-yellow">
                                                                 <div class="widget-user-image">
@@ -329,7 +289,7 @@
 
                                                             </div>                                                       
                                                         </div>
-
+                                                        <!--                                                        fin seccion-->
 
 
                                                         <a href="" class="btn btn-primary btn-next-reserva" >

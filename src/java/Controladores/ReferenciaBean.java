@@ -9,7 +9,6 @@ import DAO.IMarcaDao;
 import DAO.IReferenciaDao;
 import DAO.ImpMarcaDao;
 import DAO.ImpReferenciaDao;
-import Modelo.SmsMarca;
 import Modelo.SmsReferencia;
 import java.io.Serializable;
 import java.util.ArrayList;

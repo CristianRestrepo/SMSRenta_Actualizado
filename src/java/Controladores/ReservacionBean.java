@@ -54,14 +54,10 @@ import org.primefaces.model.ScheduleModel;
 public class ReservacionBean implements Serializable{
 
     private List<SmsReservacion> reservacionesListView;
-
-    private SmsVehiculo vehiculoView;
-    private SmsEmpleado empleadoView;
+    
     private SmsReservacion reservaView;
     private SmsCategoria categoriaView;
-    private SmsCiudad ciudadView;
-    private SmsUsuario clienteView;
-
+      
     private SmsCostosservicios costoServicioView;
     private SmsServicios servicioView;
 
@@ -108,13 +104,10 @@ public class ReservacionBean implements Serializable{
 
     public ReservacionBean() {
 
-        vehiculoView = new SmsVehiculo();
-        empleadoView = new SmsEmpleado();
+        
         reservaView = new SmsReservacion();
         categoriaView = new SmsCategoria();
-        ciudadView = new SmsCiudad();
-        clienteView = new SmsUsuario();
-
+        
         costoServicioView = new SmsCostosservicios();
         servicioView = new SmsServicios();
         
@@ -259,23 +252,7 @@ public class ReservacionBean implements Serializable{
     public void setReservacionesListView(List<SmsReservacion> reservacionesListView) {
         this.reservacionesListView = reservacionesListView;
     }
-
-    public SmsVehiculo getVehiculoView() {
-        return vehiculoView;
-    }
-
-    public void setVehiculoView(SmsVehiculo vehiculoView) {
-        this.vehiculoView = vehiculoView;
-    }
-
-    public SmsEmpleado getEmpleadoView() {
-        return empleadoView;
-    }
-
-    public void setEmpleadoView(SmsEmpleado empleadoView) {
-        this.empleadoView = empleadoView;
-    }
-
+    
     public SmsReservacion getReservaView() {
         return reservaView;
     }
@@ -291,23 +268,7 @@ public class ReservacionBean implements Serializable{
     public void setCategoriaView(SmsCategoria categoriaView) {
         this.categoriaView = categoriaView;
     }
-
-    public SmsCiudad getCiudadView() {
-        return ciudadView;
-    }
-
-    public void setCiudadView(SmsCiudad ciudadView) {
-        this.ciudadView = ciudadView;
-    }
-
-    public SmsUsuario getClienteView() {
-        return clienteView;
-    }
-
-    public void setClienteView(SmsUsuario clienteView) {
-        this.clienteView = clienteView;
-    }
-
+    
     public List<SmsReservacion> getListaReservaciones() {
         return listaReservaciones;
     }
@@ -507,6 +468,10 @@ public class ReservacionBean implements Serializable{
             }
             return event.getNewStep();
         }
+    }
+    
+    public String flujoReservacion(){
+        
     }
 
     public void SeleccionarVehiculo() {
