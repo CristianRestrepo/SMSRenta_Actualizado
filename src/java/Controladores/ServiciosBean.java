@@ -259,5 +259,11 @@ public class ServiciosBean implements Serializable {
             habilitarLugar = false;
         }
     }
+    
+    public List<String> seleccionarServiciosSegunMercado(){
+            
+        
+        return nombreServiciosListView;
+    }
 
 }

@@ -77,6 +77,7 @@ public class VehiculoBean {
     public VehiculoBean() {
 
         vehiculoView = new SmsVehiculo();
+        vehiculosListView = new ArrayList<>();
         estadoVehiculoView = new SmsEstadovehiculo();
 
         habilitarCancelar = true;
@@ -98,11 +99,11 @@ public class VehiculoBean {
         operacion = 0;
         estadoArchivo1 = "Foto sin subir";
         estadoArchivo2 = "Foto sin subir";
-        vehDao = new ImpVehiculoDao();
+        
     }
 
     @PostConstruct
-    public void init() {
+    public void init() {       
         vehiculosListView = vehDao.mostrarVehiculo();
     }
 

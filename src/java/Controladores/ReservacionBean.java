@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import DAO.ICategoriasServicioDao;
 import Funciones.SendEmail;
 import Modelo.SmsReservacion;
 import DAO.ICiudadDao;
@@ -14,6 +15,7 @@ import DAO.IReservacionDao;
 import DAO.IServicioDao;
 import DAO.IUsuarioDao;
 import DAO.IVehiculoDao;
+import DAO.ImpCategoriasServicioDao;
 import DAO.ImpCiudadDao;
 import DAO.ImpCostosServiciosDao;
 import DAO.ImpReservacionDao;
@@ -24,14 +26,12 @@ import Modelo.SmsCategoria;
 import Modelo.SmsCiudad;
 import Modelo.SmsCostosservicios;
 import Modelo.SmsEmpleado;
-import Modelo.SmsLugares;
 import Modelo.SmsServicios;
 import Modelo.SmsUsuario;
 import Modelo.SmsVehiculo;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,15 +51,12 @@ import org.primefaces.model.ScheduleModel;
  *
  * @author Desarrollo_Planit
  */
-public class ReservacionBean implements Serializable{
+public class ReservacionBean implements Serializable {
 
     private List<SmsReservacion> reservacionesListView;
-    
+
     private SmsReservacion reservaView;
-    private SmsCategoria categoriaView;
-      
     private SmsCostosservicios costoServicioView;
-    private SmsServicios servicioView;
 
     private SmsUsuario sesion; //objeto donde guardaremos los datos del usuario logueado
 
@@ -68,11 +65,6 @@ public class ReservacionBean implements Serializable{
     private String MinutosInicio;
     private String MinutosEntrega;
 
-    private List<SmsVehiculo> vehiculosListView;
-    private List<SmsEmpleado> empleadosListView;
-    private List<SmsLugares> LugaresListView;
-    private List<String> nombresLugaresListView;
-
     private boolean skip = false;//Controla la transicion entre las pestañas del panel de reserva
     //Controlan la seleccion de los vehiculos y los empleados
     private boolean SelecVeh;
@@ -80,7 +72,7 @@ public class ReservacionBean implements Serializable{
 
     //Relacion con los controladores
     LugarBean lugarController;
-    VehiculoBean vehiculoController; 
+    VehiculoBean vehiculoController;
     UsuarioBean usuarioController;
     SendEmail emailController;
 
@@ -100,23 +92,14 @@ public class ReservacionBean implements Serializable{
     IReservacionDao resDao;
     IUsuarioDao usuDao;
     IEmpleadoDao empleadoDao;
-          
+    ICategoriasServicioDao catServicioDao;
 
     public ReservacionBean() {
 
-        
         reservaView = new SmsReservacion();
-        categoriaView = new SmsCategoria();
-        
         costoServicioView = new SmsCostosservicios();
-        servicioView = new SmsServicios();
-        
-        vehiculosListView = new ArrayList<>();
-        empleadosListView = new ArrayList<>();
-        LugaresListView = new ArrayList<>();
-        nombresLugaresListView = new ArrayList<>();
 
-        vehiculoController = new VehiculoBean();        
+        vehiculoController = new VehiculoBean();
         usuarioController = new UsuarioBean();
         emailController = new SendEmail();
 
@@ -132,7 +115,8 @@ public class ReservacionBean implements Serializable{
 
         ciuDao = new ImpCiudadDao();
         resDao = new ImpReservacionDao();
-        usuDao = new ImpUsuarioDao();       
+        usuDao = new ImpUsuarioDao();
+        catServicioDao = new ImpCategoriasServicioDao();
 
         lugarController = new LugarBean();
 
@@ -148,21 +132,13 @@ public class ReservacionBean implements Serializable{
         consultarReservacionesSegunUsuario();
         addEventoCalendario();
     }
-    
+
     public SmsCostosservicios getCostoServicioView() {
         return costoServicioView;
     }
 
     public void setCostoServicioView(SmsCostosservicios costoServicioView) {
         this.costoServicioView = costoServicioView;
-    }
-
-    public SmsServicios getServicioView() {
-        return servicioView;
-    }
-
-    public void setServicioView(SmsServicios servicioView) {
-        this.servicioView = servicioView;
     }
 
     public String getHoraInicio() {
@@ -179,38 +155,6 @@ public class ReservacionBean implements Serializable{
 
     public void setHoraEntrega(String HoraEntrega) {
         this.HoraEntrega = HoraEntrega;
-    }
-
-    public List<SmsVehiculo> getVehiculosListView() {
-        return vehiculosListView;
-    }
-
-    public void setVehiculosListView(List<SmsVehiculo> vehiculosListView) {
-        this.vehiculosListView = vehiculosListView;
-    }
-
-    public List<SmsEmpleado> getEmpleadosListView() {
-        return empleadosListView;
-    }
-
-    public void setEmpleadosListView(List<SmsEmpleado> empleadosListView) {
-        this.empleadosListView = empleadosListView;
-    }
-
-    public List<SmsLugares> getLugaresListView() {
-        return LugaresListView;
-    }
-
-    public void setLugaresListView(List<SmsLugares> LugaresListView) {
-        this.LugaresListView = LugaresListView;
-    }
-
-    public List<String> getNombresLugaresListView() {
-        return nombresLugaresListView;
-    }
-
-    public void setNombresLugaresListView(List<String> nombresLugaresListView) {
-        this.nombresLugaresListView = nombresLugaresListView;
     }
 
     public boolean isSelecVeh() {
@@ -252,7 +196,7 @@ public class ReservacionBean implements Serializable{
     public void setReservacionesListView(List<SmsReservacion> reservacionesListView) {
         this.reservacionesListView = reservacionesListView;
     }
-    
+
     public SmsReservacion getReservaView() {
         return reservaView;
     }
@@ -261,14 +205,6 @@ public class ReservacionBean implements Serializable{
         this.reservaView = reservaView;
     }
 
-    public SmsCategoria getCategoriaView() {
-        return categoriaView;
-    }
-
-    public void setCategoriaView(SmsCategoria categoriaView) {
-        this.categoriaView = categoriaView;
-    }
-    
     public List<SmsReservacion> getListaReservaciones() {
         return listaReservaciones;
     }
@@ -276,7 +212,7 @@ public class ReservacionBean implements Serializable{
     public void setListaReservaciones(List<SmsReservacion> listaReservaciones) {
         this.listaReservaciones = listaReservaciones;
     }
- 
+
     public String getMinutosInicio() {
         return MinutosInicio;
     }
@@ -297,45 +233,24 @@ public class ReservacionBean implements Serializable{
     //CRUD
     public String registrarReservacion() {
 
-        //asignacion
-        reservaView.setSmsVehiculo(vehiculoView);//Asignamos el vehiculo a la agenda
-        if (empleadoView.getIdEmpleado() != null) {//Validamos si se escogio conductor en la reservacion
-            reservaView.setSmsEmpleado(empleadoView); //Si hay conductor escogido lo asignamos a la reservacion
-        }
-        ciudadView = ciuDao.consultarCiudad(ciudadView).get(0);
-        if (sesion.getSmsRol().getIdRol() != 3) {
-            clienteView = usuDao.consultarUsuario(clienteView).get(0);
-        }
-        reservaView.setSmsCiudadByIdCiudadInicio(ciudadView);
-        reservaView.setSmsUsuario(clienteView);
-
         //Registro
         resDao.registrarReservacion(reservaView);
 
         //Enviamos mensajes al administrador del sistema, el cliente y el conductor
-        if (empleadoView.getIdEmpleado() != null) {
-            emailController.sendEmailAdministrador(empleadoView, vehiculoView, reservaView, clienteView);
-            emailController.sendEmailCliente(empleadoView, vehiculoView, reservaView, clienteView);
-            emailController.sendEmailConductor(empleadoView, vehiculoView, reservaView, clienteView);
+        if (reservaView.getSmsEmpleado().getIdEmpleado() != null) {
+            emailController.sendEmailAdministrador(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
+            emailController.sendEmailCliente(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
+            emailController.sendEmailConductor(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
         } else {
-            emailController.sendEmailAdministradorWithout(vehiculoView, reservaView, clienteView);
-            emailController.sendEmailClienteWithout(vehiculoView, reservaView, clienteView);
+            emailController.sendEmailAdministradorWithout(reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
+            emailController.sendEmailClienteWithout(reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
         }
 
         consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
 
-        //Limpieza de objetos
-        empleadoView = new SmsEmpleado();
-        vehiculoView = new SmsVehiculo();
+        //Limpieza de objetos      
         reservaView = new SmsReservacion();
-        ciudadView = new SmsCiudad();
-
-        vehiculosListView = new ArrayList<>();
-        empleadosListView = new ArrayList<>();
-        clienteView = new SmsUsuario();
-        servicioView = new SmsServicios();
-
         //Habilitamos la seleccion de vehiculos y conductores
         SelecVeh = false;
         SelecCon = false;
@@ -372,17 +287,12 @@ public class ReservacionBean implements Serializable{
     }
 
     public String eliminarReservacion() {
-        boolean valor = false ; //= validarEliminarReservacion(MreservaView);
+        boolean valor = validarEliminarReservacion(reservaView);
         String Ruta = "";
         if (valor) {
-           // resDao.eliminarReservacion(MreservaView);
-
-//            MclienteView = new SmsUsuario();
-//            MciudadView = new SmsCiudad();
-//            MreservaView = new SmsReservacion();
-//            MvehiculoView = new SmsVehiculo();
-//            MempleadoView = new SmsEmpleado();
-
+            resDao.eliminarReservacion(reservaView);
+            reservaView = new SmsReservacion();
+            costoServicioView = new SmsCostosservicios();
             switch (sesion.getSmsRol().getRolNombre()) {
                 case "Administrador Principal":
                     Ruta = "AdminPPrincipal";
@@ -410,6 +320,17 @@ public class ReservacionBean implements Serializable{
 
     //Especificos 
     ///Controla el flujo de la vista de reservacion
+    
+     public String onFlowProcess1(FlowEvent event) {
+        if(skip) {
+            skip = false;   //reset in case user goes back
+            return "confirm";
+        }
+        else {
+            return event.getNewStep();
+        }
+    }
+    
     public String onFlowProcess(FlowEvent event) {
         if (skip) {
             skip = false;//reset in case user goes back
@@ -426,26 +347,26 @@ public class ReservacionBean implements Serializable{
                     }
 
                     if (resDao.mostrarReservaciones().isEmpty()) {
-                        vehiculosListView = new ArrayList<>();
-                        vehiculosListView = vehiculoController.consultarVehiculosCiudad(ciudadView);
-                    } else {
-                        vehiculosListView = new ArrayList<>();
-                        vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, ciudadView);
-                    }
+//                        vehiculosListView = new ArrayList<>();
+//                        vehiculosListView = vehiculoController.consultarVehiculosCiudad(ciudadView);
+                   } else {
+//                        vehiculosListView = new ArrayList<>();
+//                        vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, ciudadView);
+                   }
                     break;
                 case "Conductor":
-                    if (resDao.mostrarReservaciones().isEmpty()) {
-                        empleadosListView = new ArrayList<>();
-                        empleadosListView = empleadoDao.consultarEmpleadosCiudad(ciudadView);
-                    } else {
-                        empleadosListView.clear();
-                      //  empleadosListView = empleadoController.consultarEmpleadosDisponibles(reservaView, ciudadView);
-                    }
+//                    if (resDao.mostrarReservaciones().isEmpty()) {
+//                        empleadosListView = new ArrayList<>();
+//                        empleadosListView = empleadoDao.consultarEmpleadosCiudad(ciudadView);
+//                    } else {
+//                        empleadosListView.clear();
+//                        //  empleadosListView = empleadoController.consultarEmpleadosDisponibles(reservaView, ciudadView);
+//                    }
                     break;
                 case "Confirmacion":
 
                     if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
-                        clienteView = sesion;
+                       // clienteView = sesion;
                     }
 
                     SimpleDateFormat formatTime;
@@ -453,7 +374,7 @@ public class ReservacionBean implements Serializable{
                     HoraInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                     HoraEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
 
-                    int valor = calcularCostoReservacion(reservaView, servicioView, vehiculoView);
+                    int valor = calcularCostoReservacion(reservaView, reservaView.getSmsServicios(), reservaView.getSmsVehiculo());
                     reservaView.setReservacionCosto(valor);
                     break;
             }
@@ -462,39 +383,79 @@ public class ReservacionBean implements Serializable{
                 case "Agendamiento":
                     SelecCon = false;
                     SelecVeh = false;
-                    vehiculoView = new SmsVehiculo();
-                    empleadoView = new SmsEmpleado();
+                   
                     break;
             }
             return event.getNewStep();
         }
     }
+
+    public String flujoReservacion(String tab) {
+        String NextTab = "";
+        switch (tab) {
+            case "agenda":
+                NextTab = tab;
+                break;
+            case "vehiculo":
+                SelecVeh = false;
+                reservaView.setReservacionFechaLlegada(reservaView.getReservacionFechaInicio());
+                SimpleDateFormat sdft = new SimpleDateFormat("HH:mm:ss");
+                try {
+                    reservaView.setReservacionHoraInicio(sdft.parse(HoraInicio + ":" + MinutosInicio));
+                    reservaView.setReservacionHoraLlegada(sdft.parse(HoraInicio + ":" + MinutosInicio));
+                } catch (ParseException pe) {
+                    pe.getMessage();
+                }
+
+                reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
+                reservaView.setSmsCiudadByIdCiudadDestino(reservaView.getSmsCiudadByIdCiudadInicio());
+                reservaView.setSmsCategoriasServicio(catServicioDao.consultarCategoriasServicios(reservaView.getSmsCategoriasServicio()).get(0));
+                NextTab = tab;
+                break;
+            case "conductor":
+                SelecCon = false;
+                NextTab = tab;
+                break;
+            case "confirmacion":
+                if (sesion.getSmsRol().getIdRol() != 3) {
+                    reservaView.setSmsUsuario(sesion);
+                }
+
+                SimpleDateFormat formatTime;
+                formatTime = new SimpleDateFormat("HH:mm:ss");
+                HoraInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                HoraEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                NextTab = tab;
+                break;
+        }
+        return NextTab;
+    }
     
-    public String flujoReservacion(){
-        
+    public void seleccionar(){
+    reservaView = new SmsReservacion();
     }
 
-    public void SeleccionarVehiculo() {
+    public void seleccionarVehiculo() {
         SelecVeh = true;
     }
 
-    public void SeleccionarNuevoVehiculo() {
-        vehiculoView = new SmsVehiculo();
+    public void seleccionarNuevoVehiculo() {
+        reservaView.setSmsVehiculo(new SmsVehiculo());
         SelecVeh = false;
     }
 
-    public void SeleccionarConductor() {
+    public void seleccionarConductor() {
         SelecCon = true;
     }
 
-    public void SeleccionarNuevoConductor() {
-        empleadoView = new SmsEmpleado();
+    public void seleccionarNuevoConductor() {
+        reservaView.setSmsEmpleado(new SmsEmpleado());
         SelecCon = false;
     }
 
     public void filtrar() {
 
-        if (categoriaView.getCategoriaNombre().isEmpty()) {
+        if (reservaView.getSmsVehiculo().getSmsCategoria().getCategoriaNombre().isEmpty()) {
             if (resDao.mostrarReservaciones().isEmpty()) {
                 vehiculosListView = new ArrayList<>();
                 vehiculosListView = vehiculoController.consultarVehiculosCiudad(ciudadView);
@@ -512,17 +473,7 @@ public class ReservacionBean implements Serializable{
             }
         }
     }
-
-    //Lugares
-    public void consultarLugaresCiudades() {
-        nombresLugaresListView = new ArrayList<>();
-        LugaresListView = new ArrayList<>();
-        LugaresListView = lugarController.consultarLugaresCiudades(ciudadView.getCiudadNombre());
-        for (int i = 0; i < LugaresListView.size(); i++) {
-            nombresLugaresListView.add(LugaresListView.get(i).getLugarNombre());
-        }
-    }
-
+  
     // CONTROLADOR PARA SACAR DATOS DE RESERVACION 
     public void consultarReservacionesSegunUsuario() { //carga la agendas de las reservaciones hechan en el sistema segun el tipo de usuario conectado
 
@@ -540,8 +491,8 @@ public class ReservacionBean implements Serializable{
                 listaReservaciones = resDao.mostrarReservacionCliente(sesion);
                 break;
             case "Empleado":
-                empleadoView = empleadoDao.consultarEmpleado(sesion).get(0);//Consultamos la informacion de usuario correspondiente al conductor
-                listaReservaciones = resDao.mostrarReservacionConductores(empleadoView);
+                reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion).get(0));//Consultamos la informacion de usuario correspondiente al conductor
+                listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
                 break;
 
         }
@@ -622,7 +573,6 @@ public class ReservacionBean implements Serializable{
 //
 //        return Ruta;
 //    }
-
     public boolean validarEliminarReservacion(SmsReservacion reserva) {
         boolean valido = true;
 

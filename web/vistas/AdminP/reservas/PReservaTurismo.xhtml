@@ -27,8 +27,7 @@
                             </h1>
                         </section>
 
-                        <section >
-
+                        <section>
                             <b:container fluid="true">
                                 <div class="row">
                                     <div class="board">
@@ -37,7 +36,7 @@
                                             <ul class="nav nav-tabs" id="myTab">
                                                 <div class="liner"></div>
                                                 <li class="active ">
-                                                    <a href="#home" data-toggle="tab" class="btn-reserva-select">
+                                                    <a href="#agenda" data-toggle="tab" class="btn-reserva-select">
                                                         <div data-toggle="tooltip" data-placement="top" title="Agendamiento">
                                                             <span class="round-tabs one">
                                                                 <i class="fa  fa-th-list ico-reserva-nav-agen"></i>
@@ -47,7 +46,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a data-toggle="tab" href="#profile" class="btn-reserva-select">
+                                                    <a href="#vehiculo" data-toggle="tab" class="btn-reserva-select">
                                                         <div data-toggle="tooltip" data-placement="top" title="Vehículo">
                                                             <span class="round-tabs one">
                                                                 <i class="fa  fa-car ico-reserva-nav-veh"></i>
@@ -57,7 +56,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#messages" data-toggle="tab"  class="btn-reserva-select">
+                                                    <a href="#conductor" data-toggle="tab" class="btn-reserva-select">
                                                         <div data-toggle="tooltip" data-placement="top" title="Conductor">
                                                             <span class="round-tabs one">
                                                                 <i class="fa  fa-user-plus ico-reserva-nav"></i>
@@ -67,7 +66,7 @@
                                                 </li>
 
                                                 <li>
-                                                    <a href="#doner" data-toggle="tab"  class="btn-reserva-select">
+                                                    <a href="#confirmacion" data-toggle="tab"  class="btn-reserva-select">
                                                         <div data-toggle="tooltip" data-placement="top" title="Confirmación">
                                                             <span class="round-tabs five">
                                                                 <i class="fa  fa-check ico-reserva-nav-comp"></i>
@@ -80,42 +79,43 @@
 
                                         <div class="tab-content">
                                             <!--tab de agendamiento-->                                            
-                                            <div class="table-responsive tab-pane fade in active" id="home">
-                                                <b:row>
-                                                    <h3 class="head text-center">Agendamiento
-                                                        <small>Define el lugar y la hora de reserva</small>
-                                                    </h3>
-                                                    <b:column col-lg="8" offset-lg="2">
-                                                        <h:form>
+                                            <div class="table-responsive tab-pane fade in active" id="agenda">
+                                                <h:form id="formularioAgenda">
+                                                    <b:row>
+                                                        <h3 class="head text-center">Agendamiento
+                                                            <small>Define el lugar y la hora de reserva</small>
+                                                        </h3>
+
+                                                        <b:column col-lg="8" offset-lg="2">
+
                                                             <div class="form-group" align="left">
                                                                 <b:selectOneMenu label="Ciudad" style="width: 100%">
-                                                                    <f:selectItem itemLabel="Seleccione ciudad" noSelectionOption="true"/>
-                                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                                    <f:selectItem itemLabel="Seleccione ciudad" value="#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}" noSelectionOption="true"/>
+                                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}" />
                                                                 </b:selectOneMenu>
                                                             </div>
 
                                                             <div class="form-group" align="left">
-                                                                <b:selectOneMenu label="Lugar de recogida" style="width: 100%">
+                                                                <b:selectOneMenu label="Lugar de recogida" value="#{reservacionBean.reservaView.reservacionLugarLlegada}" style="width: 100%">
                                                                     <f:selectItem itemLabel="Seleccione lugar de recogida del vehiculo" noSelectionOption="true"/>
                                                                     <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
                                                                 </b:selectOneMenu>         
                                                             </div>
 
                                                             <div class="form-group" align="left">
-                                                                <b:selectOneMenu label="Lugar de destino" style="width: 100%">
+                                                                <b:selectOneMenu label="Lugar de destino" value="#{reservacionBean.reservaView.reservacionLugarDestino}" style="width: 100%">
                                                                     <f:selectItem itemLabel="Seleccione lugar de entrega del vehiculo" noSelectionOption="true"/>
                                                                     <f:selectItems value="#{lugarBean.nombresLugaresListView}"/>
                                                                 </b:selectOneMenu>       
-                                                            </div>
-                                                        </h:form>             
-                                                    </b:column>                                                       
-                                                </b:row>
-                                                <hr/>
-                                                <b:row>                                                        
-                                                    <b:column col-lg="8"  offset-lg="2">
-                                                        <h:form>  
+                                                            </div>                                                            
+                                                        </b:column>                                                       
+                                                    </b:row>
+                                                    <hr/>
+                                                    <b:row>                                                        
+                                                        <b:column col-lg="8"  offset-lg="2">
+
                                                             <div class="form-group" align="left">
-                                                                <b:selectOneMenu label="Tipo de Servicio" style="width: 100%">
+                                                                <b:selectOneMenu label="Tipo de Servicio" value="#{reservacionBean.reservaView.smsCategoriasServicio.catNombre}" style="width: 100%">
                                                                     <f:selectItem itemLabel="Seleccione servicio de reservacion" noSelectionOption="true"/>
                                                                     <f:selectItems value="#{serviciosBean.nombreServiciosListView}"/>
                                                                 </b:selectOneMenu>         
@@ -126,7 +126,7 @@
                                                                     <label class="col-sm-12 control-label" >Fecha de Inicio</label>
                                                                     <p:calendar id="CFechaEntrega" style="width: 100%" 
                                                                                 styleClass="dateTimeField" placeholder="Seleccione fecha de inicio"  
-                                                                                binding="#{FEntrega}" pattern="yyyy-MM-dd" 
+                                                                                pattern="yyyy-MM-dd" 
                                                                                 value="#{reservacionBean.reservaView.reservacionFechaLlegada}" 
                                                                                 required="true"/>                                                                    
                                                                 </h:panelGrid>
@@ -167,25 +167,19 @@
                                                                         <f:selectItem itemLabel="45:00" itemValue="45:00"/>            
                                                                     </b:selectOneMenu>
                                                                 </h:panelGrid>
-                                                            </div>
-                                                            <br/>                                                          
-                                                        </h:form>
-
-                                                        <hr/>                                                        
-                                                        <a href="#profile" data-toggle="tab" class="btn-reserva-select">                                                           
-                                                            <div data-toggle="tooltip" data-placement="top" title="Vehículo">
-                                                                <span  class="fa fa-check">
-                                                                    siguiente                                                                    
-                                                                </span>                                                                                                                               
-                                                            </div>
-                                                        </a>
-                                                    </b:column>
-                                                </b:row>
+                                                            </div>                                                                                                                    
+                                                            <hr/>
+                                                            <a href="" class="btn btn-primary btn-next-reserva" >
+                                                                Siguiente <span  class="fa fa-check"></span>
+                                                            </a>
+                                                        </b:column>
+                                                    </b:row>
+                                                </h:form>
                                             </div>
                                             <!--//tab de agendamiento-->
 
                                             <!--tab de Vehiculo-->
-                                            <div class="tab-pane fade" id="profile">
+                                            <div class="tab-pane fade" id="vehiculo">
                                                 <b:row>
 
                                                     <h3 class="head text-center">Vehículos SMS Renta
@@ -194,112 +188,103 @@
 
                                                     <b:column col-lg="10" offset-lg="1">
 
-                                                        <h:form class="form-horizontal" style="margin-bottom: 64px">
+                                                        <h:form id="formularioVehiculo" class="form-horizontal">
 
                                                             <div class="form-group">
-                                                                <label for="inputEmail3" class="col-sm-4 control-label">Categoría de Vehículo</label>
+                                                                <label class="col-sm-4 control-label">Categoría de Vehículo</label>
                                                                 <div class="col-sm-5">
-                                                                    <b:selectOneMenu value="#{reservacionBean.categoriaView.categoriaNombre}">
+                                                                    <b:selectOneMenu value="#{reservacionBean.reservaView.smsVehiculo.smsCategoria.categoriaNombre}">
                                                                         <f:selectItem itemLabel="Seleccione Categoria"/>
                                                                         <f:selectItems value="#{categoriaBean.nombresCategoriasListView}"/>
-                                                                    </b:selectOneMenu>>
+                                                                    </b:selectOneMenu>
                                                                 </div>
                                                             </div> 
+
+
+                                                            <!--                                                        Segmento a repetir segun cantidad de vehiculos-->
+                                                            <div id="prueba" style="max-height: 870px; overflow-y: scroll" >
+                                                                <c:forEach var="vehiculo" begin="0" items="#{vehiculoBean.vehiculosListView}" end="#{vehiculoBean.vehiculosListView.size()}">
+
+                                                                    <div class="box box-widget widget-user-2" style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
+                                                                        <div class="widget-user-header bg-yellow">
+                                                                            <div class="widget-user-image">
+                                                                                <p:graphicImage  value="#{vehiculo.smsReferencia.smsMarca.marcaFotoRuta}" alt="First slide" class="img-circle"/>                                                       
+
+                                                                            </div>
+
+                                                                            <h3 class="widget-user-username">#{vehiculo.smsReferencia.smsMarca.marcaNombre} | #{vehiculo.smsReferencia.referenciaNombre}</h3>
+                                                                            <h5 class="widget-user-desc">#{vehiculo.smsCategoria.categoriaNombre} | #{vehiculo.vehPlaca}</h5>                                                                    
+
+                                                                        </div>
+                                                                        <div class="box-body">
+                                                                            <b:column col-lg="5" >
+                                                                                <!--espacio para imagen-->
+
+                                                                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+                                                                                    <div class="carousel-inner">
+                                                                                        <div class="item active">
+                                                                                            <p:graphicImage  value="#{vehiculo.vehFotoRuta}" alt="First slide" class="img-responsive center-block img-rounded"/>                                                       
+                                                                                            <div class="carousel-caption">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="item">
+                                                                                            <p:graphicImage  value="#{vehiculo.vehFoto2Ruta}" alt="Second slide" class="img-responsive center-block img-rounded"/>                                                       
+                                                                                            <div class="carousel-caption">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </b:column>
+
+                                                                            <b:column col-lg="7" class="border-reserva">
+                                                                                <!--cuerpo horizontal del div-->
+                                                                                <h4 class="box-title text-marca-veh">
+                                                                                    Marca Vehiculo | referencia vehiculo 
+                                                                                    <small> Categoría: #{vehiculo.smsCategoria.categoriaNombre}</small>
+                                                                                </h4>
+
+                                                                                <div class="col-xs-12">
+                                                                                    <!--contenedor de iconocs con info de personas maletas-->
+                                                                                    <div class="btn-caract-vehi">
+                                                                                        <i class="fa fa-user"></i>                                                                            
+                                                                                        #{vehiculo.vehNumPersonas}
+                                                                                    </div>
+                                                                                    <div class="btn-caract-vehi">
+                                                                                        <i class="fa fa-suitcase"></i>
+                                                                                        G  #{vehiculo.vehNumMalGrande}
+                                                                                    </div>
+                                                                                    <div class="btn-caract-vehi">
+                                                                                        <i class="fa fa-suitcase"></i>
+                                                                                        P #{vehiculo.vehNumMalPequeña}
+                                                                                    </div>
+                                                                                    <div class="btn-caract-vehi">
+                                                                                        #{vehiculo.smsColor.colorNombre}
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <p class="text-justify">
+                                                                                    <strong><i class="fa fa-arrow-right"/> Recogida y Devolución</strong>: 
+                                                                                    (desde el bean se trae la información)
+                                                                                </p>
+
+                                                                            </b:column>
+                                                                        </div>
+                                                                        <div class="box-footer">
+                                                                            <p:commandButton id="BTVehiculo" disabled="#{reservacionBean.selecVeh}" class="btn btn-danger btn-next-reserva" action="#{reservacionBean.seleccionarVehiculo()}" value="Reservar">
+                                                                                <f:setPropertyActionListener value="#{vehiculo}" target="#{reservacionBean.reservaView.smsVehiculo}"/> 
+                                                                            </p:commandButton>                                                                        
+                                                                        </div>                                                       
+                                                                    </div>
+                                                                    <!--                                                        fin seccion-->
+                                                                </c:forEach>
+                                                            </div>
                                                         </h:form>
-
-                                                        <!--                                                        Segmento a repetir segun cantidad de vehiculos-->
-                                                        <div class="box box-widget widget-user-2" style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
-                                                            <div class="widget-user-header bg-yellow">
-                                                                <div class="widget-user-image">
-
-                                                                    <img class="img-circle" src="../../../../resources/images/logo-sms-mini.png"/>
-                                                                    <!--<p:graphicImage value="" class="img-circle" />-->                                                                    
-                                                                </div>
-
-                                                                <h3 class="widget-user-username">Marca Vehiculo | Referencia Veh</h3>
-                                                                <h5 class="widget-user-desc">Categoria Vehiculo</h5>                                                                    
-
-                                                            </div>
-                                                            <div class="box-body">
-                                                                <b:column col-lg="5" >
-                                                                    <!--espacio para imagen-->
-
-                                                                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-
-                                                                        <div class="carousel-inner">
-                                                                            <div class="item active">
-                                                                                <img class="img-responsive center-block img-rounded" src="../../../../resources/images/toyo-prado.jpg" alt="First slide"/>
-                                                                                <div class="carousel-caption">
-
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="item">
-                                                                                <img class="img-responsive center-block img-rounded" src="../../../../resources/images/toyo-prado.jpg" alt="Second slide"/>
-                                                                                <div class="carousel-caption">
-
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                     <!--<p:graphicImage value="#{Mercado.mercadoFotoRuta}" class="img-responsive center-block" />-->                                                                    
-                                                                </b:column>
-
-                                                                <b:column col-lg="7" class="border-reserva">
-                                                                    <!--cuerpo horizontal del div-->
-                                                                    <h4 class="box-title text-marca-veh">
-                                                                        Marca Vehiculo | referencia vehiculo 
-                                                                        <small> Categoría: (auto, camioneta, etc)</small>
-                                                                    </h4>
-
-                                                                    <div class="col-xs-12">
-                                                                        <!--contenedor de iconocs con info de personas maletas-->
-                                                                        <div class="btn-caract-vehi">
-                                                                            <i class="fa fa-user"></i>                                                                            
-                                                                            # Personas
-                                                                        </div>
-                                                                        <div class="btn-caract-vehi">
-                                                                            <i class="fa fa-suitcase"></i>
-                                                                            G #
-                                                                        </div>
-                                                                        <div class="btn-caract-vehi">
-                                                                            <i class="fa fa-suitcase"></i>
-                                                                            P #
-                                                                        </div>
-                                                                        <div class="btn-caract-vehi">
-                                                                            Color
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <p class="text-justify">
-                                                                        <strong><i class="fa fa-arrow-right"/> Recogida y Devolución</strong>: 
-                                                                        (desde el beam se trae la información)
-                                                                    </p>
-
-                                                                </b:column>
-                                                            </div>
-                                                            <div class="box-footer">
-
-                                                                <a href="" class="btn btn-danger btn-next-reserva" >
-                                                                    Reservar
-                                                                    <span style="margin-left: 4px;" class="fa fa-arrow-right"></span>
-                                                                </a>
-
-                                                            </div>                                                       
-                                                        </div>
-                                                        <!--                                                        fin seccion-->
-
-
-                                                        <a href="" class="btn btn-primary btn-next-reserva" >
+                                                        <br/>
+                                                        <a href="#conductor" class="btn btn-primary btn-next-reserva" >
                                                             Siguiente <span  class="fa fa-check"></span>
                                                         </a>
                                                     </b:column>
-
-
-
-
                                                 </b:row>
 
 
@@ -307,98 +292,97 @@
                                             <!--//tab de VEhiculo-->
 
                                             <!--tab de CONDUCTOR-->
-                                            <div class="tab-pane fade" id="messages">
+                                            <div class="tab-pane fade" id="conductor">
                                                 <b:row>
-
-                                                    <h3 class="head text-justify">Conductores SMS Renta
+                                                    <h3 class="head text-center">Conductores SMS Renta
                                                         <small>Elige el Conductor que desees para tu reserva</small>
                                                     </h3>
 
                                                     <b:column col-lg="10" offset-lg="1">
+                                                        <h:form id="formularioConductor">
+                                                            <div style="max-height: 870px; overflow-y: scroll" >
+                                                                <c:forEach var="conductor" begin="0" items="#{empleadoBean.empleadosListView}" end="#{empleadoBean.empleadosListView.size()}">
 
-                                                        <div class="box box box-sms-renta " style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
-                                                            <div class="box-header with-border">
-                                                                <div class="user-block">
+                                                                    <div class="box box box-sms-renta " style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
+                                                                        <div class="box-header with-border">
+                                                                            <div class="user-block">
 
-                                                                    <a href=""   class="btn-reserva-select">
-                                                                        <div data-placement="top" >
-                                                                            <span class="round-tabs-conduc one">
-                                                                                <i style="position: relative; top: -16px;  left: 3px;" class="fa  fa-user-plus"></i>
-                                                                            </span>
+                                                                                <a href=""   class="btn-reserva-select">
+                                                                                    <div data-placement="top" >
+                                                                                        <span class="round-tabs-conduc one">
+                                                                                            <i style="position: relative; top: -16px;  left: 3px;" class="fa  fa-user-plus"></i>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </a>                                                                   
+
+                                                                                <h5 class=" box-title" style="    margin-left: 10%;"> #{conductor.smsUsuario.usuarioNombre}</h5>
+                                                                                <br/>
+                                                                                <small style="margin: 10%;"> <strong>NIT </strong>: #{conductor.smsProveedor.proveedorNit}</small>                                                                    
+                                                                            </div>
+
                                                                         </div>
-                                                                    </a>                                                                   
+                                                                        <div class="box-body">
+                                                                            <b:column col-lg="5" >
+                                                                                <!--espacio para imagen-->
+                                                                                <p:graphicImage  value="#{conductor.smsUsuario.usuarioFotoRuta}" class="img-responsive center-block img-rounded"/>                                                       
+                                                                            </b:column>
 
-                                                                    <h5 class=" box-title" style="    margin-left: 10%;">  Nombre del Conductor</h5>
-                                                                    <br/>
-                                                                    <small style="margin: 10%;"> <strong>NIT </strong>: 123456</small>                                                                    
-                                                                </div>
+                                                                            <b:column col-lg="7" class="border-reserva">
+                                                                                <!--cuerpo horizontal del div-->
+                                                                                <h4 class="box-title text-marca-veh">
+                                                                                    Datos personales y de Contácto del Conductor <br/>
+                                                                                    <small> ID SMS Renta: #{conductor.idEmpleado} </small>
+                                                                                </h4>
 
-                                                            </div>
-                                                            <div class="box-body">
-                                                                <b:column col-lg="5" >
-                                                                    <!--espacio para imagen-->
+                                                                                <div class="col-xs-12">
+                                                                                    <ul style="list-style-type: none;">
+                                                                                        <li>
+                                                                                            <div class="btn-caract-vehi-2">                                                                                    
+                                                                                                Nombre:
+                                                                                            </div>
+                                                                                            <p style="    display: inline;">#{conductor.smsUsuario.usuarioNombre}</p>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <div class="btn-caract-vehi-2">                                                                                    
+                                                                                                Cc:
+                                                                                            </div>
+                                                                                            <p style="    display: inline;">#{conductor.smsUsuario.usuarioCc}</p>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <div class="btn-caract-vehi-2">                                                                                    
+                                                                                                Teléfono:
+                                                                                            </div>
+                                                                                            <p style="    display: inline;">(57) #{conductor.smsUsuario.usuarioTelefono}</p>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <div class="btn-caract-vehi-2">                                                                                    
+                                                                                                Email:
+                                                                                            </div>
+                                                                                            <p style="    display: inline;">#{conductor.smsUsuario.usuarioEmail}</p>
+                                                                                            <b:commandButton class="btn btn-info btn-sm" value="Hoja de Vida"></b:commandButton>
 
-                                                                    <img class="img-responsive center-block img-rounded" src="../../../../resources/images/logo.jpg" alt="Second slide"/>
-                                                                     <!--<p:graphicImage value="#{Mercado.mercadoFotoRuta}" class="img-responsive center-block" />-->                                                                    
-                                                                </b:column>
+                                                                                        </li>
+                                                                                    </ul>
 
-                                                                <b:column col-lg="7" class="border-reserva">
-                                                                    <!--cuerpo horizontal del div-->
-                                                                    <h4 class="box-title text-marca-veh">
-                                                                        Datos personales y de Contácto del Conductor <br/>
-                                                                        <small> ID SMS Renta: 123 </small>
-                                                                    </h4>
-
-                                                                    <div class="col-xs-12">
-                                                                        <ul style="list-style-type: none;">
-                                                                            <li>
-                                                                                <div class="btn-caract-vehi-2">                                                                                    
-                                                                                    Nombre:
                                                                                 </div>
-                                                                                <p style="    display: inline;">Johan Cañon</p>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="btn-caract-vehi-2">                                                                                    
-                                                                                    Cc:
-                                                                                </div>
-                                                                                <p style="    display: inline;">1026276136</p>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="btn-caract-vehi-2">                                                                                    
-                                                                                    Teléfono:
-                                                                                </div>
-                                                                                <p style="    display: inline;">(57) 315 4614680</p>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="btn-caract-vehi-2">                                                                                    
-                                                                                    Email:
-                                                                                </div>
-                                                                                <p style="    display: inline;">johanncanon@gmail.com</p>
-                                                                                <button class="btn btn-info btn-sm">Hoja de Vida</button>
 
-                                                                            </li>
-                                                                        </ul>
+                                                                                <!--                                                                    ETIQUETA PARA COLOCAR INFORMACION POSTERIORMENTE
+                                                                                                                                              <p class="text-justify">
+                                                                                                                                                        <strong><i class="fa fa-arrow-right"/> Recogida y Devolución</strong>: 
+                                                                                                                                                        (desde el beam se trae la información)-->
 
+
+                                                                            </b:column>
+                                                                        </div>
+                                                                        <div class="box-footer">
+                                                                            <p:commandButton disabled="#{reservacionBean.selecCon}" update=":formularioConductor" class="btn btn-danger btn-next-reserva" action="#{reservacionBean.seleccionarConductor()}" value="Reservar">
+                                                                                <f:setPropertyActionListener value="#{conductor}" target="#{reservacionBean.reservaView.smsEmpleado}"/> 
+                                                                            </p:commandButton>
+                                                                        </div>                                                       
                                                                     </div>
-
-                                                                    <!--                                                                    ETIQUETA PARA COLOCAR INFORMACION POSTERIORMENTE
-                                                                                                                                        <p class="text-justify">
-                                                                                                                                            <strong><i class="fa fa-arrow-right"/> Recogida y Devolución</strong>: 
-                                                                                                                                            (desde el beam se trae la información)
-                                                                                                                                        </p>-->
-
-                                                                </b:column>
+                                                                </c:forEach>
                                                             </div>
-                                                            <div class="box-footer">
-
-                                                                <a href="" class="btn btn-danger btn-next-reserva" >
-                                                                    Reservar
-                                                                    <span style="margin-left: 4px;" class="fa fa-arrow-right"></span>
-                                                                </a>
-
-                                                            </div>                                                       
-                                                        </div>
-
+                                                        </h:form>               
                                                         <a href="" class="btn btn-primary btn-next-reserva" >
                                                             Siguiente <span  class="fa fa-check"></span>
                                                         </a>
@@ -411,7 +395,7 @@
 
 
                                             <!--tab de CONFIRMACION-->
-                                            <div class="tab-pane fade" id="doner">
+                                            <div class="tab-pane fade" id="confirmacion">
                                                 <h:form>
                                                     <p:growl id="msg" autoUpdate="true" showDetail="true" life="3000"/>
 
@@ -464,7 +448,7 @@
                                                                         <address>
                                                                             <strong>Nombre: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioNombre}</strong><br></br>
                                                                             Cc: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioCc}<br></br>
-                                                                            Razon Social:<br></br>
+                                                                            Razon Social:#{reservacionBean.reservaView.smsEmpleado.smsProveedor.proveedorRazonSocial}<br></br>
                                                                             Teléfono: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioTelefono}<br></br>
                                                                             Email: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioEmail}
                                                                         </address>                                        
@@ -496,26 +480,19 @@
                                                                                 <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}</td>
                                                                                 <td>#{reservacionBean.reservaView.reservacionLugarLlegada}</td>
                                                                                 <td>#{reservacionBean.reservaView.reservacionFechaInicio}</td>
-                                                                                <td>#{reservacionBean.reservaView.reservacionHoraInicio}</td>
+                                                                                <td>#{reservacionBean.horaInicio}</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Entrega</th>
-                                                                                <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}</td>
+                                                                                <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadDestino.ciudadNombre}</td>
                                                                                 <td>#{reservacionBean.reservaView.reservacionLugarDestino}</td>
                                                                                 <td>#{reservacionBean.reservaView.reservacionFechaLlegada}</td>
-                                                                                <td>#{reservacionBean.reservaView.reservacionHoraLlegada}</td>
+                                                                                <td>#{reservacionBean.horaEntrega}</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <th>Observaciones</th>
                                                                                 <td>#{reservacionBean.reservaView.reservacionNotas}</td>                                                
-                                                                            </tr>
-                                                                            <!--<tr>
-                                                                                <td>1</td>
-                                                                                <td>Grown Ups Blue Ray</td>
-                                                                                <td>422-568-642</td>
-                                                                                <td>Tousled lomo letterpress</td>
-                                                                                <td>$25.99</td>
-                                                                            </tr>-->
+                                                                            </tr>                                                                           
                                                                         </tbody>
                                                                     </table>
                                                                 </div><!-- /.col -->
@@ -567,7 +544,7 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Color:</th>
-                                                                                    <td>#</td>
+                                                                                    <td>#{reservacionBean.reservaView.smsVehiculo.smsColor.colorNombre}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th>Personas:</th>
@@ -615,14 +592,8 @@
                                                             <div class="row no-print">
                                                                 <div class="col-xs-12" align="right">
                                                                     <h:panelGrid columns="3">
-                                                                        <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.eliminarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
-                                                                            <p:confirm header="Confirmacion" message="Esta seguro que desea cancelar esta reservación?" icon="ui-icon-alert" /> 
-                                                                        </p:commandButton>                                 
-                                                                        <p:commandButton type="button" class="btn btn-primary pull-right" value="Modificar Reservacion"></p:commandButton>                                 
-                                                                        <button class="btn btn-success btn-lg">
-                                                                            <i class="fa fa-arrow-right"></i>
-                                                                            Pagar Reservación
-                                                                        </button>
+                                                                        <b:commandButton iconAwesome="fa fa-arrow-right" value="Pagar Reservación" action="#{reservacionBean.registrarReservacion()}" class="btn btn-success btn-lg"/>
+
                                                                     </h:panelGrid>
                                                                     <script type="text/javascript">
                                                                         function start() {
@@ -635,11 +606,7 @@
                                                                     </script>
                                                                     <p:dialog modal="true" widgetVar="statusDialog" header="Cancelando reservacion" draggable="false" closable="false" resizable="false">
                                                                         <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
-                                                                    </p:dialog>
-                                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
-                                                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                                                    </p:confirmDialog>
+                                                                    </p:dialog>                                                                    
                                                                 </div>
                                                             </div>
                                                         </section>
@@ -648,7 +615,6 @@
                                                 </h:form>
                                             </div>
                                             <!--tab de CONFIRMACION-->
-
                                             <div class="clearfix"></div>
                                         </div>
 

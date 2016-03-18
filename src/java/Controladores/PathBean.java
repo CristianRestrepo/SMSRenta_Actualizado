@@ -41,6 +41,10 @@ public class PathBean implements Serializable {
     public String ir_PCiudad() {
         return "AdminPCiudad";
     }
+    
+    public String ir_PReservaPrueba() {
+        return "ReservaPrueba";
+    }
 
     public String ir_PEmpleado() {
         return "AdminPEmpleado";
