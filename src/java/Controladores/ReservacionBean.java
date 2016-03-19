@@ -93,6 +93,7 @@ public class ReservacionBean implements Serializable {
     IEmpleadoDao empleadoDao;
     ICategoriasServicioDao catServicioDao;
     IVehiculoDao vehiculoDao;
+    IServicioDao servicioDao;
 
     public ReservacionBean() {
 
@@ -115,6 +116,7 @@ public class ReservacionBean implements Serializable {
         ciuDao = new ImpCiudadDao();
         resDao = new ImpReservacionDao();
         usuDao = new ImpUsuarioDao();
+        servicioDao = new ImpServicioDao();
 
         catServicioDao = new ImpCategoriasServicioDao();
         vehiculoDao = new ImpVehiculoDao();
@@ -328,30 +330,31 @@ public class ReservacionBean implements Serializable {
 
     //Especificos 
     ///Controla el flujo de la vista de reservacion
-    
-    public String onFlowProcess1(FlowEvent event) {
-        if(skip) {
+    public String flujoDeReservacion(FlowEvent event) {
+        if (skip) {
             skip = false;   //reset in case user goes back
             return "Confirmacion";
-        }
-        else {
+        } else {
             switch (event.getNewStep()) {
                 case "Vehiculo":
+                    SelecVeh = false;
+                    reservaView.setReservacionFechaLlegada(reservaView.getReservacionFechaInicio());
                     SimpleDateFormat sdft = new SimpleDateFormat("HH:mm:ss");
                     try {
                         reservaView.setReservacionHoraInicio(sdft.parse(HoraInicio + ":" + MinutosInicio));
-                        reservaView.setReservacionHoraLlegada(sdft.parse(HoraEntrega + ":" + MinutosEntrega));
+                        reservaView.setReservacionHoraLlegada(sdft.parse(HoraInicio + ":" + MinutosInicio));
                     } catch (ParseException pe) {
                         pe.getMessage();
                     }
 
-                    if (resDao.mostrarReservaciones().isEmpty()) {
-//                        vehiculosListView = new ArrayList<>();
-//                        vehiculosListView = vehiculoController.consultarVehiculosCiudad(ciudadView);
-                    } else {
-//                        vehiculosListView = new ArrayList<>();
-//                        vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, ciudadView);
-                    }
+                    reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
+                    reservaView.setSmsCiudadByIdCiudadDestino(reservaView.getSmsCiudadByIdCiudadInicio());
+
+                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));
+                    reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
+                    break;
+                case "conductor":
+                    SelecCon = false;
                     break;
             }
             return event.getNewStep();

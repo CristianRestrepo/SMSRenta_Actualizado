@@ -25,13 +25,14 @@
                     <b:container fluid="true">
                         <b:row>
                             <b:column class="box espacio-arriba" col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
-
                                 <h:form id="formularioAgenda">
-                                    <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset-lg="2">
-                                        <p:messages id="msg" showDetail="false" autoUpdate="false" closable="true"/>
 
-                                        <p:wizard flowListener="#{reservacionBean.onFlowProcess1}" showNavBar="false" showStepStatus="false" widgetVar="wiz">
-                                            <p:tab id="Agenda" title="Agenda">                                           
+                                    <p:messages id="msg" showDetail="true" autoUpdate="true" closable="true"/>
+
+
+                                    <p:wizard flowListener="#{reservacionBean.flujoDeReservacion}" showNavBar="false" showStepStatus="false" widgetVar="wiz">
+                                        <p:tab id="Agenda" title="Agenda">
+                                            <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset-lg="2">
                                                 <div class="box-header">
                                                     <h3 align="center">AGENDAMIENTO
                                                         <small>DEFINE EL LUGAR Y LA HORA DE RESERVA</small>
@@ -113,27 +114,24 @@
                                                                 <f:selectItem itemLabel="45:00" itemValue="45:00"/>            
                                                             </b:selectOneMenu>
                                                         </h:panelGrid>
-                                                    </div>  
-
+                                                    </div> 
                                                 </div>
-                                            </p:tab>
-                                            <p:tab id="Vehiculo" title="Vehiculo">
-
+                                            </b:column>
+                                        </p:tab>
+                                        <p:tab id="Vehiculo" title="Vehiculo">
+                                            <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset-lg="2">
                                                 <h3 align="center" class="head text-center">VEHICULOS SMS RENTA
                                                     <small>ELIEGE EL VEHICULO QUE QUIERES PARA TU RESERVA</small>
-                                                </h3>                                                                                      
-
-                                                <div class="form-group" style="width: 100%" align="center">                                               
-
+                                                </h3>                                                                                     
+                                                <div class="form-group" style="width: 100%" align="center">                                              
                                                     <b:selectOneMenu style="width: 100%" value="#{reservacionBean.reservaView.smsVehiculo.smsCategoria.categoriaNombre}">
                                                         <f:selectItem itemLabel="Seleccione Categoria"/>
                                                         <f:selectItems value="#{categoriaBean.nombresCategoriasListView}"/>
                                                     </b:selectOneMenu>
-
                                                 </div> 
-
-                                                <br/><br/><br/>
-
+                                            </b:column>
+                                            <br/><br/><br/>
+                                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
                                                 <p:dataScroller id="ScrollerVehiculos" style="width: 100%" value="#{vehiculoBean.vehiculosListView}" var="vehiculo" chunkSize="2" mode="inline" scrollHeight="500">
                                                     <f:facet name="header">
                                                         Scroll Down para cargar mas vehiculos
@@ -152,7 +150,6 @@
                                                         <div class="box-body">
                                                             <b:column col-lg="5" >
                                                                 <!--espacio para imagen-->
-
                                                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 
                                                                     <div class="carousel-inner">
@@ -209,14 +206,16 @@
                                                         </div>                                                       
                                                     </div>
                                                 </p:dataScroller>
-                                                <!--                                                        Segmento a repetir segun cantidad de vehiculos-->
-
-                                            </p:tab>
-                                            <p:tab id="Conductor" title="Conductor">
+                                            </b:column>
+                                            <!--                                                        Segmento a repetir segun cantidad de vehiculos-->
+                                        </p:tab>
+                                        <p:tab id="Conductor" title="Conductor">
+                                            <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset-lg="2">
                                                 <h3 class="head text-center">Conductores SMS Renta
                                                     <small>Elige el Conductor que desees para tu reserva</small>
                                                 </h3>
-
+                                            </b:column>
+                                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
                                                 <p:dataScroller id="ScrollerConductores" style="width: 100%" value="#{empleadoBean.empleadosListView}" var="conductor" chunkSize="2" mode="inline" scrollHeight="500" >
 
                                                     <div class="box box box-sms-renta " style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
@@ -235,7 +234,6 @@
                                                                 <br/>
                                                                 <small style="margin: 10%;"> <strong>NIT </strong>: #{conductor.smsProveedor.proveedorNit}</small>                                                                    
                                                             </div>
-
                                                         </div>
                                                         <div class="box-body">
                                                             <b:column col-lg="5" >
@@ -280,7 +278,7 @@
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                </b:column>
+                                                            </b:column>
                                                         </div>
                                                         <div class="box-footer">
                                                             <p:commandButton style="width: 200px" disabled="#{reservacionBean.selecCon}" update="ScrollerConductores" class="btn-reservas-color" action="#{reservacionBean.seleccionarConductor()}" value="Reservar">
@@ -290,26 +288,20 @@
                                                     </div>
 
                                                 </p:dataScroller>
+                                            </b:column>
+                                        </p:tab>
+                                        <p:tab id="Confirmacion" title="Confirmacion">
 
-                                            </p:tab>
-                                            <p:tab id="Confirmacion" title="Confirmacion">
+                                        </p:tab>
 
-                                            </p:tab>
-
-                                        </p:wizard>
-                                        <div class="box-footer" align="right">
-                                            <h:panelGrid width="30%" columns="2">
-                                                <h:outputLink value="#" onclick="PF('wiz').back();">Atras</h:outputLink>
-                                                <h:outputLink value="#" onclick="PF('wiz').next();">Siguiente</h:outputLink>
-
-
-                                                <!--                                            <b:commandButton style="width: 100%" value="Atras" class="btn btn-danger" iconAwesome="fa fa-arrow-left" onclick="PF('wiz').back();"/>
-                                                                                            <b:commandButton style="width: 100%" value="Siguiente" class="btn btn-primary" iconAwesome="fa fa-arrow-right" onclick="PF('wiz').next();"/>-->
-                                            </h:panelGrid>
-                                        </div>
-                                    </b:column>
+                                    </p:wizard>
+                                    <div class="box-footer" align="right">
+                                        <h:panelGrid width="30%" columns="2">
+                                            <h:outputLink value="#" onclick="PF('wiz').back();">Atras</h:outputLink>
+                                            <h:outputLink value="#" onclick="PF('wiz').next();">Siguiente</h:outputLink>
+                                        </h:panelGrid>
+                                    </div>                             
                                 </h:form>
-
                             </b:column>
                         </b:row>
                     </b:container>
