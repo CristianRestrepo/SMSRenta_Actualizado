@@ -160,9 +160,13 @@ public class LugarBean implements Serializable {
         }
     }
 
-    public List<SmsLugares> consultarLugaresCiudades(String Ciudad) {
+    public List<String> consultarLugaresCiudades(SmsCiudad Ciudad) {
         LugaresListView = new ArrayList<>();
-        LugaresListView = lugarDao.consultarLugarCiudad(Ciudad); //Relacionamos el lugar con una ciudad
-        return LugaresListView;
+        nombresLugaresListView = new ArrayList<>();
+        LugaresListView = lugarDao.consultarLugarCiudad(Ciudad.getCiudadNombre()); //Relacionamos el lugar con una ciudad
+        for (int i = 0; i < LugaresListView.size(); i++) {
+            nombresLugaresListView.add(LugaresListView.get(i).getLugarNombre());
+        }
+        return nombresLugaresListView;
     }
 }

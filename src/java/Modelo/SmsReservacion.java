@@ -117,6 +117,7 @@ public class SmsReservacion  implements java.io.Serializable {
     public void setSmsEstado(SmsEstado smsEstado) {
         this.smsEstado = smsEstado;
     }
+    
     public SmsServicios getSmsServicios() {
         return this.smsServicios;
     }
