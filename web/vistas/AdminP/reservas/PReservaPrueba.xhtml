@@ -5,8 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -132,7 +131,7 @@
                                             </b:column>
                                             <br/><br/><br/>
                                             <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
-                                                <p:dataScroller id="ScrollerVehiculos" style="width: 100%" value="#{vehiculoBean.vehiculosListView}" var="vehiculo" chunkSize="2" mode="inline" scrollHeight="500">
+                                                <p:dataScroller id="ScrollerVehiculos" style="width: 100%" value="#{reservacionBean.vehiculosListView}" var="vehiculo" chunkSize="2" mode="inline" scrollHeight="500">
                                                     <f:facet name="header">
                                                         Scroll Down para cargar mas vehiculos
                                                     </f:facet>
@@ -216,7 +215,7 @@
                                                 </h3>
                                             </b:column>
                                             <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
-                                                <p:dataScroller id="ScrollerConductores" style="width: 100%" value="#{empleadoBean.empleadosListView}" var="conductor" chunkSize="2" mode="inline" scrollHeight="500" >
+                                                <p:dataScroller id="ScrollerConductores" style="width: 100%" value="#{reservacionBean.empleadoListView}" var="conductor" chunkSize="2" mode="inline" scrollHeight="500" >
 
                                                     <div class="box box box-sms-renta " style=" box-shadow: 1px 1px 13px 5px #DDDDDD; margin: 26px 0;"> 
                                                         <div class="box-header with-border">

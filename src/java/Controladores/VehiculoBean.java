@@ -379,9 +379,9 @@ public class VehiculoBean {
         }
     }
 
-    public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva, SmsCiudad ciudad) {
+    public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva) {
         vehiculosListView = new ArrayList<>();
-        String ciudadVeh = ciudad.getCiudadNombre();
+        String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
 
         Calendar calInicio = Calendar.getInstance();
         calInicio.setTime(reserva.getReservacionHoraInicio());

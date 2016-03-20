@@ -18,6 +18,7 @@ import DAO.IVehiculoDao;
 import DAO.ImpCategoriasServicioDao;
 import DAO.ImpCiudadDao;
 import DAO.ImpCostosServiciosDao;
+import DAO.ImpEmpleadoDao;
 import DAO.ImpReservacionDao;
 import DAO.ImpServicioDao;
 import DAO.ImpUsuarioDao;
@@ -55,6 +56,7 @@ public class ReservacionBean implements Serializable {
 
     private List<SmsReservacion> reservacionesListView;
     private List<SmsVehiculo> vehiculosListView;
+    private List<SmsEmpleado> empleadoListView;
     private SmsMercado mercadoSeleccionado;
 
     private SmsReservacion reservaView;
@@ -74,6 +76,7 @@ public class ReservacionBean implements Serializable {
 
     //Controladores
     SendEmail emailController;
+    VehiculoBean vehiculoController;
 
     //Sesion  
     private HttpServletRequest httpServletRequest;
@@ -100,8 +103,11 @@ public class ReservacionBean implements Serializable {
         reservaView = new SmsReservacion();
         costoServicioView = new SmsCostosservicios();
         vehiculosListView = new ArrayList<>();
-
+        empleadoListView = new ArrayList<>();
+        
         emailController = new SendEmail();
+        vehiculoController = new VehiculoBean();
+        
 
         SelecVeh = false;
         SelecCon = false;
@@ -117,6 +123,7 @@ public class ReservacionBean implements Serializable {
         resDao = new ImpReservacionDao();
         usuDao = new ImpUsuarioDao();
         servicioDao = new ImpServicioDao();
+        empleadoDao = new ImpEmpleadoDao();
 
         catServicioDao = new ImpCategoriasServicioDao();
         vehiculoDao = new ImpVehiculoDao();
@@ -239,6 +246,27 @@ public class ReservacionBean implements Serializable {
         this.mercadoSeleccionado = mercadoSeleccionado;
     }
 
+    public List<SmsVehiculo> getVehiculosListView() {
+        return vehiculosListView;
+    }
+
+    public void setVehiculosListView(List<SmsVehiculo> vehiculosListView) {
+        this.vehiculosListView = vehiculosListView;
+    }
+
+    public List<SmsEmpleado> getEmpleadoListView() {
+        return empleadoListView;
+    }
+
+    public void setEmpleadoListView(List<SmsEmpleado> empleadoListView) {
+        this.empleadoListView = empleadoListView;
+    }
+    
+    
+    
+    
+    
+
     //Metodos    
     //CRUD
     public String registrarReservacion() {
@@ -337,6 +365,8 @@ public class ReservacionBean implements Serializable {
         } else {
             switch (event.getNewStep()) {
                 case "Vehiculo":
+                    
+                    
                     SelecVeh = false;
                     reservaView.setReservacionFechaLlegada(reservaView.getReservacionFechaInicio());
                     SimpleDateFormat sdft = new SimpleDateFormat("HH:mm:ss");
@@ -351,10 +381,20 @@ public class ReservacionBean implements Serializable {
                     reservaView.setSmsCiudadByIdCiudadDestino(reservaView.getSmsCiudadByIdCiudadInicio());
 
                     reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));
-                    reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
+                    reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());                        
+                  
+                    if(resDao.mostrarReservaciones().isEmpty()){
+                    vehiculosListView = vehiculoDao.mostrarVehiculo();
+                    }
+                   
                     break;
-                case "conductor":
-                    SelecCon = false;
+                case "Conductor":
+                    SelecCon = false;                    
+                    if(resDao.mostrarReservaciones().isEmpty()){
+                    empleadoListView = empleadoDao.mostrarEmpleados();
+                    }
+                   
+                    
                     break;
             }
             return event.getNewStep();
@@ -419,48 +459,7 @@ public class ReservacionBean implements Serializable {
             return event.getNewStep();
         }
     }
-
-    public String flujoReservacion(String tab) {
-        String NextTab = "";
-        switch (tab) {
-            case "agenda":
-                NextTab = tab;
-                break;
-            case "vehiculo":
-                SelecVeh = false;
-                reservaView.setReservacionFechaLlegada(reservaView.getReservacionFechaInicio());
-                SimpleDateFormat sdft = new SimpleDateFormat("HH:mm:ss");
-                try {
-                    reservaView.setReservacionHoraInicio(sdft.parse(HoraInicio + ":" + MinutosInicio));
-                    reservaView.setReservacionHoraLlegada(sdft.parse(HoraInicio + ":" + MinutosInicio));
-                } catch (ParseException pe) {
-                    pe.getMessage();
-                }
-
-                reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
-                reservaView.setSmsCiudadByIdCiudadDestino(reservaView.getSmsCiudadByIdCiudadInicio());
-                reservaView.setSmsCategoriasServicio(catServicioDao.consultarCategoriasServicios(reservaView.getSmsCategoriasServicio()).get(0));
-                NextTab = tab;
-                break;
-            case "conductor":
-                SelecCon = false;
-                NextTab = tab;
-                break;
-            case "confirmacion":
-                if (sesion.getSmsRol().getIdRol() != 3) {
-                    reservaView.setSmsUsuario(sesion);
-                }
-
-                SimpleDateFormat formatTime;
-                formatTime = new SimpleDateFormat("HH:mm:ss");
-                HoraInicio = formatTime.format(reservaView.getReservacionHoraInicio());
-                HoraEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
-                NextTab = tab;
-                break;
-        }
-        return NextTab;
-    }
-
+   
     public void seleccionar() {
         reservaView = new SmsReservacion();
     }
@@ -491,7 +490,7 @@ public class ReservacionBean implements Serializable {
                 vehiculosListView = vehiculoDao.consultarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio());
             } else {
                 vehiculosListView = new ArrayList<>();
-                vehiculosListView = vehiculoDao.consultarVehiculosDisponible(reservaView, ciudadView);
+                vehiculosListView = vehiculoDao.consultarVehiculosDisponible(reservaView);
             }
         } else {
             if (resDao.mostrarReservaciones().isEmpty()) {

@@ -167,6 +167,6 @@ public class LugarBean implements Serializable {
         for (int i = 0; i < LugaresListView.size(); i++) {
             nombresLugaresListView.add(LugaresListView.get(i).getLugarNombre());
         }
-        return nombresLugaresListView;
+     return nombresLugaresListView;
     }
 }
