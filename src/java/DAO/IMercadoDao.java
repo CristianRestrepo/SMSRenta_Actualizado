@@ -16,7 +16,9 @@ public interface IMercadoDao {
     
     
     public List<SmsMercado> consultarMercados();
-    public List<SmsMercado> consultarMercado(String mercado);
+    public List<SmsMercado> consultarMercadoConCategorias(SmsMercado mercado);
+    public List<SmsMercado> consultarMercadoConServicios(SmsMercado mercado);
+    public List<SmsMercado> consultarMercadoConProveedores(SmsMercado mercado);
     public void registrarMercado(SmsMercado mercado);
     public void modificarMercado(SmsMercado mercado);
     public void eliminarMercado(SmsMercado mercado);

@@ -16,11 +16,12 @@ public class SmsMercado  implements java.io.Serializable {
      private String mercadoDescripcion;
      private String mercadoFotoNombre;
      private String mercadoFotoRuta;
-     private Set<SmsServicios> smsServicioses = new HashSet<>(0);
-     private Set<SmsProveedor> smsProveedors = new HashSet<>(0);
-     private Set<SmsCategoria> smsCategorias = new HashSet<>(0);
+     private Set<SmsServicios> smsServicioses = new HashSet<>();
+     private Set<SmsProveedor> smsProveedors = new HashSet<>();
+     private Set<SmsCategoria> smsCategorias = new HashSet<>();
 
     public SmsMercado() {
+        smsCategorias = new HashSet<>();
     }
 
 	

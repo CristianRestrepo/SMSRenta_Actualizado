@@ -130,12 +130,12 @@ public class ImpMercadoDao implements IMercadoDao {
     }
 
     @Override
-    public List<SmsMercado> consultarMercado(String mercado) {
+    public List<SmsMercado> consultarMercadoConCategorias(SmsMercado mercado) {
         Session session = null;
         List<SmsMercado> mercados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsCategorias left join fetch mercado.smsServicioses left join fetch mercado.smsProveedors where mercado.mercadoNombre = '" + mercado + "'");
+            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsCategorias as categorias where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
             mercados = (List<SmsMercado>) query.list();
 
         } catch (HibernateException e) {
@@ -148,4 +148,41 @@ public class ImpMercadoDao implements IMercadoDao {
         return mercados;
     }
 
+    @Override
+    public List<SmsMercado> consultarMercadoConServicios(SmsMercado mercado) {
+        Session session = null;
+        List<SmsMercado> mercados = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsServicioses as servicios where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
+            mercados = (List<SmsMercado>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return mercados;
+    }
+    
+    @Override
+    public List<SmsMercado> consultarMercadoConProveedores(SmsMercado mercado) {
+        Session session = null;
+        List<SmsMercado> mercados = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsProveedors as proveedores where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
+            mercados = (List<SmsMercado>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return mercados;
+    }
 }
