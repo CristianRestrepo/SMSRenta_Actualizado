@@ -201,8 +201,8 @@ public class CategoriaBean implements Serializable {
             boolean bandera = false;
             for (int i = 0; i < m.size(); i++) {
                 for (int j = 0; j < categoriasListView.size(); j++) {
-                    for (SmsMercado mercado : categoriasListView.get(j).getSmsMercados()) {
-                        if (m.get(i).getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
+                    for (SmsMercado merc : categoriasListView.get(j).getSmsMercados()) {
+                        if (m.get(i).getMercadoNombre().equalsIgnoreCase(merc.getMercadoNombre())) {
                             for (int k = 0; k < nombresCategoriasListView.size(); k++) {
                                 if (nombresCategoriasListView.get(k).equalsIgnoreCase(categoriasListView.get(j).getCategoriaNombre())) {
                                     bandera = true;

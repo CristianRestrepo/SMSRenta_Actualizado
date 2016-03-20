@@ -26,7 +26,7 @@
             </key>
             <one-to-many class="Modelo.SmsVehiculo" />
         </set>
-        <set name="smsMercados" cascade="save-update" table="sms_mercado_sms_categoria" inverse="true" lazy="true" fetch="join">
+        <set name="smsMercados" cascade="save-update" table="sms_mercado_sms_categoria" inverse="true" fetch="select">
             <key>
                 <column name="idCategoria" not-null="true" />
             </key>
