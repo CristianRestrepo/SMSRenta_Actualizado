@@ -10,6 +10,7 @@ import DAO.IMercadoDao;
 import DAO.ImpCategoriasServicioDao;
 import DAO.ImpMercadoDao;
 import Modelo.SmsCategoriasServicio;
+import Modelo.SmsCiudad;
 import Modelo.SmsMercado;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class CategoriasServiciosBean {
     private List<SmsCategoriasServicio> categoriasServicioListView;
     private List<String> nombresCategoriasServicios;
 
+    
+    
     ICategoriasServicioDao catServicioDao;
     IMercadoDao mercadoDao;
 
@@ -42,6 +45,7 @@ public class CategoriasServiciosBean {
         mercadoDao = new ImpMercadoDao();
         
         nombre = "Registrar Categoria";
+       
     }
 
     @PostConstruct
@@ -95,8 +99,12 @@ public class CategoriasServiciosBean {
         this.buscar = buscar;
     }
 
+   
+
+    
+    //Metodos
     public void registrar() {
-        categoriaServiciosView.setSmsMercado(categoriaServiciosView.getSmsMercado());
+        categoriaServiciosView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(categoriaServiciosView.getSmsMercado()).get(0));
         catServicioDao.registrarCategoriaServicio(categoriaServiciosView);
         
         categoriaServiciosView = new SmsCategoriasServicio();
@@ -104,7 +112,7 @@ public class CategoriasServiciosBean {
     }
 
     public void modificar() {
-        categoriaServiciosView.setSmsMercado(categoriaServiciosView.getSmsMercado());
+        categoriaServiciosView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(categoriaServiciosView.getSmsMercado()).get(0));
         catServicioDao.modificarCategoriaServicio(categoriaServiciosView);
         
         categoriaServiciosView = new SmsCategoriasServicio();
@@ -136,6 +144,16 @@ public class CategoriasServiciosBean {
         if (estado == 1) {
             nombre = "Modificar Categoria";
         }
+    }
+    
+    public List<String> consultarCategoriasSegunMercado(SmsMercado mercado){
+        nombresCategoriasServicios = new ArrayList<>();
+        categoriasServicioListView = new ArrayList<>();
+        categoriasServicioListView = catServicioDao.consultarCategoriasServiciosSegunMercado(mercado);
+        for (int i = 0; i < categoriasServicioListView.size(); i++) {
+            nombresCategoriasServicios.add(categoriasServicioListView.get(i).getCatNombre());
+        }
+        return nombresCategoriasServicios;
     }
 
 }

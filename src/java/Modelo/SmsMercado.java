@@ -14,8 +14,7 @@ public class SmsMercado implements java.io.Serializable {
     private String mercadoDescripcion;
     private String mercadoFotoNombre;
     private String mercadoFotoRuta;
-    private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>();
-    private Set<SmsServicios> smsServicioses = new HashSet<>();
+    private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>();   
     private Set<SmsProveedor> smsProveedors = new HashSet<>();
     private Set<SmsCategoria> smsCategorias = new HashSet<>();
 
@@ -29,12 +28,11 @@ public class SmsMercado implements java.io.Serializable {
         this.mercadoFotoRuta = mercadoFotoRuta;
     }
 
-    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsServicios> smsServicioses, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsCategoriasServicio> smsCategoriasServicios) {
+    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsCategoriasServicio> smsCategoriasServicios) {
         this.mercadoNombre = mercadoNombre;
         this.mercadoDescripcion = mercadoDescripcion;
         this.mercadoFotoNombre = mercadoFotoNombre;
-        this.mercadoFotoRuta = mercadoFotoRuta;
-        this.smsServicioses = smsServicioses;
+        this.mercadoFotoRuta = mercadoFotoRuta;       
         this.smsProveedors = smsProveedors;
         this.smsCategorias = smsCategorias;
         this.smsCategoriasServicios = smsCategoriasServicios;
@@ -79,15 +77,7 @@ public class SmsMercado implements java.io.Serializable {
     public void setMercadoFotoRuta(String mercadoFotoRuta) {
         this.mercadoFotoRuta = mercadoFotoRuta;
     }
-
-    public Set<SmsServicios> getSmsServicioses() {
-        return this.smsServicioses;
-    }
-
-    public void setSmsServicioses(Set<SmsServicios> smsServicioses) {
-        this.smsServicioses = smsServicioses;
-    }
-
+   
     public Set<SmsProveedor> getSmsProveedors() {
         return this.smsProveedors;
     }

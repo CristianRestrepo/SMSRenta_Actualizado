@@ -15,25 +15,22 @@ public class SmsServicios  implements java.io.Serializable {
      private SmsCategoriasServicio smsCategoriasServicio;
      private String servicioNombre;
      private String servicioDescripcion;
-     private Set<SmsCostosservicios> smsCostosservicioses = new HashSet<>(0);
-     private Set<SmsMercado> smsMercados = new HashSet<>(0);
+     private Set<SmsCostosservicios> smsCostosservicioses = new HashSet<>(0);     
      private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
 
     public SmsServicios() {
         this.smsCategoriasServicio = new SmsCategoriasServicio();
     }
-
 	
     public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre) {
         this.smsCategoriasServicio = smsCategoriasServicio;
         this.servicioNombre = servicioNombre;
     }
-    public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, String servicioDescripcion, Set<SmsCostosservicios> smsCostosservicioses, Set<SmsMercado> smsMercados, Set<SmsReservacion> smsReservacions) {
+    public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, String servicioDescripcion, Set<SmsCostosservicios> smsCostosservicioses, Set<SmsReservacion> smsReservacions) {
        this.smsCategoriasServicio = smsCategoriasServicio;
        this.servicioNombre = servicioNombre;
        this.servicioDescripcion = servicioDescripcion;
-       this.smsCostosservicioses = smsCostosservicioses;
-       this.smsMercados = smsMercados;
+       this.smsCostosservicioses = smsCostosservicioses;      
        this.smsReservacions = smsReservacions;
     }
    
@@ -72,13 +69,7 @@ public class SmsServicios  implements java.io.Serializable {
     public void setSmsCostosservicioses(Set<SmsCostosservicios> smsCostosservicioses) {
         this.smsCostosservicioses = smsCostosservicioses;
     }
-    public Set<SmsMercado> getSmsMercados() {
-        return this.smsMercados;
-    }
     
-    public void setSmsMercados(Set<SmsMercado> smsMercados) {
-        this.smsMercados = smsMercados;
-    }
     public Set<SmsReservacion> getSmsReservacions() {
         return this.smsReservacions;
     }
