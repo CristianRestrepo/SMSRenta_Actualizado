@@ -602,6 +602,7 @@ public class ReservacionBean implements Serializable {
 //
 //        return Ruta;
 //    }
+    
     public boolean validarEliminarReservacion(SmsReservacion reserva) {
         boolean valido = true;
 

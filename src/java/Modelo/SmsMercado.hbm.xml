@@ -20,6 +20,12 @@
         <property name="mercadoFotoRuta" type="string">
             <column name="Mercado_foto_ruta" length="65535" not-null="true" />
         </property>
+        <set name="smsCategoriasServicios" table="sms_categorias_servicios" inverse="true" lazy="true" fetch="join">
+            <key>
+                <column name="idMercado" />
+            </key>
+            <one-to-many class="Modelo.SmsCategoriasServicio" />
+        </set>
         <set name="smsServicioses" cascade="save-update" table="sms_mercado_sms_servicios" inverse="false" lazy="true" fetch="join">
             <key>
                 <column name="idMercado" not-null="true" />

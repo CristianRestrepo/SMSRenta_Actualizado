@@ -40,18 +40,18 @@
                                                 <p:selectOneMenu  label="Mercado al que pertenece el servicio" id="SMMercado" value="#{serviciosBean.mercadoView.mercadoNombre}" style="width: 100%">                                                            
                                                     <f:selectItem itemLabel="Seleccione Mercado" noSelectionOption="true"/>
                                                     <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>
-                                                    <p:ajax event="change" update="@form"/> 
+                                                    <p:ajax event="change" update="SMCatVehiculo"/> 
                                                 </p:selectOneMenu>
                                                 <p:message for="SMMercado"/>
 
                                                 <p:selectOneMenu value="#{serviciosBean.servicioView.smsCategoriasServicio.catNombre}" label="Categoria del servicio" style="width: 100%" id="SMCatServicio"> 
                                                     <f:selectItem itemLabel="Seleccione categoria" noSelectionOption="true"/>
                                                     <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
-                                                    <p:ajax event="change" listener="#{serviciosBean.habilitarLugar()}" update="@form" />
+                                                    <p:ajax event="change" listener="#{serviciosBean.habilitarLugar()}" update="PServicios" />
                                                 </p:selectOneMenu>
                                                 <p:message for="SMCatServicio"/>
 
-                                                <b:selectOneMenu value="#{serviciosBean.costoView.smsCategoria.categoriaNombre}"  style="width: 100%" label="Categoria del vehiculo" id="SMCatVehiculo"> 
+                                                <b:selectOneMenu tooltip="Categoria del vehiculo" value="#{serviciosBean.costoView.smsCategoria.categoriaNombre}"  style="width: 100%" id="SMCatVehiculo"> 
                                                     <f:selectItem itemLabel="Seleccione categoria del vehiculo" noSelectionOption="true"/>
                                                     <f:selectItems value="#{categoriaBean.CategoriasSegunMercado(serviciosBean.mercadoView.mercadoNombre)}"/>                                                
                                                 </b:selectOneMenu>

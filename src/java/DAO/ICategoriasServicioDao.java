@@ -17,4 +17,11 @@ public interface ICategoriasServicioDao {
     public List<SmsCategoriasServicio> consultarCategoriasServicios();
 
     public List<SmsCategoriasServicio> consultarCategoriasServicios(SmsCategoriasServicio catServicio);
+    
+    public void registrarCategoriaServicio(SmsCategoriasServicio categoria);
+    
+    public void modificarCategoriaServicio(SmsCategoriasServicio categoria);
+    
+    public void eliminarCategoriaServicio(SmsCategoriasServicio categoria);
+    
 }

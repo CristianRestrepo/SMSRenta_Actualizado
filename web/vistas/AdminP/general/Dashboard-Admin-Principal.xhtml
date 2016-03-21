@@ -15,7 +15,24 @@
             <b:container fluid="true">
                 <b:row>
                     <h:form>
-                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12"  >
+                        
+                        <b:column col-lg="12" col-md="12" col-sm="6" col-xs="12">
+                            <div class="box espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-dashboard" />
+                                    <h3 class="box-title">Tablero Principal</h3>
+                                </div>
+                                <div class="box-body">
+                                    <p class="text-justify">
+                                        En el tablero principal podrá ver una vista general de las actividades más 
+                                        importantes realizadas dentro de SMS Renta:<em> Horarios, clientes, Conductores, 
+                                            Vehículos y Estadistícas.</em>
+                                    </p>
+                                </div>
+                            </div>
+                        </b:column>
+                        
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12"  >
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-calendar"/>
@@ -28,7 +45,7 @@
 
                                     <h:panelGrid columnClasses="value">
 
-                                        <p:schedule id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
+                                        <p:schedule ignoreTimezone="true" id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
                                             <p:ajax event="eventSelect" listener="#{reservacionBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                                         </p:schedule>
                                     </h:panelGrid>
@@ -58,78 +75,7 @@
                                 </div>
                             </div>
                         </b:column>
-
-                        <b:column col-lg="5" col-md="5" col-sm="6" col-xs="12">
-                            <div class="box box-solid bg-green-gradient espacio-arriba">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-dashboard" />
-                                    <h3 class="box-title">Tablero Principal</h3>
-                                </div>
-                                <div class="box-body">
-                                    <p class="text-justify">
-                                        En el tablero principal podrá ver una vista general de las actividades más 
-                                        importantes realizadas dentro de SMS Renta:<em> Horarios, clientes, Conductores, 
-                                            Vehículos y Estadistícas.</em>
-                                    </p>
-                                </div>
-                            </div>
-                        </b:column>
-
-                        <b:column col-lg="5" col-md="5" col-sm="6" col-xs="12">
-                            <div class="box box-danger ">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-road" />
-                                    <h3 class="box-title">Lista de Conductores</h3>
-                                </div>
-                                <div class="box-body">
-                                    <!-- LISTA DE CONDUCTORES -->
-                                    <p:dataTable value="#{empleadoBean.usuariosListView}" var="conductores" styleClass="paginated" rows="5"
-                                                 paginator="true"
-                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
-
-                                        <p:column headerText="ID ">
-                                            <h:outputText value="#{conductores.idUsuario}" />
-                                        </p:column>
-                                        <p:column headerText="Nombre ">
-                                            <h:outputText value="#{conductores.usuarioNombre}" />
-                                        </p:column>
-                                        <p:column headerText="Teléfono">
-                                            <h:outputText value="#{conductores.usuarioTelefono}" />
-                                        </p:column>
-
-                                    </p:dataTable>
-                                </div>
-                            </div>
-                        </b:column>
-
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <div class="box box-primary">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-users "/>
-                                    <h3 class="box-title">Lista de Clientes</h3>
-                                </div>
-                                <div class="box-body">
-                                    <!-- LISTA DE CLIENTES -->
-                                    <p:dataTable var="cliente" value="#{clienteBean.usuariosListView}" rows="5"
-                                                 paginator="true"
-                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
-                                        <p:column headerText="Id">
-                                            <h:outputText value="#{cliente.idUsuario}" />
-                                        </p:column>
-
-                                        <p:column headerText="Nombres">
-                                            <h:outputText value="#{cliente.usuarioNombre}" />
-                                        </p:column>
-
-                                        <p:column headerText="Ciudad Origen">
-                                            <h:outputText value="#{cliente.smsCiudad.ciudadNombre}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </div>
-                            </div>
-                        </b:column>
+                                             
 
 
                     </h:form>

@@ -25,7 +25,7 @@ public interface IUsuarioDao {
 
     public List<SmsUsuario> consultarUsuario(SmsUsuario usuario);
 
-    public List<SmsUsuario> consultarDatosSesionUsuario(SmsUsuario usuario);
+    public SmsUsuario consultarDatosSesionUsuario(SmsUsuario user);
 
     public List<SmsUsuario> verificarLoginDisponible(String valor);
     

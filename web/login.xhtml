@@ -59,9 +59,21 @@
                                                     <b:inputSecret  placeholder="Contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{usuarioBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
                                                 </div>
                                                 <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrarse?"/>
-                                                <p:commandButton class="btn btn-lg btn-block btn-danger" update="messages"
+                                                <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-danger" update="messages"
                                                                  action="#{usuarioBean.iniciarSesion()}" value="Ingrese Aquí"/>
+                                                <script type="text/javascript">
+                                                    function start() {
+                                                        PF('statusDialog').show();
+                                                    }
+                                                    function stop() {
+                                                        PF('statusDialog').hide();
+                                                    }
+                                                </script>
+                                                <p:dialog modal="true" widgetVar="statusDialog" header="Iniciando Sesion, espere" draggable="false" closable="false" resizable="false">
+                                                    <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                </p:dialog>
                                             </p:fragment>
+
                                         </fieldset>
                                         <!--</form>-->
                                     </div>

@@ -226,7 +226,7 @@ public class CategoriaBean implements Serializable {
 
     public List<String> CategoriasSegunMercado(String merc) {
         nombresCategoriasListView = new ArrayList<>();
-        mercadoView.setMercadoNombre(nombre);
+        mercadoView.setMercadoNombre(merc);
         if (!merc.isEmpty()) {
             mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
 

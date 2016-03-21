@@ -461,6 +461,11 @@
             <to-view-id>/vistas/AdminP/reservas/PReservaPrueba.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminPCategoriasServicios</from-outcome>
+            <to-view-id>/vistas/AdminP/servicios/PCategoriasServicios.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     
     <!-- otras rutas admin principal-->

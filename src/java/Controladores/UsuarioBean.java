@@ -170,18 +170,19 @@ public class UsuarioBean implements Serializable {
         MD5 md = new MD5();
         usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
         SmsUsuario user;
-
-        if (!usuarioDao.consultarDatosSesionUsuario(usuarioView).isEmpty()) {//valida si el usuario existe en la BD
-            user = usuarioDao.consultarDatosSesionUsuario(usuarioView).get(0);
+        usuarioView = usuarioDao.consultarDatosSesionUsuario(usuarioView);
+       
+        if (usuarioView.getIdUsuario() != null) {//valida si el usuario existe en la BD
+            user = usuarioDao.consultarUsuario(usuarioView).get(0);
             if (user.getUsuarioEstadoUsuario() == 1) {//Evalua el estado de la cuenta de usuario, si esta activa o inactiva
                 if (user.getUsuarioPassword() != null && (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword()))) {
                     //ruta = usuarioController.iniciarSesion(user.get(0));//envia el objeto usuarioBean al metodo iniciarSesion para tomar este objeto como atributo de sesion
 
-                    usuarioView.setSmsRol(user.getSmsRol());
+                    
                     httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     httpSession.setAttribute("Sesion", user);
 
-                    switch (usuarioView.getSmsRol().getRolNombre()) {
+                    switch (user.getSmsRol().getRolNombre()) {
                         case "Administrador Principal":
                             ruta = "AdminPPrincipal";
                             break;

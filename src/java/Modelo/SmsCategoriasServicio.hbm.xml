@@ -13,7 +13,10 @@
         </property>
         <property name="catDescripcion" type="string">
             <column name="Cat_descripcion" length="45" />
-        </property>
+        </property>         
+        <many-to-one name="smsMercado" class="Modelo.SmsMercado" fetch="join">
+            <column name="idMercado" not-null="true" />
+        </many-to-one>
         <set name="smsServicioses" table="sms_servicios" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idCategoria_Servicio" not-null="true" />

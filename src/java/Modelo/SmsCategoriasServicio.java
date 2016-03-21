@@ -14,6 +14,7 @@ public class SmsCategoriasServicio  implements java.io.Serializable {
      private Integer idCategoriaServicio;
      private String catNombre;
      private String catDescripcion;
+     private SmsMercado smsMercado;
      private Set<SmsServicios> smsServicioses = new HashSet<>(0);
      private Set<SmsEmpleado> smsEmpleados = new HashSet<>(0);
      private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
@@ -21,12 +22,15 @@ public class SmsCategoriasServicio  implements java.io.Serializable {
      private Set<SmsLugares> smsLugares = new HashSet<>(0);
 
     public SmsCategoriasServicio() {
+    this.smsMercado = new SmsMercado();
     }
 
 	
-    public SmsCategoriasServicio(String catNombre) {
+    public SmsCategoriasServicio(String catNombre, SmsMercado smsMercado) {
+        this.smsMercado = smsMercado;
         this.catNombre = catNombre;
     }
+    
     public SmsCategoriasServicio(String catNombre, String catDescripcion, Set<SmsServicios> smsServicioses, Set<SmsEmpleado> smsEmpleados, Set<SmsVehiculo> smsVehiculos, Set<SmsReservacion> smsReservacions, Set<SmsLugares> smsLugares) {
        this.catNombre = catNombre;
        this.catDescripcion = catDescripcion;
@@ -93,6 +97,14 @@ public class SmsCategoriasServicio  implements java.io.Serializable {
 
     public void setSmsLugares(Set<SmsLugares> smsLugares) {
         this.smsLugares = smsLugares;
+    }
+
+    public SmsMercado getSmsMercado() {
+        return smsMercado;
+    }
+
+    public void setSmsMercado(SmsMercado smsMercado) {
+        this.smsMercado = smsMercado;
     }
 
     
