@@ -6,6 +6,7 @@
 package DAO;
 
 import Modelo.SmsCategoriasServicio;
+import Modelo.SmsMercado;
 import java.util.List;
 
 /**
@@ -16,7 +17,9 @@ public interface ICategoriasServicioDao {
 
     public List<SmsCategoriasServicio> consultarCategoriasServicios();
 
-    public List<SmsCategoriasServicio> consultarCategoriasServicios(SmsCategoriasServicio catServicio);
+    public List<SmsCategoriasServicio> consultarCategoriaServicio(SmsCategoriasServicio catServicio);
+    
+    public List<SmsCategoriasServicio> consultarCategoriasServiciosSegunMercado(SmsMercado mercado);
     
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria);
     

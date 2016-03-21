@@ -25,15 +25,7 @@
                 <column name="idMercado" />
             </key>
             <one-to-many class="Modelo.SmsCategoriasServicio" />
-        </set>
-        <set name="smsServicioses" cascade="save-update" table="sms_mercado_sms_servicios" inverse="false" lazy="true" fetch="join">
-            <key>
-                <column name="idMercado" not-null="true" />
-            </key>
-            <many-to-many class="Modelo.SmsServicios">
-                <column name="idServicios" not-null="true" />
-            </many-to-many>
-        </set>
+        </set>        
         <set name="smsProveedors" cascade="save-update" table="sms_mercado_sms_proveedor" inverse="false" lazy="true" fetch="join">
             <key>
                 <column name="idMercado" not-null="true" />

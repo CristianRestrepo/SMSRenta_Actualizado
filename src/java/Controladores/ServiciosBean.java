@@ -16,6 +16,7 @@ import DAO.ImpCostosServiciosDao;
 import DAO.ImpLugarDao;
 import DAO.ImpServicioDao;
 import Modelo.SmsCategoria;
+import Modelo.SmsCiudad;
 import Modelo.SmsCostosservicios;
 import Modelo.SmsMercado;
 import Modelo.SmsServicios;
@@ -35,6 +36,7 @@ public class ServiciosBean implements Serializable {
 
     private SmsMercado mercadoView;
     private SmsCostosservicios costoView;
+    private SmsCiudad ciudadView;
 
     private List<SmsServicios> serviciosListView;
     private List<String> nombreServiciosListView;
@@ -66,7 +68,8 @@ public class ServiciosBean implements Serializable {
         nombreServiciosListView = new ArrayList<>();
         costoView = new SmsCostosservicios();
         mercadoView = new SmsMercado();
-
+        ciudadView = new SmsCiudad();
+                
         buscar = null;
         estado = 0;
         nombre = "Registrar Servicio";
@@ -184,6 +187,16 @@ public class ServiciosBean implements Serializable {
         this.habilitarLugar = habilitarLugar;
     }
 
+    public SmsCiudad getCiudadView() {
+        return ciudadView;
+    }
+
+    public void setCiudadView(SmsCiudad ciudadView) {
+        this.ciudadView = ciudadView;
+    }
+    
+    
+
     //Metodos Propios
     public void metodo() {
         if (estado == 0) {
@@ -207,7 +220,7 @@ public class ServiciosBean implements Serializable {
     public void registrar() {
 
         //Se consulta la informacion de la categoria del servicio seleccionado
-        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriasServicios(servicioView.getSmsCategoriasServicio()).get(0));
+        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriaServicio(servicioView.getSmsCategoriasServicio()).get(0));
 
         servicioDao.registrarServicio(servicioView);
 
