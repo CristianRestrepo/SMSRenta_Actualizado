@@ -426,9 +426,9 @@ public class VehiculoBean {
         return vehiculosListView;
     }
 
-    public List<SmsVehiculo> filtrarVehiculosDisponibles(SmsReservacion reserva, SmsCategoria cat) {
+    public List<SmsVehiculo> filtrarVehiculosDisponibles(SmsReservacion reserva, String cat) {
         vehiculosListView = new ArrayList<>();
-        String categoriaVeh = cat.getCategoriaNombre();
+        String categoriaVeh = cat;
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
 
         Calendar calInicio = Calendar.getInstance();

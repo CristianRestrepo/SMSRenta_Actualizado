@@ -374,7 +374,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         }
     }
 
-    public List<SmsEmpleado> consultarEmpleadosDisponibles(SmsReservacion reserva, SmsCiudad ciudad) {
+    public List<SmsEmpleado> consultarEmpleadosDisponibles(SmsReservacion reserva) {
 
         empleadosListView = new ArrayList<>();
 
@@ -404,7 +404,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
 
-        empleadosListView = empleadoDao.consultarEmpleadosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudad.getCiudadNombre(), espacioinicio, espacioLlegada);
+        empleadosListView = empleadoDao.consultarEmpleadosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre(), espacioinicio, espacioLlegada, reserva.getSmsVehiculo().getSmsProveedor().getProveedorRazonSocial());
         List<SmsEmpleado> lista = new ArrayList<>();
         for (int i = 0; i < empleadosListView.size(); i++) {
             //lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));

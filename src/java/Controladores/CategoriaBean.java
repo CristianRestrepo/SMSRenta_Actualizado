@@ -8,12 +8,15 @@ package Controladores;
 import DAO.ICategoriaDao;
 import DAO.IMercadoDao;
 import DAO.IProveedorDao;
+import DAO.IServicioDao;
 import DAO.ImpCategoriaDao;
 import DAO.ImpMercadoDao;
 import DAO.ImpProveedorDao;
+import DAO.ImpServicioDao;
 import Modelo.SmsCategoria;
 import Modelo.SmsMercado;
 import Modelo.SmsProveedor;
+import Modelo.SmsServicios;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -230,6 +233,41 @@ public class CategoriaBean implements Serializable {
         if (!merc.isEmpty()) {
             mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
 
+            categoriasListView = catDao.mostrarCategorias();
+            boolean bandera = false;
+            for (int j = 0; j < categoriasListView.size(); j++) {
+                for (SmsMercado mercado : categoriasListView.get(j).getSmsMercados()) {
+                    if (mercadoView.getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
+                        for (int k = 0; k < nombresCategoriasListView.size(); k++) {
+                            if (nombresCategoriasListView.get(k).equalsIgnoreCase(categoriasListView.get(j).getCategoriaNombre())) {
+                                bandera = true;
+                            }
+                        }
+                        if (!bandera) {
+                            nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
+                        }
+                        bandera = false;
+                    }
+
+                }
+
+            }
+        }
+        return nombresCategoriasListView;
+    }
+
+    public List<String> CategoriasSegunServicio(String serv) {
+
+        nombresCategoriasListView = new ArrayList<>();
+        IServicioDao servDao = new ImpServicioDao();
+        SmsServicios servicio = new SmsServicios();
+
+        if (!serv.isEmpty()) {
+            
+            servicio.setServicioNombre(serv);
+            servicio = servDao.ConsultarServicio(servicio).get(0);
+            mercadoView = servicio.getSmsCategoriasServicio().getSmsMercado();
+            mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
             categoriasListView = catDao.mostrarCategorias();
             boolean bandera = false;
             for (int j = 0; j < categoriasListView.size(); j++) {

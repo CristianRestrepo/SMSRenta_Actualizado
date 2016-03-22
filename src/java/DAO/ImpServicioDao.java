@@ -127,7 +127,7 @@ public class ImpServicioDao implements IServicioDao {
         List<SmsServicios> servicios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsServicios as servicio where servicio.servicioNombre = '" + servicio.getServicioNombre() + "' or servicio.idServicio = '" + servicio.getIdServicio()+ "'");
+            Query query = session.createQuery("from SmsServicios as servicio left join fetch servicio.smsCategoriasServicio as cat left join fetch cat.smsMercado where servicio.servicioNombre = '" + servicio.getServicioNombre() + "' or servicio.idServicio = '" + servicio.getIdServicio()+ "'");
             servicios = (List<SmsServicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

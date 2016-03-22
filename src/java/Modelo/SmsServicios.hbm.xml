@@ -17,6 +17,9 @@
         <property name="servicioDescripcion" type="string">
             <column name="Servicio_descripcion" length="65535" />
         </property>
+        <property name="servicioDuracion" type="java.lang.Integer">
+            <column name="Servicio_duracion" not-null="true" />
+        </property>
         <set name="smsCostosservicioses" table="sms_costosservicios" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idServicio" not-null="true" />

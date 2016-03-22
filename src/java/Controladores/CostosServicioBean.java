@@ -7,13 +7,14 @@ package Controladores;
 
 import DAO.ICategoriaDao;
 import DAO.ICostosServiciosDao;
+import DAO.ILugarDao;
 import DAO.IServicioDao;
 import DAO.ImpCategoriaDao;
 import DAO.ImpCostosServiciosDao;
+import DAO.ImpLugarDao;
 import DAO.ImpServicioDao;
-import Modelo.SmsCategoria;
+import Modelo.SmsCiudad;
 import Modelo.SmsCostosservicios;
-import Modelo.SmsServicios;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,32 +28,29 @@ public class CostosServicioBean implements Serializable {
 
     //Objetos necesarios ne vista
     private SmsCostosservicios costoView;
+    private SmsCiudad ciudadView;
 
-    private SmsCostosservicios DCostoview;
-    private List<SmsCostosservicios> costosRentaListView;
-
-    private SmsCategoria categoriaView;
-    private SmsServicios servicioView;
+    private List<SmsCostosservicios> costosListView;
 
     //Conexion con el Dao
     ICategoriaDao catDao;
     IServicioDao serDao;
     ICostosServiciosDao cosDao;
+    ILugarDao lugarDao;
 
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
     private String buscar;
 
+    private boolean habilitar;
     public CostosServicioBean() {
 
         costoView = new SmsCostosservicios();
-        DCostoview = new SmsCostosservicios();
+        ciudadView = new SmsCiudad();
 
-        costosRentaListView = new ArrayList<>();
-
-        categoriaView = new SmsCategoria();
-        servicioView = new SmsServicios();
+        costosListView = new ArrayList<>();
+        lugarDao = new ImpLugarDao();
 
         buscar = null;
         estado = 0;
@@ -61,23 +59,16 @@ public class CostosServicioBean implements Serializable {
         catDao = new ImpCategoriaDao();
         serDao = new ImpServicioDao();
         cosDao = new ImpCostosServiciosDao();
-
+        
+        habilitar = false;
     }
 
     @PostConstruct
     public void init() {
-        costosRentaListView = cosDao.consultarCostos();
+        costosListView = cosDao.consultarCostos();
     }
 
     //Getters & Setters
-    public SmsCostosservicios getDCostoview() {
-        return DCostoview;
-    }
-
-    public void setDCostoview(SmsCostosservicios DCostoview) {
-        this.DCostoview = DCostoview;
-    }
-
     public int getEstado() {
         return estado;
     }
@@ -102,22 +93,6 @@ public class CostosServicioBean implements Serializable {
         this.buscar = buscar;
     }
 
-    public SmsCategoria getCategoriaView() {
-        return categoriaView;
-    }
-
-    public void setCategoriaView(SmsCategoria categoriaView) {
-        this.categoriaView = categoriaView;
-    }
-
-    public SmsServicios getServicioView() {
-        return servicioView;
-    }
-
-    public void setServicioView(SmsServicios servicioView) {
-        this.servicioView = servicioView;
-    }
-
     public SmsCostosservicios getCostoView() {
         return costoView;
     }
@@ -126,112 +101,106 @@ public class CostosServicioBean implements Serializable {
         this.costoView = costoView;
     }
 
-    public List<SmsCostosservicios> getCostosRentaListView() {
-        return costosRentaListView;
+    public SmsCiudad getCiudadView() {
+        return ciudadView;
     }
 
-    public void setCostosRentaListView(List<SmsCostosservicios> costosRentaListView) {
-        this.costosRentaListView = costosRentaListView;
+    public void setCiudadView(SmsCiudad ciudadView) {
+        this.ciudadView = ciudadView;
+    }
+
+    public List<SmsCostosservicios> getCostosListView() {
+        return costosListView;
+    }
+
+    public void setCostosListView(List<SmsCostosservicios> costosListView) {
+        this.costosListView = costosListView;
+    }
+
+    public boolean isHabilitar() {
+        return habilitar;
+    }
+
+    public void setHabilitar(boolean habilitar) {
+        this.habilitar = habilitar;
     }
 
     
     //Metodos Crud
-    public void registrarCostoRenta() {
+    public void registrar() {
 
         //Consultamos la informacion completa de la categoria y el servicio elegido
-        categoriaView = catDao.consultarCategoria(categoriaView).get(0);
-        servicioView = serDao.ConsultarServicio(servicioView).get(0);
+        costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
+        costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()).get(0));
 
-        //Asignamos la categoria y el servicio a nuestro costo
-        costoView.setSmsCategoria(categoriaView);
-        costoView.setSmsServicios(servicioView);
+        if (costoView.getSmsLugaresByIdLugarInicio().getLugarNombre() != null && costoView.getSmsLugaresByIdLugarDestino().getLugarNombre() != null) {
+            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarInicio()).get(0));
+            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarDestino()).get(0));
+        }
 
         //Registramos el costo
         cosDao.registrarCostoServicio(costoView);
-        costosRentaListView = cosDao.consultarCostos();//Recargamos la lista de costos
+        costosListView = cosDao.consultarCostos();//Recargamos la lista de costos
 
         //Limpiamos objetos
         costoView = new SmsCostosservicios();
-        categoriaView = new SmsCategoria();
-        servicioView = new SmsServicios();
+    }
+    
+    public void habilitarListas(String valor){
+        
+        if(!valor.isEmpty()){
+        habilitar = true;
+        }else{
+        habilitar = false;
+        }
+    
     }
 
-    public void registrarCostoTiempo() {
-
-    }
-
-    public void registrarCostoTraslado() {
-
-    }
-
-    public void modificarCostoRenta() {
+    public void modificar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
-        categoriaView = catDao.consultarCategoria(categoriaView).get(0);
-        servicioView = serDao.ConsultarServicio(servicioView).get(0);
+        costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
+        costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()).get(0));
 
-        //Asignamos la categoria y el servicio a nuestro costo
-        costoView.setSmsCategoria(categoriaView);
-        costoView.setSmsServicios(servicioView);
-
+        if (costoView.getSmsLugaresByIdLugarInicio().getLugarNombre() != null && costoView.getSmsLugaresByIdLugarDestino().getLugarNombre() != null) {
+            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarInicio()).get(0));
+            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarDestino()).get(0));
+        }
+        
         cosDao.modificarCostoServicio(costoView);//Modificamos el costo   
-        costosRentaListView = cosDao.consultarCostos();//Recargamos la lista de costos
+        costosListView = cosDao.consultarCostos();//Recargamos la lista de costos
 
         //Limpiamos objetos
         costoView = new SmsCostosservicios();
-        categoriaView = new SmsCategoria();
-        servicioView = new SmsServicios();
-    }
-
-    public void modificarCostoTraslado() {
-
-    }
-
-    public void modificarCostoTiempo() {
-
     }
 
     public void filtrar() {
-        costosRentaListView = new ArrayList<>();
+        costosListView = new ArrayList<>();
         if (buscar == null) {
-            costosRentaListView = cosDao.consultarCostos();
+            costosListView = cosDao.consultarCostos();
         } else {
-            costosRentaListView = cosDao.filtrarCostosServicios(buscar);
+            costosListView = cosDao.filtrarCostosServicios(buscar);
         }
     }
 
-    public void eliminarCostoRenta() {
+    public void eliminar() {
         //Eliminamos el costo
-        cosDao.eliminarCostoServicio(DCostoview);
+        cosDao.eliminarCostoServicio(costoView);
 
-        //Comprobamos que el costo a eliminar no este en proceso de modificacion
-        if (costoView.equals(DCostoview)) {
-            //Si es asi limpiamos los objetos que contenian el costo a modificar
-            costoView = new SmsCostosservicios();
-            categoriaView = new SmsCategoria();
-            servicioView = new SmsServicios();
-            estado = 0;
+        //Si es asi limpiamos los objetos que contenian el costo a modificar
+        costoView = new SmsCostosservicios();
+        estado = 0;
 
-            nombre = "Registrar Costo Servicio";
-        }
-        //Limpiamos los objetos
-        DCostoview = new SmsCostosservicios();
-        costosRentaListView = cosDao.consultarCostos();//Recargamos la lista de costos
-    }
+        nombre = "Registrar Costo Servicio";
 
-    public void eliminarCostoTraslado() {
-
-    }
-
-    public void eliminarCostoTiempo() {
-
+        costosListView = cosDao.consultarCostos();//Recargamos la lista de costos
     }
 
     //Metodos Propios
     public void metodo() {
         if (estado == 0) {
-            registrarCostoRenta();
+            registrar();
         } else if (estado == 1) {
-            modificarCostoRenta();
+            modificar();
             estado = 0;
             nombre = "Registrar Costo Servicio";
         }
@@ -242,8 +211,6 @@ public class CostosServicioBean implements Serializable {
         estado = i;
         if (estado == 1) {
             nombre = "Modificar Costo Servicio";
-            categoriaView = costoView.getSmsCategoria();
-            servicioView = costoView.getSmsServicios();
         }
     }
 

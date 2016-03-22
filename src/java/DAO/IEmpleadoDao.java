@@ -14,6 +14,8 @@ public interface IEmpleadoDao {
 
     //Definicion metodos CRUD
     public List<SmsEmpleado> mostrarEmpleados();
+    
+    public List<SmsEmpleado> consultarEmpleadosSegunProveedor(String Proveedor);
 
     public void registrarEmpleado(SmsEmpleado empleado);
 
@@ -27,7 +29,7 @@ public interface IEmpleadoDao {
 
     public List<SmsEmpleado> consultarEmpleado(SmsUsuario usuario);
 
-    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String espacioInicio, String espacioLlegada);
+    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String espacioInicio, String espacioLlegada, String Proveedor);
     
     public List<SmsEmpleado> consultarEmpleadosCiudad(SmsCiudad ciudad);
 }
