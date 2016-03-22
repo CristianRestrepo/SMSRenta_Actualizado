@@ -25,10 +25,7 @@
                         <b:row>
                             <b:column class="box espacio-arriba" col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1" offset="1">
                                 <h:form id="formularioAgenda">
-
-                                    <p:messages id="msg" showDetail="true" autoUpdate="true" closable="true"/>
-
-
+                                    <p:growl id="msg" autoUpdate="true" showDetail="true" life="3000"/>
                                     <p:wizard flowListener="#{reservacionBean.flujoDeReservacion}" showNavBar="false" showStepStatus="false" widgetVar="wiz">
                                         <p:tab id="Agenda" title="Agenda">
                                             <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset-lg="2" offset="2">
@@ -298,9 +295,7 @@
                                                 </p:dataScroller>
                                             </b:column>
                                         </p:tab>
-                                        <p:tab id="Confirmacion" title="Confirmacion">                                           
-                                            <p:growl id="msg" autoUpdate="true" showDetail="true" life="3000"/>
-
+                                        <p:tab id="Confirmacion" title="Confirmacion">                                          
                                             <div class="col-md-12">
                                                 <div class="col-md-4">
                                                     <img class="img-responsive center-block img-rounded" 
@@ -313,10 +308,7 @@
                                                 </div>
                                             </div>
 
-                                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                                                <!-- Content Header (Page header) -->
-
-
+                                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">                                                <!-- Content Header (Page header) -->
 
                                                 <!-- Main content -->
                                                 <section class="invoice">

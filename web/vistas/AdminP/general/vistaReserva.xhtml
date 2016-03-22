@@ -21,7 +21,7 @@
 
                                 <div class="pad margin no-print">
                                     <div class="callout callout-info" style="margin-bottom: 0!important;">
-                                        <h4>Reserva #{reservacionBean.mreservaView.idReservacion}</h4>
+                                        <h4>Reserva #{reservacionBean.reservaView.idReservacion}</h4>
                                         Su reserva ha sido exitosa, porfavor verifique los datos ingresados en la reservación
                                         antes de realizar el pago del servicio.
                                     </div>
@@ -54,11 +54,10 @@
                                         <div class="col-sm-3 invoice-col">
                                             Para:<br/>
                                             <address>
-                                                <strong>#{reservacionBean.mclienteView.usuarioNombre}</strong><br></br>
-                                                Cc: #{reservacionBean.mclienteView.usuarioCc}<br></br>
-                                                Razon Social: #{reservacionBean.mclienteView.usuarioRazonSocial}<br></br>
-                                                Teléfono: #{reservacionBean.mclienteView.usuarioTelefono}<br></br>
-                                                Email:  #{reservacionBean.mclienteView.usuarioEmail}
+                                                <strong>#{reservacionBean.reservaView.smsUsuario.usuarioNombre}</strong><br></br>
+                                                Cc: #{reservacionBean.reservaView.smsUsuario.usuarioCc}<br></br>
+                                                Teléfono: #{reservacionBean.reservaView.smsUsuario.usuarioTelefono}<br></br>
+                                                Email:  #{reservacionBean.reservaView.smsUsuario.usuarioEmail}
                                             </address>
                                         </div><!-- /.col -->
 
@@ -66,8 +65,8 @@
                                             <h3>Conductor elegido para Servicio</h3>
                                             <div class="col-sm-6">
                                                 <address>
-                                                    <strong>Nombre: #{reservacionBean.MConductorView.usuarioNombre}</strong><br></br>
-                                                    Cc: #{reservacionBean.MConductorView.usuarioCc}<br></br>
+                                                    <strong>Nombre: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioNombre}</strong><br></br>
+                                                    Cc: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioCc}<br></br>
                                                     Razon Social: #{reservacionBean.MConductorView.usuarioRazonSocial}<br></br>
                                                     Teléfono: #{reservacionBean.MConductorView.usuarioTelefono}<br></br>
                                                     Email: #{reservacionBean.MConductorView.usuarioEmail}
