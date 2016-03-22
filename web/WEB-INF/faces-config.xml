@@ -349,6 +349,15 @@
             <to-view-id>/vistas/AdminS/lugares/SLugares.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+         <navigation-case>
+            <from-outcome>AdminSMercado</from-outcome>
+            <to-view-id>/vistas/AdminS/mercados/SMercados.xhtml</to-view-id>
+        </navigation-case>    
+        <navigation-case>
+            <from-outcome>AdminSCategoriaServicio</from-outcome>
+            <to-view-id>/vistas/AdminS/servicios/SCategoriasServicios.xhtml</to-view-id>
+        </navigation-case>
+            
         
          
         <!-- ADMIN SECUNDARIO -->
@@ -466,6 +475,7 @@
             <to-view-id>/vistas/AdminP/servicios/PCategoriasServicios.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
     </navigation-rule>
     
     <!-- otras rutas admin principal-->
@@ -567,4 +577,7 @@
         <managed-bean-class>Controladores.NacionalidadBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    <navigation-rule>
+       
+    </navigation-rule>
 </faces-config>

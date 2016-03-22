@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../temp-admin2.xhtml">
+
+            <ui:define name="content1">                
+                <b:container fluid="true">
+                    <b:row>
+                        <h:form id="formularioSubidaArchivos" enctype="multipart/form-data">   
+                            <p:messages id="msg" closable="true"/>
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <div class="box box-info espacio-arriba">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Mercados y Servicios SMS Renta</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <p>En este panel podrá registrar los diferentes tipos de mercado existentes en SMS renta.</p>
+                                    </div>
+                                </div>
+                            </b:column> 
+
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <ol class=" breadcrumb">
+                                    <li class="active">
+                                        <i class="fa fa-dashboard"></i> Mercados
+                                    </li>
+                                </ol>
+                            </b:column>
+
+
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
+                                <div class="box box-warning">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Fotografia de portada para mercados</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <p>Por favor ingrese la fotografia que servira como portada para el mercado en el momento de realizar una reservacion.</p>
+                                    </div>
+                                </div>
+                            </b:column> 
+
+
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                                <div class="box box-warning">
+                                    <p:fragment autoUpdate="true">
+                                        <div class="box-header with-border">    
+                                            <i class="fa fa-2x fa-camera"/>
+                                            <h4 class="box-title">Ingreso de Fotografía</h4>
+                                        </div>
+                                        <div class="box-body">
+                                            <p:outputLabel id="TEstadoFoto" value="#{mercadoBean.estadoFoto}"/>
+                                            <div class="table-responsive">
+                                                <p:fileUpload id="fileIdPhoto" fileUploadListener="#{mercadoBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                              process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formularioMercado:BTMercado :formularioSubidaArchivos" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+
+                                                <p:messages id="messages" closable="true" />
+                                            </div> 
+                                        </div>
+                                    </p:fragment>
+                                </div>
+                            </b:column>
+                        </h:form>
+
+                        <h:form id="formularioMercado">
+
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
+                                <div class="box box-success">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Registro Mercados SMS Renta</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="table-responsive">                                            
+                                            <div class="form-group">
+                                                <h:panelGrid cellpadding="5" width="100%" columns="2" id="PMercado">
+                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" tooltip="Nombre del mercado" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
+                                                    <p:message for="TNombreMrd"/>
+
+                                                    <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
+                                                    <p:message for="TDescripcionMrd"/>
+                                                </h:panelGrid>
+                                                <p:commandButton id="BTMercado" disabled="#{mercadoBean.habilitarRegistro}" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:BTMercado :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg :formularioSubidaArchivos:messages" value="#{mercadoBean.nombre}" action="#{mercadoBean.metodo()}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </h:form>
+
+
+
+                        <h:form id="formularioListaMercados">
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Lista Mercados SMS Renta</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="table-responsive">                                      
+                                            <p:dataTable id="ListaMercados" var="Mercado" value="#{mercadoBean.mercadoListView}"  
+                                                         rows="5"
+                                                         paginator="true"
+                                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                         rowsPerPageTemplate="5,10,15" emptyMessage="Marcas no registrados">
+
+                                                <p:column headerText="Nombre">
+                                                    <h:outputText value="#{Mercado.mercadoNombre}" />
+                                                </p:column>
+
+                                                <p:column headerText="Descripcion">
+                                                    <h:outputText value="#{Mercado.mercadoDescripcion}" />
+                                                </p:column>
+
+                                                <p:column style="width: 35px">
+                                                    <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" action="#{mercadoBean.seleccionarCrud(1)}" update=":formularioMercado :formularioSubidaArchivos" title="Modificar">
+                                                        <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
+                                                    </p:commandLink>
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                                <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                            </p:confirmDialog>                                      
+                                        </div>                                                                       
+                                    </div> 
+                                </div>
+                            </b:column> 
+                        </h:form>
+
+                    </b:row>
+                </b:container>                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

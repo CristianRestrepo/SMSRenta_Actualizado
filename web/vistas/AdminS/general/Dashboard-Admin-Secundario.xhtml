@@ -72,41 +72,41 @@
                         </b:column>
 
 
-                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+<!--                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-road" />
                                     <h3 class="box-title">Lista de Conductores</h3>
                                 </div>
                                 <div class="box-body">
-                                    <!-- LISTA DE CONDUCTORES -->
+                                     LISTA DE CONDUCTORES 
                                     <p:dataTable value="#{empleadoBean.empleadosListView}" var="condictores"  paginator="true" rows="10" styleClass="paginated">
 
                                         <p:column headerText="ID ">
-                                            <h:outputText value="#{condictores.idUsuario}" />
+                                            <h:outputText value="#{condictores.smsUsuario.idUsuario}" />
                                         </p:column>
                                         <p:column headerText="Nombre ">
-                                            <h:outputText value="#{condictores.usuarioNombre}" />
+                                            <h:outputText value="#{condictores.smsUsuario.usuarioNombre}" />
                                         </p:column>
                                         <p:column headerText="Teléfono">
-                                            <h:outputText value="#{condictores.usuarioTelefono}" />
+                                            <h:outputText value="#{condictores.smsUsuario.usuarioTelefono}" />
                                         </p:column>
 
                                     </p:dataTable>
                                 </div>
                             </div>
-                        </b:column>
+                        </b:column>-->
 
 
-                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
+<!--                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-users "/>
                                     <h3 class="box-title">Lista de Clientes</h3>
                                 </div>
                                 <div class="box-body">
-                                    <!-- LISTA DE CLIENTES -->
-                                    <p:dataTable var="clien" value="#{clienteBean.clientesListView}">
+                                     LISTA DE CLIENTES 
+                                    <p:dataTable var="clien" value="#{clienteBean.usuariosListView}">
                                         <p:column headerText="Id">
                                             <h:outputText value="#{clien.idUsuario}" />
                                         </p:column>
@@ -119,14 +119,14 @@
                                             <h:outputText value="#{clien.smsCiudad.ciudadNombre}" />
                                         </p:column>
 
-                                        <!-- <p:column headerText="Ciudad Servicio">
+                                         <p:column headerText="Ciudad Servicio">
                                              <h:outputText value="#{agendaBean.ciudadView.ciudadNombre}" />
-                                         </p:column>-->
+                                         </p:column>
 
                                     </p:dataTable>
                                 </div>
                             </div>
-                        </b:column>
+                        </b:column>-->
                     </h:form>
                 </b:row>
             </b:container>

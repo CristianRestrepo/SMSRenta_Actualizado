@@ -10,7 +10,7 @@
 
     <ui:composition template="./../temp-admin2.xhtml">
         <ui:define name="content1">
-            <b:container fluid="true">
+             <b:container fluid="true">
                 <b:row>
                     <h:form>   
                         <p:messages id="msg" closable="true"/>
@@ -37,7 +37,7 @@
                                     <div class="table-responsive">                                        
                                         <h:panelGrid id="PReferencias" columns="3" cellpadding="5" style="width: 100%">
                                             <p:outputLabel value="Marca"/>
-                                            <b:selectOneMenu value="#{referenciaBean.marcaView.marcaNombre}">
+                                            <b:selectOneMenu value="#{referenciaBean.referenciaView.smsMarca.marcaNombre}">
                                                 <f:selectItem id="SMarcas" itemLabel="Seleccione Marca"/>
                                                 <f:selectItems value="#{marcaBean.nombresMarcaView}"/>
                                             </b:selectOneMenu>
@@ -49,7 +49,7 @@
                                         </h:panelGrid>
                                     </div> 
                                     <hr/>
-                                    <p:commandButton  id="BTReferencia" update="@form" class="btn btn-block btn-danger" value="#{referenciaBean.nombre}" action="#{referenciaBean.metodo()}"/>                                   
+                                    <p:commandButton  id="BTReferencia" update="msg BTReferencia PReferencias DTReferencias" class="btn btn-block btn-danger" value="#{referenciaBean.nombre}" action="#{referenciaBean.metodo()}"/>                                   
                                 </div>                                  
                             </div>
                         </b:column>
@@ -58,7 +58,7 @@
                             <div class="box box-success">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-search"/>
-                                    <h4 class="box-title">Consultar Referencias SMS Renta</h4>                                
+                                    <h4 class="box-title">Consulta de Referencias SMS Renta</h4>                                
                                 </div>
                                 <div class="box-body">
                                     <b:inputText id="TBuscar" placeholder="Buscar" value="#{referenciaBean.buscar}" style="width: 100%">
@@ -77,10 +77,19 @@
                                             <p:outputLabel value="#{Referencias.smsMarca.marcaNombre}"/>
                                         </p:column>
 
+                                        <p:column style="width: 35px">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this"  update="@form" action="#{referenciaBean.seleccionarCRUD(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.referenciaView}"/>
+                                            </p:commandLink>
+                                        </p:column>
+
                                         
                                     </p:dataTable>
 
-                                   
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                    </p:confirmDialog>
                                 </div>
                             </div>
                         </b:column>

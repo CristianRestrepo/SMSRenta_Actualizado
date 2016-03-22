@@ -7,19 +7,28 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui">
 
- 
-        <ui:composition template="./../temp-admin2.xhtml">        
-            <ui:define name="content1">
-                <b:container fluid="true">
+
+    <ui:composition template="./../temp-admin2.xhtml">        
+        <ui:define name="content1">
+            <b:container fluid="true">
                 <b:row>
-                    <h:form>
-                        <p:messages id="messages" closable="true"/>
+                    <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                        <div class="espacio-arriba" style="text-align: center" align="center">
+                            <h4 style="font-size: x-large">PAISES Y DEPARTAMENTOS</h4><br/>
+                            <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre}</p>
+                        </div>
+                    </b:column>
+
+                    <h:form id="formularioPais">                        
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <p:messages id="messages" closable="true"/>
+                        </b:column>
 
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-globe"/>
-                                    <h4 class="box-title">Registro de Países</h4>
+                                    <h4 class="box-title">Registro de Paises</h4>
                                 </div>
                                 <div class="box-body">
                                     <p style="text-justify: auto">En este panel de registro podrá registrar
@@ -34,16 +43,16 @@
                             <div class="box box-danger">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-globe"/>
-                                    <h4 class="box-title">Datos de país</h4>
+                                    <h4 class="box-title">Datos de pais</h4>
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid id="PPais" columns="2" style="width: 100%">                                            
-                                            <p:outputLabel value="Nombre del país:"/>
-                                            <b:inputText placeholder="Nombre del país"  value="#{paisBean.paisView.paisNombre}" style="width: 100%"/>                                         
+                                        <h:panelGrid id="PPais" columns="2" style="width: 100%">                                          
+                                            <b:inputText id="TPaisNombre" placeholder="Nombre del pais" required="true" requiredMessage="Ingrese nombre del pais"  value="#{paisBean.paisView.paisNombre}" style="width: 100%"/>                                         
+                                            <p:message for="TPaisNombre"/>
                                         </h:panelGrid>
                                     </div> <br/>
-                                    <p:commandButton class="btn btn-block btn-danger" id="BTPais" action="#{paisBean.metodo()}" update="messages PPais BTPais DTPaises" value="#{paisBean.nombre}"/>                                       
+                                    <p:commandButton class="btn btn-block btn-danger" id="BTPais" action="#{paisBean.metodo()}" update=":formularioPais :formularioDepartamentos:SMPais" value="#{paisBean.nombre}"/>                                       
                                 </div>
                             </div>
                         </b:column>
@@ -52,7 +61,7 @@
                             <div class="box box-success">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-list-alt"/>
-                                    <h4 class="box-title">Lista de Países</h4>
+                                    <h4 class="box-title">Lista de Paises</h4>
                                 </div> 
                                 <div class="box-body">
                                     <b:inputText placeholder="Buscar" value="#{paisBean.buscar}" style="width: 100%">
@@ -67,15 +76,112 @@
                                         <p:column headerText="Nombre">
                                             <h:outputText value="#{paises.paisNombre}"/>
                                         </p:column>
+
+                                        <p:column style="width: 35px">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{paisBean.seleccionarCrud(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{paises}" target="#{paisBean.paisView}"/>
+                                            </p:commandLink>
+                                        </p:column>
+
+                                        
                                     </p:dataTable> 
-                                    
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                    </p:confirmDialog>
                                 </div>                                   
                             </div>
                         </b:column>
-                    </h:form> 
+                    </h:form>
+
+                    <h:form id="formularioDepartamentos">
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <p:messages id="messages" closable="true"/>
+                        </b:column>
+
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-info espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-globe"/>
+                                    <h4 class="box-title">Registro de Departamentos</h4>
+                                </div>
+                                <div class="box-body">
+                                    <p style="text-justify: auto">En esta seccion de registro podrá registrar
+                                        la información referente a los departamentos de un pais en donde
+                                        SMS Renta presta sus servicios.</p> 
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
+
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-globe"/>
+                                    <h4 class="box-title">Datos del departamento</h4>
+                                </div> 
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <h:panelGrid id="PDepartamento" columns="2" style="width: 100%">                                          
+                                            <b:selectOneMenu id="SMPais" required="true" style="width: 100%" value="#{departamentoBean.departamentoView.smsPais.paisNombre}" tooltip="Pais al que pertenece el departamento a registrar o modificar" requiredMessage="Seleccion el pais" >
+                                                <f:selectItem noSelectionOption="true" itemLabel="Seleccione pais"/>
+                                                <f:selectItems value="#{paisBean.nombrePaisesListView}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SMPais"/>
+
+                                            <b:inputText tooltip="Nombre del departamento" id="TDepartamentoNombre" placeholder="Nombre del departamento" required="true" requiredMessage="Ingrese nombre del pais"  value="#{departamentoBean.departamentoView.departamentoNombre}" style="width: 100%"/>                                         
+                                            <p:message for="TDepartamentoNombre"/>
+                                        </h:panelGrid>
+                                    </div> <br/>
+                                    <p:commandButton class="btn btn-block btn-danger" id="BTPais" action="#{departamentoBean.metodo()}" update=":formularioDepartamentos" value="#{departamentoBean.nombre}"/>                                       
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-list-alt"/>
+                                    <h4 class="box-title">Lista de Paises</h4>
+                                </div> 
+                                <div class="box-body">
+                                    <b:inputText placeholder="Buscar" value="#{departamentoBean.buscar}" style="width: 100%">
+                                        <p:ajax event="keyup" listener="#{departamentoBean.filtrar()}" process="@this" update="DTDepartamentos"/>                                    
+                                    </b:inputText>
+                                    <hr/>
+                                    <p:dataTable id="DTDepartamentos" emptyMessage="Ciudades no registradas" var="departamento" value="#{departamentoBean.departamentoListView}" 
+                                                 rows="5"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15">
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{departamento.departamentoNombre}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Nombre">
+                                            <h:outputText value="#{departamento.smsPais.paisNombre}"/>
+                                        </p:column>
+
+                                        <p:column style="width: 35px">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formularioDepartamentos" action="#{departamentoBean.seleccionarCrud(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{departamento}" target="#{departamentoBean.departamentoView}"/>
+                                            </p:commandLink>
+                                        </p:column>
+
+                                    </p:dataTable> 
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                    </p:confirmDialog>
+                                </div>                                   
+                            </div>
+                        </b:column>
+                    </h:form>
                 </b:row>
             </b:container>
-            </ui:define>
-        </ui:composition>
-   
+        </ui:define>
+    </ui:composition>
+
 </html>

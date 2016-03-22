@@ -14,138 +14,67 @@
         <ui:define name="content1">
 
             <b:container fluid="true">
-                <h:form id="formA">
-                    <p:messages closable="true" id="msg"/>
-                    <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
-                        <div class="box box-danger espacio-arriba">
-                            <div class="box-header with-border">
-                                <i class="fa fa-2x fa-file-text"/>
-                                <h4 class="box-title"> Edicion de Perfil</h4>                                   
+                    <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                        <div class="espacio-arriba" style="text-align: center" align="center">
+                            <strong>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre}</strong>
+                        </div>
+
+                    </b:column>
+
+                    <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                        <div class="box espacio-arriba">
+                            <div style="text-align: left" class="box-header with-border">
+                                <i class="fa fa-5x fa-lock"/>
+                                <h4 class="box-title" style="font-size: x-large">Inicio de sesión <br/> y seguridad</h4>
                             </div> 
-                            <div class="box-body">
-                                <div class="table-responsive">
-                                    <h:panelGrid  id="seccionDatosUsuario" columns="3" cellpadding="2" style="width: 100%;">
-                                        <p:outputLabel value="Nombre: *"/>
-                                        <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombre y apellido" style="width: 100%;" maxlength="60" value="#{usuarioBean.usuario.usuarioNombre}"></b:inputText>                       
-                                        <p:message for="TNombreApProv"/>
+                            <br/>
+                            <div align="center" class="box-body" >
+                                <img src="../../../../resources/images/vec-1.png" style="max-width: 77% !important; " class="img-responsive center-block" />
+                                <p>Controla tu contraseña y la configuración de acceso <br/> a tu cuenta</p>
+                            </div>
 
-                                        <p:outputLabel value="CC: " />
-                                        <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioCc}"></b:inputText>
-                                        <p:message for="TCcProv"/>
-
-                                        <p:outputLabel value="Telefono: "/>
-                                        <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioTelefono}"></b:inputText> 
-                                        <p:message for="TTelProv"/>
-
-                                        <p:outputLabel value="Email: *"/>
-                                        <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioEmail}"></b:inputText>
-                                        <p:message for="TEmailProv"/>
-
-                                        <p:outputLabel value="Razon social: "/>
-                                        <b:inputText maxlength="100" id="TRazSocProv" placeholder="Nombre de la empresa" style="width: 100%"  value="#{usuarioBean.modUsuarioView.usuarioRazonSocial}"></b:inputText>
-                                        <p:message for="TRazSocProv"/>
-
-                                        <p:outputLabel value="Nit: "/>
-                                        <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{usuarioBean.modUsuarioView.usuarioNit}"></b:inputText>
-                                        <p:message for="TNitProv"/>
-
-                                        <p:outputLabel value="Ciudad: *"/>
-                                        <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{usuarioBean.ciudadUsuario.ciudadNombre}" style="width: 100%">
-                                            <f:selectItem itemLabel="Seleccione Ciudad"/>
-                                            <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
-                                        </b:selectOneMenu>
-                                        <p:message for="SCiudades"/>
-
+                            <div class="box-footer">
+                                <h:panelGrid columns="2" width="100%">
+                                    <p:graphicImage/>
+                                    <h:panelGrid columns="1" width="100%">
+                                        <h4 class="box-title" style="font-size: large">Controla tu seguridad</h4>                                        
+                                        <p>Modifica tu informacion de sesion en pocos minutos, crea una contraseña personalizada y cambia tu nombre de sesión.</p>
                                     </h:panelGrid>
-                                </div>
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-check-square"/>
-                                    <h4 class="box-title">Datos de Sesión</h4>
-                                    <br/><br/> 
-                                    <p:commandLink value="Editar datos de sesion">
-                                        <p:ajax listener="#{usuarioBean.habilitarEdicion()}"  event="click" update="@form"/>
-                                    </p:commandLink>
-                                </div>
-                                <div class="box-body">
-                                    <div class="table-responsive"> 
-                                        <h:panelGrid rendered="#{usuarioBean.habilitarEditarSesion}" columns="2" id="seccionDatosSesion"  cellpadding="2"  style="width: 100%">
-
-                                            <p:outputLabel value="Login: "/>
-                                            <b:inputText style="width: 100%" maxlength="60" validator="regLoginValidator" placeholder="Login de sesion" value="#{usuarioBean.modUsuarioView.usuarioLogin}"></b:inputText>
-
-                                            <p:outputLabel value="Contraseña: "/>
-                                            <b:inputSecret label="Contraseña" style="width: 100%" binding="#{UserPass}" maxlength="20" placeholder="Contraseña de sesion" value="#{usuarioBean.modUsuarioView.usuarioPassword}">
-                                                <f:validateLength minimum="6"/>
-                                            </b:inputSecret>
-
-                                            <p:outputLabel value="Repita contraseña: "/>
-                                            <b:inputSecret label="Repita Contraseña" style="width: 100%" maxlength="20" validator="repeatPasswordValidator" placeholder="Repita contraseña de sesion" value="#{usuarioBean.modUsuarioView.usuarioRememberToken}">
-                                                <f:attribute name="password" value="#{UserPass.value}"/>
-                                                <f:validateLength minimum="6"/>
-                                            </b:inputSecret>
-
-                                            <p:commandLink value="Cerrar">
-                                                <p:ajax event="click" listener="#{usuarioBean.deshabilitarEdicion()}" update="@form"/>
-                                            </p:commandLink>
-
-                                        </h:panelGrid>                                        
-                                    </div><hr/>                                    
-                                    <p:commandButton id="BTProveedor" class="btn btn-block btn-danger" ajax="false" action="#{usuarioBean.modificarPerfil()}" value="Editar Perfil" />
-                                </div>                                        
+                                </h:panelGrid>
+                                <p:commandButton action="InformacionSesion" value="Modificar" class="btn btn-block btn-success"/>
                             </div>
                         </div>
+
                     </b:column>
 
-                    <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
-                        <div class="box box-solid bg-green-gradient espacio-arriba">
-                            <div class="box-header ui-sortable-handle">
-                                <i class="fa fa-user-plus"/>
-                                <h3 class="box-title">Edición de Datos de Perfil </h3>
+                    <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                        <div class="box espacio-arriba"> 
+                            <div style="text-align: left;" class="box-header with-border">
+                                <i class="fa fa-2x fa-user"/>
+                                <h4 style="font-size: x-large" class="box-title">Información personal <br/> y perfil </h4>                                   
+                            </div> 
+                            <br/>
+                            <div align="center" class="box-body">
+                                <img src="../../../../resources/images/vec-2.png" style="max-width: 77% !important; " class="img-responsive center-block" />
+                                <p>Controla tus datos personales y cambia tu imagen de perfil.</p>
                             </div>
-                            <div class="box-body">
-                                <p class="text-justify">    
-                                    Espacio reservado solo para cambiar los datos del usuario que sean necesarios 
-                                    debido a errores de digitación al principio del registro, o de actualizaciones de datos 
-                                    como el teléfono, el correo, etc.
-                                </p>
-
+                            <div class="box-footer">
+                                <h:panelGrid columns="2" width="100%">
+                                    <p:graphicImage/>
+                                    <h:panelGrid columns="1" width="100%">
+                                        <h4 class="box-title" style="font-size: large">Controla tus datos personales</h4>                                        
+                                        <p>Modifica tu informacion personal y cambia tu foto de sesion para personalizar tu cuenta.</p>                                    
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <p:commandButton action="InformacionPersonal"  value="Modificar" class="btn btn-block btn-success"/>
                             </div>
-                        </div>
+                        </div>                        
                     </b:column>
-                </h:form>
 
-                <h:form id="formB" enctype="multipart/form-data">
-                    <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >
 
-                        <div class="box box-success">
-                            <div class="box-header with-border">
-                                <i class="fa fa-2x fa-user-plus"/>
-                                <h4 class="box-title">Fotografia de perfil</h4>
-                            </div>
-                            <div class="box-body" style="width: 100%" align="center">
-                                <p:graphicImage class="img-circle" width="160" height="180" value="#{usuarioBean.modUsuarioView.usuarioFotoRuta}"/> 
-                            </div>
-                        </div>
 
-                        <div class="box box-primary">
-                            <p:fragment autoUpdate="true">
-                                <div class="box-header with-border">    
-                                    <i class="fa fa-2x fa-camera"/>
-                                    <h4 class="box-title">Ingreso de Fotografía</h4>
-                                </div>
-                                <div class="box-body">
-                                    <p:outputLabel id="TEstadoFoto" value="#{usuarioBean.estadoFoto}"/>
-                                    <div class="table-responsive">
-                                        <p:fileUpload id="fileIdPhoto" fileUploadListener="#{usuarioBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
-                                                      process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formB" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
 
-                                        <p:messages id="messages" closable="true" /></div> 
-                                </div>
-                            </p:fragment>
-                        </div>
-                    </b:column>
-                </h:form>
-            </b:container>
+                </b:container>
 
         </ui:define>
 

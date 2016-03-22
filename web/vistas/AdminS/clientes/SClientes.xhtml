@@ -10,14 +10,13 @@
 
     <ui:composition template="./../temp-admin2.xhtml">
         <ui:define name="content1">
+            
             <b:container fluid="true">
                 <b:row>
                     <h:form id="formulario">
-                        <p:messages id="msg" closable="true"/>
+                        <p:messages id="msg" closable="true"/>                       
 
-                        
-
-                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12" >                            
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >                            
                             <div class="box box-danger espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-th-list"/>
@@ -26,75 +25,61 @@
                                 <div class="box-body">
 
                                     <div class="table-responsive">
-                                        <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="3" style="width: 100%;">
-                                            <p:outputLabel value="Nombre: *"/>
-                                            <b:inputText maxlength="60" id="TNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.clienteView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
+                                        <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="2" style="width: 100%;">
+
+                                            <b:inputText maxlength="60" id="TNombreApCli" tooltip="Nombres y apellidos del cliente" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.usuarioView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
                                             <p:message for="TNombreApCli"/>
 
-                                            <p:outputLabel value="CC:" />
-                                            <b:inputText maxlength="45" id="TCcCli" placeholder="Cédula de ciudadania" value="#{clienteBean.clienteView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                            <b:selectOneMenu value="#{clienteBean.usuarioView.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
+                                                <f:selectItem itemLabel="Seleccione nacionalidad" noSelectionOption="true"/>
+                                                <f:selectItems value="#{nacionalidadBean.nombresNacionalidades}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SNacionalidad"/>
+
+                                            <b:inputText maxlength="45" id="TCcCli" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" value="#{clienteBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
                                             <p:message for="TCcCli"/>
 
-                                            <p:outputLabel value="Teléfono:"/>
-                                            <b:inputText maxlength="45" id="TTelCli" placeholder="Número de télefono fijo o celular" value="#{clienteBean.clienteView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+
+                                            <b:inputText maxlength="45" id="TTelCli" tooltip="Numero de telefono celular" placeholder="Numero de telefono fijo o celular" value="#{clienteBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelCli"/>
 
-                                            <p:outputLabel value="Email: *"/>
-                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.clienteView.usuarioEmail}" style="width: 100%"/>
-                                            <p:message for="TEmailCli"/>
 
-                                            <p:outputLabel value="Rózon social: "/>
-                                            <b:inputText maxlength="100" id="TRazSocCli" placeholder="Nombre de la empresa" value="#{clienteBean.clienteView.usuarioRazonSocial}" style="width: 100%" ></b:inputText>
-                                            <p:message for="TRazSocCli"/>
+                                            <b:inputText maxlength="100" tooltip="Email valido" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%">
+                                                <f:attribute name="operacion" value="#{clienteBean.operacion}"/>
+                                                <f:attribute name="usuario" value="#{clienteBean.usuarioView}"/>
+                                            </b:inputText>
+                                            <p:message for="TEmailCli"/>                                           
 
-                                            <p:outputLabel value="Nit: "/>
-                                            <b:inputText maxlength="45" id="TNitCli" placeholder="Nit de la empresa" value="#{clienteBean.clienteView.usuarioNit}" style="width: 100%" ></b:inputText>
-                                            <p:message for="TNitCli"/>
-
-                                            <p:outputLabel value="Ciudad: *"/>
-                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{clienteBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" tooltip="Ciudad en la que recide el cliente" id="SCiudades" value="#{clienteBean.usuarioView.smsCiudad.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SCiudades"/>
                                         </h:panelGrid>
+                                        <hr/>  
                                     </div>
-                                </div>
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-check-square"/>
-                                    <h4 class="box-title">Datos de Sesión</h4>
-                                </div>
-                                <div class="box-body">                                  
-                                    <div class="table-responsive">
-                                        <h:panelGrid cellpadding="5" columns="3" id="seccionDatosSesion" style="width: 100%">
+                                    <h:panelGrid columns="2" width="100%">
+                                        <p:commandButton id="BTCliente" class="btn btn-block btn-success" onclick="PrimeFaces.monitorDownload(start, stop);"  update="@form" action="#{clienteBean.metodo()}" value="#{clienteBean.nombreOperacion}" />
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{clienteBean.habilitarCancelar}" action="#{clienteBean.cancelar()}" update="@form" value="Cancelar" />
+                                    </h:panelGrid>
+                                    <script type="text/javascript">
+                                        function start() {
+                                            PF('statusDialog').show();
+                                        }
+                                        function stop() {
+                                            PF('statusDialog').hide();
+                                        }
+                                    </script>
+                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                    </p:dialog>
 
-                                            <p:outputLabel value="Login: "/>
-                                            <b:inputText id="TLoginCli" maxlength="60" validator="regLoginValidator" style="width: 100%" value="#{clienteBean.clienteView.usuarioLogin}" placeholder="Login de sesion"/>
-                                            <p:message for="TLoginCli"/>
+                                </div>                              
 
-                                            <p:outputLabel value="Contraseña: "/>
-                                            <b:inputSecret label="Contraseña" id="TPassCli" binding="#{pass}"  maxlength="20" style="width: 100%" value="#{clienteBean.clienteView.usuarioPassword}" placeholder="Contraseña de sesion">
-                                                <f:validateLength minimum="6"/>
-                                            </b:inputSecret>
-                                            <p:message for="TPassCli"/>
-
-                                            <p:outputLabel value="Repita contraseña: "/>
-                                            <b:inputSecret label="Repita contraseña" id="TRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.clienteView.usuarioRememberToken}" placeholder="Repita contraseña de sesion">
-                                                <f:validator validatorId="repeatPasswordValidator" />
-                                                <f:attribute name="password" value="#{pass.value}"/>
-                                                <f:validateLength minimum="6" />
-                                            </b:inputSecret> 
-                                            <p:message id="msgPass" for="TRemPassCli"/>
-
-
-                                        </h:panelGrid>
-                                    </div><hr/>
-                                    <p:commandButton id="BTCliente" class="btn btn-block btn-danger" update="@form" action="#{clienteBean.registrarClienteAdmin()}" value="Registrar Cliente" />
-                                </div>
                             </div>
-                        </b:column>
-                        
-                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >
+                        </b:column>                                                 
+
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-user-plus"/>
@@ -102,13 +87,12 @@
 
                                 </div>
                                 <div class="box-body">
-                                    <p class="text-justify">En este panel de registro podrá registrar
-                                        la información referente a nuestros clientes.</p> 
+                                    <p class="text-justify">En este panel de registro podrá registrar la información referente a nuestros clientes.</p> 
                                 </div>
                             </div>
                         </b:column>
 
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
                             <div class="box box-success">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-th-list"/>
@@ -117,9 +101,9 @@
 
                                 <div class="box-body">
                                     <b:inputText placeholder="Buscar" value="#{clienteBean.buscar}" style=" width: 100%">
-                                        <p:ajax event="keyup" listener="#{clienteBean.filtrar()}" process="@this" update="DTClientes"/>
+                                        <p:ajax event="keyup" listener="#{clienteBean.filtrarClientes()}" process="@this" update="DTClientes"/>
                                     </b:inputText>
-                                    <p:dataTable id="DTClientes" var="cliente" emptyMessage="Clientes no registrados" value="#{clienteBean.clientesListView}" rows="5"
+                                    <p:dataTable id="DTClientes" var="cliente" emptyMessage="Clientes no registrados" value="#{clienteBean.usuariosListView}" rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  rowsPerPageTemplate="5,10,15">
@@ -131,22 +115,25 @@
                                             <p:outputLabel value="#{cliente.usuarioEmail}"/>
                                         </p:column>
 
-                                        <p:column headerText="Razón Social">
-                                            <p:outputLabel value="#{cliente.usuarioRazonSocial}"/>
+                                        <p:column style="width: 35px">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{clienteBean.seleccionarCRUD(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.usuarioView}"/>
+                                            </p:commandLink>
                                         </p:column>
 
-                                        <p:column headerText="Teléfono">
-                                            <p:outputLabel value="#{cliente.usuarioTelefono}"/>
-                                        </p:column>
+
                                     </p:dataTable>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                    </p:confirmDialog>
                                 </div>
                             </div>
                         </b:column>
                     </h:form>
                 </b:row>
             </b:container>
-
-
         </ui:define>
     </ui:composition>
 

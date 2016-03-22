@@ -4,15 +4,15 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
     <ui:composition template="./../temp-admin2.xhtml">
         <ui:define name="content1">
-             <b:container fluid="true">
+         <b:container fluid="true">
                 <b:row>
-
-                   <h:form>
+                    <h:form>
                         <p:messages id="msg" autoUpdate="true" closable="true"/>
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="box box-info espacio-arriba">
@@ -22,8 +22,8 @@
                                 </div>
                                 <div class="box-body">
                                     <p class="text-justify"> En este panel podrá ingresar el nombre y la descripción respecto a las categorías 
-                                        de los Vehículos de SMS Renta. Un ejemplo de Categoría puede ser Categoría Blindado, Categoría 
-                                        Business, Categoría VIP, etc.</p>
+                                        de los Vehículos de SMS Renta. Un ejemplo de Categoría puede ser Categoría Blindado, Categorias 
+                                        Business, Categoría VIV, etc.</p>
                                 </div>
                             </div>
                         </b:column>
@@ -36,13 +36,20 @@
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid id="PCategoria" columns="3" style="width: 100%" cellpadding="5">
-                                            <p:outputLabel for="TNombreCat" value="Nombre de Categoría: "/>
-                                            <b:inputText maxlength="50" id="TNombreCat" required="true" requiredMessage="Ingrese nombre" placeholder="Nombre de categoria" value="#{categoriaBean.categoriaView.categoriaNombre}"/>
+                                        <h:panelGrid id="PCategoria" columns="2" style="width: 100%" cellpadding="5">
+                                            
+                                            <p:outputLabel value="Mercados"/>
+                                            <p:outputLabel/>
+                                            
+                                            <p:selectManyCheckbox columns="3" layout="grid" id="SMMercado" required="true" value="#{categoriaBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
+                                                <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
+                                            </p:selectManyCheckbox>
+                                            <p:message for="SMMercado"/>
+                                                                                        
+                                            <b:inputText maxlength="50" style="width: 100%" id="TNombreCat" required="true" requiredMessage="Ingrese nombre" placeholder="Nombre de categoria" value="#{categoriaBean.categoriaView.categoriaNombre}"/>
                                             <p:message for="TNombreCat"/>
 
-                                            <p:outputLabel for="TDescCat" value="Descripción de Categoría: "/>
-                                            <p:inputTextarea maxlength="150" style="width: 100%" id="TDescCat" placeholder="Descripción" value="#{categoriaBean.categoriaView.categoriaDescripcion}"/>
+                                            <p:inputTextarea maxlength="150" rows="6" style="width: 100%" id="TDescCat" placeholder="Descripcion" value="#{categoriaBean.categoriaView.categoriaDescripcion}"/>
                                             <p:message for="TDescCat"/>
                                         </h:panelGrid>
                                     </div>
@@ -55,7 +62,7 @@
                             <div class="box box-success">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-list"/>
-                                    <h4 class="box-title">Lista de Categorías</h4>
+                                    <h4 class="box-title">Lista de Categorias</h4>
                                 </div>
 
                                 <div class="box-body">
@@ -71,17 +78,27 @@
                                             <h:outputText value="#{Categorias.categoriaNombre}" />
                                         </p:column>
 
-                                        <p:column headerText="Descripción">
+                                        <p:column headerText="Descripcion">
                                             <h:outputText value="#{Categorias.categoriaDescripcion}" />
                                         </p:column>
+                                                                                                                        
+                                        <p:column style="width: 35px">
+                                            <p:commandLink class="fa fa-pencil btn btn-block btn-success" style="color: white" process="@this" update="@form" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
+                                            </p:commandLink>
+                                        </p:column>
+
                                         
                                     </p:dataTable>
-                                    
-                                   
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                    </p:confirmDialog>
                                 </div>
                             </div>
                         </b:column>
-                    </h:form>
+                    </h:form> 
                 </b:row>
             </b:container>
         </ui:define>

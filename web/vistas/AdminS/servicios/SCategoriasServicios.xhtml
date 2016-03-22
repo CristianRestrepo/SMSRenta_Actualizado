@@ -3,9 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -13,14 +14,14 @@
 
             <ui:define name="content1">
                 <b:container fluid="true">
-                    <b:row>
+                <b:row>
                         <h:form>                        
                             <p:messages id="msg" closable="true"/>
                             <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                                 <div class="box box-info espacio-arriba">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-briefcase"/>
-                                        <h4 class="box-title">Registro de Costos-Servicios</h4>
+                                        <h4 class="box-title">Registro de categorias de servicios</h4>
                                     </div>
                                     <div class="box-body">
                                         <p style="text-justify: auto">En este panel de registro podrá registrar la información 
@@ -33,32 +34,30 @@
                                 <div class="box box-danger">
                                     <div class="box-header with-border">                              
                                         <i class="fa fa-2x fa-list-alt"/>
-                                        <h4 class="box-title">Registro Costo Servicio</h4>
+                                        <h4 class="box-title">Registro de categorias de servicios</h4>
                                     </div> 
                                     <div class="box-body">
                                         <div class="table-responsive">
                                             <h:panelGrid id="PCostosServicio" columns="3" cellpadding="5" style="width: 100%">
-                                                <p:outputLabel value="Categoria:"/>
-                                                <b:selectOneMenu id="SCategoriasVehiculos" value="#{costosServicioBean.categoriaView.categoriaNombre}" style="width: 100%" required="true">                                            
-                                                    <f:selectItem itemLabel="Seleccione Categoria" noSelectionOption="true"/>
-                                                    <f:selectItems value="#{categoriaBean.nombresCategoriasListView}" />
+                                                <p:outputLabel value="Mercado:"/>
+                                                <b:selectOneMenu id="SMercados" value="#{categoriasServiciosBean.categoriaServiciosView.smsMercado.mercadoNombre}" style="width: 100%" required="true">                                            
+                                                    <f:selectItem itemLabel="Seleccione Mercado" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{mercadoBean.nombresMercadosListView}" />
                                                 </b:selectOneMenu>
-                                                <p:message for="SCategoriasVehiculos"/>
-
-                                                <p:outputLabel value="Servicio:"/>
-                                                <b:selectOneMenu id="SServicios" required="true" value="#{costosServicioBean.servicioView.serviciosNombre}">
-                                                    <f:selectItem itemLabel="Seleccione Servicio" noSelectionOption="true"/>
-                                                    <f:selectItems value="#{serviciosBean.nombreServiciosListView}" />
-                                                </b:selectOneMenu>
-                                                <p:message for="SServicios"/>
-
-                                                <p:outputLabel value="Costo: "/>
-                                                <b:inputText id="TCosto" placeholder="Costo del servicio" required="true" requiredMessage="Ingrese el valor del servicio" value="#{costosServicioBean.costoView.smsPrecio}" style="width: 100%"/>
-                                                <p:message for="TCosto"/>
+                                                <p:message for="SMercados"/>
+                                               
+                                                <p:outputLabel value="Nombre: "/>
+                                                <b:inputText id="TNombreCatServ" placeholder="Nombre de la categoria" required="true" requiredMessage="Ingrese el nombre de la categoria" value="#{categoriasServiciosBean.categoriaServiciosView.catNombre}" style="width: 100%"/>
+                                                <p:message for="TNombreCatServ"/>
+                                                
+                                                <p:outputLabel value="Descripcion: "/>
+                                                <p:inputTextarea rows="3" id="TDesCatServ" placeholder="Descripcion de la categoria" value="#{categoriasServiciosBean.categoriaServiciosView.catDescripcion}" style="width: 100%"/>
+                                                <p:message for="TDesCatServ"/>
+                                            
                                             </h:panelGrid>
                                         </div>
                                         <hr/>
-                                        <p:commandButton id="BTCosto" update="@form" action="#{costosServicioBean.metodo()}" class="btn btn-block btn-danger" value="#{costosServicioBean.nombre}"/>                           
+                                        <p:commandButton id="BTCatServicio" update="@form" action="#{categoriasServiciosBean.metodo()}" class="btn btn-block btn-danger" value="#{categoriasServiciosBean.nombre}"/>                           
                                     </div>                               
                                 </div>
                             </b:column>
@@ -73,28 +72,28 @@
                                         <b:inputText placeholder="Buscar" value="#{costosServicioBean.buscar}" style="width: 100%">
                                             <p:ajax event="keyup" listener="#{costosServicioBean.filtrar()}" process="@this" update="DTCostosServicios"/>
                                         </b:inputText>
-                                        <p:dataTable id="DTCostosServicios" var="costos" value="#{costosServicioBean.costosListView}" 
+                                        <p:dataTable id="DTCostosServicios" var="categoria" value="#{categoriasServiciosBean.categoriasServicioListView}" 
                                                      rows="5"
                                                      paginator="true"
                                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                      rowsPerPageTemplate="5,10,15" emptyMessage="Costos no registrados">
 
-                                            <p:column headerText="Categoria">
-                                                <h:outputText value="#{costos.smsCategoria.categoriaNombre}"/>
+                                            <p:column headerText="Nombre">
+                                                <h:outputText value="#{categoria.catNombre}"/>
                                             </p:column>
 
-                                            <p:column headerText="Servicio">
-                                                <h:outputText value="#{costos.smsServicios.serviciosNombre}"/>
+                                            <p:column headerText="Descripcion">
+                                                <h:outputText value="#{categoria.catDescripcion}"/>
                                             </p:column>
 
-                                            <p:column headerText="Costo">
-                                                <h:outputText value="#{costos.smsPrecio}"/>
+                                            <p:column headerText="Mercado">
+                                                <h:outputText value="#{categoria.smsMercado.mercadoNombre}"/>
                                             </p:column>
 
                                             
                                             <p:column style="width: 35px">
-                                                <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
-                                                    <f:setPropertyActionListener value="#{costos}" target="#{costosServicioBean.costoView}"/>
+                                                <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{categoriasServiciosBean.seleccionarCRUD(1)}" title="Modificar">
+                                                    <f:setPropertyActionListener value="#{categoria}" target="#{categoriasServiciosBean.categoriaServiciosView}"/>
                                                 </p:commandLink>
                                             </p:column>
 

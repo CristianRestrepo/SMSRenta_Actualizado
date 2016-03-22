@@ -20,13 +20,11 @@
                                 <div class="box box-info espacio-arriba">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-map-marker"/>
-                                        <h4 class="box-title">Registro de Lugares</h4>
+                                        <h4 class="box-title">Registro de Ciudades</h4>
                                     </div> 
                                     <div class="box-body">
-                                        <p style="text-justify: auto">En este panel de registro podrá registrar 
-                                            la información referente a los lugares especificos y más transcurridos por los clientes según 
-                                             la ciudad especifica donde 
-                                            SMS Renta presta sus servicios.</p> 
+                                        <p style="text-justify: auto">En este panel de registro podrá registrar la 
+                                            información de los lugares más requeridos por los clientes: <em>Aeropuerto El Dorado, Unicentro, Centro Internacional, etc.</em></p> 
                                     </div>
                                 </div>
                             </b:column>
@@ -39,20 +37,17 @@
                                     </div>      
                                     <div class="box-body">
                                         <div class="table-responsive">
-                                            <h:panelGrid id="PLugar" columns="3" cellpadding="5" style="width: 100%">
-                                                <p:outputLabel for="SPaises" value="Ciudad:"/>
-                                                <b:selectOneMenu id="SPaises" required="true" requiredMessage="Seleccione Pais" value="#{lugarBean.ciudadView.ciudadNombre}">
-                                                    <f:selectItem itemLabel="Seleccione Ciudad"/>
+                                            <h:panelGrid id="PLugar" columns="2" cellpadding="5" style="width: 100%">
+                                                <b:selectOneMenu id="SCiudades" tooltip="Selecciones Ciudad o municipio al que pertenece el lugar" required="true" requiredMessage="Seleccione Ciudad o municipio" value="#{lugarBean.ciudadView.ciudadNombre}">
+                                                    <f:selectItem itemLabel="Seleccione ciudad o municipio"/>
                                                     <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                                 </b:selectOneMenu>
-                                                <p:message for="SPaises"/>
+                                                <p:message for="SCiudades"/>
 
-                                                <p:outputLabel for="TNombreLugar" value="Nombre del lugar:"/>
-                                                <b:inputText maxlength="50" id="TNombreLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Nombre del lugar"  value="#{lugarBean.lugarView.lugarNombre}" style="width: 100%"></b:inputText>                                            
+                                                <b:inputText maxlength="50" label="Nombre del lugar" id="TNombreLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Nombre del lugar"  value="#{lugarBean.lugarView.lugarNombre}" style="width: 100%"></b:inputText>                                            
                                                 <p:message for="TNombreLugar"/>
-                                                
-                                                <p:outputLabel for="TDireccionLugar" value="Dirección del lugar:"/>
-                                                <b:inputText maxlength="50" id="TDireccionLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Dirección del lugar"  value="#{lugarBean.lugarView.lugarDireccion}" style="width: 100%"></b:inputText>                                            
+
+                                                <b:inputText maxlength="50" label="Direccion de lugar" id="TDireccionLugar" placeholder="Direccion del lugar"  value="#{lugarBean.lugarView.lugarDireccion}" style="width: 100%"></b:inputText>                                            
                                                 <p:message for="TDireccionLugar"/>
                                             </h:panelGrid>
                                         </div><hr/>
@@ -80,18 +75,26 @@
                                             <p:column headerText="Lugar">
                                                 <h:outputText value="#{Lugares.lugarNombre}"/>
                                             </p:column>
-                                            
-                                            <p:column headerText="Dirección">
+
+                                            <p:column headerText="Direccion">
                                                 <h:outputText value="#{Lugares.lugarDireccion}"/>
                                             </p:column>
-                                                
+
                                             <p:column headerText="Ciudad">
                                                 <h:outputText value="#{Lugares.smsCiudad.ciudadNombre}"/>
                                             </p:column>
 
-                                            
+                                            <p:column style="width: 35px">
+                                                <p:commandLink process="@this" update="@form" class="fa fa-pencil btn btn-block btn-success" style="color: white"  action="#{lugarBean.seleccionarCrud(1)}" title="Modificar">
+                                                    <f:setPropertyActionListener value="#{Lugares}" target="#{lugarBean.lugarView}"/>
+                                                </p:commandLink>
+                                            </p:column>
+
                                         </p:dataTable>    
-                                        
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                            <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                        </p:confirmDialog>
                                     </div>
                                 </div> 
                             </b:column>

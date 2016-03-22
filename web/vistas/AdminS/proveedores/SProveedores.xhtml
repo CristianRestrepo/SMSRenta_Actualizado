@@ -11,10 +11,8 @@
         <ui:define name="content1">
             <b:container fluid="true">
                 <b:row>
-
                     <h:form id="formulario">
                         <p:messages closable="true" id="msg"/>
-                        
 
                         <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
 
@@ -25,74 +23,85 @@
                                 </div> 
                                 <div class="box-body">
                                     <div class="table-responsive">
-                                        <h:panelGrid  id="seccionDatosUsuario" columns="3" cellpadding="2" style="width: 100%;">
-                                            <p:outputLabel value="Nombre: *"/>
-                                            <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.usuarioView.usuarioNombre}"></b:inputText>                       
+                                        <h:panelGrid id="SeccionMercados" columns="2" style="width: 100%">
+                                            <p:outputLabel value="Mercados"/>
+                                            <p:outputLabel/>
+
+                                            <p:selectManyCheckbox columns="2" layout="grid" id="SMMercado" required="true" value="#{proveedorBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
+                                                <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
+                                            </p:selectManyCheckbox>
+                                            <p:message for="SMMercado"/>
+                                        </h:panelGrid>
+                                        <hr/>   
+                                        <p:outputLabel value="Datos del Representante"/>
+                                        <h:panelGrid  id="seccionDatosUsuario" columns="2" cellpadding="2" style="width: 100%;">
+
+                                            <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.proveedorView.smsUsuario.usuarioNombre}"></b:inputText>                       
                                             <p:message for="TNombreApProv"/>
 
-                                            <p:outputLabel value="CC: " />
-                                            <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioCc}"></b:inputText>
+                                            <b:selectOneMenu value="#{proveedorBean.proveedorView.smsUsuario.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
+                                                <f:selectItem itemLabel="Seleccione nacionalidad" noSelectionOption="true"/>
+                                                <f:selectItems value="#{nacionalidadBean.nombresNacionalidades}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SNacionalidad"/>
+
+                                            <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
 
-                                            <p:outputLabel value="Telefono: "/>
-                                            <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioTelefono}"></b:inputText> 
+                                            <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioTelefono}"></b:inputText> 
                                             <p:message for="TTelProv"/>
 
-                                            <p:outputLabel value="Email: *"/>
-                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioEmail}"></b:inputText>
-                                            <p:message for="TEmailProv"/>
 
-                                            <p:outputLabel value="Razon social: "/>
-                                            <b:inputText maxlength="100" id="TRazSocProv" placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.usuarioView.usuarioRazonSocial}"></b:inputText>
+                                        </h:panelGrid>
+                                        <hr/>
+                                        <p:outputLabel value="Datos de la empresa"/>
+                                        <h:panelGrid  id="seccionDatosEmpresa" columns="2" cellpadding="2" style="width: 100%;">
+                                            <b:inputText maxlength="100" id="TRazSocProv" required="true" requiredMessage="Ingrese razon social de la empresa" placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.proveedorView.proveedorRazonSocial}"></b:inputText>
                                             <p:message for="TRazSocProv"/>
 
-                                            <p:outputLabel value="Nit: "/>
-                                            <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.usuarioView.usuarioNit}"></b:inputText>
+                                            <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorNit}"></b:inputText>
                                             <p:message for="TNitProv"/>
 
-                                            <p:outputLabel value="Valor Ganancia: *"/>
-                                            <b:inputText id="TValorGProv" placeholder="Valor de ganancia" required="true" requiredMessage="Indique valor de ganancia acordado con el proveedor" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorValorGanancia}"></b:inputText>
+                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioEmail}">
+                                                <f:attribute name="operacion" value="#{proveedorBean.operacion}"/>
+                                                <f:attribute name="usuario" value="#{proveedorBean.proveedorView.smsUsuario}"/>
+                                            </b:inputText>
+                                            <p:message for="TEmailProv"/>
+
+                                            <b:inputText id="TValorGProv" placeholder="Valor de ganancia" required="true" tooltip="Valor de ganancia del proveedor sobre el costo total" requiredMessage="Indique valor de ganancia acordado con el proveedor" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorValorGanancia}"></b:inputText>
                                             <p:message for="TValorGProv"/>
 
-                                            <p:outputLabel value="Ciudad: *"/>
-                                            <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{proveedorBean.ciudadView.ciudadNombre}" style="width: 100%">
+                                            <b:selectOneMenu id="SCiudades" required="true"  requiredMessage="Por favor, seleccione ciudad" value="#{proveedorBean.proveedorView.smsUsuario.smsCiudad.ciudadNombre}" style="width: 100%">
                                                 <f:selectItem itemLabel="Seleccione ciudad"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SCiudades"/>
+
                                         </h:panelGrid>
-                                    </div>
-                                    <div class="box-header with-border">
-                                        <i class="fa fa-2x fa-check-square"/>
-                                        <h4 class="box-title">Datos de Sesión</h4>
+                                    </div>                                   
 
-                                    </div>
-                                    <div class="box-body">
-                                        <div class="table-responsive"> 
-                                            <h:panelGrid columns="2" id="seccionDatosSersion"  cellpadding="2"  style="width: 100%">
+                                    <div class="box-body">                                      
 
-                                                <p:outputLabel value="Login: "/>
-                                                <b:inputText style="width: 100%" maxlength="60" validator="regLoginValidator" placeholder="Login de sesion" value="#{proveedorBean.usuarioView.usuarioLogin}"></b:inputText>
-
-                                                <p:outputLabel value="Contraseña: "/>
-                                                <b:inputSecret label="Contraseña" style="width: 100%" binding="#{ProvPass}" maxlength="20" placeholder="Contraseña de sesion" value="#{proveedorBean.usuarioView.usuarioPassword}">
-                                                    <f:validateLength minimum="6"/>
-                                                </b:inputSecret>
-
-                                                <p:outputLabel value="Repita contraseña: "/>
-                                                <b:inputSecret label="Repita Contraseña" style="width: 100%" maxlength="20" validator="repeatPasswordValidator" placeholder="Repita contraseña de sesion" value="#{proveedorBean.usuarioView.usuarioRememberToken}">
-                                                    <f:attribute name="password" value="#{ProvPass.value}"/>
-                                                    <f:validateLength minimum="6"/>
-                                                </b:inputSecret>
-
-                                            </h:panelGrid>                                        
-                                        </div><hr/>                                    
-                                        <p:commandButton id="BTProveedor" class="btn btn-block btn-danger" update="@form" action="#{proveedorBean.registrar()}" value="Registrar Proveedor" />
+                                        <h:panelGrid columns="2" width="100%">
+                                            <p:commandButton id="BTProveedor" style="width: 100%" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" update="@form" action="#{proveedorBean.metodo()}" value="#{proveedorBean.nombreOperacion}" />
+                                            <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{proveedorBean.habilitarCancelar}" action="#{proveedorBean.cancelar()}" update="@form" value="Cancelar" />
+                                        </h:panelGrid>
+                                        <script type="text/javascript">
+                                            function start() {
+                                                PF('statusDialog').show();
+                                            }
+                                            function stop() {
+                                                PF('statusDialog').hide();
+                                            }
+                                        </script>
+                                        <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                        </p:dialog>
                                     </div>                                        
                                 </div>
                             </div>
                         </b:column>
-                        
+
                         <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >
 
                             <div class="box box-info espacio-arriba">
@@ -101,15 +110,15 @@
                                     <h4 class="box-title">Registro de Proveedores</h4>
                                 </div>
                                 <div class="box-body">
-                                    <p style="text-justify: auto">En este panel de registro podra registrar la informacion referente a nuestros proveedores, asignar una valor
-                                        de ganancias y ademas podra crear una cuenta de sesion para el ingreso al sistema.</p> 
+                                    <p style="text-justify: auto">En este panel de registro podrá registrar la información referente 
+                                        a nuestros proveedores, asignar un valor
+                                        de ganancias y ademas podrá crear una cuenta de sesión para el ingreso al sistema.</p> 
                                 </div>
                             </div>
 
                         </b:column>
 
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-
+                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
                             <div class="box box-success">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-users"/>
@@ -117,33 +126,29 @@
                                 </div>
                                 <div class="box-body">
                                     <b:inputText placeholder="Buscar" value="#{proveedorBean.buscar}" style=" width: 100%">
-                                        <p:ajax event="keyup" listener="#{proveedorBean.filtrar()}" process="@this" update="DTProveedores"/>
+                                        <p:ajax event="keyup" listener="#{proveedorBean.filtrarProveedores()}" process="@this" update="DTProveedores"/>
                                     </b:inputText>
-                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.proveedoresListView}">
-
-                                        <p:column headerText="Representante">
-                                            <p:outputLabel value="#{proveedor.usuarioNombre}"/>
-                                        </p:column>
+                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.proveedorListView}">
 
                                         <p:column headerText="Razon Social">
-                                            <p:outputLabel value="#{proveedor.usuarioRazonSocial}"/>
+                                            <p:outputLabel value="#{proveedor.proveedorRazonSocial}"/>
                                         </p:column>
 
-                                        <p:column headerText="NIT">
-                                            <p:outputLabel value="#{proveedor.usuarioNit}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Email">
-                                            <p:outputLabel value="#{proveedor.usuarioEmail}"/>
+                                        <p:column style="width: 35px">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form"  action="#{proveedorBean.seleccionarCRUD(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
+                                            </p:commandLink>
                                         </p:column>
 
                                     </p:dataTable>
-
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                    </p:confirmDialog>
                                 </div>
                             </div>
-                        </b:column>
+                        </b:column>                        
                     </h:form>
-
                 </b:row>
             </b:container>
         </ui:define>
