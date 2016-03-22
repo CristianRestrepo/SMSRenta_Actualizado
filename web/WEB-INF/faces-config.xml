@@ -352,10 +352,12 @@
          <navigation-case>
             <from-outcome>AdminSMercado</from-outcome>
             <to-view-id>/vistas/AdminS/mercados/SMercados.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>    
         <navigation-case>
             <from-outcome>AdminSCategoriaServicio</from-outcome>
             <to-view-id>/vistas/AdminS/servicios/SCategoriasServicios.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
             
         
@@ -418,7 +420,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>ClienteEdicionPerfil</from-outcome>
-            <to-view-id>/vistas/Cliente/general/EdicionPerfil.xhtml</to-view-id>
+            <to-view-id>/vistas/Cliente/general/CEdicionPerfil.xhtml</to-view-id>
             <redirect/>           
         </navigation-case>        
         <!-- CLIENTE -->
@@ -434,11 +436,13 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>VistaReservaAdminS</from-outcome>
-            <to-view-id>/vistas/AdminS/general/vistaReserva.xhtml</to-view-id>            
+            <to-view-id>/vistas/AdminS/general/vistaReserva.xhtml</to-view-id>     
+            <redirect/>       
         </navigation-case>
         <navigation-case>
             <from-outcome>VistaReservaConductor</from-outcome>
-            <to-view-id>/vistas/Conductor/general/vistaReserva.xhtml</to-view-id>            
+            <to-view-id>/vistas/Conductor/general/vistaReserva.xhtml</to-view-id>  
+            <redirect/>          
         </navigation-case>
         <navigation-case>
             <from-outcome>AdminPMercado</from-outcome>
@@ -475,7 +479,36 @@
             <to-view-id>/vistas/AdminP/servicios/PCategoriasServicios.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        
+        <navigation-case>
+            <from-outcome>SInfoPersonal</from-outcome>
+            <to-view-id>/vistas/AdminS/general/SInformacionPersonal.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SInfoServicio</from-outcome>
+            <to-view-id>/vistas/AdminS/general/SInformacionSesion.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>SRegreso</from-outcome>
+            <to-view-id>/vistas/AdminS/general/EdicionPerfil.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>CInfoServicio</from-outcome>
+            <to-view-id>/vistas/Cliente/general/CInformacionSesion.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>CInfoPersonal</from-outcome>
+            <to-view-id>/vistas/Cliente/general/CInformacionPersonal.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>C_Regreso</from-outcome>
+            <to-view-id>/vistas/Cliente/general/CEdicionPerfil.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     
     <!-- otras rutas admin principal-->

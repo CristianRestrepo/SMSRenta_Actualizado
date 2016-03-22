@@ -7,12 +7,10 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-
-
-     <ui:composition template="./../temp-cliente.xhtml">
+    <ui:composition template="./../temp-cliente.xhtml">
         <ui:define name="content2">
-
-            <b:container fluid="true">
+            
+                <b:container fluid="true">
                     <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                         <div class="espacio-arriba" style="text-align: center" align="center">
                             <strong>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre}</strong>
@@ -40,7 +38,7 @@
                                         <p>Modifica tu informacion de sesion en pocos minutos, crea una contraseña personalizada y cambia tu nombre de sesión.</p>
                                     </h:panelGrid>
                                 </h:panelGrid>
-                                <p:commandButton action="InformacionSesion" value="Modificar" class="btn btn-block btn-success"/>
+                                <p:commandButton action="CInfoServicio" value="Modificar" class="btn btn-block btn-success"/>
                             </div>
                         </div>
 
@@ -65,14 +63,10 @@
                                         <p>Modifica tu informacion personal y cambia tu foto de sesion para personalizar tu cuenta.</p>                                    
                                     </h:panelGrid>
                                 </h:panelGrid>
-                                <p:commandButton action="InformacionPersonal"  value="Modificar" class="btn btn-block btn-success"/>
+                                <p:commandButton action="CInfoPersonal"  value="Modificar" class="btn btn-block btn-success"/>
                             </div>
                         </div>                        
                     </b:column>
-
-
-
-
                 </b:container>
 
         </ui:define>
