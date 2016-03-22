@@ -67,13 +67,13 @@
                                                 <address>
                                                     <strong>Nombre: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioNombre}</strong><br></br>
                                                     Cc: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioCc}<br></br>
-                                                    Razon Social: #{reservacionBean.MConductorView.usuarioRazonSocial}<br></br>
-                                                    Teléfono: #{reservacionBean.MConductorView.usuarioTelefono}<br></br>
-                                                    Email: #{reservacionBean.MConductorView.usuarioEmail}
+                                                    Razon Social: #{reservacionBean.reservaView.smsEmpleado.smsProveedor.proveedorRazonSocial}<br></br>
+                                                    Teléfono: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioTelefono}<br></br>
+                                                    Email: #{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioEmail}
                                                 </address>                                        
                                             </div>
                                             <div class="col-sm-6">
-                                                <p:graphicImage width="150" height="150" value="#{reservacionBean.MConductorView.usuarioFotoRuta}" alt="Conductor" class="img-thumbnail img-responsive"/>
+                                                <p:graphicImage width="150" height="150" value="#{reservacionBean.reservaView.smsEmpleado.smsUsuario.usuarioFotoRuta}" alt="Conductor" class="img-thumbnail img-responsive"/>
                                             </div>
 
                                         </div><!-- /.col -->
@@ -96,17 +96,17 @@
                                                 <tbody>
                                                     <tr>
                                                         <th>Recogida</th>
-                                                        <td>#{reservacionBean.mciudadView.ciudadNombre}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionLugarLlegada}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionFechaInicio}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionHoraInicio}</td>
+                                                        <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}</td>
+                                                        <td>#{reservacionBean.reservaView.reservacionLugarLlegada}</td>
+                                                        <td>#{reservacionBean.reservaView.reservacionFechaInicio}</td>
+                                                        <td>#{reservacionBean.reservaView.reservacionHoraInicio}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Entrega</th>
-                                                        <td>#{reservacionBean.mciudadView.ciudadNombre}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionLugarDestino}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionFechaLlegada}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionHoraLlegada}</td>
+                                                        <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadDestino.ciudadNombre}</td>
+                                                        <td>#{reservacionBean.reservaView.reservacionLugarDestino}</td>
+                                                        <td>#{reservacionBean.reservaView.reservacionFechaLlegada}</td>
+                                                        <td>#{reservacionBean.reservaView.reservacionHoraLlegada}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Observaciones</th>
