@@ -277,7 +277,7 @@ public class ReservacionBean implements Serializable {
 
     //Metodos    
     //CRUD
-    public String registrarReservacion() {
+    public void registrarReservacion() {
 
         //Registro
         resDao.registrarReservacion(reservaView);
@@ -305,31 +305,10 @@ public class ReservacionBean implements Serializable {
         HoraEntrega = "";
         MinutosEntrega = "";
         MinutosInicio = "";
-
-        //seleccion a que vista retornara segun el rol del usuario logueado
-        String Ruta = "";
-        switch (sesion.getSmsRol().getRolNombre()) {
-            case "Administrador Principal":
-                Ruta = "RetornarReservacionAdminP";
-                break;
-
-            case "Administrador Secundario":
-                Ruta = "RetornarReservacionAdminS";
-                break;
-
-            case "Cliente":
-                Ruta = "ClienteReservacion";
-                break;
-        }
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservacion Realizada", "");
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        
+        
         //Dormimos la aplicacion para mostrar los mensajes
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            ex.getMessage();
-        }
-        return Ruta; //retornamos
+        
     }
 
     public String eliminarReservacion() {
@@ -375,13 +354,22 @@ public class ReservacionBean implements Serializable {
                 case "Vehiculo":
 
                     SelecVeh = false;
-                    reservaView.setReservacionFechaLlegada(reservaView.getReservacionFechaInicio());
                     reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));
 
+                    Calendar calInicio = Calendar.getInstance();
+                    calInicio.setTime(reservaView.getReservacionFechaInicio());
+                    calInicio.add(Calendar.DAY_OF_MONTH, reservaView.getSmsServicios().getServicioDuracion());
+
+                    reservaView.setReservacionFechaLlegada(calInicio.getTime());
+                    SimpleDateFormat formatDate;
+                    formatDate = new SimpleDateFormat("yyyy-MM-dd");
                     SimpleDateFormat sdft = new SimpleDateFormat("HH:mm:ss");
+                    String fechallegada = formatDate.format(reservaView.getReservacionFechaLlegada());
+                    
                     try {
                         reservaView.setReservacionHoraInicio(sdft.parse(HoraInicio + ":" + MinutosInicio));
                         reservaView.setReservacionHoraLlegada(sdft.parse(HoraInicio + ":" + MinutosInicio));
+                        reservaView.setReservacionFechaLlegada(formatDate.parse(fechallegada));
                     } catch (ParseException pe) {
                         pe.getMessage();
                     }
@@ -534,40 +522,32 @@ public class ReservacionBean implements Serializable {
         evento = (ScheduleEvent) selectEvent.getObject();
     }
 
-//    public String irVistaReserva() {
-//        String Ruta = "";
-//        MreservaView.setIdReservacion(Integer.parseInt(evento.getTitle()));
-//        MreservaView = resDao.consultarReservacionId(MreservaView).get(0);
-//
-//        if (MreservaView.getSmsEmpleado() != null) {
-//            MempleadoView = MreservaView.getSmsEmpleado();
-//            MConductorView = usuDao.consultarUsuario(MempleadoView.getSmsUsuario()).get(0);
-//        }
-//
-//        MvehiculoView = MreservaView.getSmsVehiculo();
-//        MclienteView = MreservaView.getSmsUsuario();
-//        MciudadView = MreservaView.getSmsCiudadByIdCiudadInicio();
-//
-//        switch (sesion.getSmsRol().getRolNombre()) {
-//            case "Administrador Principal":
-//                Ruta = "VistaReservaAdminP";
-//                break;
-//
-//            case "Administrador Secundario":
-//                Ruta = "VistaReservaAdminS";
-//                break;
-//
-//            case "Cliente":
-//                Ruta = "VistaReservaCliente";
-//                break;
-//
-//            case "Empleado":
-//                Ruta = "VistaReservaConductor";
-//                break;
-//        }
-//
-//        return Ruta;
-//    }
+    public String irVistaReserva() {
+        String Ruta = "";
+        reservaView.setIdReservacion(Integer.parseInt(evento.getTitle()));
+        reservaView = resDao.consultarReservacionId(reservaView).get(0);
+       
+        switch (sesion.getSmsRol().getRolNombre()) {
+            case "Administrador Principal":
+                Ruta = "VistaReservaAdminP";
+                break;
+
+            case "Administrador Secundario":
+                Ruta = "VistaReservaAdminS";
+                break;
+
+            case "Cliente":
+                Ruta = "VistaReservaCliente";
+                break;
+
+            case "Empleado":
+                Ruta = "VistaReservaConductor";
+                break;
+        }
+
+        return Ruta;
+    }
+
     public boolean validarEliminarReservacion(SmsReservacion reserva) {
         boolean valido = true;
 

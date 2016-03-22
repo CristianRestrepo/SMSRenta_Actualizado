@@ -115,6 +115,9 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         usuarioDao.registrarUsuario(usuarioView);
         usuariosListView = adminDao.consultarUsuariosAdministradores();
 
+        //Enviar correo
+        email.sendEmailAdministradorBienvenida(usuarioView, password);
+        
         //limpiamos objetos
         usuarioView = new SmsUsuario();
         password = "";

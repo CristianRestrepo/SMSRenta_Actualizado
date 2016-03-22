@@ -25,11 +25,11 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-    private final Properties properties = new Properties();   
+    private final Properties properties = new Properties();
     private Session session;
-   
+
     IReservacionDao resDao = new ImpReservacionDao();
-    IUsuarioDao usuDao = new ImpUsuarioDao();   
+    IUsuarioDao usuDao = new ImpUsuarioDao();
 
     SimpleDateFormat formatDate;
     SimpleDateFormat formatTime;
@@ -261,10 +261,9 @@ public class SendEmail {
         }
 
     }
-    
-    
+
     public void sendEmailCliente(SmsUsuario Cliente, String password) {
-        
+
         init();
         try {
             MimeMessage message = new MimeMessage(session);
@@ -282,8 +281,8 @@ public class SendEmail {
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
                     + "Esperamos que nuestro servicio sea de su total agrado.\n"
                     + "Los datos de sesion para acceder al sistema son:.\n"
-                    + "Nombre de sesion o email: "+ Cliente.getUsuarioEmail()+"\n"
-                    + "Contraseña: "+ password +"\n"
+                    + "Nombre de sesion o email: " + Cliente.getUsuarioEmail() + "\n"
+                    + "Contraseña: " + password + "\n"
                     + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
                     + "Atentamente, SMS Renta");
 
@@ -300,7 +299,44 @@ public class SendEmail {
         }
 
     }
-    
+
+    public void sendEmailAdministradorBienvenida(SmsUsuario Admin, String password) {
+
+        init();
+        try {
+            MimeMessage message = new MimeMessage(session);
+
+            //quien envia
+            message.setFrom(new InternetAddress("smsrenta@gmail.com"));
+
+            // a donde se envia
+            message.addRecipient(
+                    Message.RecipientType.TO,
+                    new InternetAddress("" + Admin.getUsuarioEmail()));
+            message.setSubject("Bienvenido a SMS Renta");
+            message.setText("Administrador(a) " + Admin.getUsuarioNombre() + ","
+                    + "\n"
+                    + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
+                    + "Los datos de sesion para acceder al sistema son:.\n"
+                    + "Nombre de sesion o email: " + Admin.getUsuarioEmail() + "\n"
+                    + "Contraseña: " + password + "\n"
+                    + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
+                    + "Atentamente, SMS Renta");
+
+            Transport t = session.getTransport("smtp");
+            t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
+            t.sendMessage(message, message.getAllRecipients());
+            t.close();
+        } catch (MessagingException me) {
+            me.getMessage();
+            //Aqui se deberia o mostrar un mensaje de error o en lugar
+            //de no hacer nada con la excepcion, lanzarla para que el modulo
+            //superior la capture y avise al usuario con un popup, por ejemplo.
+            return;
+        }
+
+    }
+
     public void sendEmailProveedor(SmsUsuario usuario, SmsProveedor proveedor, String password) {
 
         init();
@@ -319,8 +355,8 @@ public class SendEmail {
                     + "\n"
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
                     + "Los datos de sesion para acceder al sistema y administrar sus vehiculos y conductores son:\n"
-                    + "Nombre de sesion o email: "+ usuario.getUsuarioEmail()+"\n"
-                    + "Contraseña: "+ password +"\n"
+                    + "Nombre de sesion o email: " + usuario.getUsuarioEmail() + "\n"
+                    + "Contraseña: " + password + "\n"
                     + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
                     + "Atentamente, SMS Renta");
 
@@ -337,7 +373,7 @@ public class SendEmail {
         }
 
     }
-    
+
     public void sendEmailConductor(SmsUsuario conductor, String password) {
 
         init();
@@ -352,12 +388,12 @@ public class SendEmail {
                     Message.RecipientType.TO,
                     new InternetAddress("" + conductor.getUsuarioEmail()));
             message.setSubject("Bienvenido a SMS Renta");
-            message.setText("Conductor " + conductor.getUsuarioNombre()+ ","
+            message.setText("Conductor " + conductor.getUsuarioNombre() + ","
                     + "\n"
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
                     + "Los datos de sesion para acceder al sistema y ver los servicios que tiene agendados son:\n"
-                    + "Nombre de sesion o email: "+ conductor.getUsuarioEmail()+"\n"
-                    + "Contraseña: "+ password +"\n"
+                    + "Nombre de sesion o email: " + conductor.getUsuarioEmail() + "\n"
+                    + "Contraseña: " + password + "\n"
                     + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
                     + "Atentamente, SMS Renta");
 
