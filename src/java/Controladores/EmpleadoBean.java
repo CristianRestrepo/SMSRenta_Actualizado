@@ -406,10 +406,10 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
         empleadosListView = empleadoDao.consultarEmpleadosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre(), espacioinicio, espacioLlegada, reserva.getSmsVehiculo().getSmsProveedor().getProveedorRazonSocial());
         List<SmsEmpleado> lista = new ArrayList<>();
-        for (int i = 0; i < empleadosListView.size(); i++) {
-            //lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));
-        }
-        return lista;
+//        for (int i = 0; i < empleadosListView.size(); i++) {
+//            lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));
+//        }
+        return empleadosListView;
     }
 
 }

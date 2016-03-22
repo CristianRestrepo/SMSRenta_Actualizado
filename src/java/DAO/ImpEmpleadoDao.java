@@ -112,12 +112,11 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado where empleado.smsUsuario.smsCiudad.ciudadNombre = '"+ciudad+"' and " +
+            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida "
+                                            + "where empleado.smsUsuario.smsCiudad.ciudadNombre = '"+ciudad+"' and " +
                                                     "empleado.smsProveedor.proveedorRazonSocial = '"+Proveedor+"' and not exists(from SmsReservacion as reservacion where " +
                                                             "reservacion.reservacionFechaInicio = '"+fechaInicio+"' and " +
                                                             "reservacion.reservacionFechaLlegada = '"+fechaLlegada+"' and " +
-                                                            "reservacion.reservacionHoraInicio = '"+horaInicio+"' and " +
-                                                            "reservacion.reservacionHoraLlegada = '"+horaLlegada+"' and " +
                                                             "reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado) " +
                                                             "and " +
                                                             "("
@@ -144,8 +143,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                                                                     "(reservacion.reservacionHoraInicio between '"+horaInicio+"' and '"+horaLlegada+"'" +
                                                                     "or " +
                                                                     "reservacion.reservacionHoraLlegada between '"+horaInicio+"' and '"+horaLlegada+"')))"
-                                                         + ") "
-                                                         + "group by empleado.idEmpleado");
+                                                         + ")");
             
              empleados = (List<SmsEmpleado>) query.list();
 

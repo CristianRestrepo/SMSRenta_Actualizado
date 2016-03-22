@@ -110,7 +110,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Observaciones</th>
-                                                        <td>#{reservacionBean.mreservaView.reservacionNotas}</td>                                                
+                                                        <td>#{reservacionBean.reservaView.reservacionNotas}</td>                                                
                                                     </tr>
                                                     <!--<tr>
                                                         <td>1</td>
@@ -151,38 +151,38 @@
                                             </div>
                                         </div><!-- /.col -->
                                         <div class="col-xs-6">
-                                            <p:graphicImage style="margin-left: 20%; margin-bottom: 10px" width="256" height="256" value="#{reservacionBean.mvehiculoView.vehFotoRuta}" alt="Vehiculo" class="img-thumbnail img-responsive"/>
+                                            <p:graphicImage style="margin-left: 20%; margin-bottom: 10px" width="256" height="256" value="#{reservacionBean.reservaView.smsVehiculo.vehFotoRuta}" alt="Vehiculo" class="img-thumbnail img-responsive"/>
 
                                             <div class="col-sm-12 invoice-col">
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <tr>
                                                             <th style="width:50%">Marca:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.smsReferencia.smsMarca.marcaNombre}</td>
+                                                            <td>#{reservacionBean.reservaView.smsVehiculo.smsReferencia.smsMarca.marcaNombre}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Referencia:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.smsReferencia.referenciaNombre}</td>
+                                                            <td>#{reservacionBean.reservaView.smsVehiculo.smsReferencia.referenciaNombre}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Placa:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehPlaca}</td>
+                                                            <td>#{reservacionBean.reservaView.smsVehiculo.vehPlaca}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Color:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehColor}</td>
+                                                            <td>#{reservacionBean.reservaView.smsVehiculo.smsColor.colorNombre}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Personas:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehNumPersonas}</td>
+                                                            <td>#{reservacionBean.reservaView.smsVehiculo.vehNumPersonas}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Maletas Grandes:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehNumMalGrande}</td>
+                                                            <td>#{reservacionBean.reservaView.smsVehiculo.vehNumMalGrande}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Maletas Pequeñas:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehNumMalPequeña}</td>
+                                                            <td>#{reservacionBean.reservaView.smsVehiculo.vehNumMalPequeña}</td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -207,7 +207,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Total:</th>
-                                                        <td>#{reservacionBean.mreservaView.reservacionCosto}</td>
+                                                        <td>#{reservacionBean.reservaView.reservacionCosto}</td>
                                                     </tr>
                                                 </table>
                                             </div>

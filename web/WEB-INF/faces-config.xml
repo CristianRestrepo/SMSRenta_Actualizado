@@ -73,7 +73,7 @@
     <managed-bean>
         <managed-bean-name>reservacionBean</managed-bean-name>
         <managed-bean-class>Controladores.ReservacionBean</managed-bean-class>    
-        <managed-bean-scope>view</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>serviciosBean</managed-bean-name>

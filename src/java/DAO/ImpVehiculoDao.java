@@ -130,40 +130,36 @@ public class ImpVehiculoDao implements IVehiculoDao {
         List<SmsVehiculo> vehiculos = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsVehiculos as vehiculo where vehiculo.smsCiudad.ciudadNombre = '"+ciudad+"' and " +
-                                                    "not exists(from SmsReservacion as reservacion where " +
-                                                            "reservacion.reservacionFechaInicio = '"+fechaInicio+"' and " +
-                                                            "reservacion.reservacionFechaLlegada = '"+fechaLlegada+"' and " +
-                                                            "reservacion.reservacionHoraInicio = '"+horaInicio+"' and " +
-                                                            "reservacion.reservacionHoraLlegada = '"+horaLlegada+"' and " +
-                                                            "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo) " +
-                                                            "and " +
-                                                            "("
-                                                                + "('"+fechaInicio+"' = '"+fechaLlegada+"' and not exists(from SmsReservacion as reservacion where " +
-                                                                    "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and " +
-                                                                    "reservacion.reservacionFechaInicio = '"+fechaInicio+"' and " +
-                                                                    "reservacion.reservacionFechaLlegada = '"+fechaLlegada+"' and " +
-                                                                        "(reservacion.reservacionHoraInicio between '"+horaInicio+"' and '"+horaLlegada+"' " +
-                                                                        "or " +
-                                                                         "reservacion.reservacionHoraLlegada between '"+horaInicio+"' and '"+horaLlegada+"'))) " +
-                                                            " or " +
-                                                                "('"+fechaInicio+"' <> '"+fechaLlegada+"' and not exists(from SmsReservacion as reservacion where " +
-                                                                    "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and " +
-                                                                    "("
-                                                                        + "(reservacion.reservacionFechaInicio = '"+fechaInicio+"') or "
-                                                                        + "(reservacion.reservacionFechaInicio between '"+fechaInicio+"' and '"+fechaLlegada+"')"
-                                                                    + ") "
-                                                                    + "and " +                    
-                                                                    "("
-                                                                     + "(reservacion.reservacionFechaLlegada = '"+fechaLlegada+"') or "
-                                                                     + "(reservacion.reservacionFechaLlegada between '"+fechaInicio+"' and '"+fechaLlegada+"')"
-                                                                  + ")"
-                                                                  + "and " +
-                                                                    "(reservacion.reservacionHoraInicio between '"+horaInicio+"' and '"+horaLlegada+"'" +
-                                                                    "or " +
-                                                                    "reservacion.reservacionHoraLlegada between '"+horaInicio+"' and '"+horaLlegada+"')))"
-                                                         + ") "
-                                                         + "group by vehiculo.idVehiculo");
+            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor "
+                    + "where vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and "
+                    + "not exists(from SmsReservacion as reservacion where "
+                        + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
+                        + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "                        
+                        + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo) "
+                    + "and "
+                    + "("
+                    + "('" + fechaInicio + "' = '" + fechaLlegada + "' and not exists(from SmsReservacion as reservacion where "
+                        + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
+                        + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
+                        + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "
+                        + "(reservacion.reservacionHoraInicio between '" + horaInicio + "' and '" + horaLlegada + "' or "
+                        + "reservacion.reservacionHoraLlegada between '" + horaInicio + "' and '" + horaLlegada + "'))) "
+                    + "or "
+                    + "('" + fechaInicio + "' <> '" + fechaLlegada + "' and not exists(from SmsReservacion as reservacion where "
+                    + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
+                    + "("
+                        + "(reservacion.reservacionFechaInicio = '" + fechaInicio + "') or "
+                        + "(reservacion.reservacionFechaInicio between '" + fechaInicio + "' and '" + fechaLlegada + "')"
+                    + ") "
+                    + "and "
+                    + "("
+                        + "(reservacion.reservacionFechaLlegada = '" + fechaLlegada + "') or "
+                        + "(reservacion.reservacionFechaLlegada between '" + fechaInicio + "' and '" + fechaLlegada + "')"
+                    + ") "
+                    + "and "
+                    + "(reservacion.reservacionHoraInicio between '" + horaInicio + "' and '" + horaLlegada + "' or "
+                    + "reservacion.reservacionHoraLlegada between '" + horaInicio + "' and '" + horaLlegada + "'))))");
             vehiculos = (List<SmsVehiculo>) query.list();
 
         } catch (HibernateException e) {
@@ -200,40 +196,34 @@ public class ImpVehiculoDao implements IVehiculoDao {
         List<SmsVehiculo> vehiculos = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsVehiculos as vehiculo where vehiculo.smsCiudad.ciudadNombre = '"+ciudad+"' and " +
-                                                    "vehiculo.smsCategoria.categoriaNombre = '" + categoria + "' and not exists(from SmsReservacion as reservacion where " +
-                                                            "reservacion.reservacionFechaInicio = '"+fechaInicio+"' and " +
-                                                            "reservacion.reservacionFechaLlegada = '"+fechaLlegada+"' and " +
-                                                            "reservacion.reservacionHoraInicio = '"+horaInicio+"' and " +
-                                                            "reservacion.reservacionHoraLlegada = '"+horaLlegada+"' and " +
-                                                            "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo) " +
-                                                            "and " +
-                                                            "("
-                                                                + "('"+fechaInicio+"' = '"+fechaLlegada+"' and not exists(from SmsReservacion as reservacion where " +
-                                                                    "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and " +
-                                                                    "reservacion.reservacionFechaInicio = '"+fechaInicio+"' and " +
-                                                                    "reservacion.reservacionFechaLlegada = '"+fechaLlegada+"' and " +
-                                                                        "(reservacion.reservacionHoraInicio between '"+horaInicio+"' and '"+horaLlegada+"' " +
-                                                                        "or " +
-                                                                         "reservacion.reservacionHoraLlegada between '"+horaInicio+"' and '"+horaLlegada+"'))) " +
-                                                            " or " +
-                                                                "('"+fechaInicio+"' <> '"+fechaLlegada+"' and not exists(from SmsReservacion as reservacion where " +
-                                                                    "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and " +
-                                                                    "("
-                                                                        + "(reservacion.reservacionFechaInicio = '"+fechaInicio+"') or "
-                                                                        + "(reservacion.reservacionFechaInicio between '"+fechaInicio+"' and '"+fechaLlegada+"')"
-                                                                    + ") "
-                                                                    + "and " +                    
-                                                                    "("
-                                                                     + "(reservacion.reservacionFechaLlegada = '"+fechaLlegada+"') or "
-                                                                     + "(reservacion.reservacionFechaLlegada between '"+fechaInicio+"' and '"+fechaLlegada+"')"
-                                                                  + ")"
-                                                                  + "and " +
-                                                                    "(reservacion.reservacionHoraInicio between '"+horaInicio+"' and '"+horaLlegada+"'" +
-                                                                    "or " +
-                                                                    "reservacion.reservacionHoraLlegada between '"+horaInicio+"' and '"+horaLlegada+"')))"
-                                                         + ") "
-                                                         + "group by vehiculo.idVehiculo");
+            Query query = session.createQuery("from SmsVehiculos as vehiculo where vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and "
+                    + "vehiculo.smsCategoria.categoriaNombre = '" + categoria + "' and not exists(from SmsReservacion as reservacion where "
+                   + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
+                        + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "                        
+                        + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo) "
+                    + "and "
+                    + "("
+                    + "('" + fechaInicio + "' = '" + fechaLlegada + "' and not exists(from SmsReservacion as reservacion where "
+                        + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
+                        + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
+                        + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "
+                        + "(reservacion.reservacionHoraInicio between '" + horaInicio + "' and '" + horaLlegada + "' or "
+                        + "reservacion.reservacionHoraLlegada between '" + horaInicio + "' and '" + horaLlegada + "'))) "
+                    + "or "
+                    + "('" + fechaInicio + "' <> '" + fechaLlegada + "' and not exists(from SmsReservacion as reservacion where "
+                    + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
+                    + "("
+                        + "(reservacion.reservacionFechaInicio = '" + fechaInicio + "') or "
+                        + "(reservacion.reservacionFechaInicio between '" + fechaInicio + "' and '" + fechaLlegada + "')"
+                    + ") "
+                    + "and "
+                    + "("
+                        + "(reservacion.reservacionFechaLlegada = '" + fechaLlegada + "') or "
+                        + "(reservacion.reservacionFechaLlegada between '" + fechaInicio + "' and '" + fechaLlegada + "')"
+                    + ") "
+                    + "and "
+                    + "(reservacion.reservacionHoraInicio between '" + horaInicio + "' and '" + horaLlegada + "' or "
+                    + "reservacion.reservacionHoraLlegada between '" + horaInicio + "' and '" + horaLlegada + "'))))");
             vehiculos = (List<SmsVehiculo>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
