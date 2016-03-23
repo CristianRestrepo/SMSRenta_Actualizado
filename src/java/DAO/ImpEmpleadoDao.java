@@ -107,45 +107,30 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
     }
 
     @Override
-    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String espacioInicio, String espacioLlegada, String Proveedor) {
+    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada, String Proveedor) {
         Session session = null;
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida "
-                                            + "where empleado.smsUsuario.smsCiudad.ciudadNombre = '"+ciudad+"' and " +
-                                                    "empleado.smsProveedor.proveedorRazonSocial = '"+Proveedor+"' and not exists(from SmsReservacion as reservacion where " +
-                                                            "reservacion.reservacionFechaInicio = '"+fechaInicio+"' and " +
-                                                            "reservacion.reservacionFechaLlegada = '"+fechaLlegada+"' and " +
-                                                            "reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado) " +
-                                                            "and " +
-                                                            "("
-                                                                + "('"+fechaInicio+"' = '"+fechaLlegada+"' and not exists(from SmsReservacion as reservacion where " +
-                                                                    "reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and " +
-                                                                    "reservacion.reservacionFechaInicio = '"+fechaInicio+"' and " +
-                                                                    "reservacion.reservacionFechaLlegada = '"+fechaLlegada+"' and " +
-                                                                        "(reservacion.reservacionHoraInicio between '"+horaInicio+"' and '"+horaLlegada+"' " +
-                                                                        "or " +
-                                                                         "reservacion.reservacionHoraLlegada between '"+horaInicio+"' and '"+horaLlegada+"'))) " +
-                                                            " or " +
-                                                                "('"+fechaInicio+"' <> '"+fechaLlegada+"' and not exists(from SmsReservacion as reservacion where " +
-                                                                    "reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and " +
-                                                                    "("
-                                                                        + "(reservacion.reservacionFechaInicio = '"+fechaInicio+"') or "
-                                                                        + "(reservacion.reservacionFechaInicio between '"+fechaInicio+"' and '"+fechaLlegada+"')"
-                                                                    + ") "
-                                                                    + "and " +                    
-                                                                    "("
-                                                                     + "(reservacion.reservacionFechaLlegada = '"+fechaLlegada+"') or "
-                                                                     + "(reservacion.reservacionFechaLlegada between '"+fechaInicio+"' and '"+fechaLlegada+"')"
-                                                                  + ")"
-                                                                  + "and " +
-                                                                    "(reservacion.reservacionHoraInicio between '"+horaInicio+"' and '"+horaLlegada+"'" +
-                                                                    "or " +
-                                                                    "reservacion.reservacionHoraLlegada between '"+horaInicio+"' and '"+horaLlegada+"')))"
-                                                         + ")");
-            
-             empleados = (List<SmsEmpleado>) query.list();
+                    + "where empleado.smsUsuario.smsCiudad.ciudadNombre = '" + ciudad + "' and "
+                    + "empleado.smsProveedor.proveedorRazonSocial = '" + Proveedor + "' and "
+                    + "not exists(from SmsReservacion as reservacion where "
+                    + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
+                    + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "
+                    + "reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado) "
+                    + "and "
+                    + "(('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
+                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and "
+                    + "(reservacion.reservacionFechaInicio >= '" + fechaInicio + "' and "
+                    + "reservacion.reservacionFechaLlegada <= '" + fechaLlegada + "')) "
+                    + "and "
+                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaLlegada = '" + fechaInicio + "' and reservacion.reservacionHoraLlegada > '" + horaInicio + "') "
+                    + "and "
+                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaLlegada + "' and reservacion.reservacionHoraInicio < '" + horaLlegada + "') "
+                    + "))");
+
+            empleados = (List<SmsEmpleado>) query.list();
 
         } catch (HibernateException e) {
             e.getMessage();
@@ -175,7 +160,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         return empleados;
     }
 
-     @Override
+    @Override
     public List<SmsUsuario> consultarUsuariosEmpleados() {
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();
@@ -192,8 +177,8 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         }
         return usuarios;
     }
-    
-     @Override
+
+    @Override
     public List<SmsUsuario> filtrarUsuariosEmpleados(String valor) {
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();
@@ -219,7 +204,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida where proveedor.proveedorRazonSocial = '"+Proveedor+"'");
+            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida where proveedor.proveedorRazonSocial = '" + Proveedor + "'");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -228,9 +213,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                 session.close();
             }
         }
-        return empleados; }
+        return empleados;
+    }
 
 }
-
-    
-
