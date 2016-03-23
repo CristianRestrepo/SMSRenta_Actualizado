@@ -415,7 +415,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>ClienteReservacion</from-outcome>
-            <to-view-id>/vistas/Cliente/reservas/CReservacion.xhtml</to-view-id>
+            <to-view-id>/vistas/Cliente/reservas/CReservaPrueba.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
