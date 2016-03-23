@@ -873,14 +873,14 @@ li:after {
 
 }
 li.active:after {
-    content: " ";
+/*    content: " ";
     position: absolute;
     left: 74%;
     opacity:1;
     margin: 0 auto;
     bottom: 0px;
     border: 10px solid transparent;
-    border-bottom-color: #ddd;
+    border-bottom-color: #ddd;*/
 }
 .nav-tabs > li a{
     width: 70px;
