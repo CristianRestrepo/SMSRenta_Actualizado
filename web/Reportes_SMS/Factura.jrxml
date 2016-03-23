@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="75ba422c-10df-4f49-ad25-1f51b1a6f72e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="25"/>
+	<parameter name="idFactura" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$F{idFactura}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT f.idFactura,f.factura_fecha,f.factura_fecha_vencimiento,f.factura_neto,f.factura_descuento,f.factura_subtotal,f.factura_total, r.idReservacion,v.Veh_placa,cl.Usuario_nombre,cl.Usuario_CC,cl.Usuario_email,cl.Usuario_telefono,c.Ciudad_nombre,s.idServicio,s.Servicio_nombre from sms_factura as f, sms_reservacion as r, sms_vehiculo as v, sms_usuario as cl, sms_servicios as s,sms_ciudad as c where f.idFactura = $P{idFactura} and f.idReservacion = r.idReservacion and r.idVehiculo = v.idVehiculo and r.idCliente = cl.idUsuario and cl.idCiudad = c.idCiudad and r.idServicio = s.idServicio]]>
+	</queryString>
+	<field name="idFactura" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_fecha_vencimiento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_neto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_descuento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_subtotal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factura_total" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idReservacion" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Veh_placa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario_CC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario_email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario_telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Ciudad_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Servicio_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idServicio" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="71" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="115" splitType="Stretch">
+			<staticText>
+				<reportElement x="23" y="10" width="100" height="20" forecolor="#736343" uuid="7bb519cb-353b-4945-b540-afd0008a0e15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="30" width="100" height="20" forecolor="#736343" uuid="79117303-c9b2-4551-9bd5-0886d200d0be"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENCIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="50" width="100" height="20" forecolor="#736343" uuid="1b5f6ca2-61b6-4bc7-9601-2b761927a08c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VEHICULO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="86" width="100" height="20" forecolor="#736343" uuid="2c427b15-8c7c-47f2-be58-48bfbde15a54"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESERVACION Nº:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="70" width="100" height="20" forecolor="#736343" uuid="77841b46-c93d-4d21-9dd8-6e3a67259e53"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIUDAD:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="90" width="100" height="20" forecolor="#736343" uuid="eab89dfd-6c3b-4bff-b32f-86d2581d296e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELEFONO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="10" width="100" height="20" uuid="fe1e9025-f4b7-4207-8863-d75a4094fb4c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{factura_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="30" width="100" height="20" uuid="20b769a0-1cb5-45ff-9291-9206baa0b51e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{factura_fecha_vencimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="50" width="100" height="20" uuid="bb945033-d15b-4a9d-b369-c014d6688ee1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Veh_placa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="10" width="138" height="20" uuid="8cdebae8-f2b1-41d0-8ef2-f9106972df7d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Usuario_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="30" width="138" height="20" uuid="64fef165-3313-49f4-afa8-15a9ede76ae7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Usuario_CC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="50" width="138" height="20" uuid="82b56c97-5dbd-4a80-a215-ac0726f331c4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Usuario_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="70" width="138" height="20" uuid="403cc021-721d-4a43-abba-91d87ade0ecd"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Ciudad_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="90" width="138" height="20" uuid="0732910d-eb01-4333-a839-17b9a9f73356"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Usuario_telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="86" width="100" height="20" uuid="59cb2595-0422-404e-b10f-548c2b4c4509"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{idReservacion}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="37"/>
+	</detail>
+	<columnFooter>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="324" height="54" uuid="67cf79c6-7c5b-4ba6-af0a-72b5cf1f3125"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Hago constar que he recibido real y materialmente la mercancía arriba mencionada y por ello, acepto integralmente el contenido de este documento.  Esta factura es un titulo valor y tiene efectos legales de acuerdo a la  Ley  1231 de 2008 y al Código de Comercio.     En caso de mora se causará el  máximo interés autorizado por la  ley.  No se aceptan devoluciones. Favor girar cheque cruzado  a  nombre  de SMS RENTA SAS
+SAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="443" y="0" width="112" height="20" uuid="be194cdb-920a-4270-b226-70690cdc6ddf"/>
+				<textFieldExpression><![CDATA[$F{factura_subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="20" width="112" height="20" uuid="a5d729fa-6edd-4d12-906d-4c0adc246883"/>
+				<textFieldExpression><![CDATA[$F{factura_descuento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="40" width="112" height="20" uuid="b85885e4-ca92-4645-8bcc-0b317052a2cf"/>
+				<textFieldExpression><![CDATA[$F{factura_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="60" width="112" height="20" uuid="ac796c2a-2faf-466e-bd00-5776d64ca3b0"/>
+				<textFieldExpression><![CDATA[$F{factura_neto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="343" y="0" width="100" height="20" forecolor="#F86115" uuid="a6cbddbf-c5c7-42c7-9299-669ca0d9d2b8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="20" width="100" height="20" forecolor="#F86115" uuid="1fe8bfab-c348-4893-8b45-31ea839a8027"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCUENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="40" width="100" height="20" forecolor="#F86115" uuid="2a3390df-14e9-4227-a6ec-ccbb4d1f4f1b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="60" width="100" height="20" forecolor="#F86115" uuid="7da433cb-c716-4d44-9d94-9a4b48705f12"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NETO FACTURA]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="139" height="14" uuid="962046f6-9f85-47bf-91e0-1231fb14cc83"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[AUTORIZADO POR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="0" width="139" height="14" uuid="ba1d75fe-6a8f-4d8f-8de4-70ea9a2b0a16"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ACEPTADO POR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="402" y="0" width="153" height="21" forecolor="#F86115" uuid="897e5fba-8cab-4e9b-ad27-caab0c1417ee"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="35" width="139" height="1" uuid="9cb439be-45a2-4109-99a1-cfa329b39fa5"/>
+			</line>
+			<line>
+				<reportElement x="154" y="36" width="139" height="1" uuid="9a0a6278-5449-458f-92e7-1259294d5023"/>
+			</line>
+			<textField>
+				<reportElement x="402" y="21" width="153" height="20" uuid="010b2980-a87f-4aee-9798-d4dc8357b564"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="22" backcolor="#F86115" uuid="49b1b392-3c6f-4e6a-86bd-c541259e61e7"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="100" height="20" uuid="bf8c3771-95d5-4c02-b745-e3b2945fc7e0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="b460ecf0-3f17-4244-b95c-288bc8346847"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
