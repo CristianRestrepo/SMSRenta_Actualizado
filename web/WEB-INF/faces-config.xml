@@ -104,11 +104,6 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>reportePersonaBean</managed-bean-name>
-        <managed-bean-class>Controladores.ReportePersonaBean</managed-bean-class>    
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
         <managed-bean-name>administradorBean</managed-bean-name>
         <managed-bean-class>Controladores.AdministradorBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
@@ -468,8 +463,8 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>ReservaPrueba</from-outcome>
-            <to-view-id>/vistas/AdminP/reservas/PReservaPrueba.xhtml</to-view-id>
+            <from-outcome>AdminPReservacion</from-outcome>
+            <to-view-id>/vistas/AdminP/reservas/PReservacion.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

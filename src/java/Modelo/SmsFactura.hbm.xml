@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Modelo.SmsFactura" table="sms_factura" catalog="smsrenta_actualizada" optimistic-lock="version">
+        <id name="idFactura" type="java.lang.Integer">
+            <column name="idFactura" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="smsReservacion" class="Modelo.SmsReservacion" fetch="select">
+            <column name="idReservacion" not-null="true" />
+        </many-to-one>
+        <property name="facturaFecha" type="date">
+            <column name="factura_fecha"  length="0" not-null="true" />
+        </property>
+        <property name="facturaFechaVencimiento" type="date">
+            <column name="factura_fecha_vencimiento"  length="0" not-null="true" />
+        </property>
+        <property name="facturaIva" type="java.lang.Integer">
+            <column name="factura_iva" not-null="true" />
+        </property>
+        <property name="facturaRetFuente" type="java.lang.Integer">
+            <column name="factura_ret_fuente" not-null="true" />
+        </property>
+        <property name="facturaRetIva" type="java.lang.Integer">
+            <column name="factura_ret_iva" not-null="true" />
+        </property>
+        <property name="facturaRetIca" type="java.lang.Integer">
+            <column name="factura_ret_ica" not-null="true" />
+        </property>
+        <property name="facturaSubtotal" type="java.lang.Integer">
+            <column name="factura_subtotal" not-null="true" />
+        </property>
+        <property name="facturaTotal" type="java.lang.Integer">
+            <column name="factura_total" not-null="true" />
+        </property>
+        <property name="facturaDescuento" type="java.lang.Integer">
+            <column name="factura_descuento" not-null="true" />
+        </property>
+        <property name="facturaNeto" type="java.lang.Integer">
+            <column name="factura_neto" not-null="true" />
+        </property>        
+    </class> 
+</hibernate-mapping>

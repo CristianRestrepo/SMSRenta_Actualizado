@@ -45,7 +45,7 @@
 
                                     <h:panelGrid columnClasses="value">
 
-                                        <p:schedule ignoreTimezone="true" id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
+                                        <p:schedule timeZone="GMT-5" leftHeaderTemplate="today" centerHeaderTemplate="month, agendaWeek, agendaDay" rightHeaderTemplate="prev,next" id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
                                             <p:ajax event="eventSelect" listener="#{reservacionBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                                         </p:schedule>
                                     </h:panelGrid>

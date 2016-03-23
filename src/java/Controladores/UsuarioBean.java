@@ -59,7 +59,7 @@ public class UsuarioBean implements Serializable {
     IRolDao rolDao;
     IUsuarioDao usuarioDao;
     INacionalidadDao nacionalidadDao;
-    
+
     //Variables
     protected String password;
     protected String estadoFoto;
@@ -69,7 +69,7 @@ public class UsuarioBean implements Serializable {
 
     public UsuarioBean() {
 
-        usuarioView = new SmsUsuario();      
+        usuarioView = new SmsUsuario();
 
         nuevaContraseña = "";
         repitaContraseña = "";
@@ -102,7 +102,7 @@ public class UsuarioBean implements Serializable {
     public void setUsuarioView(SmsUsuario usuarioView) {
         this.usuarioView = usuarioView;
     }
-    
+
     public boolean isHabilitado() {
         return habilitado;
     }
@@ -147,7 +147,6 @@ public class UsuarioBean implements Serializable {
     //Metodos CRUD
     public void modificarPerfil() {
 
-     
         MD5 md = new MD5();
         // en caso de modificar las contraseñas estas se encriptan de nuevo
         if (!nuevaContraseña.isEmpty()) {
@@ -156,7 +155,7 @@ public class UsuarioBean implements Serializable {
         }
 
         Usuario.setSmsCiudad(ciudadDao.consultarCiudad(Usuario.getSmsCiudad()).get(0));
-        
+
         usuarioDao.modificarUsuario(Usuario);
         estadoFoto = "Foto subida:" + Usuario.getUsuarioFotoNombre();
 
@@ -168,16 +167,15 @@ public class UsuarioBean implements Serializable {
     public String iniciarSesion() {
         String ruta = "/login.xhtml";
         MD5 md = new MD5();
-        usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
         SmsUsuario user;
-        usuarioView = usuarioDao.consultarDatosSesionUsuario(usuarioView);
        
-        if (usuarioView.getIdUsuario() != null) {//valida si el usuario existe en la BD
-            user = usuarioDao.consultarUsuario(usuarioView).get(0);
+        user = usuarioDao.consultarDatosSesionUsuario(usuarioView);
+        
+        if (user.getIdUsuario() != null) {//valida si el usuario existe en la BD
+            user = usuarioDao.consultarUsuario(user).get(0);
+            usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
             if (user.getUsuarioEstadoUsuario() == 1) {//Evalua el estado de la cuenta de usuario, si esta activa o inactiva
-                if (user.getUsuarioPassword() != null && (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword()))) {
-                    //ruta = usuarioController.iniciarSesion(user.get(0));//envia el objeto usuarioBean al metodo iniciarSesion para tomar este objeto como atributo de sesion
-
+                if (user.getUsuarioPassword() != null && user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword())) {
                     
                     httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     httpSession.setAttribute("Sesion", user);
@@ -215,7 +213,7 @@ public class UsuarioBean implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
         usuarioView = new SmsUsuario();
-        
+
         return ruta;
     }
 

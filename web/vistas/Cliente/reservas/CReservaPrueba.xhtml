@@ -34,12 +34,7 @@
                                                     </h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    <div class="form-group" align="left">
-                                                        <b:selectOneMenu label="Cliente" value="#{reservacionBean.reservaView.smsUsuario.usuarioNombre}" style="width: 100%">
-                                                            <f:selectItem itemLabel="Seleccione usuario"  noSelectionOption="true"/>
-                                                            <f:selectItems value="#{clienteBean.nombresClientesListView}" />
-                                                        </b:selectOneMenu>
-
+                                                    <div class="form-group" align="left">                                     
                                                         <label class="mrg-reserva-1">Ciudad donde desea recoger su vehiculo</label>
                                                         <p:selectOneMenu label="Ciudad" value="#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}" style="width: 100%">
                                                             <f:selectItem itemLabel="Seleccione ciudad de recogida"  noSelectionOption="true"/>

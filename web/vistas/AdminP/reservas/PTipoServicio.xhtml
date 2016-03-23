@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
 
@@ -45,8 +46,8 @@
                                         <p>#{Mercado.mercadoDescripcion}</p>
                                     </div>
                                     <div class="panel-footer text-center">
-                                        <p:commandButton value="reserve aqui #{Mercado.mercadoNombre}" class="btn btn-primary btn-block">
-                                            
+                                        <p:commandButton value="Reserve aqui #{Mercado.mercadoNombre}" action="AdminPReservacion" class="btn btn-primary btn-block">
+                                            <f:setPropertyActionListener value="#{Mercado}" target="#{reservacionBean.mercadoSeleccionado}"/>
                                         </p:commandButton>
                                     </div>
                                 </div>

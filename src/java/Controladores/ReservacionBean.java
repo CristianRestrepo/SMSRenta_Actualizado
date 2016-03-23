@@ -464,7 +464,6 @@ public class ReservacionBean implements Serializable {
                 reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion).get(0));//Consultamos la informacion de usuario correspondiente al conductor
                 listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
                 break;
-
         }
 
     }
@@ -499,7 +498,7 @@ public class ReservacionBean implements Serializable {
                 pe.getMessage();
             }
 
-            evento = new DefaultScheduleEvent("" + listaReservaciones.get(i).getIdReservacion(), fechaInicio, fechaLlegada);
+            evento = new DefaultScheduleEvent(" Reservacion " + listaReservaciones.get(i).getIdReservacion(), fechaInicio, fechaLlegada);
             evento.setId("" + listaReservaciones.get(i).getIdReservacion());
             eventoModelo.addEvent(evento);
         }
