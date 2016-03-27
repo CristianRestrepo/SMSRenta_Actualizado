@@ -2,9 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
     <ui:composition template="./../temp-cliente.xhtml">
@@ -13,32 +14,8 @@
             <b:container fluid="true">
                 <b:row>
                     <h:form>
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <div class="espacio-arriba" style="text-align: center" align="center">
-                                <h4 style="font-size: x-large">DASHBOARD RESERVACIONES</h4><br/>
-                                <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre}</p>
-                            </div>
-                        </b:column>
-                        
-                        <b:column col-lg="12" col-md="12" col-sm="6" col-xs="12">
-                            <div class="box box-success espacio-arriba">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-dashboard" />
-                                    <h3 class="box-title">Tablero Principal</h3>
-                                </div>
-                                <div class="box-body">
-                                    <p class="text-justify">
-                                        En el tablero principal podrá ver una vista general de las actividades más 
-                                        importantes realizadas dentro de SMS Renta:<em> Horarios, clientes, Conductores, 
-                                            Vehículos y Estadísticas.</em>
-                                    </p>
-                                </div>
-                            </div>
-                        </b:column>
-                        
-                        
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12"  >
-                            <div class="box box-info">
+                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12"  >
+                            <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-calendar"/>
                                     <h2 class="box-title">Calendario de Eventos <srtong>SMS Renta</srtong></h2>
@@ -49,7 +26,7 @@
 
                                     <h:panelGrid columnClasses="value">
 
-                                        <p:schedule id="schedule" timeZone="GMT-5" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
+                                        <p:schedule id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
                                             <p:ajax event="eventSelect" listener="#{reservacionBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                                         </p:schedule>
 
@@ -81,8 +58,116 @@
                             </div>
                         </b:column>
 
+                        <b:column col-lg="5" col-md="5" col-sm="6" col-xs="12">
+                            <div class="box box-solid bg-green-gradient espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-dashboard" />
+                                    <h3 class="box-title">Tablero Principal</h3>
+                                </div>
+                                <div class="box-body">
+                                    <p class="text-justify">
+                                        En el tablero principal podrá ver una vista general de las actividades más 
+                                        importantes realizadas dentro de SMS Renta:<em> Horarios, clientes, Conductores, 
+                                            Vehículos y Estadísticas.</em>
+                                    </p>
+                                </div>
+                            </div>
+                        </b:column>
                         
+                        <b:column col-lg="5" col-md="5" col-sm="6" col-xs="12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-road" />
+                                    <h3 class="box-title">Conductor Elegido</h3>
+                                </div>
+                                <div class="box-body">
+                                    <!-- LISTA DE CONDUCTORES -->
+                                    <p:dataTable var="reserva"  value="#{reservacionBean.listaReservaciones}" rows="5"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15" emptyMessage="Conductores no registrados">
+                                        <p:column headerText="Nombres ">
+                                            <h:outputText value="#{reserva.smsEmpleado.smsUsuario.usuarioNombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Cédula">
+                                            <h:outputText value="#{reserva.smsEmpleado.smsUsuario.usuarioCc}" />
+                                        </p:column>
+
+                                        <p:column headerText="Teléfono">
+                                            <h:outputText value="#{reserva.smsEmpleado.smsUsuario.usuarioTelefono}" />
+                                        </p:column>
+
+                                        <p:column headerText="E-mail">
+                                            <h:outputText value="#{reserva.smsEmpleado.smsUsuario.usuarioEmail}" />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                        </b:column>
                         
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-users"/>
+                                    <h4 class="box-title">Administradores SMS Renta</h4>
+                                </div>
+                                <div class="box-body">
+                            
+                                    <p:dataTable id="ListaReservaciones" var="reser" emptyMessage="No tiene Reservaciones, por favor realice su reservación." value="#{reservacionBean.reservacionesCliente}"                                                                                               
+                                                 rowsPerPageTemplate="5,10,15">
+                                        <p:column headerText="Fecha Inicio">
+                                            <p:outputLabel value="#{reser.reservacionFechaInicio}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Hora Inicio">
+                                            <p:outputLabel value="#{reser.reservacionHoraInicio}"/>
+                                        </p:column>
+                                        
+                                        <p:column headerText="Fecha Llegada">
+                                            <p:outputLabel value="#{reser.reservacionFechaLlegada}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Hora Llegada">
+                                            <p:outputLabel value="#{reser.reservacionHoraLlegada}"/>
+                                        </p:column>
+                                        
+                                        
+                                        <p:column headerText="Conductor">
+                                            <p:outputLabel value="#{reser.smsEmpleado.smsUsuario.usuarioNombre}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Tel Coonductor">
+                                            <p:outputLabel value="#{reser.smsEmpleado.smsUsuario.usuarioTelefono}"/>
+                                        </p:column>
+                                        
+                                        <p:column headerText="Destino">
+                                            <p:outputLabel value="#{reser.smsCiudadByIdCiudadDestino.ciudadNombre}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Vehiculo SMS" > 
+                                            <p:commandLink style="color: white; padding: 7px;" class="fa fa-search btn btn-block btn-success" process="@this" update="@form"  title="Vehiculo SMS Seleccionado">
+                                                <f:setPropertyActionListener value="#{reser}" target="#{reser.smsVehiculo}"/>
+                                                <p:confirm header="Vehiculo SMS Seleccionado" /> 
+                                            </p:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <div class="box box-success" >
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title"/> Imagen de Vehiculo 
+                                            </div>
+                                            <div class="box-body"> 
+                                                <p:graphicImage value="#{reser.smsVehiculo.vehFotoRuta}" class="center-block " />
+                                                <p:graphicImage class="center-block img-responsive" value="#{reser.smsVehiculo.vehFoto2Ruta}"/>
+                                            </div>
+                                        </div>
+                                    </p:confirmDialog>
+                                </div>
+                            </div>
+                        </b:column>
 
                     </h:form>
                 </b:row>
