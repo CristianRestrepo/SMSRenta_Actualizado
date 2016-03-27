@@ -59,6 +59,7 @@ import org.primefaces.model.ScheduleModel;
 public class ReservacionBean implements Serializable {
 
     private List<SmsReservacion> reservacionesListView;
+    private List<SmsReservacion> reservacionesCliente;
     private List<SmsVehiculo> vehiculosListView;
     private List<SmsEmpleado> empleadoListView;
     private SmsMercado mercadoSeleccionado;
@@ -111,6 +112,8 @@ public class ReservacionBean implements Serializable {
     IServicioDao servicioDao;
     ICostosServiciosDao costoDao;
 
+    private SmsUsuario usuarioModelo;
+
     public ReservacionBean() {
 
         reservaView = new SmsReservacion();
@@ -150,6 +153,10 @@ public class ReservacionBean implements Serializable {
 
         mercadoSeleccionado = new SmsMercado();
         categoriaView = new SmsCategoria();
+
+//        MODELO DE USUARIO PARA MOSTRAR LISTA DE RESERVACION PARA CLIENTES
+        usuarioModelo = new SmsUsuario();
+        reservacionesCliente = new ArrayList<>();
     }
 
     @PostConstruct
@@ -291,6 +298,30 @@ public class ReservacionBean implements Serializable {
     public void setCategoriaView(SmsCategoria categoriaView) {
         this.categoriaView = categoriaView;
     }
+
+//    METODOS PARA MOSTRAR LISTA DE RESERVACIONES DE CLIENTES
+    public SmsUsuario getUsuarioModelo() {
+        return usuarioModelo;
+    }
+
+    public void setUsuarioModelo(SmsUsuario usuarioModelo) {
+        this.usuarioModelo = usuarioModelo;
+    }
+//    METODO PARA MOSTRAR LISTA DE RESERVACIONES PARA CLIENTES
+    public List<SmsReservacion> getReservacionesCliente() {
+        
+        resDao = new ImpReservacionDao();
+        
+        reservacionesCliente = resDao.mostrarReservacionCliente(sesion);
+        
+        return reservacionesCliente;
+    }
+
+    public void setReservacionesCliente(List<SmsReservacion> reservacionesCliente) {
+        this.reservacionesCliente = reservacionesCliente;
+    }
+    
+    
 
     public SmsEmpleado getEmpleadoView() {
         return empleadoView;
@@ -770,6 +801,9 @@ public class ReservacionBean implements Serializable {
         }
         return costo;
     }
+
+
+    
 }
 
 //        switch (servicio.getServicioNombre()) {
