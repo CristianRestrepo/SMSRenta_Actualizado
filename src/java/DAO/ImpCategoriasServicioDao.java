@@ -21,8 +21,8 @@ import org.hibernate.Session;
  */
 public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
 
-     private FacesMessage message;
-    
+    private FacesMessage message;
+
     @Override
     public List<SmsCategoriasServicio> consultarCategoriasServicios() {
         Session session = null;
@@ -47,7 +47,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
         List<SmsCategoriasServicio> categorias = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoriasServicio as catServicio where catServicio.catNombre = '" + catServicio.getCatNombre() + "'");
+            Query query = session.createQuery("from SmsCategoriasServicio as catServicio where catServicio.catNombre = '" + catServicio.getCatNombre() + "' and catServicio.smsMercado.mercadoNombre = '" + catServicio.getSmsMercado().getMercadoNombre() + "'");
             categorias = (List<SmsCategoriasServicio>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -58,8 +58,8 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
         }
         return categorias;
     }
-    
-     @Override
+
+    @Override
     public List<SmsCategoriasServicio> consultarCategoriasServiciosSegunMercado(SmsMercado mercado) {
         Session session = null;
         List<SmsCategoriasServicio> categorias = new ArrayList<>();
@@ -116,7 +116,8 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
                 session.close();
             }
         }
-        FacesContext.getCurrentInstance().addMessage(null, message);}
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 
     @Override
     public void eliminarCategoriaServicio(SmsCategoriasServicio categoria) {
@@ -136,6 +137,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
                 session.close();
             }
         }
-        FacesContext.getCurrentInstance().addMessage(null, message);}
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 
 }

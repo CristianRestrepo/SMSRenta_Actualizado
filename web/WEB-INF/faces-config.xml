@@ -415,7 +415,8 @@
             <from-outcome>ClienteEdicionPerfil</from-outcome>
             <to-view-id>/vistas/Cliente/general/CEdicionPerfil.xhtml</to-view-id>
             <redirect/>           
-        </navigation-case>        
+        </navigation-case>  
+              
         <!-- CLIENTE -->
         
               
@@ -500,6 +501,11 @@
         <navigation-case>
             <from-outcome>C_Regreso</from-outcome>
             <to-view-id>/vistas/Cliente/general/CEdicionPerfil.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ClienteReservaciones</from-outcome>
+            <to-view-id>/vistas/Cliente/reservas/CListaReservaciones.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
@@ -606,4 +612,9 @@
     <navigation-rule>
        
     </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>facturaBean1</managed-bean-name>
+        <managed-bean-class>Controladores.FacturaBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

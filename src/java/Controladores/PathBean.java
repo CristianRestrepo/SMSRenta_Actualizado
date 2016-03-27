@@ -245,6 +245,10 @@ public class PathBean implements Serializable {
     public String ir_ClienteReservacion() {
         return "ClienteReservacion";
     }
+    
+    public String ir_ClienteReservaciones() {
+        return "ClienteReservaciones";
+    }
 
     public String ir_ClienteDash() {
         return "ClienteDash";

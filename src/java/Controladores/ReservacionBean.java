@@ -29,6 +29,7 @@ import Modelo.SmsCategoria;
 import Modelo.SmsCostosservicios;
 import Modelo.SmsEmpleado;
 import Modelo.SmsEstado;
+import Modelo.SmsFactura;
 import Modelo.SmsMercado;
 import Modelo.SmsUsuario;
 import Modelo.SmsVehiculo;
@@ -64,7 +65,7 @@ public class ReservacionBean implements Serializable {
     private SmsReservacion reservaView;
     private SmsCostosservicios costoServicioView;
     private SmsCategoria categoriaView;
-    private SmsEstado estadoView;
+    private SmsEstado estadoView;    
 
     private SmsUsuario sesion; //objeto donde guardaremos los datos del usuario logueado
 
@@ -82,6 +83,7 @@ public class ReservacionBean implements Serializable {
     SendEmail emailController;
     VehiculoBean vehiculoController;
     EmpleadoBean empleadoController;
+    FacturaBean facturaController;
 
     //Sesion  
     private HttpServletRequest httpServletRequest;
@@ -112,10 +114,11 @@ public class ReservacionBean implements Serializable {
         costoServicioView = new SmsCostosservicios();
         vehiculosListView = new ArrayList<>();
         empleadoListView = new ArrayList<>();
-
+        
         emailController = new SendEmail();
         vehiculoController = new VehiculoBean();
         empleadoController = new EmpleadoBean();
+        facturaController = new FacturaBean();
 
         SelecVeh = false;
         SelecCon = false;
@@ -151,6 +154,7 @@ public class ReservacionBean implements Serializable {
 
         consultarReservacionesSegunUsuario();
         addEventoCalendario();
+        reservacionesListView = listaReservaciones;
     }
 
     public SmsCostosservicios getCostoServicioView() {
@@ -314,8 +318,7 @@ public class ReservacionBean implements Serializable {
         HoraEntrega = "";
         MinutosEntrega = "";
         MinutosInicio = "";
-
-        //Dormimos la aplicacion para mostrar los mensajes
+       
     }
 
     public String eliminarReservacion() {
@@ -498,7 +501,7 @@ public class ReservacionBean implements Serializable {
                 pe.getMessage();
             }
 
-            evento = new DefaultScheduleEvent(" Reservacion " + listaReservaciones.get(i).getIdReservacion(), fechaInicio, fechaLlegada);
+            evento = new DefaultScheduleEvent("" + listaReservaciones.get(i).getIdReservacion(), fechaInicio, fechaLlegada);
             evento.setId("" + listaReservaciones.get(i).getIdReservacion());
             eventoModelo.addEvent(evento);
         }

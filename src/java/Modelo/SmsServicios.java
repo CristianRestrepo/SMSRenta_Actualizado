@@ -21,7 +21,7 @@ public class SmsServicios  implements java.io.Serializable {
 
     public SmsServicios() {
         this.smsCategoriasServicio = new SmsCategoriasServicio();
-        this.servicioDuracion = 1;
+        this.servicioDuracion = 0;
     }
 	
     public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, int servicioDuracion) {
