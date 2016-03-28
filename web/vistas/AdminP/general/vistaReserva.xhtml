@@ -226,25 +226,25 @@
                                                     <f:setPropertyActionListener value="#{reservacionBean.modReservacionView}" target="#{facturaBean.reservacionView}"/>
                                                 </p:commandButton>
                                                 <p:commandButton ajax="false" class="btn btn-success pull-right" process="@this" action="#{facturaBean.generarFacturaPos()}" value="Generar factura POS">
-                                                   <f:setPropertyActionListener value="#{reservacionBean.modReservacionView}" target="#{facturaBean.reservacionView}"/> 
+                                                    <f:setPropertyActionListener value="#{reservacionBean.modReservacionView}" target="#{facturaBean.reservacionView}"/> 
                                                 </p:commandButton>
                                             </h:panelGrid>
                                             <script type="text/javascript">
                                                 function start() {
-                                                PF('statusDialog').show();
+                                                    PF('statusDialog').show();
                                                 }
 
                                                 function stop() {
-                                                PF('statusDialog').hide();
+                                                    PF('statusDialog').hide();
                                                 }
                                             </script>
-                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cancelando reservacion" draggable="false" closable="false" resizable="false">
-                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
-                                    </p:dialog>
+                                            <p:dialog modal="true" widgetVar="statusDialog" header="Cancelando reservacion" draggable="false" closable="false" resizable="false">
+                                                <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                            </p:dialog>
                                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                                 <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
                                                 <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                            </p:confirmDialog>
+                                            </p:confirmDialog>                                            
                                         </div>
                                     </div>
                                 </section>

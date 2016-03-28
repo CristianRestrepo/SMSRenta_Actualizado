@@ -6,7 +6,9 @@
 package Controladores;
 
 import DAO.IAdministradorDao;
+import DAO.IUsuarioDao;
 import DAO.ImpAdministradorDao;
+import DAO.ImpUsuarioDao;
 import Funciones.GenerarPassword;
 import Funciones.MD5;
 import Funciones.SendEmail;
@@ -24,6 +26,7 @@ import javax.annotation.PostConstruct;
 public class AdministradorBean extends UsuarioBean implements Serializable {
 
     IAdministradorDao adminDao;
+    IUsuarioDao usuarioDao;
     private String buscar;
 
     protected int operacion; //Controla la operacion a realizar
@@ -35,6 +38,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
     public AdministradorBean() {
         super();
         adminDao = new ImpAdministradorDao();
+        usuarioDao = new ImpUsuarioDao();
         buscar = null;
 
         habilitarCancelar = true;

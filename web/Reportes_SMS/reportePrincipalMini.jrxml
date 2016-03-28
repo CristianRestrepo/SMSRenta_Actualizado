@@ -95,7 +95,7 @@ where  f.idFactura = $P{idFactura} and
 			</staticText>
 			<image>
 				<reportElement x="39" y="0" width="104" height="79" uuid="3978613f-ebdc-46f1-bdec-a12af89d7cb9"/>
-				<imageExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\logo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../Reportes_SMS/logo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

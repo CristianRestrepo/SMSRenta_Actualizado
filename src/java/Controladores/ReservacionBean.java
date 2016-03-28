@@ -58,8 +58,7 @@ import org.primefaces.model.ScheduleModel;
  */
 public class ReservacionBean implements Serializable {
 
-    private List<SmsReservacion> reservacionesListView;
-    private List<SmsReservacion> reservacionesCliente;
+    private List<SmsReservacion> reservacionesListView;   
     private List<SmsVehiculo> vehiculosListView;
     private List<SmsEmpleado> empleadoListView;
     private SmsMercado mercadoSeleccionado;
@@ -112,7 +111,6 @@ public class ReservacionBean implements Serializable {
     IServicioDao servicioDao;
     ICostosServiciosDao costoDao;
 
-    private SmsUsuario usuarioModelo;
 
     public ReservacionBean() {
 
@@ -152,11 +150,7 @@ public class ReservacionBean implements Serializable {
         vehiculoDao = new ImpVehiculoDao();
 
         mercadoSeleccionado = new SmsMercado();
-        categoriaView = new SmsCategoria();
-
-//        MODELO DE USUARIO PARA MOSTRAR LISTA DE RESERVACION PARA CLIENTES
-        usuarioModelo = new SmsUsuario();
-        reservacionesCliente = new ArrayList<>();
+        categoriaView = new SmsCategoria();       
     }
 
     @PostConstruct
@@ -298,31 +292,7 @@ public class ReservacionBean implements Serializable {
     public void setCategoriaView(SmsCategoria categoriaView) {
         this.categoriaView = categoriaView;
     }
-
-//    METODOS PARA MOSTRAR LISTA DE RESERVACIONES DE CLIENTES
-    public SmsUsuario getUsuarioModelo() {
-        return usuarioModelo;
-    }
-
-    public void setUsuarioModelo(SmsUsuario usuarioModelo) {
-        this.usuarioModelo = usuarioModelo;
-    }
-//    METODO PARA MOSTRAR LISTA DE RESERVACIONES PARA CLIENTES
-    public List<SmsReservacion> getReservacionesCliente() {
-        
-        resDao = new ImpReservacionDao();
-        
-        reservacionesCliente = resDao.mostrarReservacionCliente(sesion);
-        
-        return reservacionesCliente;
-    }
-
-    public void setReservacionesCliente(List<SmsReservacion> reservacionesCliente) {
-        this.reservacionesCliente = reservacionesCliente;
-    }
-    
-    
-
+      
     public SmsEmpleado getEmpleadoView() {
         return empleadoView;
     }
@@ -418,7 +388,8 @@ public class ReservacionBean implements Serializable {
 
         consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
-
+        
+        modReservacionView = new SmsReservacion();
         return Ruta;
     }
 
@@ -675,6 +646,7 @@ public class ReservacionBean implements Serializable {
         long diffWeek;
         long diffMonth;
         long diffHourDifferentDay;
+        long diffMinutes;
 
         //asignamos a los objetos calendar la fecha de inicio con la hora de inicio y la fecha de llegada
         //con su hora de llegada
@@ -698,12 +670,22 @@ public class ReservacionBean implements Serializable {
             diff = milis1 - milis2;
             diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
 
+            // calcular la diferencia en minutos
+            diff = milis2 - milis1;
+            diffMinutes = diff / (60 * 1000);
+            
             diffDays = diffHourDifferentDay / 24;
 
-            // calcular la diferencia en horas
             diffHours = diffHourDifferentDay - (diffDays * 24);
-            costo = ((int) diffHours) * costoServicioView.getCostoServicioPrecio();
-
+            
+            // calcular la diferencia en horas
+            if(reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("30 minutos")){
+                costo = (((int)diffMinutes)/30) * costoServicioView.getCostoServicioPrecio();
+            }else if(reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("60 minutos")){
+                costo = ((int) diffHours) * costoServicioView.getCostoServicioPrecio();
+            }
+            
+            
         } else if (reservaView.getSmsServicios().getServicioDuracion() < 7 && reservaView.getSmsServicios().getServicioDuracion() >= 1) {//Renta por dias
 
             milis1 = calFechaInicio.getTimeInMillis();
@@ -801,149 +783,8 @@ public class ReservacionBean implements Serializable {
         }
         return costo;
     }
-
-
     
 }
 
-//        switch (servicio.getServicioNombre()) {
-//            case "Plan hora":
-//                // conseguir la representacion de la fecha en milisegundos
-//                milis1 = calFechaInicio.getTimeInMillis();
-//                milis2 = calFechaLlegada.getTimeInMillis();
-//
-//                // calcular la diferencia en dias
-//                diff = milis2 - milis1;
-//                diffDays = diff / (24 * 60 * 60 * 1000);
-//
-//                milis1 = calHoraInicio.getTimeInMillis();
-//                milis2 = calHoraLlegada.getTimeInMillis();
-//
-//                // calcular la diferencia en horas
-//                diff = milis2 - milis1;
-//                diffHours = (diffDays * 24) + (diff / (60 * 60 * 1000));
-//
-//                costo = ((int) diffHours) * costos.getCostoServicioPrecio();
-//                break;
-//            case "Plan dia 12 horas":
-//                // conseguir la representacion de la fecha en milisegundos
-//                milis1 = calFechaInicio.getTimeInMillis();
-//                milis2 = calFechaLlegada.getTimeInMillis();
-//
-//                // calcular la diferencia en dias
-//                diff = milis2 - milis1;
-//                diffDays = (diff / (24 * 60 * 60 * 1000)) * 2;
-//
-//                milis1 = calHoraInicio.getTimeInMillis();
-//                milis2 = calHoraLlegada.getTimeInMillis();
-//
-//                // calcular la diferencia en horas
-//                diff = milis2 - milis1;
-//                diffHours = (diff / (60 * 60 * 1000));
-//
-//                if (diffHours > 12) {
-//                    diffDays = diffDays + (diffHours / 12);
-//                    diffHours = diffHours - (diffHours / 12);
-//                }
-//
-//                costo = ((int) diffDays) * costos.getCostoServicioPrecio();
-//
-//                //Obtenemos el costo de la hora
-//                costos = cosDao.consultarCostoServicio(hora, categoria).get(0);
-//                costo = costo + (((int) diffHours) * costos.getCostoServicioPrecio());
-//                break;
-//            case "Plan dia 24 horas":
-//                // conseguir la representacion de la fecha en milisegundos
-//                milis1 = calFechaInicio.getTimeInMillis();
-//                milis2 = calFechaLlegada.getTimeInMillis();
-//
-//                // calcular la diferencia en dias
-//                diff = milis2 - milis1;
-//                diffDays = diff / (24 * 60 * 60 * 1000);
-//
-//                milis1 = calHoraInicio.getTimeInMillis();
-//                milis2 = calHoraLlegada.getTimeInMillis();
-//
-//                diff = milis1 - milis2;
-//                diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
-//
-//                diffDays = diffHourDifferentDay / 24;
-//
-//                // calcular la diferencia en horas
-//                diffHours = diffHourDifferentDay - (diffDays * 24);
-//
-//                costo = ((int) diffDays) * costos.getCostoServicioPrecio();
-//
-//                //Obtenemos el costo de la hora
-//                costos = cosDao.consultarCostoServicio(hora, categoria).get(0);
-//                costo = costo + (((int) diffHours) * costos.getCostoServicioPrecio());
-//                break;
-//            case "Plan semana":
-//                // conseguir la representacion de la fecha en milisegundos
-//                milis1 = calFechaInicio.getTimeInMillis();
-//                milis2 = calFechaLlegada.getTimeInMillis();
-//
-//                // calcular la diferencia en dias
-//                diff = milis2 - milis1;
-//                diffDays = (diff / (24 * 60 * 60 * 1000));
-//                diffWeek = diffDays / 7;
-//
-//                costo = ((int) diffWeek) * costos.getCostoServicioPrecio();
-//                costos = cosDao.consultarCostoServicio(dia, categoria).get(0);
-//
-//                diffDays = diffDays - (diffWeek * 7);
-//
-//                milis1 = calHoraInicio.getTimeInMillis();
-//                milis2 = calHoraLlegada.getTimeInMillis();
-//
-//                diff = milis1 - milis2;
-//                diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
-//
-//                diffDays = diffHourDifferentDay / 24;
-//                // calcular la diferencia en horas
-//                diffHours = diffHourDifferentDay - (diffDays * 24);
-//
-//                //Calculamos costo del dia
-//                costo = costo + ((int) diffDays * costos.getCostoServicioPrecio());
-//
-//                //Obtenemos el costo de la hora               
-//                costos = cosDao.consultarCostoServicio(hora, categoria).get(0);
-//                costo = costo + (((int) diffHours) * costos.getCostoServicioPrecio());
-//                break;
-//            case "Plan mes":
-//                // conseguir la representacion de la fecha en milisegundos
-//
-//                int diaInicio = reserva.getReservacionFechaInicio().getDay();
-//                int diaEntrega = reserva.getReservacionFechaLlegada().getDay();
-//
-//                // calcular la diferencia en dias
-//                diffDays = diaEntrega - diaInicio;
-//
-//                int startMes = (calFechaInicio.get(Calendar.YEAR) * 12) + calFechaInicio.get(Calendar.MONTH);
-//                int endMes = (calFechaLlegada.get(Calendar.YEAR) * 12) + calFechaLlegada.get(Calendar.MONTH);
-//
-//                int daysInMonth = calFechaInicio.getActualMaximum(Calendar.DAY_OF_MONTH);
-//
-//                milis1 = calHoraInicio.getTimeInMillis();
-//                milis2 = calHoraLlegada.getTimeInMillis();
-//
-//                diff = milis1 - milis2;
-//                diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
-//
-//                diffDays = diffHourDifferentDay / 24;
-//                // calcular la diferencia en horas
-//                diffHours = diffHourDifferentDay - (diffDays * 24);
-//
-//                //Diferencia en meses entre las dos fechas
-//                diffMonth = endMes - startMes;
-//                costo = ((int) diffMonth) * costos.getCostoServicioPrecio();
-//
-//                costos = cosDao.consultarCostoServicio(dia, categoria).get(0);
-//                costo = costo + ((int) diffDays * costos.getCostoServicioPrecio());
-//                costos = cosDao.consultarCostoServicio(hora, categoria).get(0);
-//                costo = costo + (((int) diffHours) * costos.getCostoServicioPrecio());
-//                break;
-//        }
-//        return costo;
-//    }
+
 

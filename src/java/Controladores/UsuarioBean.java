@@ -57,7 +57,7 @@ public class UsuarioBean implements Serializable {
     //Conexion con el Dao
     ICiudadDao ciudadDao;
     IRolDao rolDao;
-    IUsuarioDao usuarioDao;
+    
     INacionalidadDao nacionalidadDao;
 
     //Variables
@@ -78,8 +78,7 @@ public class UsuarioBean implements Serializable {
         estadoFoto = "";
 
         fileController = new Upload();
-
-        usuarioDao = new ImpUsuarioDao();
+      
         ciudadDao = new ImpCiudadDao();
         rolDao = new ImpRolDao();
         nacionalidadDao = new ImpNacionalidadDao();
@@ -146,7 +145,7 @@ public class UsuarioBean implements Serializable {
     //Declaracion de metodos
     //Metodos CRUD
     public void modificarPerfil() {
-
+        IUsuarioDao usuarioDao = new ImpUsuarioDao();
         MD5 md = new MD5();
         // en caso de modificar las contraseñas estas se encriptan de nuevo
         if (!nuevaContraseña.isEmpty()) {
@@ -168,9 +167,9 @@ public class UsuarioBean implements Serializable {
         String ruta = "/login.xhtml";
         MD5 md = new MD5();
         SmsUsuario user;
+        IUsuarioDao usuarioDao = new ImpUsuarioDao();
        
-        user = usuarioDao.consultarDatosSesionUsuario(usuarioView);
-        
+        user = usuarioDao.consultarDatosSesionUsuario(usuarioView);        
         if (user.getIdUsuario() != null) {//valida si el usuario existe en la BD
             user = usuarioDao.consultarUsuario(user).get(0);
             usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
@@ -190,7 +189,7 @@ public class UsuarioBean implements Serializable {
                         case "Cliente":
                             ruta = "ClienteDash";
                             break;
-                        case "Empleado":
+                        case "Conductor":
                             ruta = "ConductorDash";
                             break;
                         case "Proveedor":

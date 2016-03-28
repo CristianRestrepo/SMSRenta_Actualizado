@@ -6,7 +6,9 @@
 package Controladores;
 
 import DAO.IClienteDao;
+import DAO.IUsuarioDao;
 import DAO.ImpClienteDao;
+import DAO.ImpUsuarioDao;
 import Funciones.GenerarPassword;
 import Funciones.MD5;
 import Funciones.SendEmail;
@@ -29,6 +31,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     //Conexion con el dao
     IClienteDao clienteDao;
+    IUsuarioDao usuarioDao;
 
     //Relacion con el controlador    
     protected SendEmail emailController;
@@ -46,6 +49,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         nombresClientesListView = new ArrayList<>();
         emailController = new SendEmail();
         clienteDao = new ImpClienteDao();
+        usuarioDao = new ImpUsuarioDao();
 
         buscar = null;
         habilitarCancelar = true;
@@ -106,8 +110,6 @@ public class ClienteBean extends UsuarioBean implements Serializable {
     public void setOperacion(int operacion) {
         this.operacion = operacion;
     }
-    
-    
 
     //Metodos     
     public String registrarCliente() {
@@ -155,7 +157,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         GenerarPassword pass = new GenerarPassword();//Generamos un password aleatorio
 
         password = pass.generarPass(6);//Generamos pass aleatorio
-      
+
         //Encriptamos las contraseñas
         usuarioView.setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
         usuarioView.setUsuarioRememberToken(md.getMD5(password));
@@ -166,7 +168,6 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
         usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
-       
 
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(usuarioView);
@@ -188,8 +189,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
         usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
         usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
-       
-        
+
         //modificamos el usuario y recargamos la lista de clientes
         usuarioDao.modificarUsuario(usuarioView);
         usuariosListView = clienteDao.consultarUsuariosClientes();
@@ -237,7 +237,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     public void seleccionarCRUD(int i) {
         operacion = i;
-        if (operacion == 1) {           
+        if (operacion == 1) {
             habilitarCancelar = false;
             nombreOperacion = "Modificar Cliente";
         }
@@ -245,7 +245,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     public void cancelar() {
         //Limpiamos objetos utilizados
-        usuarioView = new SmsUsuario();       
+        usuarioView = new SmsUsuario();
 
         //Reiniciamos los objetos       
         habilitarCancelar = true;

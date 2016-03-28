@@ -8,8 +8,10 @@ package Controladores;
 import DAO.IMercadoDao;
 import Funciones.MD5;
 import DAO.IProveedorDao;
+import DAO.IUsuarioDao;
 import DAO.ImpMercadoDao;
 import DAO.ImpProveedorDao;
+import DAO.ImpUsuarioDao;
 import Funciones.GenerarPassword;
 import Funciones.SendEmail;
 import static Funciones.Upload.getNameDefaultUsuario;
@@ -48,6 +50,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     //Conexion con el dao
     IProveedorDao proveedorDao;
     IMercadoDao mercadoDao;
+    IUsuarioDao usuarioDao;
 
     public ProveedorBean() {
         super();
@@ -59,6 +62,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         buscar = null;
         proveedorDao = new ImpProveedorDao();
         mercadoDao = new ImpMercadoDao();
+        usuarioDao = new ImpUsuarioDao();
 
         habilitarCancelar = true;
         contraseñaModificada = false;

@@ -4,10 +4,12 @@ import DAO.IEmpleadoDao;
 import DAO.IEstadoDao;
 import DAO.IHojaVidaDao;
 import DAO.IProveedorDao;
+import DAO.IUsuarioDao;
 import DAO.ImpEmpleadoDao;
 import DAO.ImpEstadoDao;
 import DAO.ImpHojaVidaDao;
 import DAO.ImpProveedorDao;
+import DAO.ImpUsuarioDao;
 import Funciones.GenerarPassword;
 import Funciones.MD5;
 import Funciones.SendEmail;
@@ -67,6 +69,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     IHojaVidaDao hojaDao;
     IProveedorDao proveedorDao;
     IEstadoDao estadoDao;
+    IUsuarioDao usuarioDao;
 
     public EmpleadoBean() {
         super();
@@ -87,6 +90,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         hojaDao = new ImpHojaVidaDao();
         proveedorDao = new ImpProveedorDao();
         estadoDao = new ImpEstadoDao();
+        usuarioDao = new ImpUsuarioDao();
     }
 
     @PostConstruct
