@@ -24,8 +24,4 @@ public interface IVehiculoDao {
     public List<SmsVehiculo> filtrarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String categoria, String espacioInicio, String espacioLlegada);
     public List<SmsVehiculo> consultarVehiculosCiudad(SmsCiudad ciudad);
     public List<SmsVehiculo> filtrarVehiculosCiudad(SmsCiudad ciudad, String categoria);
-   
-
-    
-        
-}
+    }

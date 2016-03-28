@@ -176,9 +176,9 @@
                                                     <small>ELIEGE EL VEHICULO QUE QUIERES PARA TU RESERVA</small>
                                                 </h3>                                                                                     
                                                 <div class="form-group" style="width: 100%" align="center">                                              
-                                                    <p:selectOneMenu style="width: 100%" value="#{reservacionBean.categoriaView.categoriaNombre}">
+                                                    <p:selectOneMenu style="width: 100%" value="#{reservacionBean.categoriaView.categoriaNombre}">                                                        
                                                         <f:selectItems value="#{categoriaBean.nombresCategoriasListView}"/>
-                                                        <p:ajax listener="#{reservacionBean.filtrar()}" update="ScrollerVehiculos"/>
+                                                        <p:ajax event="change" listener="#{reservacionBean.filtrar()}" process="@this" update="ScrollerVehiculos"/>
                                                     </p:selectOneMenu>
                                                 </div> 
                                             </b:column>
@@ -201,7 +201,7 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <b:column col-lg="5" >
-                                                                <!--espacio para imagen-->
+                                                                <!--espacio para imagen-->                                                                
                                                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 
                                                                     <div class="carousel-inner">

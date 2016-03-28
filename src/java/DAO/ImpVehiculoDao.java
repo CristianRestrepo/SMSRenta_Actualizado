@@ -197,8 +197,9 @@ public class ImpVehiculoDao implements IVehiculoDao {
         List<SmsVehiculo> vehiculos = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsVehiculos as vehiculo where vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and "
-                    + "vehiculo.smsCategoria.categoriaNombre = '" + categoria + "' and "
+            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor "
+                    + "where vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and vehiculo.smsCategoria.categoriaNombre = '" + categoria + "' and "
                     + "not exists(from SmsReservacion as reservacion where "
                     + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
                     + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "

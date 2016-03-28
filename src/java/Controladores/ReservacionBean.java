@@ -479,10 +479,12 @@ public class ReservacionBean implements Serializable {
 
     public void filtrar() {
 
-        if (categoriaView.getCategoriaNombre().isEmpty()) {
+        if (categoriaView.getCategoriaNombre().equalsIgnoreCase("")) {
             if (resDao.mostrarReservaciones().isEmpty()) {
-                vehiculosListView = vehiculoDao.mostrarVehiculo();
+                vehiculosListView = new ArrayList<>();
+                vehiculosListView = vehiculoDao.consultarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio());
             } else {
+                vehiculosListView = new ArrayList<>();
                 vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView);
             }
         } else {

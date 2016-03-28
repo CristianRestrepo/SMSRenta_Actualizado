@@ -19,6 +19,7 @@ public class SmsCategoria  implements java.io.Serializable {
      private Set<SmsMercado> smsMercados = new HashSet<>(0);
 
     public SmsCategoria() {
+        categoriaNombre = "";
     }
 
 	
