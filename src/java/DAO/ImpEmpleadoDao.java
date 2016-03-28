@@ -131,7 +131,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                     + "and "
                     + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaLlegada + "' and reservacion.reservacionHoraInicio < '" + horaLlegada + "') "
                     + "and "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsVehiculo.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaInicio + "' and (reservacion.reservacionHoraInicio >= '" + horaInicio + "' or reservacion.reservacionHoraLlegada >= '" + horaInicio + "'))"
+                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaInicio + "' and (reservacion.reservacionHoraInicio >= '" + horaInicio + "' or reservacion.reservacionHoraLlegada >= '" + horaInicio + "'))"
                     + ")"
                     + "or "
                      + "('" + fechaInicio + "' = '" + fechaLlegada + "' and "
