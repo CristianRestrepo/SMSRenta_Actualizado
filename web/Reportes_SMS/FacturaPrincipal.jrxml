@@ -119,8 +119,8 @@ ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 				<reportElement x="0" y="51" width="555" height="1" forecolor="#999999" uuid="f8521acd-3df2-4be2-bceb-61149b15cfdf"/>
 			</line>
 			<image>
-				<reportElement x="5" y="3" width="60" height="43" uuid="f6ce904c-ce56-4ce1-be67-6be809098301"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\SMSRenta_Actualizado\\web\\Reportes_SMS\\logo.jpg"]]></imageExpression>
+				<reportElement x="0" y="3" width="58" height="49" uuid="6b28f7be-68a0-4bf4-a776-3a7c69d15063"/>
+				<imageExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\logo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

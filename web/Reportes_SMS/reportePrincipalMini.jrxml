@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="328" pageHeight="842" columnWidth="288" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d495719f-3b9b-49bc-b4a2-bec5d133ff17">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="80"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idFactura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{idFactura}]]></defaultValueExpression>
 	</parameter>
@@ -72,10 +72,6 @@ where  f.idFactura = $P{idFactura} and
 	</background>
 	<title>
 		<band height="79" splitType="Stretch">
-			<image>
-				<reportElement x="49" y="9" width="93" height="62" uuid="72ca4dfe-21af-456d-be17-aaea33717f3c"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\SMSRenta_Actualizado\\web\\Reportes_SMS\\logo.jpg"]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="156" y="37" width="100" height="20" uuid="ad4812b8-a094-44a4-9ecf-66426684d1ae"/>
 				<textElement textAlignment="Center">
@@ -97,6 +93,10 @@ where  f.idFactura = $P{idFactura} and
 				</textElement>
 				<text><![CDATA[FACTURA DE VENTA]]></text>
 			</staticText>
+			<image>
+				<reportElement x="39" y="0" width="104" height="79" uuid="3978613f-ebdc-46f1-bdec-a12af89d7cb9"/>
+				<imageExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\logo.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

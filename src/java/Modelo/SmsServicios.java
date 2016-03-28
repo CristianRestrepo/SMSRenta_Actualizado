@@ -16,12 +16,13 @@ public class SmsServicios  implements java.io.Serializable {
      private String servicioNombre;
      private String servicioDescripcion;
      private Integer servicioDuracion;
+     private Integer servicioConductor;
      private Set<SmsCostosservicios> smsCostosservicioses = new HashSet<>(0);     
      private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
 
     public SmsServicios() {
         this.smsCategoriasServicio = new SmsCategoriasServicio();
-        this.servicioDuracion = 0;
+        this.servicioDuracion = 0;      
     }
 	
     public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, int servicioDuracion) {
@@ -90,6 +91,15 @@ public class SmsServicios  implements java.io.Serializable {
         this.servicioDuracion = servicioDuracion;
     }
 
+    public Integer getServicioConductor() {
+        return servicioConductor;
+    }
+
+    public void setServicioConductor(Integer servicioConductor) {
+        this.servicioConductor = servicioConductor;
+    }
+
+    
     
 
 

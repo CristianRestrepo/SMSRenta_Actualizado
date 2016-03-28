@@ -28,6 +28,14 @@ public class SmsFactura {
 
     public SmsFactura() {
         this.smsReservacion = new SmsReservacion();
+        this.facturaIva = 0;
+        this.facturaDescuento = 0;
+        this.facturaRetFuente = 0;
+        this.facturaNeto = 0;
+        this.facturaRetIca = 0;
+        this.facturaRetIva = 0;
+        this.facturaSubtotal = 0;
+        this.facturaTotal = 0;
     }
 
     public SmsFactura(Integer idFactura, SmsReservacion smsReservacion, Date facturaFecha, Date facturaFechaVencimiento, int facturaIva, int facturaRetFuente, int facturaRetIca, int facturaRetIva, int facturaSubtotal, int facturaTotal, int facturaDescuento, int facturaNeto) {
@@ -44,8 +52,7 @@ public class SmsFactura {
         this.facturaDescuento = facturaDescuento;
         this.facturaNeto = facturaNeto;
     }
-    
-    
+
     public Integer getIdFactura() {
         return idFactura;
     }

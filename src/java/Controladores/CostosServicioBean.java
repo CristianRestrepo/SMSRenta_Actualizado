@@ -15,6 +15,7 @@ import DAO.ImpLugarDao;
 import DAO.ImpServicioDao;
 import Modelo.SmsCiudad;
 import Modelo.SmsCostosservicios;
+import Modelo.SmsLugares;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class CostosServicioBean implements Serializable {
     //Objetos necesarios ne vista
     private SmsCostosservicios costoView;
     private SmsCiudad ciudadView;
+    private SmsLugares lugarInicioView;
+    private SmsLugares lugsrDestinoView;
 
     private List<SmsCostosservicios> costosListView;
 
@@ -48,7 +51,9 @@ public class CostosServicioBean implements Serializable {
 
         costoView = new SmsCostosservicios();
         ciudadView = new SmsCiudad();
-
+        lugarInicioView = new SmsLugares();
+        lugsrDestinoView = new SmsLugares();
+        
         costosListView = new ArrayList<>();
         lugarDao = new ImpLugarDao();
 
@@ -124,18 +129,33 @@ public class CostosServicioBean implements Serializable {
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
     }
+    public SmsLugares getLugarInicioView() {
+
+        return lugarInicioView;
+    }
+
+    public void setLugarInicioView(SmsLugares lugarInicioView) {
+        this.lugarInicioView = lugarInicioView;
+    }
+
+    public SmsLugares getLugsrDestinoView() {
+        return lugsrDestinoView;
+    }
+
+    public void setLugsrDestinoView(SmsLugares lugsrDestinoView) {
+        this.lugsrDestinoView = lugsrDestinoView;
+    }
 
     
-    //Metodos Crud
-    public void registrar() {
 
+    public void registrar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
         costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
         costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()).get(0));
 
-        if (costoView.getSmsLugaresByIdLugarInicio().getLugarNombre() != null && costoView.getSmsLugaresByIdLugarDestino().getLugarNombre() != null) {
-            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarInicio()).get(0));
-            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarDestino()).get(0));
+        if (lugarInicioView.getLugarNombre() != null && lugsrDestinoView.getLugarNombre() != null) {
+            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(lugarInicioView).get(0));
+            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(lugsrDestinoView).get(0));
         }
 
         //Registramos el costo
@@ -211,6 +231,9 @@ public class CostosServicioBean implements Serializable {
         estado = i;
         if (estado == 1) {
             nombre = "Modificar Costo Servicio";
+            ciudadView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
+            lugarInicioView = costoView.getSmsLugaresByIdLugarInicio();
+            lugsrDestinoView = costoView.getSmsLugaresByIdLugarDestino();
         }
     }
 

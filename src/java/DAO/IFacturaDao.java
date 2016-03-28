@@ -6,6 +6,7 @@
 package DAO;
 
 import Modelo.SmsFactura;
+import Modelo.SmsReservacion;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
 public interface IFacturaDao {
     
     public List<SmsFactura> consultarFacturas();
+    public List<SmsFactura> consultarFacturaSegunReservacion(SmsReservacion reservacion);
     public void registrarFactura(SmsFactura factura);   
     public void eliminarFactura(SmsFactura factura);
     

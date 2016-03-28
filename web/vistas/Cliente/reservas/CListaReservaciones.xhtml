@@ -53,8 +53,8 @@
                                 </p:column>
 
                                 <p:column style="width: 35px">
-                                    <p:commandLink style="color: white" class="fa fa-download btn btn-block btn-success" process="@this" update="@form" title="Descargar Factura">
-                                        <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.reservaView}"/>
+                                    <p:commandLink style="color: white" class="fa fa-download btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura()}" title="Descargar Factura">
+                                        <f:setPropertyActionListener value="#{reservacion}" target="#{facturaBean.reservacionView}"/>
                                     </p:commandLink>
                                 </p:column>
                                 

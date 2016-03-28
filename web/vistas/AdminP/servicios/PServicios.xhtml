@@ -44,17 +44,24 @@
                                             <p:message for="SMMercado"/>
 
                                             <p:selectOneMenu required="true" requiredMessage="Seleccione categoria del servicio" value="#{serviciosBean.servicioView.smsCategoriasServicio.catNombre}" label="Categoria del servicio" style="width: 100%" id="SMCatServicio"> 
-                                                <f:selectItem itemLabel="Seleccione categoria del servicio" noSelectionOption="true"/>="Categoria del
+                                                <f:selectItem itemLabel="Seleccione categoria del servicio" noSelectionOption="true"/>
                                                 <f:selectItems value="#{categoriasServiciosBean.consultarCategoriasSegunMercado(serviciosBean.mercadoView)}"/>                                               
                                             </p:selectOneMenu>
                                             <p:message for="SMCatServicio"/>
+
+                                            <p:selectOneMenu required="true" requiredMessage="Seleccione tipo de servicio" value="#{serviciosBean.servicioView.servicioConductor}" label="Tipo de servicio" style="width: 100%" id="SMTipoServicio"> 
+                                                <f:selectItem itemLabel="Seleccione categoria del servicio" noSelectionOption="true"/>l
+                                                <f:selectItem itemLabel="Con conductor" itemValue="1"/>
+                                                <f:selectItem itemLabel="Sin conductor" itemValue="0"/>
+                                            </p:selectOneMenu>
+                                            <p:message for="SMTipoServicio"/>
 
                                             <b:inputText id="TNombreServicio" tooltip="Nombre del servicio" value="#{serviciosBean.servicioView.servicioNombre}" style="width: 100%" required="true" requiredMessage="Ingrese nombre de servicio" placeholder="Nombre del servicio"/>
                                             <p:message for="TNombreServicio"/>
 
                                             <p:inputTextarea rows="3" value="#{serviciosBean.servicioView.servicioDescripcion}" style="width: 100%" id="TDescripcionServicio" placeholder="Descripcion del servicio"/>
                                             <p:message for="TDescripcionServicio"/> 
-                                            
+
                                             <b:inputText value="#{serviciosBean.servicioView.servicioDuracion}" tooltip="Duracion del servicio (1,7,30 dias)" style="width: 100%" id="TDuracionServicio" placeholder="Duracion del servicio (1,7,30 dias)"/>
                                             <p:message for="TDuracionServicio"/>  
                                         </h:panelGrid>
@@ -146,17 +153,17 @@
                                             </p:selectOneMenu>
                                             <p:message for="SMCiudad"/>
 
-                                            <b:selectOneMenu rendered="#{costosServicioBean.habilitar}" required="false" value="#{costosServicioBean.costoView.smsLugaresByIdLugarInicio.lugarNombre}" style="width: 100%" tooltip="Lugar de recojida" id="SMLugarInicio"> 
+                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugarInicioView.lugarNombre}" style="width: 100%" tooltip="Lugar de recojida" id="SMLugarInicio"> 
                                                 <f:selectItem itemLabel="Seleccione lugar de recojida" noSelectionOption="true"/>
                                                 <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadView)}"/>
                                             </b:selectOneMenu>
-                                            <p:message rendered="#{costosServicioBean.habilitar}" for="SMLugarInicio"/>
+                                            <p:message for="SMLugarInicio"/>
 
-                                            <b:selectOneMenu rendered="#{costosServicioBean.habilitar}" required="false" value="#{costosServicioBean.costoView.smsLugaresByIdLugarDestino.lugarNombre}" style="width: 100%" tooltip="Lugar de destino" id="SMLugarDestino"> 
+                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugsrDestinoView.lugarNombre}" style="width: 100%" tooltip="Lugar de destino" id="SMLugarDestino"> 
                                                 <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
                                                 <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadView)}"/>
                                             </b:selectOneMenu>
-                                            <p:message rendered="#{costosServicioBean.habilitar}" for="SMLugarDestino"/>
+                                            <p:message for="SMLugarDestino"/>
 
                                             <b:inputText id="TCostoServicio" tooltip="Costo del servicio" value="#{costosServicioBean.costoView.costoServicioPrecio}" style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
                                             <p:message for="TCostoServicio"/>

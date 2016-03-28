@@ -29,10 +29,10 @@ import Modelo.SmsCategoria;
 import Modelo.SmsCostosservicios;
 import Modelo.SmsEmpleado;
 import Modelo.SmsEstado;
-import Modelo.SmsFactura;
 import Modelo.SmsMercado;
 import Modelo.SmsUsuario;
 import Modelo.SmsVehiculo;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +44,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import net.sf.jasperreports.engine.JRException;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -63,9 +64,12 @@ public class ReservacionBean implements Serializable {
     private SmsMercado mercadoSeleccionado;
 
     private SmsReservacion reservaView;
+    private SmsReservacion modReservacionView;
+    
     private SmsCostosservicios costoServicioView;
     private SmsCategoria categoriaView;
-    private SmsEstado estadoView;    
+    private SmsEstado estadoView;
+    private SmsEmpleado empleadoView;
 
     private SmsUsuario sesion; //objeto donde guardaremos los datos del usuario logueado
 
@@ -110,11 +114,14 @@ public class ReservacionBean implements Serializable {
     public ReservacionBean() {
 
         reservaView = new SmsReservacion();
+        modReservacionView = new SmsReservacion();
         estadoView = new SmsEstado();
         costoServicioView = new SmsCostosservicios();
+        empleadoView = new SmsEmpleado();
+
         vehiculosListView = new ArrayList<>();
         empleadoListView = new ArrayList<>();
-        
+
         emailController = new SendEmail();
         vehiculoController = new VehiculoBean();
         empleadoController = new EmpleadoBean();
@@ -285,9 +292,26 @@ public class ReservacionBean implements Serializable {
         this.categoriaView = categoriaView;
     }
 
+    public SmsEmpleado getEmpleadoView() {
+        return empleadoView;
+    }
+
+    public void setEmpleadoView(SmsEmpleado empleadoView) {
+        this.empleadoView = empleadoView;
+    }
+
+    public SmsReservacion getModReservacionView() {
+        return modReservacionView;
+    }
+
+    public void setModReservacionView(SmsReservacion modReservacionView) {
+        this.modReservacionView = modReservacionView;
+    }
+
+    
     //Metodos    
     //CRUD
-    public void registrarReservacion() {
+    public String registrarReservacion() throws JRException, IOException {
 
         estadoView.setEstadoNombre("Inactiva");
         reservaView.setSmsEstado(estadoDao.consultarEstado(estadoView).get(0));
@@ -308,7 +332,9 @@ public class ReservacionBean implements Serializable {
         consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
 
-        //Limpieza de objetos      
+        //Se registra factura
+        facturaController.registrar(reservaView);        
+        //Limpieza de objetos         
         reservaView = new SmsReservacion();
         //Habilitamos la seleccion de vehiculos y conductores
         SelecVeh = false;
@@ -318,15 +344,27 @@ public class ReservacionBean implements Serializable {
         HoraEntrega = "";
         MinutosEntrega = "";
         MinutosInicio = "";
-       
+        
+        String ruta = "";   
+                
+        
+        if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")) {
+            ruta = "regresarAdminPReservacion";
+        }else if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")){
+            ruta = "RegresarClienteReservacion";
+        }                 
+
+              
+        
+        return ruta;
     }
 
     public String eliminarReservacion() {
-        boolean valor = validarEliminarReservacion(reservaView);
+        boolean valor = validarEliminarReservacion(modReservacionView);
         String Ruta = "";
         if (valor) {
-            resDao.eliminarReservacion(reservaView);
-            reservaView = new SmsReservacion();
+            resDao.eliminarReservacion(modReservacionView);
+            modReservacionView = new SmsReservacion();
             costoServicioView = new SmsCostosservicios();
             switch (sesion.getSmsRol().getRolNombre()) {
                 case "Administrador Principal":
@@ -360,6 +398,7 @@ public class ReservacionBean implements Serializable {
             skip = false;   //reset in case user goes back
             return "Confirmacion";
         } else {
+
             switch (event.getNewStep()) {
                 case "Vehiculo":
                     reservaView.setSmsVehiculo(new SmsVehiculo());
@@ -404,15 +443,23 @@ public class ReservacionBean implements Serializable {
                         reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
                     }
 
+                    if (empleadoView.getIdEmpleado() != null) {
+                        reservaView.setSmsEmpleado(empleadoView);
+                    }
+
                     SimpleDateFormat formatTime;
                     formatTime = new SimpleDateFormat("HH:mm:ss");
                     HoraInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                     HoraEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
-                     
+
                     reservaView.setReservacionCosto(calcularCostoReservacion(reservaView));
                     break;
             }
-            return event.getNewStep();
+            if (event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
+                return "Confirmacion";
+            } else {
+                return event.getNewStep();
+            }
         }
     }
 
@@ -513,8 +560,8 @@ public class ReservacionBean implements Serializable {
 
     public String irVistaReserva() {
         String Ruta = "";
-        reservaView.setIdReservacion(Integer.parseInt(evento.getTitle()));
-        reservaView = resDao.consultarReservacionId(reservaView).get(0);
+        modReservacionView.setIdReservacion(Integer.parseInt(evento.getTitle()));
+        modReservacionView = resDao.consultarReservacionId(modReservacionView).get(0);
 
         switch (sesion.getSmsRol().getRolNombre()) {
             case "Administrador Principal":
@@ -580,7 +627,7 @@ public class ReservacionBean implements Serializable {
         int costo = 0;
 
         //instancia de objetos relacionados a los DAO necesarios
-        ICostosServiciosDao cosDao = new ImpCostosServiciosDao();        
+        ICostosServiciosDao cosDao = new ImpCostosServiciosDao();
 
         // Crear 2 instancias de Calendar
         Calendar calFechaInicio = Calendar.getInstance();
@@ -606,8 +653,27 @@ public class ReservacionBean implements Serializable {
         calHoraLlegada.setTime(reserva.getReservacionHoraLlegada());
 
         costoServicioView = cosDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
+        if (reservaView.getSmsServicios().getServicioDuracion() == 0) {
+            milis1 = calFechaInicio.getTimeInMillis();
+            milis2 = calFechaLlegada.getTimeInMillis();
 
-        if (reservaView.getSmsServicios().getServicioDuracion() < 7) {//Renta por dias
+            // calcular la diferencia en dias
+            diff = milis2 - milis1;
+            diffDays = diff / (24 * 60 * 60 * 1000);
+
+            milis1 = calHoraInicio.getTimeInMillis();
+            milis2 = calHoraLlegada.getTimeInMillis();
+
+            diff = milis1 - milis2;
+            diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
+
+            diffDays = diffHourDifferentDay / 24;
+
+            // calcular la diferencia en horas
+            diffHours = diffHourDifferentDay - (diffDays * 24);
+            costo = ((int) diffHours) * costoServicioView.getCostoServicioPrecio();
+
+        } else if (reservaView.getSmsServicios().getServicioDuracion() < 7 && reservaView.getSmsServicios().getServicioDuracion() >= 1) {//Renta por dias
 
             milis1 = calFechaInicio.getTimeInMillis();
             milis2 = calFechaLlegada.getTimeInMillis();

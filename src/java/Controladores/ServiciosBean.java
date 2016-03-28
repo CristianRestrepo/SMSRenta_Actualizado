@@ -229,24 +229,12 @@ public class ServiciosBean implements Serializable {
     }
 
     public List<String> seleccionarServiciosSegunMercado(SmsMercado mercado) {
+        nombreServiciosListView = new ArrayList<>();
         serviciosListView = new ArrayList<>();
-        serviciosListView = servicioDao.mostrarServicios();
-        boolean bandera = false;
+        serviciosListView = servicioDao.ConsultarServicioSegunMercado(mercado);
         for (int i = 0; i < serviciosListView.size(); i++) {
-            if (serviciosListView.get(i).getSmsCategoriasServicio().getSmsMercado().getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
-                for (int j = 0; j < nombreServiciosListView.size(); j++) {
-                    if (nombreServiciosListView.get(j).equalsIgnoreCase(serviciosListView.get(i).getServicioNombre())) {
-                        bandera = true;
-                    }
-                }
-                if (!bandera) {
-                    nombreServiciosListView.add(serviciosListView.get(i).getServicioNombre());
-                }
-            }
-
-            bandera = false;
+            nombreServiciosListView.add(serviciosListView.get(i).getServicioNombre());
         }
         return nombreServiciosListView;
     }
-
 }
