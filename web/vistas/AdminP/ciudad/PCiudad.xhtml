@@ -95,13 +95,13 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink process="@this" update="@form" class="fa fa-pencil btn btn-block btn-success" style="color: white"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
+                                            <p:commandLink process="@this" update="@form" class="fa fa-pencil btn btn-block btn-success" style="color: white; padding: 8px"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink process="@this" update="@form" class="fa fa-trash btn btn-block btn-danger" style="color: white" action="#{ciudadBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink process="@this" update="@form" class="fa fa-trash btn btn-block btn-danger" style="color: white; padding: 8px" action="#{ciudadBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta ciudad?" icon="ui-icon-alert" /> 
                                             </p:commandLink>

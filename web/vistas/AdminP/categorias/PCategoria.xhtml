@@ -83,13 +83,13 @@
                                         </p:column>
                                                                                                                         
                                         <p:column style="width: 35px">
-                                            <p:commandLink class="fa fa-pencil btn btn-block btn-success" style="color: white" process="@this" update="@form" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink class="fa fa-pencil btn btn-block btn-success" style="color: white; padding: 8px" process="@this" update="@form" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink class="fa fa-close btn btn-block btn-danger" style="color: white" process="@this" update="@form" action="#{categoriaBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink class="fa fa-close btn btn-block btn-danger" style="color: white; padding: 8px" process="@this" update="@form" action="#{categoriaBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta categoria?" icon="ui-icon-alert" /> 
                                             </p:commandLink>

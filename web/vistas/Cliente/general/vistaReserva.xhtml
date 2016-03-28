@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
 
@@ -22,7 +23,7 @@
 
                                 <div class="pad margin no-print">
                                     <div class="callout callout-info" style="margin-bottom: 0!important;">
-                                        <h4>Reserva #{reservacionBean.mreservaView.idReservacion}</h4>
+                                        <h4>Reserva #{reservacionBean.reservaView.idReservacion}</h4>
                                         Su reserva ha sido exitosa, porfavor verifique los datos ingresados en la reservación
                                         antes de realizar el pago del servicio.
                                     </div>
@@ -55,11 +56,10 @@
                                         <div class="col-sm-3 invoice-col">
                                             Para:<br/>
                                             <address>
-                                                <strong>#{reservacionBean.mclienteView.usuarioNombre}</strong><br></br>
-                                                Cc: #{reservacionBean.mclienteView.usuarioCc}<br></br>
-                                                Razon Social: #{reservacionBean.mclienteView.usuarioRazonSocial}<br></br>
-                                                Teléfono: #{reservacionBean.mclienteView.usuarioTelefono}<br></br>
-                                                Email:  #{reservacionBean.mclienteView.usuarioEmail}
+                                                <strong>#{reservacionBean.modReservacionView.smsUsuario.usuarioNombre}</strong><br></br>
+                                                Cc: #{reservacionBean.modReservacionView.smsUsuario.usuarioCc}<br></br>
+                                                Teléfono: #{reservacionBean.modReservacionView.smsUsuario.usuarioTelefono}<br></br>
+                                                Email:  #{reservacionBean.modReservacionView.smsUsuario.usuarioEmail}
                                             </address>
                                         </div><!-- /.col -->
 
@@ -67,15 +67,15 @@
                                             <h3>Conductor elegido para Servicio</h3>
                                             <div class="col-sm-6">
                                                 <address>
-                                                    <strong>Nombre: #{reservacionBean.MConductorView.usuarioNombre}</strong><br></br>
-                                                    Cc: #{reservacionBean.MConductorView.usuarioCc}<br></br>
-                                                    Razon Social: #{reservacionBean.MConductorView.usuarioRazonSocial}<br></br>
-                                                    Teléfono: #{reservacionBean.MConductorView.usuarioTelefono}<br></br>
-                                                    Email: #{reservacionBean.MConductorView.usuarioEmail}
+                                                    <strong>Nombre: #{reservacionBean.modReservacionView.smsEmpleado.smsUsuario.usuarioNombre}</strong><br></br>
+                                                    Cc: #{reservacionBean.modReservacionView.smsEmpleado.smsUsuario.usuarioCc}<br></br>
+                                                    Razon Social: #{reservacionBean.modReservacionView.smsEmpleado.smsProveedor.proveedorRazonSocial}<br></br>
+                                                    Teléfono: #{reservacionBean.modReservacionView.smsEmpleado.smsUsuario.usuarioTelefono}<br></br>
+                                                    Email: #{reservacionBean.modReservacionView.smsEmpleado.smsUsuario.usuarioEmail}
                                                 </address>                                        
                                             </div>
                                             <div class="col-sm-6">
-                                                <p:graphicImage width="150" height="150" value="#{reservacionBean.MConductorView.usuarioFotoRuta}" alt="Conductor" class="img-thumbnail img-responsive"/>
+                                                <p:graphicImage width="150" height="150" value="#{reservacionBean.modReservacionView.smsEmpleado.smsUsuario.usuarioFotoRuta}" alt="Conductor" class="img-thumbnail img-responsive"/>
                                             </div>
 
                                         </div><!-- /.col -->
@@ -98,21 +98,21 @@
                                                 <tbody>
                                                     <tr>
                                                         <th>Recogida</th>
-                                                        <td>#{reservacionBean.mciudadView.ciudadNombre}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionLugarLlegada}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionFechaInicio}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionHoraInicio}</td>
+                                                        <td>#{reservacionBean.modReservacionView.smsCiudadByIdCiudadInicio.ciudadNombre}</td>
+                                                        <td>#{reservacionBean.modReservacionView.reservacionLugarLlegada}</td>
+                                                        <td>#{reservacionBean.modReservacionView.reservacionFechaInicio}</td>
+                                                        <td>#{reservacionBean.modReservacionView.reservacionHoraInicio}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Entrega</th>
-                                                        <td>#{reservacionBean.mciudadView.ciudadNombre}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionLugarDestino}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionFechaLlegada}</td>
-                                                        <td>#{reservacionBean.mreservaView.reservacionHoraLlegada}</td>
+                                                        <td>#{reservacionBean.modReservacionView.smsCiudadByIdCiudadDestino.ciudadNombre}</td>
+                                                        <td>#{reservacionBean.modReservacionView.reservacionLugarDestino}</td>
+                                                        <td>#{reservacionBean.modReservacionView.reservacionFechaLlegada}</td>
+                                                        <td>#{reservacionBean.modReservacionView.reservacionHoraLlegada}</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Observaciones</th>
-                                                        <td>#{reservacionBean.mreservaView.reservacionNotas}</td>                                                
+                                                        <td>#{reservacionBean.modReservacionView.reservacionNotas}</td>                                                
                                                     </tr>
                                                     <!--<tr>
                                                         <td>1</td>
@@ -153,38 +153,38 @@
                                             </div>
                                         </div><!-- /.col -->
                                         <div class="col-xs-6">
-                                            <p:graphicImage style="margin-left: 20%; margin-bottom: 10px" width="256" height="256" value="#{reservacionBean.mvehiculoView.vehFotoRuta}" alt="Vehiculo" class="img-thumbnail img-responsive"/>
+                                            <p:graphicImage style="margin-left: 20%; margin-bottom: 10px" width="256" height="256" value="#{reservacionBean.modReservacionView.smsVehiculo.vehFotoRuta}" alt="Vehiculo" class="img-thumbnail img-responsive"/>
 
                                             <div class="col-sm-12 invoice-col">
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <tr>
                                                             <th style="width:50%">Marca:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.smsReferencia.smsMarca.marcaNombre}</td>
+                                                            <td>#{reservacionBean.modReservacionView.smsVehiculo.smsReferencia.smsMarca.marcaNombre}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Referencia:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.smsReferencia.referenciaNombre}</td>
+                                                            <td>#{reservacionBean.modReservacionView.smsVehiculo.smsReferencia.referenciaNombre}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Placa:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehPlaca}</td>
+                                                            <td>#{reservacionBean.modReservacionView.smsVehiculo.vehPlaca}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Color:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehColor}</td>
+                                                            <td>#{reservacionBean.modReservacionView.smsVehiculo.smsColor.colorNombre}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Personas:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehNumPersonas}</td>
+                                                            <td>#{reservacionBean.modReservacionView.smsVehiculo.vehNumPersonas}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Maletas Grandes:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehNumMalGrande}</td>
+                                                            <td>#{reservacionBean.modReservacionView.smsVehiculo.vehNumMalGrande}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Maletas Pequeñas:</th>
-                                                            <td>#{reservacionBean.mvehiculoView.vehNumMalPequeña}</td>
+                                                            <td>#{reservacionBean.modReservacionView.smsVehiculo.vehNumMalPequeña}</td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -209,7 +209,7 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Total:</th>
-                                                        <td>#{reservacionBean.mreservaView.reservacionCosto}</td>
+                                                        <td>#{reservacionBean.modReservacionView.reservacionCosto}</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -220,11 +220,15 @@
                                     <div class="row no-print">
                                         <div class="col-xs-12" align="left">
                                             <h:panelGrid columns="3">
-                                                <p:commandButton type="button" class="btn btn-success pull-right" value="Pagar Reservacion"></p:commandButton>                                 
                                                 <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.eliminarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
                                                     <p:confirm header="Confirmacion" message="Esta seguro que desea cancelar esta reservación?" icon="ui-icon-alert" /> 
                                                 </p:commandButton>                                 
-                                                <p:commandButton type="button" class="btn btn-primary pull-right" value="Modificar Reservacion"></p:commandButton>                                 
+                                                <p:commandButton ajax="false" class="btn btn-primary pull-right" process="@this" action="#{facturaBean.generarFactura()}" value="Generar factura">
+                                                    <f:setPropertyActionListener value="#{reservacionBean.modReservacionView}" target="#{facturaBean.reservacionView}"/>
+                                                </p:commandButton>
+                                                <p:commandButton ajax="false" class="btn btn-success pull-right" process="@this" action="#{facturaBean.generarFacturaPos()}" value="Generar factura POS">
+                                                   <f:setPropertyActionListener value="#{reservacionBean.modReservacionView}" target="#{facturaBean.reservacionView}"/> 
+                                                </p:commandButton>
                                             </h:panelGrid>
                                             <script type="text/javascript">
                                                 function start() {

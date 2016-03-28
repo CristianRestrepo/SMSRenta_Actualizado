@@ -222,7 +222,7 @@
                                                 <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.eliminarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
                                                     <p:confirm header="Confirmacion" message="Esta seguro que desea cancelar esta reservación?" icon="ui-icon-alert" /> 
                                                 </p:commandButton>                                 
-                                                <p:commandButton ajax="false" class="btn btn-primary pull-right" process="@this" action="#{facturaBean.generarFactura()}" value="Genarar factura">
+                                                <p:commandButton ajax="false" class="btn btn-primary pull-right" process="@this" action="#{facturaBean.generarFactura()}" value="Generar factura">
                                                     <f:setPropertyActionListener value="#{reservacionBean.modReservacionView}" target="#{facturaBean.reservacionView}"/>
                                                 </p:commandButton>
                                                 <p:commandButton ajax="false" class="btn btn-success pull-right" process="@this" action="#{facturaBean.generarFacturaPos()}" value="Generar factura POS">

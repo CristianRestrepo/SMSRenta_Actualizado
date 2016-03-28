@@ -1116,3 +1116,8 @@ span.round-tabs-conduc.one {}
     border-bottom: 1px solid #FC5B35;
     margin-bottom: 17px;
 }
+
+
+.btn-padding{
+    padding: 8px;
+}

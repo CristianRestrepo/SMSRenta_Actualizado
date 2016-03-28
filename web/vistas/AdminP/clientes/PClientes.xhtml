@@ -115,13 +115,13 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{clienteBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white; padding: 8px" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{clienteBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.usuarioView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{clienteBean.eliminarCliente()}" title="Eliminar">
+                                            <p:commandLink style="color: white; padding: 8px" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{clienteBean.eliminarCliente()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.usuarioView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este cliente?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
