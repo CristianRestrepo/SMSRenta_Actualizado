@@ -43,30 +43,35 @@
                                             </p:selectOneMenu>
                                             <p:message for="SMMercado"/>
 
-                                            <p:selectOneMenu required="true" requiredMessage="Seleccione categoria del servicio" value="#{serviciosBean.servicioView.smsCategoriasServicio.catNombre}" label="Categoria del servicio" style="width: 100%" id="SMCatServicio"> 
-                                                <f:selectItem itemLabel="Seleccione categoria del servicio" noSelectionOption="true"/>
+                                            <p:selectOneMenu required="true" requiredMessage="Seleccione categoría del servicio" value="#{serviciosBean.servicioView.smsCategoriasServicio.catNombre}" label="Categoría del servicio" style="width: 100%" id="SMCatServicio"> 
+                                                <f:selectItem itemLabel="Seleccione categoría del servicio" noSelectionOption="true"/>
                                                 <f:selectItems value="#{categoriasServiciosBean.consultarCategoriasSegunMercado(serviciosBean.mercadoView)}"/>                                               
                                             </p:selectOneMenu>
                                             <p:message for="SMCatServicio"/>
 
                                             <p:selectOneMenu required="true" requiredMessage="Seleccione tipo de servicio" value="#{serviciosBean.servicioView.servicioConductor}" label="Tipo de servicio" style="width: 100%" id="SMTipoServicio"> 
-                                                <f:selectItem itemLabel="Seleccione categoria del servicio" noSelectionOption="true"/>l
+                                                <f:selectItem itemLabel="Seleccione categoría del servicio" noSelectionOption="true"/>l
                                                 <f:selectItem itemLabel="Con conductor" itemValue="1"/>
                                                 <f:selectItem itemLabel="Sin conductor" itemValue="0"/>
                                             </p:selectOneMenu>
                                             <p:message for="SMTipoServicio"/>
 
-                                            <b:inputText id="TNombreServicio" tooltip="Nombre del servicio" value="#{serviciosBean.servicioView.servicioNombre}" style="width: 100%" required="true" requiredMessage="Ingrese nombre de servicio" placeholder="Nombre del servicio"/>
+                                            <b:inputText id="TNombreServicio" tooltip="Nombre del servicio" value="#{serviciosBean.servicioView.servicioNombre}" 
+                                                         style="width: 100%" required="true" requiredMessage="Ingrese nombre de servicio" placeholder="Nombre del servicio"/>
                                             <p:message for="TNombreServicio"/>
 
-                                            <p:inputTextarea rows="3" value="#{serviciosBean.servicioView.servicioDescripcion}" style="width: 100%" id="TDescripcionServicio" placeholder="Descripcion del servicio"/>
+                                            <p:inputTextarea rows="3" value="#{serviciosBean.servicioView.servicioDescripcion}" 
+                                                             style="width: 100%" id="TDescripcionServicio" placeholder="Descripción del servicio"/>
                                             <p:message for="TDescripcionServicio"/> 
 
-                                            <b:inputText value="#{serviciosBean.servicioView.servicioDuracion}" tooltip="Duracion del servicio (1,7,30 dias)" style="width: 100%" id="TDuracionServicio" placeholder="Duracion del servicio (1,7,30 dias)"/>
+                                            <b:inputText value="#{serviciosBean.servicioView.servicioDuracion}" tooltip="Duración del servicio (1,7,30 dias)" 
+                                                         style="width: 100%" id="TDuracionServicio" placeholder="Duración del servicio (1,7,30 dias)"/>
                                             <p:message for="TDuracionServicio"/>  
                                         </h:panelGrid>
                                         <hr/>
-                                        <p:commandButton id="BTServicio" class="btn btn-block btn-danger" update="msgServicios :formularioServicios:PServicio :formularioServicios:DTservicios BTServicio :formularioCostos:SMServicios" action="#{serviciosBean.metodo()}" value="#{serviciosBean.nombre}" style="width: 100%"/>
+                                        <p:commandButton id="BTServicio" class="btn btn-block btn-danger" 
+                                                         update="msgServicios :formularioServicios:PServicio :formularioServicios:DTservicios BTServicio :formularioCostos:SMServicios" 
+                                                         action="#{serviciosBean.metodo()}" value="#{serviciosBean.nombre}" style="width: 100%"/>
                                     </div>
                                 </div>
                             </div>                        
@@ -92,20 +97,23 @@
                                             <h:outputText value="#{servicio.servicioNombre}"/>
                                         </p:column>
 
-                                        <p:column headerText="Descripcion del servicio">
+                                        <p:column headerText="Descripción del servicio">
                                             <h:outputText value="#{servicio.servicioDescripcion}"/>
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{serviciosBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" 
+                                                           update="@form" action="#{serviciosBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{servicio}" target="#{serviciosBean.servicioView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{serviciosBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger btn-padding" process="@this" 
+                                                           update="@form" action="#{serviciosBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{servicio}" target="#{serviciosBean.servicioView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este Servicio?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar este Servicio?" 
+                                                           icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>                                
@@ -140,8 +148,9 @@
                                             </p:selectOneMenu>
                                             <p:message for="SMServicios"/>
 
-                                            <b:selectOneMenu required="true" requiredMessage="Seleccione categoria del vehiculo" tooltip="Categoria del vehiculo" value="#{costosServicioBean.costoView.smsCategoria.categoriaNombre}"  style="width: 100%" id="SMCatVehiculo"> 
-                                                <f:selectItem itemLabel="Seleccione categoria del vehiculo" noSelectionOption="true"/>
+                                            <b:selectOneMenu required="true" requiredMessage="Seleccione categoría del vehículo" 
+                                                             tooltip="Categoría del vehículo" value="#{costosServicioBean.costoView.smsCategoria.categoriaNombre}"  style="width: 100%" id="SMCatVehiculo"> 
+                                                <f:selectItem itemLabel="Seleccione categoría del vehículo" noSelectionOption="true"/>
                                                 <f:selectItems value="#{categoriaBean.CategoriasSegunServicio(costosServicioBean.costoView.smsServicios.servicioNombre)}"/>                                                
                                             </b:selectOneMenu>
                                             <p:message for="SMCatVehiculo"/>
@@ -153,19 +162,22 @@
                                             </p:selectOneMenu>
                                             <p:message for="SMCiudad"/>
 
-                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugarInicioView.lugarNombre}" style="width: 100%" tooltip="Lugar de recojida" id="SMLugarInicio"> 
+                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugarInicioView.lugarNombre}" 
+                                                             style="width: 100%" tooltip="Lugar de recojida" id="SMLugarInicio"> 
                                                 <f:selectItem itemLabel="Seleccione lugar de recojida" noSelectionOption="true"/>
                                                 <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadView)}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SMLugarInicio"/>
 
-                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugsrDestinoView.lugarNombre}" style="width: 100%" tooltip="Lugar de destino" id="SMLugarDestino"> 
+                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugsrDestinoView.lugarNombre}" 
+                                                             style="width: 100%" tooltip="Lugar de destino" id="SMLugarDestino"> 
                                                 <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
                                                 <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadView)}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SMLugarDestino"/>
 
-                                            <b:inputText id="TCostoServicio" tooltip="Costo del servicio" value="#{costosServicioBean.costoView.costoServicioPrecio}" style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
+                                            <b:inputText id="TCostoServicio" tooltip="Costo del servicio" value="#{costosServicioBean.costoView.costoServicioPrecio}" 
+                                                         style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
                                             <p:message for="TCostoServicio"/>
                                         </h:panelGrid>
                                         <p:commandButton id="BTCosto" class="btn btn-block btn-primary" update="msgServicios BTCosto DTCostos PCostos" action="#{costosServicioBean.metodo()}" value="#{costosServicioBean.nombre}" style="width: 100%"/>
@@ -199,15 +211,15 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{costosServicioBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger btn-padding" process="@this" update="@form" action="#{costosServicioBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este costo?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar este costo?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>                                

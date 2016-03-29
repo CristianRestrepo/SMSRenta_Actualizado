@@ -94,7 +94,7 @@
                                                  rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15" emptyMessage="Marcas no registrados">
+                                                 rowsPerPageTemplate="5,10,15" emptyMessage="Marcas no registradas">
                                         <p:column headerText="Nombre">
                                             <h:outputText value="#{Marca.marcaNombre}" />
                                         </p:column>
@@ -108,7 +108,7 @@
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formularioDatos :formularioFotografia :formularioMarca" action="#{marcaBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{Marca}" target="#{marcaBean.marcaView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta marca?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar esta marca?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

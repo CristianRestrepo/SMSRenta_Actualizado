@@ -47,7 +47,8 @@
                                         <hr/>
                                         <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="2" style="width: 100%;">                                                                                                                              
 
-                                            <b:inputText id="TNombreApEmp" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{empleadoBean.empleadoView.smsUsuario.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
+                                            <b:inputText id="TNombreApEmp" required="true" requiredMessage="Ingrese nombre y apellido" 
+                                                         placeholder="Nombres y apellidos" value="#{empleadoBean.empleadoView.smsUsuario.usuarioNombre}" style="width: 100%;" maxlength="60"></b:inputText>                       
                                             <p:message for="TNombreApEmp"/>
 
                                             <b:selectOneMenu value="#{empleadoBean.empleadoView.smsUsuario.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
@@ -56,13 +57,15 @@
                                             </b:selectOneMenu>
                                             <p:message for="SNacionalidad"/>
 
-                                            <b:inputText id="TCcEmp" maxlength="45" placeholder="Cedula de ciudadania" value="#{empleadoBean.empleadoView.smsUsuario.usuarioCc}" style="width: 100%" ></b:inputText>
+                                            <b:inputText id="TCcEmp" maxlength="45" placeholder="Cédula de ciudadania" value="#{empleadoBean.empleadoView.smsUsuario.usuarioCc}" style="width: 100%" ></b:inputText>
                                             <p:message for="TCcEmp"/>
 
-                                            <b:inputText id="TTelEmp" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{empleadoBean.empleadoView.smsUsuario.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                            <b:inputText id="TTelEmp" maxlength="45" placeholder="Número de teléfono fijo o celular" value="#{empleadoBean.empleadoView.smsUsuario.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelEmp"/>
 
-                                            <b:inputText id="TEmailEmp" maxlength="100" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{empleadoBean.empleadoView.smsUsuario.usuarioEmail}" style="width: 100%" >
+                                            <b:inputText id="TEmailEmp" maxlength="100" validator="emailValidator" required="true" 
+                                                         requiredMessage="Ingrese Email valido" placeholder="Dirección de correo electrónico" 
+                                                         value="#{empleadoBean.empleadoView.smsUsuario.usuarioEmail}" style="width: 100%" >
                                                 <f:attribute name="operacion" value="#{empleadoBean.operacion}"/>
                                                 <f:attribute name="usuario" value="#{empleadoBean.empleadoView.smsUsuario}"/>
                                             </b:inputText>
@@ -110,7 +113,7 @@
                                         <p:outputLabel id="TEstadoFoto" value="#{empleadoBean.estadoFoto}"/>
                                         <div class="table-responsive">
                                             <p:fileUpload id="fileIdPhoto" fileUploadListener="#{empleadoBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
-                                                          process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formB" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+                                                          process="@this" uploadLabel="Subir Fotografía" cancelLabel="Cancelar" update=":formB" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
 
                                             <p:messages id="messages" closable="true" /></div> 
                                     </div>
@@ -179,7 +182,7 @@
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formA :formC:DTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.eliminarEmpleado()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{empleado}" target="#{empleadoBean.empleadoView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este conductor?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar este conductor?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>                                        
                                     </p:dataTable>

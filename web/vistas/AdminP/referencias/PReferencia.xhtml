@@ -44,7 +44,7 @@
                                             <p:message for="SMarcas" />
 
                                             <p:outputLabel  value="Referencia: "/>
-                                            <b:inputText id="TNombreRef" placeholder="Referencia del vehiculo" required="true" requiredMessage="Ingrese referencia" style="width: 100%" value="#{referenciaBean.referenciaView.referenciaNombre}"/>
+                                            <b:inputText id="TNombreRef" placeholder="Referencia del vehículo" required="true" requiredMessage="Ingrese referencia" style="width: 100%" value="#{referenciaBean.referenciaView.referenciaNombre}"/>
                                             <p:message for="TNombreRef" />
                                         </h:panelGrid>
                                     </div> 
@@ -86,7 +86,7 @@
                                         <p:column style="width: 35px">                                                    
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{referenciaBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.referenciaView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este referencia de vehiculos?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar este referencia de vehiculos?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

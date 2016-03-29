@@ -34,11 +34,11 @@
                                             </b:selectOneMenu>
                                             <p:message for="SNacionalidad"/>
 
-                                            <b:inputText id="TCcUsu" maxlength="45" placeholder="Cedula de ciudadania" value="#{administradorBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                            <b:inputText id="TCcUsu" maxlength="45" placeholder="Cédula de ciudadania" value="#{administradorBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
                                             <p:message for="TCcUsu"/>
 
 
-                                            <b:inputText id="TTelUsu" maxlength="45" placeholder="Numero de telefono fijo o celular" value="#{administradorBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                            <b:inputText id="TTelUsu" maxlength="45" placeholder="Número de teléfono fijo o celular" value="#{administradorBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelUsu"/>
 
 
@@ -135,7 +135,7 @@
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{administradorBean.eliminarAdministrador()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{usuario}" target="#{administradorBean.usuarioView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este administrador?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar este administrador?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

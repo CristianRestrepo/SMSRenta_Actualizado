@@ -35,15 +35,15 @@
                                             </b:selectOneMenu>
                                             <p:message for="SNacionalidad"/>
 
-                                            <b:inputText maxlength="45" id="TCcCli" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" value="#{clienteBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                            <b:inputText maxlength="45" id="TCcCli" tooltip="Número de identificación" placeholder="Cédula de ciudadania" value="#{clienteBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
                                             <p:message for="TCcCli"/>
 
 
-                                            <b:inputText maxlength="45" id="TTelCli" tooltip="Numero de telefono celular" placeholder="Numero de telefono fijo o celular" value="#{clienteBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
+                                            <b:inputText maxlength="45" id="TTelCli" tooltip="Número de telefono celular" placeholder="Número de teléfono fijo o celular" value="#{clienteBean.usuarioView.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelCli"/>
 
 
-                                            <b:inputText maxlength="100" tooltip="Email valido" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%">
+                                            <b:inputText maxlength="100" tooltip="Email valido" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Dirección de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%">
                                                 <f:attribute name="operacion" value="#{clienteBean.operacion}"/>
                                                 <f:attribute name="usuario" value="#{clienteBean.usuarioView}"/>
                                             </b:inputText>
@@ -123,7 +123,7 @@
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white; padding: 8px" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{clienteBean.eliminarCliente()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.usuarioView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este cliente?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar este cliente?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

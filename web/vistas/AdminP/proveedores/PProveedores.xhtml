@@ -36,7 +36,8 @@
                                         <p:outputLabel value="Datos del Representante"/>
                                         <h:panelGrid  id="seccionDatosUsuario" columns="2" cellpadding="2" style="width: 100%;">
 
-                                            <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.proveedorView.smsUsuario.usuarioNombre}"></b:inputText>                       
+                                            <b:inputText id="TNombreApProv" required="true" requiredMessage="Ingrese nombre y apellido" 
+                                                         placeholder="Nombres y apellidos" style="width: 100%;" maxlength="60" value="#{proveedorBean.proveedorView.smsUsuario.usuarioNombre}"></b:inputText>                       
                                             <p:message for="TNombreApProv"/>
 
                                             <b:selectOneMenu value="#{proveedorBean.proveedorView.smsUsuario.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
@@ -45,24 +46,27 @@
                                             </b:selectOneMenu>
                                             <p:message for="SNacionalidad"/>
 
-                                            <b:inputText maxlength="45" id="TCcProv" placeholder="Cedula de ciudadania" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioCc}"></b:inputText>
+                                            <b:inputText maxlength="45" id="TCcProv" placeholder="Cédula de ciudadania" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
 
-                                            <b:inputText maxlength="45" id="TTelProv" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioTelefono}"></b:inputText> 
+                                            <b:inputText maxlength="45" id="TTelProv" placeholder="Número de teléfono fijo o celular" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioTelefono}"></b:inputText> 
                                             <p:message for="TTelProv"/>
 
+                                            
 
                                         </h:panelGrid>
                                         <hr/>
                                         <p:outputLabel value="Datos de la empresa"/>
                                         <h:panelGrid  id="seccionDatosEmpresa" columns="2" cellpadding="2" style="width: 100%;">
-                                            <b:inputText maxlength="100" id="TRazSocProv" required="true" requiredMessage="Ingrese razon social de la empresa" placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.proveedorView.proveedorRazonSocial}"></b:inputText>
+                                            <b:inputText maxlength="100" id="TRazSocProv" required="true" requiredMessage="Ingrese razón social de la empresa" 
+                                                         placeholder="Nombre de la empresa" style="width: 100%"  value="#{proveedorBean.proveedorView.proveedorRazonSocial}"></b:inputText>
                                             <p:message for="TRazSocProv"/>
 
-                                            <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorNit}"></b:inputText>
+                                            <b:inputText maxlength="45" id="TNitProv" placeholder="NIT de la empresa" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorNit}"></b:inputText>
                                             <p:message for="TNitProv"/>
 
-                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioEmail}">
+                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" 
+                                                         placeholder="Dirección de correo electrónico" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioEmail}">
                                                 <f:attribute name="operacion" value="#{proveedorBean.operacion}"/>
                                                 <f:attribute name="usuario" value="#{proveedorBean.proveedorView.smsUsuario}"/>
                                             </b:inputText>
@@ -110,9 +114,10 @@
                                     <h4 class="box-title">Registro de Proveedores</h4>
                                 </div>
                                 <div class="box-body">
-                                    <p style="text-justify: auto">En este panel de registro podrá registrar la información referente 
-                                        a nuestros proveedores, asignar un valor
-                                        de ganancias y ademas podrá crear una cuenta de sesión para el ingreso al sistema.</p> 
+                                    <p style="text-justify: auto">En este panel de registro podrá 
+                                        registrar la información referente a nuestros proveedores, 
+                                        asignar un valor de ganancias y además podrá crear una cuenta
+                                        de sesión para el ingreso al sistema.</p> 
                                 </div>
                             </div>
 
@@ -130,7 +135,7 @@
                                     </b:inputText>
                                     <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.proveedorListView}">
 
-                                        <p:column headerText="Razon Social">
+                                        <p:column headerText="Rázon Social">
                                             <p:outputLabel value="#{proveedor.proveedorRazonSocial}"/>
                                         </p:column>
 
@@ -147,7 +152,7 @@
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{proveedorBean.eliminarProveedor()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este Proveedor?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar este Proveedor?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

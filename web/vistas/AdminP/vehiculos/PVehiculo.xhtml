@@ -18,7 +18,7 @@
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border"> 
                                     <i class="fa fa-2x fa-car"/>
-                                    <h4 class="box-title">Vehiculos SMS Renta</h4>
+                                    <h4 class="box-title">Vehículos SMS Renta</h4>
                                 </div>
                                 <div class="box-body">
                                     <p>En este panel podrá ingresar las Marcas de los vehículos de SMS renta como 
@@ -31,7 +31,7 @@
                             <div class="box box-danger">
                                 <div class="box-header with-border">   
                                     <i class="fa fa-2x fa-folder-open"/>
-                                    <h4 class="box-title">Registro de Vehiculos SMS Renta</h4>
+                                    <h4 class="box-title">Registro de Vehículos SMS Renta</h4>
                                 </div>
                                 <div class="box-body">
 
@@ -45,7 +45,7 @@
                                             </p:selectOneMenu>
                                         </h:panelGrid>
                                         <hr/>
-                                        <h4>Descripcion del vehiculo</h4>
+                                        <h4>Descripción del vehículo</h4>
                                         <h:panelGrid id="seccionDatosVehiculo" columns="2" columnClasses="grid,grid" style="width: 100%;">                                     
 
                                             <b:selectOneMenu id="referencia"  required="true" value="#{vehiculoBean.vehiculoView.smsReferencia.referenciaNombre}" style="width: 100%">
@@ -59,16 +59,16 @@
                                             </b:selectOneMenu>
 
                                             <b:selectOneMenu id="categoria" required="true" value="#{vehiculoBean.vehiculoView.smsCategoria.categoriaNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar categoria del vehiculo" itemValue="" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Seleccionar categoría del vehículo" itemValue="" noSelectionOption="true" />
                                                 <f:selectItems value="#{categoriaBean.CategoriasSegunMercadoProv(vehiculoBean.vehiculoView.smsProveedor.proveedorRazonSocial)}" />
                                             </b:selectOneMenu>                                           
 
                                             <b:selectOneMenu id="color" required="true" value="#{vehiculoBean.vehiculoView.smsColor.colorNombre}" style="width: 100%">
-                                                <f:selectItem itemLabel="Seleccionar color del vehiculo" itemValue="" noSelectionOption="true" />
+                                                <f:selectItem itemLabel="Seleccionar color del vehículo" itemValue="" noSelectionOption="true" />
                                                 <f:selectItems value="#{colorBean.nombresColores}" />
                                             </b:selectOneMenu> 
 
-                                            <b:inputText id="TVehModelo" required="true" requiredMessage="Ingrese modelo del vehiculo" placeholder="Modelo del vehiculo" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehModelo}"/>
+                                            <b:inputText id="TVehModelo" required="true" requiredMessage="Ingrese modelo del vehículo" placeholder="Modelo del vehículo" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehModelo}"/>
 
                                             <b:inputText id="TVehMalP" placeholder="Cant. maletas pequeñas" style="width: 100%"  value="#{vehiculoBean.vehiculoView.vehNumMalPequeña}"/>
 
@@ -76,13 +76,13 @@
 
                                             <b:inputText id="TVehPer" placeholder="Cant. personas" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehNumPersonas}"/>
 
-                                            <b:inputText id="TVehPlaca" required="true" requiredMessage="Ingrese placa del vehiculo" placeholder="Numero del placa" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehPlaca}"/>                                                
+                                            <b:inputText id="TVehPlaca" required="true" requiredMessage="Ingrese placa del vehículo" placeholder="Número del placa" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehPlaca}"/>                                                
 
                                         </h:panelGrid>
                                     </div>
                                     <hr/>
                                     <div class="table-responsive">
-                                        <h4>Estado Vehiculo</h4>
+                                        <h4>Estado Vehículo</h4>
                                         <h:panelGrid id="seccionEstadoVehiculo" columns="2" style="width: 100%">
                                             <p:outputLabel value="Frenos:" />
                                             <b:selectOneMenu id="est-frenos" value="#{vehiculoBean.estadoVehiculoView.estadoVehFrenos}" style="width: 100%">
@@ -100,7 +100,7 @@
                                                 <f:selectItem itemLabel="Malo" itemValue="Malo" />
                                             </b:selectOneMenu>
 
-                                            <p:outputLabel value="Silleteria:" />
+                                            <p:outputLabel value="Cojinería:" />
                                             <b:selectOneMenu id="est-sillas" value="#{vehiculoBean.estadoVehiculoView.estadoVehSilleteria}" style="width: 100%">
                                                 <f:selectItem itemLabel="Excelente" itemValue="Excelente" />
                                                 <f:selectItem itemLabel="Bueno" itemValue="Bueno" />
@@ -192,11 +192,11 @@
                             <div class="box box-success">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-sort-amount-asc"/>
-                                    <h3 class="box-title">Vehìculos SMS Renta</h3>
+                                    <h3 class="box-title">Vehículos SMS Renta</h3>
                                 </div>
 
                                 <div class="box-body">
-                                    <p:dataTable var="vehiculo" id="DTVehiculos" emptyMessage="Vehiculos nos registrados" value="#{vehiculoBean.vehiculosListView}"
+                                    <p:dataTable var="vehiculo" id="DTVehiculos" emptyMessage="Vehículos no registrados" value="#{vehiculoBean.vehiculosListView}"
                                                  rows="5"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -213,7 +213,7 @@
                                             <h:outputText value="#{vehiculo.smsCiudad.ciudadNombre}" />
                                         </p:column>
 
-                                        <p:column headerText="Categoria">
+                                        <p:column headerText="Categoría">
                                             <h:outputText value="#{vehiculo.smsCategoria.categoriaNombre}" />
                                         </p:column>
 
@@ -230,7 +230,7 @@
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formA:msg :formC:DTVehiculos" action="#{vehiculoBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
-                                                <p:confirm header="Confirmacion"  message="Esta seguro que desea eliminar este vehiculo?" icon="ui-icon-alert" /> 
+                                                <p:confirm header="Confirmación"  message="Está seguro que desea eliminar este vehiculo?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>  
                                     </p:dataTable>                                     
