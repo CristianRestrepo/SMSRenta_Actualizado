@@ -63,7 +63,7 @@
                                             <b:inputText id="TTelEmp" maxlength="45" placeholder="Número de teléfono fijo o celular" value="#{empleadoBean.empleadoView.smsUsuario.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelEmp"/>
 
-                                            <b:inputText id="TEmailEmp" maxlength="100" validator="emailValidator" required="true" 
+                                            <b:inputText id="TEmailEmp" maxlength="100" validator="regModEmailValidator" required="true" 
                                                          requiredMessage="Ingrese Email valido" placeholder="Dirección de correo electrónico" 
                                                          value="#{empleadoBean.empleadoView.smsUsuario.usuarioEmail}" style="width: 100%" >
                                                 <f:attribute name="operacion" value="#{empleadoBean.operacion}"/>

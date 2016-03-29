@@ -29,11 +29,12 @@ public class emailValidator implements Validator {
     Pattern pattern = Pattern.compile("[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
     String user;
     int operacion;
+
     @Override
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
         user = (String) value;
-        operacion = (int) component.getAttributes().get("operacion");
+        //operacion = (int) component.getAttributes().get("operacion");
 
         Matcher matcher = pattern.matcher(value.toString());
         if (!matcher.matches()) {
@@ -41,29 +42,16 @@ public class emailValidator implements Validator {
             throw new ValidatorException(fmsg);
         }
 
-        if (operacion == 0) {
-            IUsuarioDao userDao = new ImpUsuarioDao();
-            List<SmsUsuario> usuario = userDao.verificarEmailDisponible(user);
-            if (!user.equalsIgnoreCase("")) {
-                if (!usuario.isEmpty()) {
+        IUsuarioDao userDao = new ImpUsuarioDao();
+        List<SmsUsuario> usuario = userDao.verificarEmailDisponible(user);
+        if (!user.equalsIgnoreCase("")) {
+            if (!usuario.isEmpty()) {
 
-                    FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email invalido", "El email ya esta en uso");
-                    throw new ValidatorException(fmsg);
-                }
-            }
-        } else if (operacion == 1) {
-            SmsUsuario usuario = (SmsUsuario) component.getAttributes().get("usuario");
-            IUsuarioDao userDao = new ImpUsuarioDao();
-            List<SmsUsuario> newLogin = new ArrayList<>();
-
-            if (!usuario.getUsuarioEmail().equalsIgnoreCase(user)) {
-                newLogin = userDao.verificarEmailDisponible(user);
-                if (!newLogin.isEmpty()) {
-                    FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email invalido", "El email ya esta en uso");
-                    throw new ValidatorException(fmsg);
-                }
+                FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email invalido", "El email ya esta en uso");
+                throw new ValidatorException(fmsg);
             }
         }
+
     }
 
 }

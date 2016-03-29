@@ -22,7 +22,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida");
+            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsEstado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -134,7 +134,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                     + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaInicio + "' and (reservacion.reservacionHoraInicio >= '" + horaInicio + "' or reservacion.reservacionHoraLlegada >= '" + horaInicio + "'))"
                     + ")"
                     + "or "
-                     + "('" + fechaInicio + "' = '" + fechaLlegada + "' and "
+                    + "('" + fechaInicio + "' = '" + fechaLlegada + "' and "
                     + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and "
                     + "(reservacion.reservacionHoraInicio >= '" + horaInicio + "' and "
                     + "reservacion.reservacionHoraLlegada <= '" + horaLlegada + "') and reservacion.reservacionFechaInicio = '" + fechaInicio + "')"
@@ -193,9 +193,9 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
     }
 
     @Override
-    public List<SmsUsuario> filtrarUsuariosEmpleados(String valor) {
+    public List<SmsEmpleado> filtrarUsuariosEmpleados(String valor) {
         Session session = null;
-        List<SmsUsuario> usuarios = new ArrayList<>();
+        List<SmsEmpleado> conductores = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsUsuario as usuario "
@@ -209,8 +209,9 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                     + "usuario.usuarioEmail LIKE '%" + valor + "%' or "
                     + "usuario.usuarioTelefono LIKE '%" + valor + "%' or "
                     + "ciudad.ciudadNombre LIKE '%" + valor + "%' or "
-                    + "proveedor.");
-            usuarios = (List<SmsUsuario>) query.list();
+                    + "proveedor.proveedorRazonSocial LIKE '%" + valor + "%' or "
+                    + "proveedor.proveedorNit LIKE '%" + valor + "%'");
+            conductores = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -218,7 +219,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                 session.close();
             }
         }
-        return usuarios;
+        return conductores;
     }
 
     @Override

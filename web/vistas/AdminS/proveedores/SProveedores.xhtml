@@ -62,7 +62,7 @@
                                             <b:inputText maxlength="45" id="TNitProv" placeholder="Nit de la empresa" style="width: 100%" value="#{proveedorBean.proveedorView.proveedorNit}"></b:inputText>
                                             <p:message for="TNitProv"/>
 
-                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioEmail}">
+                                            <b:inputText maxlength="100" validator="regModEmailValidator" id="TEmailProv" required="true" requiredMessage="Ingrese email" placeholder="Direccion de correo electronico" style="width: 100%" value="#{proveedorBean.proveedorView.smsUsuario.usuarioEmail}">
                                                 <f:attribute name="operacion" value="#{proveedorBean.operacion}"/>
                                                 <f:attribute name="usuario" value="#{proveedorBean.proveedorView.smsUsuario}"/>
                                             </b:inputText>

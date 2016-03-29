@@ -167,14 +167,13 @@ public class UsuarioBean implements Serializable {
         String ruta = "/login.xhtml";
         MD5 md = new MD5();
         SmsUsuario user;
-        IUsuarioDao usuarioDao = new ImpUsuarioDao();
-       
-        user = usuarioDao.consultarDatosSesionUsuario(usuarioView);        
-        if (user.getIdUsuario() != null) {//valida si el usuario existe en la BD
-            user = usuarioDao.consultarUsuario(user).get(0);
+        IUsuarioDao usuarioDao = new ImpUsuarioDao();       
+               
+        if (!usuarioDao.consultarDatosSesionUsuario(usuarioView).isEmpty()) {//valida si el usuario existe en la BD        
+            user = usuarioDao.consultarUsuario(usuarioView).get(0);
             usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
             if (user.getUsuarioEstadoUsuario() == 1) {//Evalua el estado de la cuenta de usuario, si esta activa o inactiva
-                if (user.getUsuarioPassword() != null && user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword())) {
+                if (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword())) {
                     
                     httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                     httpSession.setAttribute("Sesion", user);
@@ -217,6 +216,8 @@ public class UsuarioBean implements Serializable {
     }
 
     public String cerrarSesion() {
+        usuarioView = new SmsUsuario();
+        Usuario = new SmsUsuario();
         String ruta = "Login";
         httpSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         httpSession.invalidate();

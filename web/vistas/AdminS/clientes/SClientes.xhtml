@@ -44,7 +44,7 @@
                                             <p:message for="TTelCli"/>
 
 
-                                            <b:inputText maxlength="100" tooltip="Email valido" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%">
+                                            <b:inputText maxlength="100" tooltip="Email valido" validator="regModEmailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%">
                                                 <f:attribute name="operacion" value="#{clienteBean.operacion}"/>
                                                 <f:attribute name="usuario" value="#{clienteBean.usuarioView}"/>
                                             </b:inputText>

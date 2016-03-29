@@ -491,7 +491,7 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>CInfoServicio</from-outcome>
+            <from-outcome>CInfoSesion</from-outcome>
             <to-view-id>/vistas/Cliente/general/CInformacionSesion.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
@@ -499,12 +499,7 @@
             <from-outcome>CInfoPersonal</from-outcome>
             <to-view-id>/vistas/Cliente/general/CInformacionPersonal.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>CRegreso</from-outcome>
-            <to-view-id>/vistas/Cliente/general/CEdicionPerfil.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
+        </navigation-case>      
         <navigation-case>
             <from-outcome>ClienteReservaciones</from-outcome>
             <to-view-id>/vistas/Cliente/reservas/CListaReservaciones.xhtml</to-view-id>
@@ -524,12 +519,7 @@
             <from-outcome>COInformacionSesion</from-outcome>
             <to-view-id>/vistas/Conductor/general/CoInformacionSesion.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>CORegreso</from-outcome>
-            <to-view-id>/vistas/Conductor/general/EdicionPerfil.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
+        </navigation-case>        
     </navigation-rule>
                     
     <navigation-rule>

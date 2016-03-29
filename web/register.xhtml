@@ -66,7 +66,6 @@
                                                             <b:inputText maxlength="60" id="TNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.usuarioView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
                                                             <p:message for="TNombreApCli"/>
 
-
                                                             <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%"/>
                                                             <p:message for="TEmailCli"/>
 
@@ -110,8 +109,7 @@
 
                                                         </h:panelGrid>
                                                     </div><hr/>
-                                                    <!--<p:commandLink value="Login" process="@this" immediate="true" action="#{pathBean.ir_Login()}"/>-->
-                                                    <p:commandButton id="BTCliente" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-success" ajax="true" action="#{clienteBean.registrarCliente()}" value="Registrar" />
+                                                    <p:commandButton id="BTCliente" class="btn btn-lg btn-block btn-success" onclick="PrimeFaces.monitorDownload(start, stop);" action="#{clienteBean.registrarCliente()}" value="Registrar" />
                                                     <script type="text/javascript">
                                                         function start() {
                                                             PF('statusDialog').show();

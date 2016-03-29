@@ -42,7 +42,7 @@
                                             <p:message for="TTelUsu"/>
 
 
-                                            <b:inputText id="TEmailProv" validator="emailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{administradorBean.usuarioView.usuarioEmail}" style="width: 100%" >
+                                            <b:inputText id="TEmailProv" validator="regModEmailValidator" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{administradorBean.usuarioView.usuarioEmail}" style="width: 100%" >
                                                 <f:attribute name="operacion" value="#{administradorBean.operacion}"/>
                                                 <f:attribute name="usuario" value="#{administradorBean.usuarioView}"/>
                                             </b:inputText>

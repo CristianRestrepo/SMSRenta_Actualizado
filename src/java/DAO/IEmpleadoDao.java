@@ -25,7 +25,7 @@ public interface IEmpleadoDao {
     
     public List<SmsUsuario> consultarUsuariosEmpleados();
     
-    public List<SmsUsuario> filtrarUsuariosEmpleados(String valor);
+    public List<SmsEmpleado> filtrarUsuariosEmpleados(String valor);
 
     public List<SmsEmpleado> consultarEmpleado(SmsUsuario usuario);
 

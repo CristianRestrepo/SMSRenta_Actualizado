@@ -105,13 +105,13 @@ public class ImpUsuarioDao implements IUsuarioDao {
     }
 
     @Override
-    public SmsUsuario consultarDatosSesionUsuario(SmsUsuario user) {
+    public List<SmsUsuario> consultarDatosSesionUsuario(SmsUsuario user) {
         Session session = null;
-        SmsUsuario usuario = new SmsUsuario();
+        List<SmsUsuario> usuario = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsUsuario as usuario where usuario.usuarioEmail = '" + user.getUsuarioEmail() + "'");
-            usuario = (SmsUsuario) query.list().get(0);
+            usuario = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -128,7 +128,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad left join fetch usuario.smsNacionalidad where usuario.idUsuario = '" + usuario.getIdUsuario() + "' or usuario.usuarioNombre = '" + usuario.getUsuarioNombre() + "'");
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad left join fetch usuario.smsNacionalidad where usuario.idUsuario = '" + usuario.getIdUsuario() + "' or usuario.usuarioNombre = '" + usuario.getUsuarioNombre() + "' or usuario.usuarioEmail = '" + usuario.getUsuarioEmail() + "'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

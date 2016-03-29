@@ -19,7 +19,6 @@ import static Funciones.Upload.getNameDefaultHojasVida;
 import static Funciones.Upload.getNameDefaultUsuario;
 import static Funciones.Upload.getPathDefaultHojasVida;
 import static Funciones.Upload.getPathDefaultUsuario;
-import Modelo.SmsCiudad;
 import Modelo.SmsEmpleado;
 import Modelo.SmsHojavida;
 import Modelo.SmsReservacion;
@@ -271,9 +270,9 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     public void filtrarEmpleados() {
         usuariosListView = new ArrayList<>();
         if (buscar == null) {
-            usuariosListView = empleadoDao.consultarUsuariosEmpleados();
+            empleadosListView = empleadoDao.mostrarEmpleados();
         } else {
-            usuariosListView = empleadoDao.filtrarUsuariosEmpleados(buscar);
+            empleadosListView = empleadoDao.filtrarUsuariosEmpleados(buscar);
         }
     }
 
