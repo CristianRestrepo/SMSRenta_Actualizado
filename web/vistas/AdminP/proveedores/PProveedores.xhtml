@@ -134,6 +134,10 @@
                                             <p:outputLabel value="#{proveedor.proveedorRazonSocial}"/>
                                         </p:column>
 
+                                        <p:column headerText="Nombre Representante">
+                                            <p:outputLabel value="#{proveedor.smsUsuario.usuarioNombre}"/>
+                                        </p:column>
+                                        
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form"  action="#{proveedorBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>

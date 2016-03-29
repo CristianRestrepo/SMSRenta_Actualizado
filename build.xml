@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="SMS_citas_Actualizado" default="default" basedir=".">
-    <description>Builds, tests, and runs the project SMS_citas_Actualizado.</description>
+<project name="SMSRenta_Actualizado" default="default" basedir=".">
+    <description>Builds, tests, and runs the project SMSRenta_Actualizado.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
