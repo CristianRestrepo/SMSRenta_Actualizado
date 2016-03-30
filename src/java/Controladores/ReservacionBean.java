@@ -333,10 +333,7 @@ public class ReservacionBean implements Serializable {
         consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
 
-        //Se registra factura
-        facturaController.registrar(reservaView);        
-        //Limpieza de objetos         
-        reservaView = new SmsReservacion();
+        
         //Habilitamos la seleccion de vehiculos y conductores
         SelecVeh = false;
         SelecCon = false;
@@ -353,9 +350,10 @@ public class ReservacionBean implements Serializable {
             ruta = "regresarAdminPReservacion";
         }else if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")){
             ruta = "RegresarClienteReservacion";
-        }                 
-
-              
+        }                
+             
+        //Limpieza de objetos         
+        reservaView = new SmsReservacion();   
         
         return ruta;
     }

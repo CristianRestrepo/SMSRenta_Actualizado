@@ -70,12 +70,10 @@ public class FacturaBean {
 
     //Metodos
     public void registrar(SmsReservacion reservacion) {         
-        Date fecha = new Date();
-        reservacion = reservacionDao.consultarReserva(reservacion).get(0);
+        Date fecha = new Date();        
         facturaView.setFacturaFecha(fecha);
         facturaView.setFacturaFechaVencimiento(fecha);
-        facturaView.setFacturaTotal(reservacion.getReservacionCosto());
-        facturaView.setSmsReservacion(reservacion);
+        facturaView.setFacturaTotal(reservacion.getReservacionCosto() + (int)(reservacion.getReservacionCosto() * 0.16));
         facturaDao.registrarFactura(facturaView);
         facturaView = new SmsFactura();        
     }
@@ -85,13 +83,13 @@ public class FacturaBean {
         facturaView = new SmsFactura();
     }
     
-    public void generarFactura() throws JRException, IOException{
+    public void generarFactura(SmsReservacion reservacion) throws JRException, IOException{
         GenerarReportes reporte = new GenerarReportes();
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacionView).get(0);
         reporte.generarFactura(facturaView);
     }
     
-    public void generarFacturaPos() throws JRException, IOException{
+    public void generarFacturaPos(SmsReservacion reservacion) throws JRException, IOException{        
         GenerarReportes reporte = new GenerarReportes();
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacionView).get(0);
         reporte.generarFacturaPOS(facturaView);
