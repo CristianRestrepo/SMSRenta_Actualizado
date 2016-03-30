@@ -5,6 +5,7 @@
  */
 package Funciones;
 
+import static Funciones.Upload.getPath;
 import Modelo.SmsFactura;
 import java.io.File;
 import java.io.IOException;
@@ -14,11 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 /**
  *
@@ -32,19 +31,20 @@ public class GenerarReportes {
         Map parametro = new HashMap();
         parametro.put("idFactura", factura.getIdFactura());
 
-        //File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes_SMS/FacturaPrincipal.jasper"));
-        JasperReport jasperReport = JasperCompileManager.compileReport(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes_SMS/FacturaPrincipal.jasper"));
-        JasperPrint jp = JasperFillManager.fillReport(jasperReport, parametro, conexion.getConexion());
+           
+            File jasper = new File(getPath() + "/Reportes_SMS/FacturaPrincipal.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Factura " + factura.getIdFactura() + ".pdf");
-        ServletOutputStream stream = response.getOutputStream();
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Factura " + factura.getIdFactura() + ".pdf");
+            ServletOutputStream stream = response.getOutputStream();
 
-        JasperExportManager.exportReportToPdfStream(jp, stream);
+            JasperExportManager.exportReportToPdfStream(jp, stream);
 
-        stream.flush();
-        stream.close();
-        FacesContext.getCurrentInstance().responseComplete();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        
 
     }
 
@@ -54,9 +54,8 @@ public class GenerarReportes {
         Map parametro = new HashMap();
         parametro.put("idFactura", factura.getIdFactura());
 
-        //File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes_SMS/reportePrincipalMini.jasper"));
-        JasperReport jasperReport = JasperCompileManager.compileReport(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes_SMS/reportePrincipalMini.jasper"));
-        JasperPrint jp = JasperFillManager.fillReport(jasperReport, parametro, conexion.getConexion());
+        File jasper = new File(getPath() + "/Reportes_SMS/reportePrincipalMini.jasper");
+        JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition", "attachment; filename=Factura POS" + factura.getIdFactura() + ".pdf");
