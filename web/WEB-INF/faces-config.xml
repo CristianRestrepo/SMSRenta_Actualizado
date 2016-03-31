@@ -319,7 +319,12 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>AdminSReserva</from-outcome>
-            <to-view-id>/vistas/AdminS/reservas/SReserva.xhtml</to-view-id>
+            <to-view-id>/vistas/AdminS/reservas/SReservacion.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminSTipoReserva</from-outcome>
+            <to-view-id>/vistas/AdminS/reservas/STipoServicio.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

@@ -18,28 +18,28 @@
         <property name="facturaFechaVencimiento" type="date">
             <column name="factura_fecha_vencimiento"  length="0" not-null="true" />
         </property>
-        <property name="facturaIva" type="java.lang.Integer">
+        <property name="facturaIva" type="java.lang.Double">
             <column name="factura_iva" not-null="true" />
         </property>
-        <property name="facturaRetFuente" type="java.lang.Integer">
+        <property name="facturaRetFuente" type="java.lang.Double">
             <column name="factura_ret_fuente" not-null="true" />
         </property>
-        <property name="facturaRetIva" type="java.lang.Integer">
+        <property name="facturaRetIva" type="java.lang.Double">
             <column name="factura_ret_iva" not-null="true" />
         </property>
-        <property name="facturaRetIca" type="java.lang.Integer">
+        <property name="facturaRetIca" type="java.lang.Double">
             <column name="factura_ret_ica" not-null="true" />
         </property>
-        <property name="facturaSubtotal" type="java.lang.Integer">
+        <property name="facturaSubtotal" type="java.lang.Double">
             <column name="factura_subtotal" not-null="true" />
         </property>
-        <property name="facturaTotal" type="java.lang.Integer">
+        <property name="facturaTotal" type="java.lang.Double">
             <column name="factura_total" not-null="true" />
         </property>
-        <property name="facturaDescuento" type="java.lang.Integer">
+        <property name="facturaDescuento" type="java.lang.Double">
             <column name="factura_descuento" not-null="true" />
         </property>
-        <property name="facturaNeto" type="java.lang.Integer">
+        <property name="facturaNeto" type="java.lang.Double">
             <column name="factura_neto" not-null="true" />
         </property>        
     </class> 

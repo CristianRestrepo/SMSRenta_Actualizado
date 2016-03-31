@@ -26,9 +26,8 @@ public class FacturaBean {
 
     private SmsFactura facturaView;
     private List<SmsFactura> facturaListView;
-    
-    private SmsReservacion reservacionView;
-
+    private double descuento;
+    private String tipo;
     IFacturaDao facturaDao;
     IReservacionDao reservacionDao;
 
@@ -36,11 +35,11 @@ public class FacturaBean {
 
         facturaDao = new ImpFacturaDao();
         reservacionDao = new ImpReservacionDao();
-        
-        facturaView = new SmsFactura();
-        reservacionView = new SmsReservacion();
-        facturaListView = new ArrayList<>();
+        tipo = "";
+        descuento = 0;
 
+        facturaView = new SmsFactura();
+        facturaListView = new ArrayList<>();
     }
 
     public SmsFactura getFacturaView() {
@@ -51,15 +50,6 @@ public class FacturaBean {
         this.facturaView = facturaView;
     }
 
-    public SmsReservacion getReservacionView() {
-        return reservacionView;
-    }
-
-    public void setReservacionView(SmsReservacion reservacionView) {
-        this.reservacionView = reservacionView;
-    }
-
-        
     public List<SmsFactura> getFacturaListView() {
         return facturaListView;
     }
@@ -68,31 +58,72 @@ public class FacturaBean {
         this.facturaListView = facturaListView;
     }
 
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
+
     //Metodos
-    public void registrar(SmsReservacion reservacion) {         
-        Date fecha = new Date();        
+    public void registrar(SmsReservacion reservacion) {
+        Date fecha = new Date();
         facturaView.setFacturaFecha(fecha);
         facturaView.setFacturaFechaVencimiento(fecha);
-        facturaView.setFacturaTotal(reservacion.getReservacionCosto() + (int)(reservacion.getReservacionCosto() * 0.16));
+
+        facturaView.setFacturaSubtotal(reservacion.getReservacionCosto());
+        facturaView.setFacturaDescuento((facturaView.getFacturaSubtotal() * descuento) / 100);
+        facturaView.setFacturaTotal(facturaView.getFacturaSubtotal() - facturaView.getFacturaDescuento());
+        facturaView.setFacturaIva(facturaView.getFacturaTotal() * 0.16);        
+        facturaView.setFacturaNeto((facturaView.getFacturaTotal()) + facturaView.getFacturaIva());
+        facturaView.setFacturaTotal(facturaView.getFacturaNeto());
+
+        facturaView.setSmsReservacion(reservacion);
         facturaDao.registrarFactura(facturaView);
-        facturaView = new SmsFactura();        
+        facturaView = new SmsFactura();
     }
 
     public void eliminar() {
         facturaDao.eliminarFactura(facturaView);
         facturaView = new SmsFactura();
     }
+
+    public void crearFactura(SmsReservacion reservacion) throws JRException, IOException {
+        if(tipo.equalsIgnoreCase("Computador")){
+            generarFactura(reservacion);
+        }else if(tipo.equalsIgnoreCase("POS")){
+            generarFacturaPos(reservacion);
+        }
+    }
     
-    public void generarFactura(SmsReservacion reservacion) throws JRException, IOException{
+    
+    public void generarFactura(SmsReservacion reservacion) throws JRException, IOException {
+        if (facturaDao.consultarFacturaSegunReservacion(reservacion).isEmpty()) {
+            registrar(reservacion);
+        }
         GenerarReportes reporte = new GenerarReportes();
-        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacionView).get(0);
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion).get(0);
         reporte.generarFactura(facturaView);
     }
-    
-    public void generarFacturaPos(SmsReservacion reservacion) throws JRException, IOException{        
+
+    public void generarFacturaPos(SmsReservacion reservacion) throws JRException, IOException {
+        if (facturaDao.consultarFacturaSegunReservacion(reservacion).isEmpty()) {
+            registrar(reservacion);
+        }
         GenerarReportes reporte = new GenerarReportes();
-        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacionView).get(0);
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion).get(0);
         reporte.generarFacturaPOS(facturaView);
     }
-   
+
 }

@@ -14,11 +14,12 @@ import java.util.List;
  * @author CristianCamilo
  */
 public interface IFacturaDao {
-    
+
     public List<SmsFactura> consultarFacturas();
+
     public List<SmsFactura> consultarFacturaSegunReservacion(SmsReservacion reservacion);
-    public void registrarFactura(SmsFactura factura);   
+
+    public void registrarFactura(SmsFactura factura);
+
     public void eliminarFactura(SmsFactura factura);
-    public boolean verificarFecturaReserva(SmsReservacion reserva);
-    
 }

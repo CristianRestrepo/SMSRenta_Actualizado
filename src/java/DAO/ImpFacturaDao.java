@@ -102,11 +102,5 @@ public class ImpFacturaDao implements IFacturaDao {
             }
         }
         return facturas;
-    }
-
-    @Override
-    public boolean verificarFecturaReserva(SmsReservacion reserva) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    }    
 }

@@ -169,7 +169,7 @@ public class PathBean implements Serializable {
     }
 
     public String ir_SReservacion() {
-        return "AdminSReserva";
+        return "AdminSTipoReserva";
     }
 
     public String ir_SCostoServicio() {

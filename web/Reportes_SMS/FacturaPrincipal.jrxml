@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaPrincipal" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b5deb20-dac9-42f8-9a39-097fd6dbf282">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="235"/>
 	<parameter name="idFactura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{idFactura}]]></defaultValueExpression>
 	</parameter>
@@ -70,7 +70,7 @@ where f.idFactura = $P{idFactura} and
 	</background>
 	<title>
 		<band height="71" splitType="Stretch">
-			<textField>
+			<textField pattern="###0">
 				<reportElement x="440" y="23" width="100" height="24" forecolor="#F86115" uuid="43a91959-fbf5-492f-9ce3-51522900d50f"/>
 				<box>
 					<pen lineWidth="0.0" lineColor="#000000"/>
@@ -111,7 +111,7 @@ where f.idFactura = $P{idFactura} and
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[NIT 900.904.121-8 REGIMEN COMÚN DE IMPUESTOS
-RES DIAN N° 32000XXXXXXDE FECHA XX/XX/16 FACTURA POR COMPUTADOR AUTORIZA DEL 1 -10000
+RES DIAN N° 320001340638 DE FECHA 30/11/15 FACTURA POR COMPUTADOR AUTORIZA DEL 1 -10000
 NO SOMOS GRANDES CONTRIBUYENTES - NO SOMOS AUTORETENEDORES - RESPONSABLES DEL IVA
 ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 			</staticText>
@@ -255,7 +255,7 @@ ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 				</textElement>
 				<text><![CDATA[CIUDAD:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="dd/MM/yy">
 				<reportElement x="147" y="6" width="100" height="20" uuid="9762de15-e4af-4e8a-b94a-5fb3aa749dce"/>
 				<box>
 					<pen lineWidth="0.0"/>
@@ -269,7 +269,7 @@ ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_fecha}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yy">
 				<reportElement x="147" y="26" width="100" height="20" uuid="41612bbc-1444-45f9-9dac-c78b084d79c3"/>
 				<box>
 					<pen lineWidth="0.0"/>
@@ -448,12 +448,9 @@ ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 				<textFieldExpression><![CDATA[$F{Servicio_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="370" y="1" width="185" height="20" uuid="2578c9f6-044e-4e13-bc7d-91bce19e4ef7"/>
-				<box topPadding="0" bottomPadding="1"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_total}]]></textFieldExpression>
+				<reportElement x="370" y="1" width="185" height="20" uuid="07e5ee35-2954-4491-a492-993d81bff106"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{factura_subtotal}]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="25"/>
@@ -463,7 +460,7 @@ ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 	</columnFooter>
 	<lastPageFooter>
 		<band height="275">
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="326" y="190" width="214" height="22" uuid="a177d6dc-9aaa-412b-ac1e-d64564a1839b"/>
 				<box>
 					<pen lineWidth="0.0"/>
@@ -523,7 +520,7 @@ ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Hago constar que he recibido real y materialmente la mercancía arriba mencionada y por ello, acepto integralmente el contenido de este documento.  Esta factura es un titulo valor y tiene efectos legales de acuerdo a la  Ley  1231 de 2008 y al Código de Comercio.     En caso de mora se causará el  máximo interés autorizado por la  ley.  No se aceptan devoluciones. Favor girar cheque cruzado  a  nombre  de SMS RENTA SAS
+				<text><![CDATA[Hago constar que he recibido satisfactoriamente el servicio arriba mencionado y por ello, acepto integralmente el contenido de este documento.  Esta factura es un titulo valor y tiene efectos legales de acuerdo a la  Ley  1231 de 2008 y al Código de Comercio.     En caso de mora se causará el  máximo interés autorizado por la  ley.  No se aceptan devoluciones. Favor girar cheque cruzado  a  nombre  de SMS RENTA SAS
 SAS]]></text>
 			</staticText>
 			<staticText>
@@ -539,20 +536,6 @@ SAS]]></text>
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DESCUENTO:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="365" y="103" width="100" height="20" forecolor="#F86115" uuid="aebd9258-c787-4bac-826c-577adef6375c"/>
-				<box>
-					<pen lineWidth="0.0"/>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isBold="true"/>
-				</textElement>
-				<text><![CDATA[VALOR TOTAL:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="365" y="43" width="100" height="20" forecolor="#F86115" uuid="206af5cf-69c5-480e-a5c0-3bd44a1f3500"/>
@@ -596,7 +579,7 @@ SAS]]></text>
 				</textElement>
 				<text><![CDATA[IVA:]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="470" y="64" width="75" height="20" uuid="b9cb8b5f-4b5f-4a95-bb92-e32cb0301b09"/>
 				<box>
 					<pen lineWidth="0.0"/>
@@ -610,21 +593,7 @@ SAS]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_descuento}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="470" y="104" width="75" height="20" uuid="55e2d30a-d668-4dd1-b634-95cc92a8095f"/>
-				<box>
-					<pen lineWidth="0.0"/>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_total}]]></textFieldExpression>
-			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement mode="Transparent" x="470" y="44" width="75" height="20" uuid="bb3c3b7e-f00b-4185-8758-33935ce431c5"/>
 				<box>
 					<pen lineWidth="0.0"/>
@@ -638,8 +607,8 @@ SAS]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_subtotal}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="470" y="124" width="75" height="20" uuid="bec98802-a9bc-44d6-8b56-fef07edf4088"/>
+			<textField pattern="#,##0.00">
+				<reportElement x="470" y="123" width="75" height="20" uuid="bec98802-a9bc-44d6-8b56-fef07edf4088"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -652,7 +621,7 @@ SAS]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_neto}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="470" y="84" width="75" height="20" uuid="2a333f11-f91f-43e8-82f0-e364c16f5eb5"/>
 				<box>
 					<pen lineWidth="0.0"/>
@@ -682,6 +651,20 @@ SAS]]></text>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="470" y="103" width="75" height="20" uuid="4e86f6b7-197d-4b9e-995f-c4a4e5f190d9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="365" y="104" width="100" height="20" forecolor="#F86115" uuid="0cfea518-d64f-41aa-9ed0-8e7c6abf2b47"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
 		</band>
 	</lastPageFooter>
 	<summary>

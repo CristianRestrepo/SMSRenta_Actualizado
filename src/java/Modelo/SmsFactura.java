@@ -17,14 +17,14 @@ public class SmsFactura {
     private SmsReservacion smsReservacion;
     private Date facturaFecha;
     private Date facturaFechaVencimiento;
-    private int facturaIva;
-    private int facturaRetFuente;
-    private int facturaRetIca;
-    private int facturaRetIva;
-    private int facturaSubtotal;
-    private int facturaTotal;
-    private int facturaDescuento;
-    private int facturaNeto;
+    private double facturaIva;
+    private double facturaRetFuente;
+    private double facturaRetIca;
+    private double facturaRetIva;
+    private double facturaSubtotal;
+    private double facturaTotal;
+    private double facturaDescuento;
+    private double facturaNeto;
 
     public SmsFactura() {
         this.smsReservacion = new SmsReservacion();
@@ -38,7 +38,7 @@ public class SmsFactura {
         this.facturaTotal = 0;
     }
 
-    public SmsFactura(Integer idFactura, SmsReservacion smsReservacion, Date facturaFecha, Date facturaFechaVencimiento, int facturaIva, int facturaRetFuente, int facturaRetIca, int facturaRetIva, int facturaSubtotal, int facturaTotal, int facturaDescuento, int facturaNeto) {
+    public SmsFactura(Integer idFactura, SmsReservacion smsReservacion, Date facturaFecha, Date facturaFechaVencimiento, double facturaIva, double facturaRetFuente, double facturaRetIca, double facturaRetIva, double facturaSubtotal, double facturaTotal, double facturaDescuento, double facturaNeto) {
         this.idFactura = idFactura;
         this.smsReservacion = smsReservacion;
         this.facturaFecha = facturaFecha;
@@ -85,68 +85,70 @@ public class SmsFactura {
         this.facturaFechaVencimiento = facturaFechaVencimiento;
     }
 
-    public int getFacturaIva() {
+    public double getFacturaIva() {
         return facturaIva;
     }
 
-    public void setFacturaIva(int facturaIva) {
+    public void setFacturaIva(double facturaIva) {
         this.facturaIva = facturaIva;
     }
 
-    public int getFacturaRetFuente() {
+    public double getFacturaRetFuente() {
         return facturaRetFuente;
     }
 
-    public void setFacturaRetFuente(int facturaRetFuente) {
+    public void setFacturaRetFuente(double facturaRetFuente) {
         this.facturaRetFuente = facturaRetFuente;
     }
 
-    public int getFacturaRetIca() {
+    public double getFacturaRetIca() {
         return facturaRetIca;
     }
 
-    public void setFacturaRetIca(int facturaRetIca) {
+    public void setFacturaRetIca(double facturaRetIca) {
         this.facturaRetIca = facturaRetIca;
     }
 
-    public int getFacturaRetIva() {
+    public double getFacturaRetIva() {
         return facturaRetIva;
     }
 
-    public void setFacturaRetIva(int facturaRetIva) {
+    public void setFacturaRetIva(double facturaRetIva) {
         this.facturaRetIva = facturaRetIva;
     }
 
-    public int getFacturaSubtotal() {
+    public double getFacturaSubtotal() {
         return facturaSubtotal;
     }
 
-    public void setFacturaSubtotal(int facturaSubtotal) {
+    public void setFacturaSubtotal(double facturaSubtotal) {
         this.facturaSubtotal = facturaSubtotal;
     }
 
-    public int getFacturaTotal() {
+    public double getFacturaTotal() {
         return facturaTotal;
     }
 
-    public void setFacturaTotal(int facturaTotal) {
+    public void setFacturaTotal(double facturaTotal) {
         this.facturaTotal = facturaTotal;
     }
 
-    public int getFacturaDescuento() {
+    public double getFacturaDescuento() {
         return facturaDescuento;
     }
 
-    public void setFacturaDescuento(int facturaDescuento) {
+    public void setFacturaDescuento(double facturaDescuento) {
         this.facturaDescuento = facturaDescuento;
     }
 
-    public int getFacturaNeto() {
+    public double getFacturaNeto() {
         return facturaNeto;
     }
 
-    public void setFacturaNeto(int facturaNeto) {
+    public void setFacturaNeto(double facturaNeto) {
         this.facturaNeto = facturaNeto;
     }
+
+    
 
 }
