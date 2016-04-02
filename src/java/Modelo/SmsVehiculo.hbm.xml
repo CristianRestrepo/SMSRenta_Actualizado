@@ -53,6 +53,14 @@
         <property name="vehFoto2Ruta" type="string">
             <column name="Veh_foto2_ruta" length="65535" />
         </property>
+        <set name="smsEmpleados" table="sms_vehiculo_sms_empleado" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="idVehiculo" not-null="true" />
+            </key>
+            <many-to-many class="Modelo.SmsEmpleado">
+                <column name="idEmpleado" not-null="true" />
+            </many-to-many>
+        </set>
         <set name="smsCategoriasServicios" table="sms_vehiculo_sms_categorias_servicio" inverse="false" lazy="true" fetch="select">
             <key>
                 <column name="idVehiculo" not-null="true" />

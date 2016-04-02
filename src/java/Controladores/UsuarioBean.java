@@ -19,6 +19,7 @@ import static Funciones.Upload.getMapPathFotosUsuario;
 import Modelo.SmsUsuario;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -38,6 +39,7 @@ public class UsuarioBean implements Serializable {
     //Instanciacion de los objetos    
     protected SmsUsuario usuarioView;
     protected List<SmsUsuario> usuariosListView;
+    protected List<String> nombresUsuarios;
 
     private String nuevaContraseña;
     private String repitaContraseña;
@@ -70,6 +72,7 @@ public class UsuarioBean implements Serializable {
     public UsuarioBean() {
 
         usuarioView = new SmsUsuario();
+        nombresUsuarios = new ArrayList<>();
 
         nuevaContraseña = "";
         repitaContraseña = "";
@@ -141,6 +144,16 @@ public class UsuarioBean implements Serializable {
     public void setRepitaContraseña(String repitaContraseña) {
         this.repitaContraseña = repitaContraseña;
     }
+
+    public List<String> getNombresUsuarios() {
+        return nombresUsuarios;
+    }
+
+    public void setNombresUsuarios(List<String> nombresUsuarios) {
+        this.nombresUsuarios = nombresUsuarios;
+    }
+    
+    
 
     //Declaracion de metodos
     //Metodos CRUD

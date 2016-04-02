@@ -6,6 +6,7 @@
 package DAO;
 
 import Modelo.SmsCiudad;
+import Modelo.SmsProveedor;
 import Modelo.SmsVehiculo;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -111,7 +112,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria as categoria left join fetch vehiculo.smsCiudad as ciudad"
-                    + " left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia where vehiculo.vehPlaca = '" + vehiculo.getVehPlaca() + "'");
+                    + " left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsEmpleados where vehiculo.vehPlaca = '" + vehiculo.getVehPlaca() + "'");
             vehiculos = (List<SmsVehiculo>) query.list();
 
         } catch (HibernateException e) {
@@ -247,6 +248,26 @@ public class ImpVehiculoDao implements IVehiculoDao {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad as ciudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor where ciudad.ciudadNombre = '" + ciudad.getCiudadNombre() + "' and vehiculo.smsCategoria.categoriaNombre = '" + categoria + "'");
+            vehiculos = (List<SmsVehiculo>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vehiculos;
+    }
+
+    @Override
+    public List<SmsVehiculo> consultarVehiculosSegunProveedor(SmsProveedor proveedor) {
+        Session session = null;
+        List<SmsVehiculo> vehiculos = null;
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor where "
+                    + "proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
             vehiculos = (List<SmsVehiculo>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

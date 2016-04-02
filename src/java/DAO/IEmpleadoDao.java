@@ -7,6 +7,7 @@ package DAO;
 
 import Modelo.SmsCiudad;
 import Modelo.SmsEmpleado;
+import Modelo.SmsProveedor;
 import Modelo.SmsUsuario;
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface IEmpleadoDao {
     public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String espacioInicio, String espacioLlegada, String Proveedor);
     
     public List<SmsEmpleado> consultarEmpleadosCiudad(SmsCiudad ciudad);
+    
+    public List<SmsEmpleado> consultarEmpleadosSegunProveedor(SmsProveedor proveedor);
 }

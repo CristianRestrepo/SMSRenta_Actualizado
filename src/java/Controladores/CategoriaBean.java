@@ -29,6 +29,7 @@ public class CategoriaBean implements Serializable {
     private List<SmsCategoria> categoriasListView;
     private List<String> nombresCategoriasListView;
     private List<String> mercadosSeleccionados;
+    private List<SmsMercado> mercadoList;
     private SmsMercado mercadoView;
     //Variables
     private int estado; //Controla la operacion a realizar
@@ -43,6 +44,7 @@ public class CategoriaBean implements Serializable {
         categoriaView = new SmsCategoria();
         categoriasListView = new ArrayList<>();
         nombresCategoriasListView = new ArrayList<>();
+        mercadoList = new ArrayList<>();
         mercadoView = new SmsMercado();
 
         buscar = null;
@@ -116,18 +118,21 @@ public class CategoriaBean implements Serializable {
     //METODOS QUE DEVUELVEN DATOS PARA VISTAS
     public void modificar() {
         boolean valor = false;
+        mercadoList = mercadoDao.consultarMercadoSegunCategoria(categoriaView);
         for (int j = 0; j < mercadosSeleccionados.size(); j++) {
-            mercadoView.setMercadoNombre(mercadosSeleccionados.get(j));
-            for (SmsMercado mercado : categoriaView.getSmsMercados()) {
+            for (SmsMercado mercado : mercadoList) {
                 if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
                     valor = true;
                 }
             }
             if (!valor) {
+                mercadoView.setMercadoNombre(mercadosSeleccionados.get(j));
                 mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
                 mercadoView.getSmsCategorias().add(categoriaView);
                 categoriaView.getSmsMercados().add(mercadoView);
             }
+            valor = false;
+            mercadoView = new SmsMercado();
         }
 
         catDao.modificarCategoria(categoriaView);
@@ -146,8 +151,9 @@ public class CategoriaBean implements Serializable {
             mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
             mercadoView.getSmsCategorias().add(categoriaView);//Se relaciona la categoria al mercado 
             categoriaView.getSmsMercados().add(mercadoView);//Se relaciona el mercado a la categoria
+            catDao.agregarMercadosCategoria(categoriaView);//se registra la relacion entre la categoria y los mercados
+            mercadoView = new SmsMercado();
         }
-        catDao.agregarMercadosCategoria(categoriaView);//se registra la relacion entre la categoria y los mercados
 
         //Limpiamos objetos
         categoriaView = new SmsCategoria();
@@ -163,6 +169,8 @@ public class CategoriaBean implements Serializable {
         nombre = "Registrar Categoria";
         estado = 0;
         categoriasListView = catDao.mostrarCategorias();
+        mercadosSeleccionados = new ArrayList<>();
+
     }
 
     //Consultar categoria
@@ -187,73 +195,37 @@ public class CategoriaBean implements Serializable {
         if (!prov.isEmpty()) {
             SmsProveedor proveedor = new SmsProveedor();
             IProveedorDao provDao = new ImpProveedorDao();
-
             proveedor.setProveedorRazonSocial(prov);
             proveedor = provDao.consultarProveedor(proveedor).get(0);
 
-            List<SmsMercado> mercados = mercadoDao.consultarMercados();
-            List<SmsMercado> m = new ArrayList<>();
+            List<SmsMercado> mercados = mercadoDao.consultarMercadosSegunProveedor(proveedor);
 
-            for (SmsMercado mercado : mercados) {
-                for (SmsMercado mercadoProv : proveedor.getSmsMercados()) {
-                    if (mercadoProv.getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
-                        m.add(mercado);
-                    }
-                }
-            }
-
-            categoriasListView = catDao.mostrarCategorias();
-            boolean bandera = false;
-            for (int i = 0; i < m.size(); i++) {
-                for (int j = 0; j < categoriasListView.size(); j++) {
-                    for (SmsMercado merc : categoriasListView.get(j).getSmsMercados()) {
-                        if (m.get(i).getMercadoNombre().equalsIgnoreCase(merc.getMercadoNombre())) {
-                            for (int k = 0; k < nombresCategoriasListView.size(); k++) {
-                                if (nombresCategoriasListView.get(k).equalsIgnoreCase(categoriasListView.get(j).getCategoriaNombre())) {
-                                    bandera = true;
-                                }
-                            }
-                            if (!bandera) {
-                                nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
-                            }
-                            bandera = false;
-                        }
-
-                    }
-
-                }
+            for (int i = 0; i < mercados.size(); i++) {
+                CategoriasSegunMercado(mercados.get(i));
             }
         }
         return nombresCategoriasListView;
     }
 
-    public List<String> CategoriasSegunMercado(String merc) {
-        nombresCategoriasListView = new ArrayList<>();
-        mercadoView.setMercadoNombre(merc);
-        if (!merc.isEmpty()) {
-            mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
+    public List<String> CategoriasSegunMercado(SmsMercado merc) {
+        //nombresCategoriasListView = new ArrayList<>();
 
-            categoriasListView = catDao.mostrarCategorias();
-            boolean bandera = false;
-            for (int j = 0; j < categoriasListView.size(); j++) {
-                for (SmsMercado mercado : categoriasListView.get(j).getSmsMercados()) {
-                    if (mercadoView.getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
-                        for (int k = 0; k < nombresCategoriasListView.size(); k++) {
-                            if (nombresCategoriasListView.get(k).equalsIgnoreCase(categoriasListView.get(j).getCategoriaNombre())) {
-                                bandera = true;
-                            }
-                        }
-                        if (!bandera) {
-                            nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
-                        }
-                        bandera = false;
-                    }
-
+        mercadoView = mercadoDao.consultarMercadoConCategorias(merc).get(0);
+        categoriasListView = catDao.consultarCategoriasSegunMercado(mercadoView);
+        boolean existe = false;
+        for (int j = 0; j < categoriasListView.size(); j++) {
+            for (int i = 0; i < nombresCategoriasListView.size(); i++) {
+                if (categoriasListView.get(j).getCategoriaNombre().equalsIgnoreCase(nombresCategoriasListView.get(i))) {
+                    existe = true;
                 }
-
             }
+            if (!existe) {
+                nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
+            }
+            existe = false;
         }
         return nombresCategoriasListView;
+
     }
 
     public List<String> CategoriasSegunServicio(String serv) {
@@ -263,30 +235,13 @@ public class CategoriaBean implements Serializable {
         SmsServicios servicio = new SmsServicios();
 
         if (!serv.isEmpty()) {
-            
             servicio.setServicioNombre(serv);
             servicio = servDao.ConsultarServicio(servicio).get(0);
             mercadoView = servicio.getSmsCategoriasServicio().getSmsMercado();
             mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
-            categoriasListView = catDao.mostrarCategorias();
-            boolean bandera = false;
-            for (int j = 0; j < categoriasListView.size(); j++) {
-                for (SmsMercado mercado : categoriasListView.get(j).getSmsMercados()) {
-                    if (mercadoView.getMercadoNombre().equalsIgnoreCase(mercado.getMercadoNombre())) {
-                        for (int k = 0; k < nombresCategoriasListView.size(); k++) {
-                            if (nombresCategoriasListView.get(k).equalsIgnoreCase(categoriasListView.get(j).getCategoriaNombre())) {
-                                bandera = true;
-                            }
-                        }
-                        if (!bandera) {
-                            nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
-                        }
-                        bandera = false;
-                    }
+            nombresCategoriasListView = new ArrayList<>();
+            nombresCategoriasListView = CategoriasSegunMercado(mercadoView);
 
-                }
-
-            }
         }
         return nombresCategoriasListView;
     }
@@ -307,18 +262,10 @@ public class CategoriaBean implements Serializable {
         mercadosSeleccionados = new ArrayList<>();
         if (estado == 1) {
             nombre = "Modificar Categoria";
-            List<SmsMercado> mercadoList;
-            mercadoList = mercadoDao.consultarMercados();
-
-            for (SmsMercado mercado : categoriaView.getSmsMercados()) {
-                for (int j = 0; j < mercadoList.size(); j++) {
-                    if (mercado.getMercadoNombre().equals(mercadoList.get(j).getMercadoNombre())) {
-                        mercadosSeleccionados.add(mercado.getMercadoNombre());
-                    }
-                }
+            mercadoList = mercadoDao.consultarMercadoSegunCategoria(categoriaView);
+            for (int j = 0; j < mercadoList.size(); j++) {
+                mercadosSeleccionados.add(mercadoList.get(j).getMercadoNombre());
             }
-
         }
     }
-
 }

@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Modelo.SmsMercado;
 import Modelo.SmsProveedor;
 import Modelo.SmsUsuario;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class ImpProveedorDao implements IProveedorDao {
         List<SmsProveedor> Proveedores = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsProveedor as proveedor left join fetch proveedor.smsMercados as mercados left join fetch proveedor.smsUsuario as usuario"
+            Query query = session.createQuery("from SmsProveedor as proveedor left join fetch proveedor.smsUsuario as usuario"
                     + " left join fetch usuario.smsCiudad as ciudad left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol");
             Proveedores = (List<SmsProveedor>) query.list();
         } catch (HibernateException e) {
@@ -91,7 +92,7 @@ public class ImpProveedorDao implements IProveedorDao {
             }
         }
     }
-    
+
     @Override
     public List<SmsProveedor> filtrarProveedor(String dato) {
         Session session = null;
@@ -129,7 +130,7 @@ public class ImpProveedorDao implements IProveedorDao {
         }
         return Proveedores;
     }
-    
+
     @Override
     public List<SmsUsuario> consultarUsuariosProveedores() {
         Session session = null;
@@ -147,5 +148,7 @@ public class ImpProveedorDao implements IProveedorDao {
         }
         return usuarios;
     }
+
+    
 
 }

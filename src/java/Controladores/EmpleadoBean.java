@@ -21,6 +21,7 @@ import static Funciones.Upload.getPathDefaultHojasVida;
 import static Funciones.Upload.getPathDefaultUsuario;
 import Modelo.SmsEmpleado;
 import Modelo.SmsHojavida;
+import Modelo.SmsProveedor;
 import Modelo.SmsReservacion;
 import java.io.IOException;
 import java.io.Serializable;
@@ -170,14 +171,13 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         this.operacion = operacion;
     }
 
-    
     //Metodos que se comunican con el controlador    
     public void registrarEmpleado() {
         empleadoView.getSmsUsuario().getSmsRol().setRolNombre("Conductor");
         //Asignamos un estado al conductor
         empleadoView.getSmsEstado().setEstadoNombre("Disponible");
         empleadoView.setSmsEstado(estadoDao.consultarEstado(empleadoView.getSmsEstado()).get(0));
-        
+
         //Si el usuario no registra foto y hoja de vida se asignas unas default
         if (empleadoView.getSmsUsuario().getUsuarioFotoRuta() == null && empleadoView.getSmsHojavida().getHojaVidaRuta() == null) {
             //asignamos al usuario la imagen de perfil default
@@ -193,7 +193,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         SendEmail email = new SendEmail();
 
         password = pass.generarPass(6);//Generamos pass aleatorio
-        
+
         //Encriptamos las contraseñas
         empleadoView.getSmsUsuario().setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
         empleadoView.getSmsUsuario().setUsuarioRememberToken(md.getMD5(password));
@@ -205,7 +205,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         empleadoView.getSmsUsuario().setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
         empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
         empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()).get(0));
-        
+
         //registramos el usuario
         usuarioDao.registrarUsuario(empleadoView.getSmsUsuario());
 
@@ -242,12 +242,12 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     }
 
     public void modificarEmpleado() {
-        
+
         empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()).get(0));
         empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
         empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()).get(0));
-              
-        usuarioDao.modificarUsuario(empleadoView.getSmsUsuario());        
+
+        usuarioDao.modificarUsuario(empleadoView.getSmsUsuario());
         empleadoDao.modificarEmpleado(empleadoView);//Se modifica el empleado
         estadoFoto = "Foto sin subir";
         estadoArchivo = "Hoja de vida sin subir";
@@ -323,7 +323,6 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         nombreOperacion = "Registrar Proveedor";
         estadoFoto = "Foto sin subir";
         estadoArchivo = "Hoja de vida sin subir";
-
     }
 
     //Subida de archivos
@@ -413,6 +412,16 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 //            lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));
 //        }
         return empleadosListView;
+    }
+
+    public List<String> consultarEmpleadosSegunProveedor(SmsProveedor proveedor) {
+        empleadosListView = new ArrayList<>();
+        nombresUsuarios = new ArrayList<>();
+        empleadosListView = empleadoDao.consultarEmpleadosSegunProveedor(proveedor);
+        for (int i = 0; i < empleadosListView.size(); i++) {
+           nombresUsuarios.add(empleadosListView.get(i).getSmsUsuario().getUsuarioNombre());
+        }
+        return nombresUsuarios;
     }
 
 }

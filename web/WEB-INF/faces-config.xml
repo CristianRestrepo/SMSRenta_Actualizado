@@ -229,9 +229,7 @@
             <from-outcome>Login</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>
-        
-        
+        </navigation-case>       
         <navigation-case>
             <from-outcome>AdminPEUsuario</from-outcome>
             <to-view-id>/vistas/AdminP/usuarios/PEUsuario.xhtml</to-view-id>
@@ -440,12 +438,12 @@
         <navigation-case>
             <from-outcome>VistaReservaCliente</from-outcome>
             <to-view-id>/vistas/Cliente/general/vistaReserva.xhtml</to-view-id>
-                   <redirect/>     
+            <redirect/>     
         </navigation-case>
         <navigation-case>
             <from-outcome>VistaReservaAdminP</from-outcome>
             <to-view-id>/vistas/AdminP/general/vistaReserva.xhtml</to-view-id> 
-                <redirect/>       
+            <redirect/>       
         </navigation-case>
         <navigation-case>
             <from-outcome>VistaReservaAdminS</from-outcome>
@@ -526,7 +524,12 @@
             <from-outcome>COInformacionSesion</from-outcome>
             <to-view-id>/vistas/Conductor/general/CoInformacionSesion.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>        
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>administrarVehiculo</from-outcome>
+            <to-view-id>/vistas/AdminP/vehiculos/PAdminVehiculos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
                     
     <navigation-rule>

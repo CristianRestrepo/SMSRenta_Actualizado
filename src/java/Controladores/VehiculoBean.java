@@ -9,6 +9,7 @@ import Funciones.Upload;
 import DAO.ICategoriaDao;
 import DAO.ICiudadDao;
 import DAO.IColorDao;
+import DAO.IEmpleadoDao;
 import DAO.IEstadoDao;
 import DAO.IProveedorDao;
 import DAO.IReferenciaDao;
@@ -17,6 +18,7 @@ import DAO.IVehiculoDao;
 import DAO.ImpCategoriaDao;
 import DAO.ImpCiudadDao;
 import DAO.ImpColorDao;
+import DAO.ImpEmpleadoDao;
 import DAO.ImpEstadoDao;
 import DAO.ImpProveedorDao;
 import DAO.ImpReferenciaDao;
@@ -26,7 +28,9 @@ import static Funciones.Upload.getMapPathFotosVehiculos;
 import static Funciones.Upload.getPathDefaultVehiculo;
 import Modelo.SmsCategoria;
 import Modelo.SmsCiudad;
+import Modelo.SmsEmpleado;
 import Modelo.SmsEstadovehiculo;
+import Modelo.SmsProveedor;
 import Modelo.SmsReservacion;
 import Modelo.SmsVehiculo;
 import java.io.IOException;
@@ -49,6 +53,7 @@ public class VehiculoBean {
     private SmsVehiculo vehiculoView;
     private SmsEstadovehiculo estadoVehiculoView;
     private List<SmsVehiculo> vehiculosListView;
+    private List<String> placasVehiculos;
 
     //Relacion con el controlador   
     Upload fileController;
@@ -79,6 +84,7 @@ public class VehiculoBean {
         vehiculoView = new SmsVehiculo();
         vehiculosListView = new ArrayList<>();
         estadoVehiculoView = new SmsEstadovehiculo();
+        placasVehiculos = new ArrayList<>();
 
         habilitarCancelar = true;
 
@@ -180,6 +186,15 @@ public class VehiculoBean {
         this.estadoArchivo2 = estadoArchivo2;
     }
 
+    public List<String> getPlacasVehiculos() {
+        return placasVehiculos;
+    }
+
+    public void setPlacasVehiculos(List<String> placasVehiculos) {
+        this.placasVehiculos = placasVehiculos;
+    }
+
+    
     //Definicion de metodos VEHICULO
     public void registrar() {
 
@@ -417,6 +432,16 @@ public class VehiculoBean {
         vehiculosListView = vehDao.consultarVehiculosCiudad(vehiculoView.getSmsCiudad());
         return vehiculosListView;
     }
+    
+    public List<String> consultarVehiculosSegunProveedor(SmsProveedor proveedor){
+        vehiculosListView = new ArrayList<>();
+        placasVehiculos = new ArrayList<>();
+        vehiculosListView = vehDao.consultarVehiculosSegunProveedor(proveedor);
+            for (int i = 0; i < vehiculosListView.size(); i++) {
+                placasVehiculos.add(vehiculosListView.get(i).getVehPlaca());
+        }
+        return placasVehiculos;
+    }
 
     public List<SmsVehiculo> filtrarVehiculosCiudad(SmsCiudad c, SmsCategoria cat) {
         vehiculosListView = new ArrayList<>();
@@ -457,5 +482,21 @@ public class VehiculoBean {
 
         vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada);
         return vehiculosListView;
+    }
+    
+    public void asociarVehiculo(SmsEmpleado empleado){
+        //Consultamos objetos
+        vehiculoView = vehDao.consultarVehiculo(vehiculoView).get(0);
+        IEmpleadoDao empleadoDao = new ImpEmpleadoDao();
+        SmsEmpleado empleadoView = empleadoDao.consultarEmpleado(empleado.getSmsUsuario()).get(0);
+        
+        
+        //asociamos vehiculo y conductor
+        vehiculoView.getSmsEmpleados().add(empleadoView);
+        empleadoView.getSmsVehiculos().add(vehiculoView);
+        
+        vehDao.modificarVehiculo(vehiculoView);
+        
+        vehiculoView = new SmsVehiculo();
     }
 }

@@ -5,17 +5,12 @@
  */
 package Controladores;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.DateAxis;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 /**

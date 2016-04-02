@@ -50,7 +50,7 @@
                                             <p:message for="SMCatServicio"/>
 
                                             <p:selectOneMenu required="true" requiredMessage="Seleccione tipo de servicio" value="#{serviciosBean.servicioView.servicioConductor}" label="Tipo de servicio" style="width: 100%" id="SMTipoServicio"> 
-                                                <f:selectItem itemLabel="Seleccione categoría del servicio" noSelectionOption="true"/>l
+                                                <f:selectItem itemLabel="Seleccione tipo de servicio" noSelectionOption="true"/>l
                                                 <f:selectItem itemLabel="Con conductor" itemValue="1"/>
                                                 <f:selectItem itemLabel="Sin conductor" itemValue="0"/>
                                             </p:selectOneMenu>
@@ -158,7 +158,7 @@
                                             <p:selectOneMenu value="#{costosServicioBean.ciudadView.ciudadNombre}" label="Ciudad" style="width: 100%" id="SMCiudad"> 
                                                 <f:selectItem itemLabel="Seleccione ciudad" noSelectionOption="true"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
-                                                <p:ajax event="change" listener="#{costosServicioBean.habilitarListas(costosServicioBean.ciudadView.ciudadNombre)}" update="formularioCostos" />
+                                                <p:ajax event="change" listener="#{costosServicioBean.habilitarListas(costosServicioBean.ciudadView.ciudadNombre)}" update="SMLugarInicio SMLugarDestino" />
                                             </p:selectOneMenu>
                                             <p:message for="SMCiudad"/>
 

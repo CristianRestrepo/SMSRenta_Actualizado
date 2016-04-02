@@ -5,7 +5,9 @@
  */
 package DAO;
 
+import Modelo.SmsCategoria;
 import Modelo.SmsMercado;
+import Modelo.SmsProveedor;
 import java.util.List;
 
 /**
@@ -19,6 +21,8 @@ public interface IMercadoDao {
     public List<SmsMercado> consultarMercadoConCategorias(SmsMercado mercado);
     public List<SmsMercado> consultarMercadoConServicios(SmsMercado mercado);
     public List<SmsMercado> consultarMercadoConProveedores(SmsMercado mercado);
+    public List<SmsMercado> consultarMercadoSegunCategoria(SmsCategoria categoria);
+    public List<SmsMercado> consultarMercadosSegunProveedor(SmsProveedor proveedor); 
     public void registrarMercado(SmsMercado mercado);
     public void modificarMercado(SmsMercado mercado);
     public void eliminarMercado(SmsMercado mercado);

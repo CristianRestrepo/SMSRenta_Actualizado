@@ -202,22 +202,21 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     public void modificarProveedor() {
 
         boolean valor = false;
-
-        for (int j = 0; j < mercadosSeleccionados.size(); j++) {
-
-            mercadoView.setMercadoNombre(mercadosSeleccionados.get(j));
-            for (SmsMercado mercado : proveedorView.getSmsMercados()) {
+        List<SmsMercado> mercadoList = mercadoDao.consultarMercadosSegunProveedor(proveedorView);
+        for (int j = 0; j < mercadosSeleccionados.size(); j++) {            
+            for (SmsMercado mercado : mercadoList) {
                 if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
                     valor = true;
                 }
             }
             if (!valor) {
-
+                mercadoView.setMercadoNombre(mercadosSeleccionados.get(j));
                 mercadoView = mercadoDao.consultarMercadoConProveedores(mercadoView).get(0);
                 mercadoView.getSmsProveedors().add(proveedorView);
                 proveedorView.getSmsMercados().add(mercadoView);
             }
             valor = false;
+            mercadoView = new SmsMercado();
         }
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
@@ -285,14 +284,10 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         if (operacion == 1) {
 
             List<SmsMercado> mercadoList = new ArrayList<>();
-            mercadoList = mercadoDao.consultarMercados();
+            mercadoList = mercadoDao.consultarMercadosSegunProveedor(proveedorView);
 
-            for (SmsMercado mercado : proveedorView.getSmsMercados()) {
-                for (int j = 0; j < mercadoList.size(); j++) {
-                    if (mercado.getMercadoNombre().equals(mercadoList.get(j).getMercadoNombre())) {
-                        mercadosSeleccionados.add(mercado.getMercadoNombre());
-                    }
-                }
+            for (int j = 0; j < mercadoList.size(); j++) {
+                mercadosSeleccionados.add(mercadoList.get(j).getMercadoNombre());
             }
 
             habilitarCancelar = false;

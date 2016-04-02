@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Modelo.SmsMercado;
 import Modelo.SmsProveedor;
 import Modelo.SmsUsuario;
 import java.util.List;
@@ -18,8 +19,8 @@ public interface IProveedorDao {
     //Definicion de metodos CRUD    
     public List<SmsProveedor> consultarProveedor(SmsProveedor proveedor);
     
-     public List<SmsUsuario> consultarUsuariosProveedores();
-
+    public List<SmsUsuario> consultarUsuariosProveedores();     
+   
     public List<SmsProveedor> mostrarProveedores();
 
     public void registrarProveedor(SmsProveedor proveedor);

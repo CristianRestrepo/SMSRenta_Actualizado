@@ -34,5 +34,6 @@
   <table-filter match-name="sms_estado"/>
   <table-filter match-name="sms_marca"/>
   <table-filter match-name="sms_lugar_sms_vehiculo"/>
+  <table-filter match-name="sms_vehiculo_sms_empleado"/>
   <table-filter match-name="sms_vehiculo"/>
 </hibernate-reverse-engineering>

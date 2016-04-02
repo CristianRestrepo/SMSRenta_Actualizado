@@ -7,6 +7,7 @@ package DAO;
 
 import Modelo.SmsCiudad;
 import Modelo.SmsEmpleado;
+import Modelo.SmsProveedor;
 import Modelo.SmsUsuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida where usuario.idUsuario = '" + usuario.getIdUsuario() + "'");
+            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida left join fetch empleado.smsVehiculos where usuario.idUsuario = '" + usuario.getIdUsuario() + "' or usuario.usuarioNombre = '"+usuario.getUsuarioNombre()+"'");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -229,6 +230,31 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida where proveedor.proveedorRazonSocial = '" + Proveedor + "'");
+            empleados = (List<SmsEmpleado>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return empleados;
+    }
+
+    @Override
+    public List<SmsEmpleado> consultarEmpleadosSegunProveedor(SmsProveedor proveedor) {
+        Session session = null;
+        List<SmsEmpleado> empleados = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsEstado "
+                    + "left join fetch empleado.smsProveedor as proveedor "
+                    + "left join fetch empleado.smsUsuario as usuario "
+                    + "left join fetch usuario.smsNacionalidad as nacionalidad "
+                    + "left join fetch usuario.smsCiudad "
+                    + "left join fetch usuario.smsRol "
+                    + "left join fetch empleado.smsHojavida as hojaVida where "
+                    + "proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

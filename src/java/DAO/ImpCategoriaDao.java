@@ -6,6 +6,7 @@
 package DAO;
 
 import Modelo.SmsCategoria;
+import Modelo.SmsMercado;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -28,7 +29,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
         List<SmsCategoria> categorias = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoria as categoria left join fetch categoria.smsMercados");
+            Query query = session.createQuery("from SmsCategoria as categoria");
             categorias = (List<SmsCategoria>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -103,8 +104,6 @@ public class ImpCategoriaDao implements ICategoriaDao {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-   
-
     @Override
     public List<SmsCategoria> consultarCategoria(SmsCategoria categoria) {
         Session session = null;
@@ -150,15 +149,32 @@ public class ImpCategoriaDao implements ICategoriaDao {
             session.beginTransaction();
             session.update(categoria);
             session.getTransaction().commit();
-           } catch (HibernateException e) {
+        } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
-           } finally {
+        } finally {
             if (session != null) {
                 session.close();
             }
-        }        
+        }
     }
 
- 
+    @Override
+    public List<SmsCategoria> consultarCategoriasSegunMercado(SmsMercado mercado) {
+        Session session = null;
+        List<SmsCategoria> categorias = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("select categoria from SmsMercado as mercado left outer join mercado.smsCategorias as categoria where mercado.idMercado = '" + mercado.getIdMercado() + "'");
+            categorias = (List<SmsCategoria>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return categorias;
+    }
+
 }

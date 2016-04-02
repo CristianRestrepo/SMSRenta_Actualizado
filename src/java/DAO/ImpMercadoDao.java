@@ -5,7 +5,9 @@
  */
 package DAO;
 
+import Modelo.SmsCategoria;
 import Modelo.SmsMercado;
+import Modelo.SmsProveedor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -176,6 +178,43 @@ public class ImpMercadoDao implements IMercadoDao {
             Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsProveedors as proveedores where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
             mercados = (List<SmsMercado>) query.list();
 
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return mercados;
+    }
+    
+     @Override
+    public List<SmsMercado> consultarMercadoSegunCategoria(SmsCategoria categoria) {
+        Session session = null;
+        List<SmsMercado> mercados = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("select mercado from SmsCategoria as cat left outer join cat.smsMercados as mercado where cat.idCategoria ='" + categoria.getIdCategoria() + "'");
+            mercados = (List<SmsMercado>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }return mercados;
+    }
+    
+    @Override
+    public List<SmsMercado> consultarMercadosSegunProveedor(SmsProveedor proveedor) {
+        Session session = null;
+        List<SmsMercado> mercados = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("select mercado from SmsProveedor as prov "
+                    + "left outer join prov.smsMercados as mercado "
+                    + "where prov.idProveedor = '" + proveedor.getIdProveedor() + "'");
+            mercados = (List<SmsMercado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
