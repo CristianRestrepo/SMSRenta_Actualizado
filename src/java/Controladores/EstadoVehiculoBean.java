@@ -9,7 +9,9 @@ import Modelo.SmsEstadovehiculo;
 import java.util.List;
 import javax.inject.Named;
 import DAO.IEstadoVehiculoDao;
+import DAO.IVehiculoDao;
 import DAO.ImpEstadoVehiculoDao;
+import DAO.ImpVehiculoDao;
 import Modelo.SmsVehiculo;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,8 +57,10 @@ public class EstadoVehiculoBean implements Serializable{
     //Metodos
     public void registrarEstVeh(SmsEstadovehiculo estV) {
         estVehView = estV;
+        IVehiculoDao vehDao = new ImpVehiculoDao();
         //Obtenemos fecha actual en la cual se registra el estado del vehiculo
         java.util.Date fecha = new Date();
+        estVehView.setSmsVehiculo(vehDao.consultarVehiculo(estVehView.getSmsVehiculo()).get(0));
         estVehView.setFechaEstadoVehiculo(fecha);
         estVehDao.registrarEstadoVehiculo(estVehView);
     }

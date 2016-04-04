@@ -412,8 +412,8 @@
                                                                         <td></td>
                                                                         <th>Ciudad</th>
                                                                         <th>Lugar</th>
-                                                                        <th>Fechas</th>
-                                                                        <th>Horas</th>
+                                                                        <th>Fecha</th>
+                                                                        <th>Hora</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -421,14 +421,14 @@
                                                                         <th>Recogida</th>
                                                                         <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}</td>
                                                                         <td>#{reservacionBean.reservaView.reservacionLugarLlegada}</td>
-                                                                        <td>#{reservacionBean.reservaView.reservacionFechaInicio}</td>
+                                                                        <td>#{reservacionBean.fechaInicio}</td>
                                                                         <td>#{reservacionBean.horaInicio}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th>Entrega</th>
                                                                         <td>#{reservacionBean.reservaView.smsCiudadByIdCiudadDestino.ciudadNombre}</td>
                                                                         <td>#{reservacionBean.reservaView.reservacionLugarDestino}</td>
-                                                                        <td>#{reservacionBean.reservaView.reservacionFechaLlegada}</td>
+                                                                        <td>#{reservacionBean.fechaEntrega}</td>
                                                                         <td>#{reservacionBean.horaEntrega}</td>
                                                                     </tr>
                                                                     <tr>

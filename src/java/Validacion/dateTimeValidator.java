@@ -110,18 +110,24 @@ public class dateTimeValidator implements Validator {
 
         Calendar calInicio1 = Calendar.getInstance();
         calInicio1.setTime(hInicio);
-        calInicio1.add(Calendar.MINUTE, 29);
+        calInicio1.add(Calendar.MINUTE, 15);
 
         Calendar calInicio2 = Calendar.getInstance();
-        calInicio2.setTime(hActual);
-        calInicio2.add(Calendar.HOUR, 2);
+        calInicio2.setTime(hInicio);
+        calInicio2.add(Calendar.MINUTE, 30);
+        
+        Calendar calInicio3 = Calendar.getInstance();
+        calInicio3.setTime(hActual);
+        calInicio3.add(Calendar.MINUTE, 15);
 
         Date hInicioMod1 = new Date();
         Date hInicioMod2 = new Date();
+        Date hInicioMod3 = new Date();
 
         try {
             hInicioMod1 = sdft.parse(sdft.format(calInicio1.getTime()));
             hInicioMod2 = sdft.parse(sdft.format(calInicio2.getTime()));
+            hInicioMod3 = sdft.parse(sdft.format(calInicio3.getTime()));
         } catch (ParseException pe) {
             pe.getMessage();
         }
@@ -138,9 +144,9 @@ public class dateTimeValidator implements Validator {
                     message.setSummary("La hora de entrega es anterior o igual a la hora de inicio");
                     message.setSeverity(FacesMessage.SEVERITY_ERROR);
                     throw new ValidatorException(message);
-                } else if (hEntrega.after(hInicio) && hEntrega.before(hInicioMod1) && servicioElegido.getServicioDuracion() == 0) {
+                } else if (hEntrega.after(hInicio) && hEntrega.before(hInicioMod2) && servicioElegido.getServicioDuracion() == 0) {
                     FacesMessage message = new FacesMessage();
-                    message.setSummary("El tiempo de reserva debe ser minimo de 30 minutos");
+                    message.setSummary("El tiempo de reserva debe ser minimo de 15 minutos");
                     message.setSeverity(FacesMessage.SEVERITY_ERROR);
                     throw new ValidatorException(message);
                 } else if (hEntrega.after(hInicio) && diffHourEqualDay < 24 && servicioElegido.getServicioDuracion() >= 1) {
@@ -164,14 +170,13 @@ public class dateTimeValidator implements Validator {
             }
         } else if (fInicio.equals(fActual)) {
             if (fEntrega.equals(fInicio)) {
-                if (hInicio.after(hInicioMod2)) {
-                    if (hInicio.after(hInicioMod2)) {
+                if (hInicio.after(hInicioMod3)) {                  
                         if (hEntrega.before(hInicio) || hEntrega.equals(hInicio)) {
                             FacesMessage message = new FacesMessage();
                             message.setSummary("La hora de entrega es anterior o igual a la hora de inicio");
                             message.setSeverity(FacesMessage.SEVERITY_ERROR);
                             throw new ValidatorException(message);
-                        } else if (hEntrega.after(hInicio) && hEntrega.before(hInicioMod1) && servicioElegido.getServicioDuracion() == 0) {
+                        } else if (hEntrega.after(hInicio) && hEntrega.before(hInicioMod2) && servicioElegido.getServicioDuracion() == 0) {
                             FacesMessage message = new FacesMessage();
                             message.setSummary("El tiempo de reserva debe ser minimo de 30 minutos");
                             message.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -181,16 +186,15 @@ public class dateTimeValidator implements Validator {
                             message.setSummary("El tiempo de reserva debe ser minimo 24 horas");
                             message.setSeverity(FacesMessage.SEVERITY_ERROR);
                             throw new ValidatorException(message);
-                        }
-                    }
-                } else if (hInicio.equals(hInicioMod2)) {
+                        }                    
+                } else if (hInicio.equals(hInicioMod3)) {
                     FacesMessage message = new FacesMessage();
-                    message.setSummary("La hora de recojida debe tener por lo menos 2 horas de antelacion");
+                    message.setSummary("La hora de recojida debe tener por lo menos 15 minutos de antelacion");
                     message.setSeverity(FacesMessage.SEVERITY_ERROR);
                     throw new ValidatorException(message);
-                } else if (hInicio.before(hInicioMod2) && hInicio.after(hActual)) {
+                } else if (hInicio.before(hInicioMod3) && hInicio.after(hActual)) {
                     FacesMessage message = new FacesMessage();
-                    message.setSummary("La hora de recojida debe tener por lo menos 2 horas de antelacion");
+                    message.setSummary("La hora de recojida debe tener por lo menos 15 minutos de antelacion");
                     message.setSeverity(FacesMessage.SEVERITY_ERROR);
                     throw new ValidatorException(message);
                 } else if (hInicio.before(hActual)) {

@@ -105,11 +105,11 @@ public class VehiculoBean {
         operacion = 0;
         estadoArchivo1 = "Foto sin subir";
         estadoArchivo2 = "Foto sin subir";
-        
+
     }
 
     @PostConstruct
-    public void init() {       
+    public void init() {
         vehiculosListView = vehDao.mostrarVehiculo();
     }
 
@@ -194,7 +194,6 @@ public class VehiculoBean {
         this.placasVehiculos = placasVehiculos;
     }
 
-    
     //Definicion de metodos VEHICULO
     public void registrar() {
 
@@ -230,15 +229,12 @@ public class VehiculoBean {
         //Registramos el vehiculo
         vehDao.registrarVehiculo(vehiculoView);//Registra el Vehiculo
 
-        //consultamos el vehiculo recien registrado
-        vehiculoView = vehDao.consultarVehiculo(vehiculoView).get(0);
-        estadoVehiculoView.setSmsVehiculo(vehiculoView); //relacionamos el vehiculo con los valores asignados en la seccion de estado
-
-        estadoVehiculoController.registrarEstVeh(estadoVehiculoView);//registramos el estado
-
         //Reiniciamos valores para las variables llamadas desde las vista
         estadoArchivo1 = "Foto sin subir";
         estadoArchivo2 = "Foto sin subir";
+
+        estadoVehiculoView.setSmsVehiculo(vehiculoView); //relacionamos el vehiculo con los valores asignados en la seccion de estado
+        estadoVehiculoController.registrarEstVeh(estadoVehiculoView);//registramos el estado
 
         //limpiamos objetos        
         vehiculoView = new SmsVehiculo();
@@ -249,7 +245,7 @@ public class VehiculoBean {
     }
 
     public void modificar() {
-      //Consulta estado
+        //Consulta estado
         vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()).get(0));
 
         //Consulta proveedor    
@@ -266,7 +262,7 @@ public class VehiculoBean {
 
         //Consultar color
         vehiculoView.setSmsColor(colorDao.consultarColor(vehiculoView.getSmsColor()).get(0));
-        
+
         vehDao.modificarVehiculo(vehiculoView);//Se modifica el vehiculo
 
         //Consultamos el vehiculo recien modificado       
@@ -281,13 +277,16 @@ public class VehiculoBean {
         estadoVehiculoView = new SmsEstadovehiculo();
 
         //Actualizamos la lista que muestra los vehiculos registrados en el sistema
-        vehiculosListView = vehDao.mostrarVehiculo();       
+        vehiculosListView = vehDao.mostrarVehiculo();
     }
 
     public void eliminar() {
         //Eliminamos el vehiculo seleccionado
         vehDao.eliminarVehiculo(vehiculoView);
         vehiculoView = new SmsVehiculo();//Limpiamos el objeto que contenia el vehiculo a eliminar
+        operacion = 0;
+        habilitarCancelar = true;
+        nombre = "Registrar Vehiculo";
         //Recargamos la lista de vehiculos
         vehiculosListView = vehDao.mostrarVehiculo();
     }
@@ -337,6 +336,7 @@ public class VehiculoBean {
         estadoVehiculoView = new SmsEstadovehiculo();
         estadoArchivo1 = "Foto sin subir";
         estadoArchivo2 = "Foto sin subir";
+        operacion = 0;
 
         //Reiniciamos los objetos
         habilitarCancelar = true;
@@ -432,13 +432,13 @@ public class VehiculoBean {
         vehiculosListView = vehDao.consultarVehiculosCiudad(vehiculoView.getSmsCiudad());
         return vehiculosListView;
     }
-    
-    public List<String> consultarVehiculosSegunProveedor(SmsProveedor proveedor){
+
+    public List<String> consultarVehiculosSegunProveedor(SmsProveedor proveedor) {
         vehiculosListView = new ArrayList<>();
         placasVehiculos = new ArrayList<>();
         vehiculosListView = vehDao.consultarVehiculosSegunProveedor(proveedor);
-            for (int i = 0; i < vehiculosListView.size(); i++) {
-                placasVehiculos.add(vehiculosListView.get(i).getVehPlaca());
+        for (int i = 0; i < vehiculosListView.size(); i++) {
+            placasVehiculos.add(vehiculosListView.get(i).getVehPlaca());
         }
         return placasVehiculos;
     }
@@ -483,20 +483,19 @@ public class VehiculoBean {
         vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada);
         return vehiculosListView;
     }
-    
-    public void asociarVehiculo(SmsEmpleado empleado){
+
+    public void asociarVehiculo(SmsEmpleado empleado) {
         //Consultamos objetos
         vehiculoView = vehDao.consultarVehiculo(vehiculoView).get(0);
         IEmpleadoDao empleadoDao = new ImpEmpleadoDao();
         SmsEmpleado empleadoView = empleadoDao.consultarEmpleado(empleado.getSmsUsuario()).get(0);
-        
-        
+
         //asociamos vehiculo y conductor
         vehiculoView.getSmsEmpleados().add(empleadoView);
         empleadoView.getSmsVehiculos().add(vehiculoView);
-        
+
         vehDao.modificarVehiculo(vehiculoView);
-        
+
         vehiculoView = new SmsVehiculo();
     }
 }

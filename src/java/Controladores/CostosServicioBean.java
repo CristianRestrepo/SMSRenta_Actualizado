@@ -47,13 +47,14 @@ public class CostosServicioBean implements Serializable {
     private String buscar;
 
     private boolean habilitar;
+
     public CostosServicioBean() {
 
         costoView = new SmsCostosservicios();
         ciudadView = new SmsCiudad();
         lugarInicioView = new SmsLugares();
         lugsrDestinoView = new SmsLugares();
-        
+
         costosListView = new ArrayList<>();
         lugarDao = new ImpLugarDao();
 
@@ -64,7 +65,7 @@ public class CostosServicioBean implements Serializable {
         catDao = new ImpCategoriaDao();
         serDao = new ImpServicioDao();
         cosDao = new ImpCostosServiciosDao();
-        
+
         habilitar = false;
     }
 
@@ -129,6 +130,7 @@ public class CostosServicioBean implements Serializable {
     public void setHabilitar(boolean habilitar) {
         this.habilitar = habilitar;
     }
+
     public SmsLugares getLugarInicioView() {
 
         return lugarInicioView;
@@ -146,8 +148,6 @@ public class CostosServicioBean implements Serializable {
         this.lugsrDestinoView = lugsrDestinoView;
     }
 
-    
-
     public void registrar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
         costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
@@ -164,16 +164,17 @@ public class CostosServicioBean implements Serializable {
 
         //Limpiamos objetos
         costoView = new SmsCostosservicios();
+        ciudadView = new SmsCiudad();
     }
-    
-    public void habilitarListas(String valor){
-        
-        if(!valor.isEmpty()){
-        habilitar = true;
-        }else{
-        habilitar = false;
+
+    public void habilitarListas(String valor) {
+
+        if (!valor.isEmpty()) {
+            habilitar = true;
+        } else {
+            habilitar = false;
         }
-    
+
     }
 
     public void modificar() {
@@ -181,16 +182,17 @@ public class CostosServicioBean implements Serializable {
         costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
         costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()).get(0));
 
-        if (costoView.getSmsLugaresByIdLugarInicio().getLugarNombre() != null && costoView.getSmsLugaresByIdLugarDestino().getLugarNombre() != null) {
+        if (costoView.getSmsLugaresByIdLugarInicio() != null && costoView.getSmsLugaresByIdLugarDestino() != null) {
             costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarInicio()).get(0));
             costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarDestino()).get(0));
         }
-        
+
         cosDao.modificarCostoServicio(costoView);//Modificamos el costo   
         costosListView = cosDao.consultarCostos();//Recargamos la lista de costos
 
         //Limpiamos objetos
         costoView = new SmsCostosservicios();
+        ciudadView = new SmsCiudad();
     }
 
     public void filtrar() {
@@ -231,9 +233,12 @@ public class CostosServicioBean implements Serializable {
         estado = i;
         if (estado == 1) {
             nombre = "Modificar Costo Servicio";
-            ciudadView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
-            lugarInicioView = costoView.getSmsLugaresByIdLugarInicio();
-            lugsrDestinoView = costoView.getSmsLugaresByIdLugarDestino();
+            if (costoView.getSmsLugaresByIdLugarInicio() != null) {
+                ciudadView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
+                lugarInicioView = costoView.getSmsLugaresByIdLugarInicio();
+                lugsrDestinoView = costoView.getSmsLugaresByIdLugarDestino();
+
+            }
         }
     }
 

@@ -574,5 +574,12 @@
             <to-view-id>/vistas/Cliente/reservas/CReservacion.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/vistas/AdminS/reservas/SReservacion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>RegresarAdminSReservacion</from-outcome>
+            <to-view-id>/vistas/AdminS/reservas/SReservacion.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
     
 </faces-config>

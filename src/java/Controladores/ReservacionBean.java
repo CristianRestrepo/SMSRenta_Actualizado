@@ -58,14 +58,14 @@ import org.primefaces.model.ScheduleModel;
  */
 public class ReservacionBean implements Serializable {
 
-    private List<SmsReservacion> reservacionesListView;   
+    private List<SmsReservacion> reservacionesListView;
     private List<SmsVehiculo> vehiculosListView;
     private List<SmsEmpleado> empleadoListView;
     private SmsMercado mercadoSeleccionado;
 
     private SmsReservacion reservaView;
     private SmsReservacion modReservacionView;
-    
+
     private SmsCostosservicios costoServicioView;
     private SmsCategoria categoriaView;
     private SmsEstado estadoView;
@@ -73,10 +73,12 @@ public class ReservacionBean implements Serializable {
 
     private SmsUsuario sesion; //objeto donde guardaremos los datos del usuario logueado
 
-    private String HoraInicio;
-    private String HoraEntrega;
-    private String MinutosInicio;
-    private String MinutosEntrega;
+    private String horaInicio;
+    private String horaEntrega;
+    private String minutosInicio;
+    private String minutosEntrega;
+    private String fechaInicio;
+    private String fechaEntrega;
 
     private boolean skip = false;//Controla la transicion entre las pestañas del panel de reserva
     //Controlan la seleccion de los vehiculos y los empleados
@@ -110,7 +112,6 @@ public class ReservacionBean implements Serializable {
     IVehiculoDao vehiculoDao;
     IServicioDao servicioDao;
     ICostosServiciosDao costoDao;
-
 
     public ReservacionBean() {
 
@@ -150,7 +151,7 @@ public class ReservacionBean implements Serializable {
         vehiculoDao = new ImpVehiculoDao();
 
         mercadoSeleccionado = new SmsMercado();
-        categoriaView = new SmsCategoria();       
+        categoriaView = new SmsCategoria();
     }
 
     @PostConstruct
@@ -174,19 +175,35 @@ public class ReservacionBean implements Serializable {
     }
 
     public String getHoraInicio() {
-        return HoraInicio;
+        return horaInicio;
     }
 
-    public void setHoraInicio(String HoraInicio) {
-        this.HoraInicio = HoraInicio;
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
     public String getHoraEntrega() {
-        return HoraEntrega;
+        return horaEntrega;
     }
 
-    public void setHoraEntrega(String HoraEntrega) {
-        this.HoraEntrega = HoraEntrega;
+    public void setHoraEntrega(String horaEntrega) {
+        this.horaEntrega = horaEntrega;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(String fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public boolean isSelecVeh() {
@@ -246,19 +263,19 @@ public class ReservacionBean implements Serializable {
     }
 
     public String getMinutosInicio() {
-        return MinutosInicio;
+        return minutosInicio;
     }
 
-    public void setMinutosInicio(String MinutosInicio) {
-        this.MinutosInicio = MinutosInicio;
+    public void setMinutosInicio(String minutosInicio) {
+        this.minutosInicio = minutosInicio;
     }
 
     public String getMinutosEntrega() {
-        return MinutosEntrega;
+        return minutosEntrega;
     }
 
-    public void setMinutosEntrega(String MinutosEntrega) {
-        this.MinutosEntrega = MinutosEntrega;
+    public void setMinutosEntrega(String minutosEntrega) {
+        this.minutosEntrega = minutosEntrega;
     }
 
     public SmsMercado getMercadoSeleccionado() {
@@ -292,7 +309,7 @@ public class ReservacionBean implements Serializable {
     public void setCategoriaView(SmsCategoria categoriaView) {
         this.categoriaView = categoriaView;
     }
-      
+
     public SmsEmpleado getEmpleadoView() {
         return empleadoView;
     }
@@ -309,7 +326,6 @@ public class ReservacionBean implements Serializable {
         this.modReservacionView = modReservacionView;
     }
 
-    
     //Metodos    
     //CRUD
     public String registrarReservacion() throws JRException, IOException {
@@ -321,7 +337,7 @@ public class ReservacionBean implements Serializable {
         resDao.registrarReservacion(reservaView);
 
         //Enviamos mensajes al administrador del sistema, el cliente y el conductor
-        if (reservaView.getSmsEmpleado().getIdEmpleado() != null) {
+        if (reservaView.getSmsEmpleado() != null) {
             emailController.sendEmailAdministrador(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
             emailController.sendEmailCliente(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
             emailController.sendEmailConductor(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
@@ -333,28 +349,28 @@ public class ReservacionBean implements Serializable {
         consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
 
-        
         //Habilitamos la seleccion de vehiculos y conductores
         SelecVeh = false;
         SelecCon = false;
 
-        HoraInicio = "";
-        HoraEntrega = "";
-        MinutosEntrega = "";
-        MinutosInicio = "";
-        
-        String ruta = "";   
-                
-        
+        horaInicio = "";
+        horaEntrega = "";
+        minutosEntrega = "";
+        minutosInicio = "";
+
+        String ruta = "";
+
         if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")) {
             ruta = "regresarAdminPReservacion";
-        }else if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")){
+        } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {
             ruta = "RegresarClienteReservacion";
-        }                
-             
+        } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Secundario")) {
+            ruta = "RegresarAdminSReservacion";
+        }
+
         //Limpieza de objetos         
-        reservaView = new SmsReservacion();   
-        
+        reservaView = new SmsReservacion();
+
         return ruta;
     }
 
@@ -386,7 +402,7 @@ public class ReservacionBean implements Serializable {
 
         consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
-        
+
         modReservacionView = new SmsReservacion();
         return Ruta;
     }
@@ -400,19 +416,40 @@ public class ReservacionBean implements Serializable {
         } else {
 
             switch (event.getNewStep()) {
+                case "Agenda":
+                    horaInicio = "";
+                    horaEntrega = "";
+                    minutosEntrega = "";
+                    minutosInicio = "";
+                    break;
                 case "Vehiculo":
-                    reservaView.setSmsVehiculo(new SmsVehiculo());
                     SelecVeh = false;
+
+                    if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
+                        reservaView.setSmsUsuario(sesion);
+                    } else {
+                        reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
+                    }
+
+                    reservaView.setSmsVehiculo(new SmsVehiculo());
                     reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));
 
-                    SimpleDateFormat sdft = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat formatTime;
+                    SimpleDateFormat formatDate;
+                    formatTime = new SimpleDateFormat("HH:mm:ss");
+                    formatDate = new SimpleDateFormat("yyyy-MM-dd");
 
                     try {
-                        reservaView.setReservacionHoraInicio(sdft.parse(HoraInicio + ":" + MinutosInicio));
-                        reservaView.setReservacionHoraLlegada(sdft.parse(HoraEntrega + ":" + MinutosEntrega));
+                        reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                        reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
                     } catch (ParseException pe) {
                         pe.getMessage();
                     }
+
+                    fechaInicio = formatDate.format(reservaView.getReservacionFechaInicio());
+                    fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
+                    horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                    horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
 
                     reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
                     reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
@@ -423,36 +460,24 @@ public class ReservacionBean implements Serializable {
                     } else {
                         vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView);
                     }
-
                     break;
                 case "Conductor":
-                    reservaView.setSmsEmpleado(new SmsEmpleado());
+                    if (reservaView.getSmsServicios().getServicioConductor() == 1) {
+                        reservaView.setSmsEmpleado(new SmsEmpleado());
+                    }
                     SelecCon = false;
                     if (resDao.mostrarReservaciones().isEmpty()) {
                         empleadoListView = empleadoDao.consultarEmpleadosSegunProveedor(reservaView.getSmsVehiculo().getSmsProveedor().getProveedorRazonSocial());
                     } else {
                         empleadoListView = empleadoController.consultarEmpleadosDisponibles(reservaView);
                     }
-
+                    reservaView.setReservacionCosto(calcularCostoReservacion(reservaView));
                     break;
                 case "Confirmacion":
-
-                    if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
-                        reservaView.setSmsUsuario(sesion);
-                    } else {
-                        reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
-                    }
 
                     if (empleadoView.getIdEmpleado() != null) {
                         reservaView.setSmsEmpleado(empleadoView);
                     }
-
-                    SimpleDateFormat formatTime;
-                    formatTime = new SimpleDateFormat("HH:mm:ss");
-                    HoraInicio = formatTime.format(reservaView.getReservacionHoraInicio());
-                    HoraEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
-
-                    reservaView.setReservacionCosto(calcularCostoReservacion(reservaView));
                     break;
             }
             if (event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
@@ -673,19 +698,18 @@ public class ReservacionBean implements Serializable {
             // calcular la diferencia en minutos
             diff = milis2 - milis1;
             diffMinutes = diff / (60 * 1000);
-            
+
             diffDays = diffHourDifferentDay / 24;
 
             diffHours = diffHourDifferentDay - (diffDays * 24);
-            
+
             // calcular la diferencia en horas
-            if(reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("30 minutos")){
-                costo = (((int)diffMinutes)/30) * costoServicioView.getCostoServicioPrecio();
-            }else if(reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("60 minutos")){
+            if (reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("30 minutos")) {
+                costo = (((int) diffMinutes) / 30) * costoServicioView.getCostoServicioPrecio();
+            } else if (reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("60 minutos")) {
                 costo = ((int) diffHours) * costoServicioView.getCostoServicioPrecio();
             }
-            
-            
+
         } else if (reservaView.getSmsServicios().getServicioDuracion() < 7 && reservaView.getSmsServicios().getServicioDuracion() >= 1) {//Renta por dias
 
             milis1 = calFechaInicio.getTimeInMillis();
@@ -783,8 +807,5 @@ public class ReservacionBean implements Serializable {
         }
         return costo;
     }
-    
+
 }
-
-
-
