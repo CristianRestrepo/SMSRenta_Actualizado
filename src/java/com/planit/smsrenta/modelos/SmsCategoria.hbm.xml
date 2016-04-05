@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsCategoria" optimistic-lock="version" table="sms_categoria">
+    <id name="idCategoria" type="java.lang.Integer">
+      <column name="idCategoria"/>
+      <generator class="identity"/>
+    </id>
+    <property name="categoriaNombre" type="string">
+      <column length="100" name="Categoria_nombre" not-null="true"/>
+    </property>
+    <property name="categoriaDescripcion" type="string">
+      <column length="65535" name="Categoria_descripcion"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="smsCostosservicioses" table="sms_costosservicios">
+      <key>
+        <column name="idCategoria" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsCostosservicios"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsVehiculos" table="sms_vehiculo">
+      <key>
+        <column name="idCategoria" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsVehiculo"/>
+    </set>
+    <set cascade="save-update" fetch="select" inverse="true" name="smsMercados" table="sms_mercado_sms_categoria">
+      <key>
+        <column name="idCategoria" not-null="true"/>
+      </key>
+      <many-to-many class="com.planit.smsrenta.modelos.SmsMercado">
+        <column name="idMercado" not-null="true"/>
+      </many-to-many>
+    </set>
+  </class>
+</hibernate-mapping>

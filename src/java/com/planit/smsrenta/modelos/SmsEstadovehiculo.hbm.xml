@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsEstadovehiculo" optimistic-lock="version" table="sms_estadovehiculo">
+    <id name="idEstadoVeh" type="java.lang.Integer">
+      <column name="idEstadoVeh"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsVehiculo" fetch="select" name="smsVehiculo">
+      <column name="idVehiculo" not-null="true"/>
+    </many-to-one>
+    <property name="estadoVehFrenos" type="string">
+      <column length="45" name="EstadoVeh_frenos"/>
+    </property>
+    <property name="estadoVehMotor" type="string">
+      <column length="45" name="EstadoVeh_motor"/>
+    </property>
+    <property name="estadoVehSilleteria" type="string">
+      <column length="45" name="EstadoVeh_silleteria"/>
+    </property>
+    <property name="estadoVehPintura" type="string">
+      <column length="45" name="EstadoVeh_pintura"/>
+    </property>
+    <property name="estadoVehKilometraje" type="string">
+      <column length="45" name="EstadoVeh_kilometraje"/>
+    </property>
+    <property name="fechaEstadoVehiculo" type="date">
+      <column length="0" name="Fecha_EstadoVehiculo"/>
+    </property>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsReservacion" optimistic-lock="version" table="sms_reservacion">
+    <id name="idReservacion" type="java.lang.Integer">
+      <column name="idReservacion"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsCategoriasServicio" fetch="select" name="smsCategoriasServicio">
+      <column name="idCategoria_Servicio" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsCiudad" fetch="select" name="smsCiudadByIdCiudadDestino">
+      <column name="idCiudad_destino"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsCiudad" fetch="select" name="smsCiudadByIdCiudadInicio">
+      <column name="idCiudad_inicio" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsEmpleado" fetch="select" name="smsEmpleado">
+      <column name="idEmpleado"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsEstado" fetch="select" name="smsEstado">
+      <column name="idEstado" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsServicios" fetch="select" name="smsServicios">
+      <column name="idServicio" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsUsuario" fetch="select" name="smsUsuario">
+      <column name="idCliente" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsVehiculo" fetch="select" name="smsVehiculo">
+      <column name="idVehiculo" not-null="true"/>
+    </many-to-one>
+    <property name="reservacionLugarLlegada" type="string">
+      <column length="100" name="Reservacion_lugar_llegada" not-null="true"/>
+    </property>
+    <property name="reservacionLugarDestino" type="string">
+      <column length="100" name="Reservacion_lugar_destino" not-null="true"/>
+    </property>
+    <property name="reservacionNotas" type="string">
+      <column length="65535" name="Reservacion_notas"/>
+    </property>
+    <property name="reservacionFechaInicio" type="date">
+      <column length="0" name="Reservacion_fechaInicio" not-null="true"/>
+    </property>
+    <property name="reservacionFechaLlegada" type="date">
+      <column length="0" name="Reservacion_fechaLlegada"/>
+    </property>
+    <property name="reservacionHoraInicio" type="time">
+      <column length="0" name="Reservacion_horaInicio" not-null="true"/>
+    </property>
+    <property name="reservacionHoraLlegada" type="time">
+      <column length="0" name="Reservacion_horaLlegada"/>
+    </property>
+    <property name="reservacionCosto" type="java.lang.Integer">
+      <column name="Reservacion_Costo"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="smsCalificacions" table="sms_calificacion">
+      <key>
+        <column name="idReservacion" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsCalificacion"/>
+    </set>
+  </class>
+</hibernate-mapping>

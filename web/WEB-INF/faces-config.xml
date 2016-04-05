@@ -5,146 +5,154 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <managed-bean>
         <managed-bean-name>usuarioBean</managed-bean-name>
-        <managed-bean-class>Controladores.UsuarioBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.UsuarioBean</managed-bean-class>        
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>marcaBean</managed-bean-name>
-        <managed-bean-class>Controladores.MarcaBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.MarcaBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>costosServicioBean</managed-bean-name>
-        <managed-bean-class>Controladores.CostosServicioBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.CostosServicioBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>clienteBean</managed-bean-name>
-        <managed-bean-class>Controladores.ClienteBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.ClienteBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>proveedorBean</managed-bean-name>
-        <managed-bean-class>Controladores.ProveedorBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.ProveedorBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>empleadoBean</managed-bean-name>
-        <managed-bean-class>Controladores.EmpleadoBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.EmpleadoBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>rolBean</managed-bean-name>
-        <managed-bean-class>Controladores.RolBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.RolBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>permisosBean</managed-bean-name>
-        <managed-bean-class>Controladores.PermisosBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.PermisosBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>ciudadBean</managed-bean-name>
-        <managed-bean-class>Controladores.CiudadBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.CiudadBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>vehiculoBean</managed-bean-name>
-        <managed-bean-class>Controladores.VehiculoBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.VehiculoBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>referenciaBean</managed-bean-name>
-        <managed-bean-class>Controladores.ReferenciaBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.ReferenciaBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>categoriaBean</managed-bean-name>
-        <managed-bean-class>Controladores.CategoriaBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.CategoriaBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>calificacionBean</managed-bean-name>
-        <managed-bean-class>Controladores.CalificacionBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.CalificacionBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>reservacionBean</managed-bean-name>
-        <managed-bean-class>Controladores.ReservacionBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.ReservacionBean</managed-bean-class>        
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>serviciosBean</managed-bean-name>
-        <managed-bean-class>Controladores.ServiciosBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.ServiciosBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>paisBean</managed-bean-name>
-        <managed-bean-class>Controladores.PaisBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.PaisBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>pruebaBean</managed-bean-name>
-        <managed-bean-class>Controladores.PruebaBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.PruebaBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>pathBean</managed-bean-name>
-        <managed-bean-class>Controladores.PathBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.PathBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>carouselBean</managed-bean-name>
-        <managed-bean-class>Controladores.carouselBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.carouselBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>lugarBean</managed-bean-name>
-        <managed-bean-class>Controladores.LugarBean</managed-bean-class>    
+        <managed-bean-class>com.planit.smsrenta.controladores.LugarBean</managed-bean-class>        
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>administradorBean</managed-bean-name>
-        <managed-bean-class>Controladores.AdministradorBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.AdministradorBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>mercadoBean</managed-bean-name>
-        <managed-bean-class>Controladores.MercadoBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.MercadoBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>categoriasServiciosBean</managed-bean-name>
-        <managed-bean-class>Controladores.CategoriasServiciosBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.CategoriasServiciosBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>departamentoBean</managed-bean-name>
-        <managed-bean-class>Controladores.DepartamentoBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.DepartamentoBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>tipoLugarBean</managed-bean-name>
-        <managed-bean-class>Controladores.TipoLugarBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.TipoLugarBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>facturaBean</managed-bean-name>
-        <managed-bean-class>Controladores.FacturaBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.FacturaBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>colorBean</managed-bean-name>
-        <managed-bean-class>Controladores.ColorBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.ColorBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>nacionalidadBean</managed-bean-name>
-        <managed-bean-class>Controladores.NacionalidadBean</managed-bean-class>
+        <managed-bean-class>com.planit.smsrenta.controladores.NacionalidadBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>     
-    
-    
+    <managed-bean>
+        <managed-bean-name>sesionBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.SesionBean</managed-bean-class>    
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>sesionActivaBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.SesionActivaBean</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>

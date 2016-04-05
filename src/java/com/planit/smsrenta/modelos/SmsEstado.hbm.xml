@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsEstado" optimistic-lock="version" table="sms_estado">
+    <id name="idEstado" type="java.lang.Integer">
+      <column name="idEstado"/>
+      <generator class="identity"/>
+    </id>
+    <property name="estadoNombre" type="string">
+      <column length="45" name="estado_nombre" not-null="true"/>
+    </property>
+    <property name="estadoDescripcion" type="string">
+      <column length="65535" name="Estado_descripcion"/>
+    </property>
+    <set fetch="join" inverse="true" name="smsReservacions" table="sms_reservacion">
+      <key>
+        <column name="idEstado" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsReservacion"/>
+    </set>
+    <set fetch="join" inverse="true" name="smsVehiculos" table="sms_vehiculo">
+      <key>
+        <column name="idEstado" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsVehiculo"/>
+    </set>
+    <set fetch="join" inverse="true" name="smsEmpleados" table="sms_empleado">
+      <key>
+        <column name="idEstado" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsEmpleado"/>
+    </set>
+  </class>
+</hibernate-mapping>

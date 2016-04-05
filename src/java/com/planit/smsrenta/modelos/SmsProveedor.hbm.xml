@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsProveedor" optimistic-lock="version" table="sms_proveedor">
+    <id name="idProveedor" type="java.lang.Integer">
+      <column name="idProveedor"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsUsuario" fetch="join" name="smsUsuario">
+      <column name="idUsuario" not-null="true"/>
+    </many-to-one>
+    <property name="proveedorValorGanancia" type="int">
+      <column name="Proveedor_ValorGanancia" not-null="true"/>
+    </property>
+    <property name="proveedorRazonSocial" type="string">
+      <column length="100" name="Proveedor_razonSocial"/>
+    </property>
+    <property name="proveedorNit" type="string">
+      <column length="45" name="Proveedor_nit"/>
+    </property>
+    <set cascade="save-update" fetch="select" inverse="true" name="smsMercados" table="sms_mercado_sms_proveedor">
+      <key>
+        <column name="idProveedor" not-null="true"/>
+      </key>
+      <many-to-many class="com.planit.smsrenta.modelos.SmsMercado">
+        <column name="idMercado" not-null="true"/>
+      </many-to-many>
+    </set>
+    <set fetch="join" inverse="true" name="smsVehiculos" table="sms_vehiculo">
+      <key>
+        <column name="idProveedor" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsVehiculo"/>
+    </set>
+    <set fetch="join" inverse="true" name="smsEmpleados" table="sms_empleado">
+      <key>
+        <column name="idProveedor" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsEmpleado"/>
+    </set>
+  </class>
+</hibernate-mapping>

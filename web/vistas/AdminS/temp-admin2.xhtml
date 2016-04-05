@@ -67,15 +67,15 @@
                                 <!-- User Account: style can be found in dropdown.less -->
                                 <li class="dropdown user user-menu">
                                     <a href="#" class="dropdown-toggle nav-sms" data-toggle="dropdown">
-                                        <p:graphicImage value="#{usuarioBean.usuario.usuarioFotoRuta}" class="user-image" alt="User Image"/>
-                                        <span class="hidden-xs">#{usuarioBean.usuario.usuarioNombre}</span>
+                                        <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="user-image" alt="User Image"/>
+                                        <span class="hidden-xs">#{sesionActivaBean.usuario.usuarioNombre}</span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- User image -->
                                         <li class="user-header">
-                                            <p:graphicImage value="#{usuarioBean.usuario.usuarioFotoRuta}" class="img-circle" alt="User Image"/>
-                                            <p>#{usuarioBean.usuario.usuarioNombre}<br/>
-                                                <small>#{usuarioBean.usuario.smsRol.rolNombre}</small>
+                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle" alt="User Image"/>
+                                            <p>#{sesionActivaBean.usuario.usuarioNombre}<br/>
+                                                <small>#{sesionActivaBean.usuario.smsRol.rolNombre}</small>
                                             </p>
 
                                         </li>
@@ -89,7 +89,7 @@
                                             </div>
                                             <div class="pull-right">
                                                 <h:form>
-                                                    <p:commandButton value="Cerrar Sesion" action="#{usuarioBean.cerrarSesion()}" class="btn btn-default btn-block "/>
+                                                    <p:commandButton value="Cerrar Sesion" action="#{sesionActivaBean.cerrarSession()}" class="btn btn-default btn-block "/>
                                                 </h:form> 
                                             </div>
                                         </li>
@@ -112,11 +112,11 @@
                                     <!-- Sidebar user panel -->
                                     <div class="user-panel">
                                         <div class="pull-left image">
-                                            <p:graphicImage value="#{usuarioBean.usuario.usuarioFotoRuta}" class="img-circle img-altura" alt="User Image"/>
+                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle img-altura" alt="User Image"/>
                                         </div>
                                         <div class="pull-left info">
-                                            <p>#{usuarioBean.usuario.usuarioNombre}</p>
-                                            <p>#{usuarioBean.usuario.smsRol.rolNombre}</p>
+                                            <p>#{sesionActivaBean.usuario.usuarioNombre}</p>
+                                            <p>#{sesionActivaBean.usuario.smsRol.rolNombre}</p>
                                         </div>
                                     </div>
 

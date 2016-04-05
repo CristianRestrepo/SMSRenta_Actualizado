@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsUsuario" optimistic-lock="version" table="sms_usuario">
+    <id name="idUsuario" type="java.lang.Integer">
+      <column name="idUsuario"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsCiudad" fetch="join" name="smsCiudad">
+      <column name="idCiudad" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsRol" fetch="join" name="smsRol">
+      <column name="idRol" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsNacionalidad" fetch="join" name="smsNacionalidad">
+      <column name="idNacionalidad" not-null="true"/>
+    </many-to-one>
+    <property name="usuarioNombre" type="string">
+      <column length="100" name="Usuario_nombre" not-null="true"/>
+    </property>
+    <property name="usuarioCc" type="string">
+      <column length="45" name="Usuario_CC"/>
+    </property>
+    <property name="usuarioPasaporte" type="string">
+      <column length="45" name="Usuario_pasaporte"/>
+    </property>
+    <property name="usuarioTelefono" type="string">
+      <column length="45" name="Usuario_telefono"/>
+    </property>
+    <property name="usuarioEmail" type="string">
+      <column length="100" name="Usuario_email" not-null="true"/>
+    </property>
+    <property name="usuarioPassword" type="string">
+      <column length="45" name="Usuario_password"/>
+    </property>
+    <property name="usuarioRememberToken" type="string">
+      <column length="45" name="Usuario_remember_token"/>
+    </property>
+    <property name="usuarioEstadoUsuario" type="java.lang.Integer">
+      <column name="Usuario_EstadoUsuario"/>
+    </property>
+    <property name="usuarioFotoNombre" type="string">
+      <column length="65535" name="Usuario_foto_nombre"/>
+    </property>
+    <property name="usuarioFotoRuta" type="string">
+      <column length="65535" name="Usuario_foto_ruta"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="smsEmpleados" table="sms_empleado">
+      <key>
+        <column name="idUsuario" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsEmpleado"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsProveedors" table="sms_proveedor">
+      <key>
+        <column name="idUsuario" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsProveedor"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsReservacions" table="sms_reservacion">
+      <key>
+        <column name="idCliente" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsReservacion"/>
+    </set>
+  </class>
+</hibernate-mapping>

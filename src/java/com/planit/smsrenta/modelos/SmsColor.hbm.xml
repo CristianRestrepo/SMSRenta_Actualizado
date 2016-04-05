@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsColor" optimistic-lock="version" table="sms_color">
+    <id name="idColor" type="java.lang.Integer">
+      <column name="idColor"/>
+      <generator class="identity"/>
+    </id>
+    <property name="colorNombre" type="string">
+      <column length="45" name="Color_nombre" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="smsVehiculos" table="sms_vehiculo">
+      <key>
+        <column name="idColor" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsVehiculo"/>
+    </set>
+  </class>
+</hibernate-mapping>

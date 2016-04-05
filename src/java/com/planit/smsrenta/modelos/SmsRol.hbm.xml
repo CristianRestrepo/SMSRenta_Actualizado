@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsRol" optimistic-lock="version" table="sms_rol">
+    <id name="idRol" type="java.lang.Integer">
+      <column name="idRol"/>
+      <generator class="identity"/>
+    </id>
+    <property name="rolNombre" type="string">
+      <column length="45" name="Rol_nombre" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="false" lazy="true" name="smsPermisoses" table="sms_rol_permisos">
+      <key>
+        <column name="idRol" not-null="true"/>
+      </key>
+      <many-to-many class="com.planit.smsrenta.modelos.SmsPermisos">
+        <column name="idPermisos" not-null="true"/>
+      </many-to-many>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsUsuarios" table="sms_usuario">
+      <key>
+        <column name="idRol" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsUsuario"/>
+    </set>
+  </class>
+</hibernate-mapping>

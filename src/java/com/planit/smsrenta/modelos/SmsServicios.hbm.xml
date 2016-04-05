@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsServicios" optimistic-lock="version" table="sms_servicios">
+    <id name="idServicio" type="java.lang.Integer">
+      <column name="idServicio"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsCategoriasServicio" fetch="select" name="smsCategoriasServicio">
+      <column name="idCategoria_Servicio" not-null="true"/>
+    </many-to-one>
+    <property name="servicioNombre" type="string">
+      <column length="45" name="Servicio_nombre" not-null="true"/>
+    </property>
+    <property name="servicioDescripcion" type="string">
+      <column length="65535" name="Servicio_descripcion"/>
+    </property>
+    <property name="servicioDuracion" type="java.lang.Integer">
+      <column name="Servicio_duracion" not-null="true"/>
+    </property>
+    <property name="servicioConductor" type="java.lang.Integer">
+      <column name="Servicio_conductor" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="smsCostosservicioses" table="sms_costosservicios">
+      <key>
+        <column name="idServicio" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsCostosservicios"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsReservacions" table="sms_reservacion">
+      <key>
+        <column name="idServicio" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsReservacion"/>
+    </set>
+  </class>
+</hibernate-mapping>

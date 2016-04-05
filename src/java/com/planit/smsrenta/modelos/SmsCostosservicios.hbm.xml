@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsCostosservicios" optimistic-lock="version" table="sms_costosservicios">
+    <id name="idCostosServicio" type="java.lang.Integer">
+      <column name="idCostosServicio"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsCategoria" fetch="select" name="smsCategoria">
+      <column name="idCategoria" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsLugares" fetch="select" name="smsLugaresByIdLugarInicio">
+      <column name="idLugar_inicio"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsLugares" fetch="select" name="smsLugaresByIdLugarDestino">
+      <column name="idLugar_destino"/>
+    </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsServicios" fetch="select" name="smsServicios">
+      <column name="idServicio" not-null="true"/>
+    </many-to-one>
+    <property name="costoServicioPrecio" type="int">
+      <column name="CostoServicio_precio" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

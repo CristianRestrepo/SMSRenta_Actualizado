@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsPais" optimistic-lock="version" table="sms_pais">
+    <id name="idPais" type="java.lang.Integer">
+      <column name="idPais"/>
+      <generator class="identity"/>
+    </id>
+    <property name="paisNombre" type="string">
+      <column length="50" name="Pais_nombre" not-null="true"/>
+    </property>
+    <set fetch="join" inverse="true" name="smsDepartamentos" table="sms_departamento">
+      <key>
+        <column name="idPais" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsDepartamento"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsCategoriasServicio" optimistic-lock="version" table="sms_categorias_servicio">
+    <id name="idCategoriaServicio" type="java.lang.Integer">
+      <column name="idCategoria_Servicio"/>
+      <generator class="identity"/>
+    </id>
+    <property name="catNombre" type="string">
+      <column length="45" name="Cat_nombre" not-null="true"/>
+    </property>
+    <property name="catDescripcion" type="string">
+      <column length="45" name="Cat_descripcion"/>
+    </property>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsMercado" fetch="join" name="smsMercado">
+      <column name="idMercado" not-null="true"/>
+    </many-to-one>
+    <set fetch="select" inverse="true" lazy="true" name="smsServicioses" table="sms_servicios">
+      <key>
+        <column name="idCategoria_Servicio" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsServicios"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsEmpleados" table="sms_empleado_sms_categorias_servicio">
+      <key>
+        <column name="idCategoria_Servicio" not-null="true"/>
+      </key>
+      <many-to-many class="com.planit.smsrenta.modelos.SmsEmpleado">
+        <column name="idEmpleado" not-null="true"/>
+      </many-to-many>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsVehiculos" table="sms_vehiculo_sms_categorias_servicio">
+      <key>
+        <column name="idCategoria_Servicio" not-null="true"/>
+      </key>
+      <many-to-many class="com.planit.smsrenta.modelos.SmsVehiculo">
+        <column name="idVehiculo" not-null="true"/>
+      </many-to-many>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsReservacions" table="sms_reservacion">
+      <key>
+        <column name="idCategoria_Servicio" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsReservacion"/>
+    </set>
+    <set fetch="select" inverse="false" lazy="true" name="smsLugares" table="sms_lugares_sms_categorias_servicio">
+      <key>
+        <column name="idCategoria_Servicio" not-null="true"/>
+      </key>
+      <many-to-many class="com.planit.smsrenta.modelos.SmsLugares">
+        <column name="idLugar" not-null="true"/>
+      </many-to-many>
+    </set>
+  </class>
+</hibernate-mapping>

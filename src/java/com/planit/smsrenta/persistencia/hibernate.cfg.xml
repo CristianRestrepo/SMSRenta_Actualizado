@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/smsrenta_actualizada</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+    <mapping resource="com/planit/smsrenta/modelos/SmsRol.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsPais.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsEstadovehiculo.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsEstado.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsPermisos.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsMarca.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsVehiculo.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsReferencia.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsCostosservicios.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsHojavida.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsDepartamento.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsMercado.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsReservacion.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsEmpleado.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsCiudad.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsCalificacion.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsLugares.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsTipoLugar.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsUsuario.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsServicios.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsCategoriasServicio.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsProveedor.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsCategoria.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsColor.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsNacionalidad.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsFactura.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

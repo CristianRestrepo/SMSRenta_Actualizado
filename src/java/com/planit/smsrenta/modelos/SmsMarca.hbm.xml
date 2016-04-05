@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-mar-2016 12:47:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsMarca" optimistic-lock="version" table="sms_marca">
+    <id name="idMarca" type="java.lang.Integer">
+      <column name="idMarca"/>
+      <generator class="identity"/>
+    </id>
+    <property name="marcaNombre" type="string">
+      <column length="45" name="Marca_nombre" not-null="true"/>
+    </property>
+    <property name="marcaFotoNombre" type="string">
+      <column length="65535" name="Marca_foto_nombre"/>
+    </property>
+    <property name="marcaFotoRuta" type="string">
+      <column length="65535" name="Marca_foto_ruta"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="smsReferencias" table="sms_referencia">
+      <key>
+        <column name="Referencia_idMarca" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsReferencia"/>
+    </set>
+  </class>
+</hibernate-mapping>
