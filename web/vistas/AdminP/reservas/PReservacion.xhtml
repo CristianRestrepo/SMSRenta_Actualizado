@@ -177,7 +177,7 @@
                                                 </h3>                                                                                     
                                                 <div class="form-group" style="width: 100%" align="center">                                              
                                                     <p:selectOneMenu style="width: 100%" value="#{reservacionBean.categoriaView.categoriaNombre}">                                                        
-                                                        <f:selectItems value="#{categoriaBean.nombresCategoriasListView}"/>
+                                                        <f:selectItems value="#{categoriaBean.CategoriasSegunMercado(reservacionBean.mercadoSeleccionado)}"/>
                                                         <p:ajax event="change" listener="#{reservacionBean.filtrar()}" process="@this" update="ScrollerVehiculos"/>
                                                     </p:selectOneMenu>
                                                 </div> 
@@ -222,7 +222,7 @@
                                                             <b:column col-lg="7" class="border-reserva">
                                                                 <!--cuerpo horizontal del div-->
                                                                 <h4 class="box-title text-marca-veh">
-                                                                    Marca Vehículo | referencia vehículo 
+                                                                    #{vehiculo.smsReferencia.smsMarca.marcaNombre} | #{vehiculo.smsReferencia.referenciaNombre} 
                                                                     <small> Categoría: #{vehiculo.smsCategoria.categoriaNombre}</small>
                                                                 </h4>
 

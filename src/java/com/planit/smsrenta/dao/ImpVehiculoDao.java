@@ -126,14 +126,15 @@ public class ImpVehiculoDao implements IVehiculoDao {
     }
 
     @Override
-    public List<SmsVehiculo> consultarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada) {
+    public List<SmsVehiculo> consultarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada, String mercado) {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
+            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria as categoria left join fetch vehiculo.smsCiudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor "
-                    + "where vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and "
+                    + "where categoria in(select categoria from SmsMercado as mercado left outer join mercado.smsCategorias as categoria where mercado.mercadoNombre = '" + mercado + "') and "
+                    + "vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and "
                     + "not exists(from SmsReservacion as reservacion where "
                     + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
                     + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "
@@ -193,14 +194,15 @@ public class ImpVehiculoDao implements IVehiculoDao {
     }
 
     @Override
-    public List<SmsVehiculo> filtrarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String categoria, String espacioInicio, String espacioLlegada) {
+    public List<SmsVehiculo> filtrarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String categoria, String espacioInicio, String espacioLlegada, String mercado) {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
+            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria as categoria left join fetch vehiculo.smsCiudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor "
-                    + "where vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and vehiculo.smsCategoria.categoriaNombre = '" + categoria + "' and "
+                    + "where categoria in(select categoria from SmsMercado as mercado left outer join mercado.smsCategorias as categoria where mercado.mercadoNombre = '" + mercado + "') and " 
+                    + "vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and categoria.categoriaNombre = '" + categoria + "' and "
                     + "not exists(from SmsReservacion as reservacion where "
                     + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
                     + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "

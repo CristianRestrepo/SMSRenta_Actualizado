@@ -203,6 +203,14 @@ public class SmsReservacion  implements java.io.Serializable {
     public void setSmsCalificacions(Set<SmsCalificacion> smsCalificacions) {
         this.smsCalificacions = smsCalificacions;
     }
+
+    public Set<SmsContrato> getSmsContratos() {
+        return smsContratos;
+    }
+
+    public void setSmsContratos(Set<SmsContrato> smsContratos) {
+        this.smsContratos = smsContratos;
+    }
     
     
 

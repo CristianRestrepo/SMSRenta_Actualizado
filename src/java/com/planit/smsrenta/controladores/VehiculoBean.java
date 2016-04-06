@@ -30,6 +30,7 @@ import com.planit.smsrenta.modelos.SmsCategoria;
 import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsEstadovehiculo;
+import com.planit.smsrenta.modelos.SmsMercado;
 import com.planit.smsrenta.modelos.SmsProveedor;
 import com.planit.smsrenta.modelos.SmsReservacion;
 import com.planit.smsrenta.modelos.SmsVehiculo;
@@ -394,10 +395,11 @@ public class VehiculoBean {
         }
     }
 
-    public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva) {
+    public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva, SmsMercado mercado) {
         vehiculosListView = new ArrayList<>();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
-
+        String mercadoSeleccionado = mercado.getMercadoNombre();
+                
         Calendar calInicio = Calendar.getInstance();
         calInicio.setTime(reserva.getReservacionHoraInicio());
         calInicio.add(Calendar.HOUR, -1);
@@ -422,7 +424,7 @@ public class VehiculoBean {
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
 
-        vehiculosListView = vehDao.consultarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, espacioinicio, espacioLlegada);
+        vehiculosListView = vehDao.consultarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, espacioinicio, espacioLlegada, mercadoSeleccionado);
         return vehiculosListView;
     }
 
@@ -451,10 +453,11 @@ public class VehiculoBean {
         return vehiculosListView;
     }
 
-    public List<SmsVehiculo> filtrarVehiculosDisponibles(SmsReservacion reserva, String cat) {
+    public List<SmsVehiculo> filtrarVehiculosDisponibles(SmsReservacion reserva, SmsCategoria cat, SmsMercado mercado) {
         vehiculosListView = new ArrayList<>();
-        String categoriaVeh = cat;
+        String categoriaVeh = cat.getCategoriaNombre();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
+        String mercadoSeleccionado = mercado.getMercadoNombre();
 
         Calendar calInicio = Calendar.getInstance();
         calInicio.setTime(reserva.getReservacionHoraInicio());
@@ -480,7 +483,7 @@ public class VehiculoBean {
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
 
-        vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada);
+        vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada, mercadoSeleccionado);
         return vehiculosListView;
     }
 

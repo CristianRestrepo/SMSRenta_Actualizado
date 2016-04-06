@@ -454,7 +454,7 @@ public class ReservacionBean implements Serializable {
                     if (resDao.mostrarReservaciones().isEmpty()) {
                         vehiculosListView = vehiculoDao.mostrarVehiculo();
                     } else {
-                        vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView);
+                        vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
                     }
                     break;
                 case "Conductor":
@@ -504,7 +504,7 @@ public class ReservacionBean implements Serializable {
                 vehiculosListView = vehiculoDao.consultarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio());
             } else {
                 vehiculosListView = new ArrayList<>();
-                vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView);
+                vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
             }
         } else {
             if (resDao.mostrarReservaciones().isEmpty()) {
@@ -512,7 +512,7 @@ public class ReservacionBean implements Serializable {
                 vehiculosListView = vehiculoDao.filtrarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio(), categoriaView.getCategoriaNombre());
             } else {
                 vehiculosListView = new ArrayList<>();
-                vehiculosListView = vehiculoController.filtrarVehiculosDisponibles(reservaView, categoriaView.getCategoriaNombre());
+                vehiculosListView = vehiculoController.filtrarVehiculosDisponibles(reservaView, categoriaView, mercadoSeleccionado);
             }
         }
     }
