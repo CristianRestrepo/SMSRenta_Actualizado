@@ -7,6 +7,9 @@
       <column name="idEmpleado"/>
       <generator class="identity"/>
     </id>
+    <property name="empleadoNumeroLicencia" type="string">
+      <column length="15" name="Empleado_numero_licencia" not-null="true"/>
+    </property>
     <many-to-one class="com.planit.smsrenta.modelos.SmsHojavida" fetch="join" name="smsHojavida">
       <column name="idhojaVida"/>
     </many-to-one>

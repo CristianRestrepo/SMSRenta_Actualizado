@@ -14,6 +14,7 @@ public class SmsEmpleado implements java.io.Serializable {
     private SmsProveedor smsProveedor;
     private SmsUsuario smsUsuario;
     private SmsEstado smsEstado;
+    private String empleadoNumeroLicencia;
     private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>(0);
     private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
     private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
@@ -102,6 +103,14 @@ public class SmsEmpleado implements java.io.Serializable {
 
     public void setSmsVehiculos(Set<SmsVehiculo> smsVehiculos) {
         this.smsVehiculos = smsVehiculos;
+    }
+
+    public String getEmpleadoNumeroLicencia() {
+        return empleadoNumeroLicencia;
+    }
+
+    public void setEmpleadoNumeroLicencia(String empleadoNumeroLicencia) {
+        this.empleadoNumeroLicencia = empleadoNumeroLicencia;
     }
     
     

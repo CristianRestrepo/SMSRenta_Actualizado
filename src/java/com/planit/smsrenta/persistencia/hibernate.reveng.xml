@@ -25,6 +25,7 @@
   <table-filter match-name="sms_lugares"/>
   <table-filter match-name="sms_servicios"/>
   <table-filter match-name="sms_color"/>
+  <table-filter match-name="sms_contrato"/>
   <table-filter match-name="sms_referencia"/>
   <table-filter match-name="sms_tipo_lugar"/>
   <table-filter match-name="sms_mercado_sms_servicios"/>

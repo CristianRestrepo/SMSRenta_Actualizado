@@ -109,6 +109,7 @@
 
                                                         </h:panelGrid>
                                                     </div><hr/>
+                                                    <p:commandLink value="Iniciar sesion" process="@this" immediate="true" action="#{pathBean.ir_Login()}"/>
                                                     <p:commandButton id="BTCliente" class="btn btn-lg btn-block btn-success" onclick="PrimeFaces.monitorDownload(start, stop);" action="#{clienteBean.registrarCliente()}" value="Registrar" />
                                                     <script type="text/javascript">
                                                         function start() {

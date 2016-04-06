@@ -45,8 +45,7 @@ public class SesionActivaBean {
     {
         Usuario = new SmsUsuario();
         faceContext=FacesContext.getCurrentInstance();
-        httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
-        httpServletRequest.getSession(false);
+        httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();       
         httpServletRequest.getSession().invalidate();
         return "Login";
     }

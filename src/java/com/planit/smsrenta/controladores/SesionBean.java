@@ -53,9 +53,9 @@ public class SesionBean implements Serializable {
             usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
             if (user.getUsuarioEstadoUsuario() == 1) {//Evalua el estado de la cuenta de usuario, si esta activa o inactiva
                 if (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword())) {
-
+                    
                     httpServletRequest.getSession().setAttribute("Sesion", user);
-
+                   
                     switch (user.getSmsRol().getRolNombre()) {
                         case "Administrador Principal":
                             ruta = "AdminPPrincipal";

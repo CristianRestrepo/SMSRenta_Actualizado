@@ -52,6 +52,12 @@
     <property name="vehFoto2Ruta" type="string">
       <column length="65535" name="Veh_foto2_ruta"/>
     </property>
+    <property name="vehNumeroInterno" type="string">
+      <column length="10" name="Veh_numero_interno"/>
+    </property>
+    <property name="vehNumeroTarjetaOperacion" type="string">
+      <column length="10" name="Veh_numero_tarjeta_operacion"/>
+    </property>
     <set fetch="select" inverse="false" lazy="true" name="smsEmpleados" table="sms_vehiculo_sms_empleado">
       <key>
         <column name="idVehiculo" not-null="true"/>

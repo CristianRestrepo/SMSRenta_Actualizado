@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsContraro" optimistic-lock="version" table="sms_contrato">
+        <id name="idContrato" type="java.lang.Integer">
+            <column name="idContrato"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="com.planit.smsrenta.modelos.SmsReservacion" fetch="join" name="smsReservacion">
+            <column name="idReservacion" not-null="true"/>
+        </many-to-one>
+        <property name="contratoObjeto" type="string">
+            <column length="15" name="Contrato_objeto" not-null="true"/>
+        </property>
+    </class> 
+</hibernate-mapping>

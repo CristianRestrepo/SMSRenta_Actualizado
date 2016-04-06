@@ -44,7 +44,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JRException;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;

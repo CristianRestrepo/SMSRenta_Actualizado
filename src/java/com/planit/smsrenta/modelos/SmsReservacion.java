@@ -30,6 +30,7 @@ public class SmsReservacion  implements java.io.Serializable {
      private Date reservacionHoraLlegada;
      private Integer reservacionCosto;
      private Set<SmsCalificacion> smsCalificacions = new HashSet<>(0);
+     private Set<SmsContrato> smsContratos = new HashSet<>(0);
 
     public SmsReservacion() {
         this.smsCategoriasServicio = new SmsCategoriasServicio();
@@ -54,7 +55,7 @@ public class SmsReservacion  implements java.io.Serializable {
         this.reservacionFechaInicio = reservacionFechaInicio;
         this.reservacionHoraInicio = reservacionHoraInicio;
     }
-    public SmsReservacion(SmsCategoriasServicio smsCategoriasServicio, SmsCiudad smsCiudadByIdCiudadDestino, SmsCiudad smsCiudadByIdCiudadInicio, SmsEmpleado smsEmpleado, SmsEstado smsEstado, SmsServicios smsServicios, SmsUsuario smsUsuario, SmsVehiculo smsVehiculo, String reservacionLugarLlegada, String reservacionLugarDestino, String reservacionNotas, Date reservacionFechaInicio, Date reservacionFechaLlegada, Date reservacionHoraInicio, Date reservacionHoraLlegada, Integer reservacionCosto, Set<SmsCalificacion> smsCalificacions) {
+    public SmsReservacion(SmsCategoriasServicio smsCategoriasServicio, SmsCiudad smsCiudadByIdCiudadDestino, SmsCiudad smsCiudadByIdCiudadInicio, SmsEmpleado smsEmpleado, SmsEstado smsEstado, SmsServicios smsServicios, SmsUsuario smsUsuario, SmsVehiculo smsVehiculo, String reservacionLugarLlegada, String reservacionLugarDestino, String reservacionNotas, Date reservacionFechaInicio, Date reservacionFechaLlegada, Date reservacionHoraInicio, Date reservacionHoraLlegada, Integer reservacionCosto, Set<SmsCalificacion> smsCalificacions, Set<SmsContrato> smsContratos) {
        this.smsCategoriasServicio = smsCategoriasServicio;
        this.smsCiudadByIdCiudadDestino = smsCiudadByIdCiudadDestino;
        this.smsCiudadByIdCiudadInicio = smsCiudadByIdCiudadInicio;
@@ -72,6 +73,7 @@ public class SmsReservacion  implements java.io.Serializable {
        this.reservacionHoraLlegada = reservacionHoraLlegada;
        this.reservacionCosto = reservacionCosto;
        this.smsCalificacions = smsCalificacions;
+       this.smsContratos = smsContratos;
     }
    
     public Integer getIdReservacion() {
@@ -201,6 +203,8 @@ public class SmsReservacion  implements java.io.Serializable {
     public void setSmsCalificacions(Set<SmsCalificacion> smsCalificacions) {
         this.smsCalificacions = smsCalificacions;
     }
+    
+    
 
 
 
