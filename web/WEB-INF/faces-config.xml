@@ -271,8 +271,11 @@
             <to-view-id>/vistas/AdminP/reservas/PReservaTurismo.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        
-      
+        <navigation-case>
+            <from-outcome>AdminPCondicionesUso</from-outcome>
+            <to-view-id>/vistas/AdminP/reservas/PReserva_Terminos_Condiciones_de_Uso.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>    
                 
         
         
@@ -538,6 +541,7 @@
             <to-view-id>/vistas/AdminP/vehiculos/PAdminVehiculos.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        
     </navigation-rule>
                     
     <navigation-rule>
