@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idContrato" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$F{Contrato_objeto}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT r.Reservacion_lugar_llegada , r.Reservacion_lugar_destino , 
+r.Reservacion_fechaInicio , r.Reservacion_fechaLlegada , 
+r.Reservacion_horaInicio , r.Reservacion_horaLlegada , 
+# CAMPOS DE LA TABLA VEHICULO, CON ASOCIACIONES EN REFERENCIA Y EN MARCA
+v.Veh_placa , v.Veh_modelo , 
+v.Veh_numero_interno , v.Veh_numero_tarjeta_operacion , 
+m.Marca_nombre , cat.Categoria_nombre ,
+#DATOS DEL CONDUCTOR
+conductor.Usuario_nombre , conductor.Usuario_CC , empl.Empleado_numero_licencia,
+#DATOS DE CONTRATO
+cont.idContrato , cont.Contrato_objeto
+from sms_contrato as cont, sms_reservacion as r , sms_vehiculo as v , sms_referencia as ref , 
+sms_marca as m , sms_categoria cat , sms_usuario as cliente , sms_usuario as conductor , sms_empleado as empl 
+where cont.idContrato = r.idReservacion AND
+	  r.idVehiculo = v.idVehiculo AND
+      r.idCliente = cliente.idUsuario AND
+      r.idEmpleado = empl.idEmpleado AND
+      empl.idEmpleado = conductor.idUsuario AND
+      v.idReferencia = ref.idReferencia AND
+      ref.Referencia_idMarca = m.idMarca AND
+      v.idCategoria = cat.idCategoria]]>
+	</queryString>
+	<field name="Reservacion_lugar_llegada" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Reservacion_lugar_destino" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Reservacion_fechaInicio" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Reservacion_fechaLlegada" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Reservacion_horaInicio" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Reservacion_horaLlegada" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Veh_placa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Veh_modelo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Veh_numero_interno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Veh_numero_tarjeta_operacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Marca_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Categoria_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Usuario_CC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Empleado_numero_licencia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idContrato" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Contrato_objeto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="145" splitType="Stretch">
+			<rectangle>
+				<reportElement x="304" y="0" width="251" height="80" forecolor="#666666" uuid="78aa99e6-edac-43e1-9cfa-ca842b0df155"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="304" height="80" forecolor="#666666" uuid="8b6da278-b1cc-4f4f-91a2-c7299e1dbce6"/>
+			</rectangle>
+			<image>
+				<reportElement x="5" y="14" width="294" height="57" uuid="10f37f18-de0f-4f69-9819-95e4fa49b0e0"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\minitraspret.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="372" y="9" width="183" height="62" uuid="87596e1e-4ca2-4f60-9e86-c35665a7ba95"/>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\coopenal.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="315" y="14" width="57" height="63" uuid="c120a713-037e-48dd-8ea6-a645e31e0c9a"/>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\super_transporte.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="0" y="80" width="555" height="65" forecolor="#666666" uuid="72b5db4a-d733-4f36-ace6-27de8f7e1c9b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="89" width="452" height="14" forecolor="#666666" uuid="42b10b69-d89b-472f-9b9c-a849f5186c76"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMATO ÚNICO DE EXTRACTO DEL CONTRATO  DE SERVICIO PUBLICO DE  TRANSPORTE ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="102" width="452" height="14" forecolor="#666666" uuid="f6f941f4-9786-407f-80e7-caa2c3287376"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERRESTRE AUTOMOTOR ESPECIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="116" width="154" height="14" forecolor="#666666" uuid="b775e8ef-bfc7-4e57-a17b-9b7bc555482a"/>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[N° 425526302    201600600370]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="57" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="57" forecolor="#666666" uuid="0056b7e9-b20a-4c94-a34e-b33359960acb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="7" width="263" height="14" forecolor="#666666" uuid="fa836ffe-7ee2-4636-9d4d-85505d8e7c6a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRANSPORTE DE CARGA, ESPECIAL Y MENSAJERÍA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="304" y="3" width="153" height="50" uuid="9fe0bb8e-c113-4c16-aa58-e3344475c8a3"/>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\coopenal.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="443" y="26" width="61" height="12" forecolor="#666666" uuid="0dc23057-dc10-4a23-9979-a87e6a13a290"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Nit: 850.020.381-7]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="17" forecolor="#666666" backcolor="#F3F3F3" uuid="1fb0b9b6-72d3-4825-9fba-ba932860c2c5"/>
+			</rectangle>
+			<textField pattern="0000">
+				<reportElement x="176" y="2" width="100" height="15" uuid="0ec1fbb4-b856-4869-b24d-2ef3215e3594"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idContrato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="41" y="0" width="100" height="17" forecolor="#333333" uuid="6e6d16ff-2bd5-40a8-b266-73ccdbbcad55"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[CONTRATO N°]]></text>
+			</staticText>
+		</band>
+		<band height="44"/>
+		<band height="239">
+			<rectangle>
+				<reportElement x="0" y="128" width="555" height="54" forecolor="#666666" uuid="3f87503d-cdcc-4839-8234-384aefa84791"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="182" width="555" height="57" forecolor="#666666" uuid="02047972-bf41-464b-ba8c-41e34cd13c9b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="44" y="144" width="100" height="20" forecolor="#333333" uuid="755681f6-38bb-408e-8ba8-bd0a79181a3f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA INICIAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="201" width="100" height="20" forecolor="#333333" uuid="04826f63-97eb-48fe-84db-e62520076e09"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA FINAL:]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="188" y="145" width="98" height="20" uuid="7766264d-08a0-46f8-826f-272cec5a772e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Reservacion_fechaInicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="144" width="32" height="20" uuid="00b6915e-1c27-4a67-9594-818985e5d91b"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<textField pattern="h.mm a">
+				<reportElement x="379" y="202" width="100" height="20" uuid="3db0a9e3-dc1f-4a87-9010-849717d63527"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Reservacion_horaLlegada}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="186" y="201" width="100" height="20" uuid="70060c3a-0403-4659-990e-b028066b3451"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Reservacion_fechaLlegada}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="101" width="555" height="29" forecolor="#666666" backcolor="#F3F3F3" uuid="162d0257-0355-4ec8-8b6d-d96f966e99b2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="209" y="105" width="155" height="20" uuid="74bc334e-4d3b-4ba8-9a51-edf0fe219412"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIGENCIA DEL CONTRATO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="202" width="32" height="20" uuid="d21f73c8-3efc-49f6-93d9-600efe6006f4"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="46" width="555" height="27" forecolor="#666666" uuid="9c88fbda-649b-4272-9ea5-896dd07fb140"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="44" y="46" width="100" height="20" forecolor="#333333" uuid="b3b8e719-1a09-4142-9087-846efcc88951"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORIGEN - DESTINO:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="73" width="555" height="28" forecolor="#666666" uuid="f0449f39-c15d-42c5-912b-ad471b911c1f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="42" y="77" width="257" height="20" forecolor="#333333" uuid="ed47be97-dc7e-4c69-aabd-2ff58438bbbe"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONVENIO - CONSORCIO UNION TEMPORAL CON:]]></text>
+			</staticText>
+			<textField pattern="h.mm a">
+				<reportElement x="379" y="145" width="100" height="20" uuid="8d9f9017-6894-43ee-8fd1-22d97ce5cdf9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Reservacion_horaInicio}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="46" forecolor="#666666" uuid="d32217c2-0953-4678-b804-d45d25a4c297"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="44" y="6" width="100" height="20" forecolor="#333333" uuid="f9ee01be-c0ba-4984-94f8-c7ed6ea3eb38"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBJETO CONTRATO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="159" y="16" width="298" height="20" forecolor="#333333" uuid="37509016-e449-4499-b482-65a60d11842c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Contrato_objeto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="159" y="53" width="145" height="13" uuid="eb57a937-75bd-4f67-88f7-bc8bb3d85ec5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Reservacion_lugar_llegada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="314" y="53" width="12" height="13" uuid="8e4b1cec-3b03-4651-9980-8960d450c629"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ - ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="336" y="53" width="143" height="13" uuid="a56f7dba-e745-46b4-a2b1-4a984740b3cc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Reservacion_lugar_destino}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="254">
+			<rectangle>
+				<reportElement x="225" y="44" width="117" height="210" forecolor="#666666" uuid="568f461f-1176-44de-8943-396924126294"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="29" width="555" height="15" forecolor="#666666" uuid="587c4952-b7e3-42b8-b7a3-9ed8653bc16a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="29" forecolor="#666666" backcolor="#F3F3F3" uuid="e72b5ea8-6f51-473b-b7d0-4e58f04569b2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="195" y="6" width="184" height="20" uuid="bf0545aa-5cdd-45c3-81bd-9d13e73c4452"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARACTERISTICAS DEL VEHÍCULO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="342" y="44" width="213" height="210" forecolor="#666666" uuid="061650c5-addb-4c1f-8388-1c54bbdb4864"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="44" width="225" height="210" forecolor="#666666" uuid="14d05661-9617-476d-a0b4-a7742b2e97ff"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="84" width="555" height="1" forecolor="#666666" uuid="5a049ebd-5cbe-408b-ad9b-87e4d4a048c4"/>
+			</line>
+			<line>
+				<reportElement x="0" y="126" width="555" height="1" forecolor="#666666" uuid="29145567-c43e-4b93-96da-19a3db71975c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="169" width="555" height="1" forecolor="#666666" uuid="78c2f0aa-28d4-4a36-bc53-00a82387252d"/>
+			</line>
+			<line>
+				<reportElement x="0" y="211" width="555" height="1" forecolor="#666666" uuid="2c934df8-2935-4cc5-9c27-790bc0c9c284"/>
+			</line>
+			<staticText>
+				<reportElement x="17" y="47" width="44" height="13" forecolor="#333333" uuid="2fffb2a8-1557-4f40-b863-72c44b52aeea"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLACA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="47" width="44" height="13" forecolor="#333333" uuid="52cec5b9-574d-41a5-9d40-bd2d4cd9c5f9"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MODELO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="47" width="44" height="13" forecolor="#333333" uuid="ea0b2aa4-5e95-453b-9985-dc499bfd9d25"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MARCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="47" width="44" height="13" forecolor="#333333" uuid="fa645f29-3a08-45b4-8103-d0e37aa51b2f"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLASE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="15" y="61" width="74" height="20" uuid="2dba09f3-2d6d-4afa-b1b8-bba16f9bda07"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Veh_placa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="60" width="100" height="20" uuid="70fba02a-0a82-487e-8919-881118017a66"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Veh_modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="237" y="59" width="92" height="20" uuid="bf4298e9-0de6-4690-aa12-867611871286"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Marca_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="61" width="148" height="20" uuid="f8b1501c-3695-4917-b3e6-a948c84ad778"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Categoria_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="62" y="87" width="97" height="13" forecolor="#333333" uuid="ec052778-21f9-4c97-bcb7-9abac7fb7f1c"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO INTERNO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="225" y="84" width="330" height="43" forecolor="#666666" uuid="dd8401f0-1700-4262-adc8-9168ab1daabf"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="315" y="86" width="178" height="13" forecolor="#333333" uuid="78883035-ab61-41fb-aad1-44db0a6f0493"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO TARJETA DE OPERACIÓN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="100" width="122" height="20" uuid="1585aafb-b56d-4a0f-9698-920b80f096fd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Veh_numero_interno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="100" width="218" height="20" uuid="f9cf73a6-5dca-4b2b-9448-b58d9e0cc6af"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Veh_numero_tarjeta_operacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="131" width="125" height="13" forecolor="#333333" uuid="65335ccc-8e77-4687-b091-30e57c0baaa7"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="175" width="125" height="13" forecolor="#333333" uuid="467f869e-f6bf-4bab-b6a7-600d5479ab13"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="217" width="125" height="13" forecolor="#333333" uuid="0b8f6a7c-1217-4073-b647-17b7432a767d"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="130" width="70" height="13" forecolor="#333333" uuid="e34790b6-a10c-4ab4-bfe6-2457e69db3cc"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° de CÉDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="172" width="70" height="13" forecolor="#333333" uuid="f5377269-104e-4e2d-89be-1a36bc71e700"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° de CÉDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="214" width="70" height="13" forecolor="#333333" uuid="95c246d3-fa1f-4181-b00e-a551c6e89692"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° de CÉDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="130" width="132" height="13" forecolor="#333333" uuid="1173ba81-c7ae-4464-852b-fed4c1b9f1c8"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° LICENCIA CONDUCCIÓN]]></text>
+			</staticText>
+			<line>
+				<reportElement x="482" y="127" width="1" height="127" forecolor="#666666" uuid="542d01d1-cbf1-417e-a416-41318531c8c2"/>
+			</line>
+			<staticText>
+				<reportElement x="347" y="172" width="132" height="13" forecolor="#333333" uuid="f339292c-80d2-4057-b61b-ce3acbf5759e"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° LICENCIA CONDUCCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="213" width="132" height="13" forecolor="#333333" uuid="107c0d6a-4975-4f0c-9e9a-e52b6d2e62d6"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° LICENCIA CONDUCCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="131" width="56" height="13" forecolor="#333333" uuid="74be06ae-3c73-4eec-bb25-3983a6cff919"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIGENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="172" width="56" height="13" forecolor="#333333" uuid="bb9ddfab-bc00-40f3-8821-40a355dbb415"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIGENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="213" width="56" height="13" forecolor="#333333" uuid="751143c0-11d8-45df-994d-0ab8a2197899"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VIGENCIA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="41" y="146" width="166" height="20" uuid="ee9c4fd0-0ad6-49e8-82b2-1e90930fee58"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Usuario_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="234" y="149" width="100" height="17" uuid="63bcf12f-31e8-402e-86b8-b0cfefde1b72"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Usuario_CC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="353" y="149" width="120" height="16" uuid="bb7b3d15-b128-4a77-a013-6094d9953f08"/>
+				<textFieldExpression><![CDATA[$F{Empleado_numero_licencia}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="70" splitType="Stretch">
+			<rectangle>
+				<reportElement x="342" y="0" width="213" height="70" forecolor="#666666" uuid="49e7da01-4e9c-4778-91cd-68c53cf27fb3"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="30" y="19" width="299" height="16" uuid="7779bd37-8c69-49d9-ba68-16472df63921"/>
+				<textElement textAlignment="Center">
+					<font isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Carrera 26a N° 1D 53 Santa Isabel (57 1) 201 24 15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="35" width="299" height="16" uuid="a2b5c0c1-5565-4e89-a103-e9c03e5b2f95"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[info@copenal]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="18" splitType="Stretch"/>
+	</summary>
+</jasperReport>
