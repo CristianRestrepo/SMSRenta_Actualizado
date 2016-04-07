@@ -6,7 +6,6 @@
 package com.planit.smsrenta.dao;
 
 import com.planit.smsrenta.modelos.SmsCategoriasServicio;
-import com.planit.smsrenta.modelos.SmsMercado;
 import java.util.List;
 
 /**
@@ -17,9 +16,7 @@ public interface ICategoriasServicioDao {
 
     public List<SmsCategoriasServicio> consultarCategoriasServicios();
 
-    public List<SmsCategoriasServicio> consultarCategoriaServicio(SmsCategoriasServicio catServicio);
-    
-    public List<SmsCategoriasServicio> consultarCategoriasServiciosSegunMercado(SmsMercado mercado);
+    public List<SmsCategoriasServicio> consultarCategoriaServicio(SmsCategoriasServicio catServicio);   
     
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria);
     

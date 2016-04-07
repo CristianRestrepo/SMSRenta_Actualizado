@@ -18,13 +18,8 @@
     </property>
     <property name="mercadoFotoRuta" type="string">
       <column length="65535" name="Mercado_foto_ruta" not-null="true"/>
-    </property>
-    <set fetch="join" inverse="true" lazy="true" name="smsCategoriasServicios" table="sms_categorias_servicios">
-      <key>
-        <column name="idMercado"/>
-      </key>
-      <one-to-many class="com.planit.smsrenta.modelos.SmsCategoriasServicio"/>
-    </set>
+    </property>   
+    
     <set cascade="save-update" fetch="join" inverse="false" lazy="true" name="smsProveedors" table="sms_mercado_sms_proveedor">
       <key>
         <column name="idMercado" not-null="true"/>
@@ -40,6 +35,12 @@
       <many-to-many class="com.planit.smsrenta.modelos.SmsCategoria">
         <column name="idCategoria" not-null="true"/>
       </many-to-many>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsServicios" table="sms_servicios">
+      <key>
+        <column name="idMercado" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsServicios"/>
     </set>
   </class>
 </hibernate-mapping>

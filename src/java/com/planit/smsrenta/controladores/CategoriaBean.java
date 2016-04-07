@@ -208,40 +208,23 @@ public class CategoriaBean implements Serializable {
     }
 
     public List<String> CategoriasSegunMercado(SmsMercado merc) {
-        //nombresCategoriasListView = new ArrayList<>();
-
-        mercadoView = mercadoDao.consultarMercadoConCategorias(merc).get(0);
-        categoriasListView = catDao.consultarCategoriasSegunMercado(mercadoView);
-        boolean existe = false;
-        for (int j = 0; j < categoriasListView.size(); j++) {
-            for (int i = 0; i < nombresCategoriasListView.size(); i++) {
-                if (categoriasListView.get(j).getCategoriaNombre().equalsIgnoreCase(nombresCategoriasListView.get(i))) {
-                    existe = true;
-                }
-            }
-            if (!existe) {
-                nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
-            }
-            existe = false;
-        }
-        return nombresCategoriasListView;
-
-    }
-
-    public List<String> CategoriasSegunServicio(String serv) {
-
         nombresCategoriasListView = new ArrayList<>();
-        IServicioDao servDao = new ImpServicioDao();
-        SmsServicios servicio = new SmsServicios();
 
-        if (!serv.isEmpty()) {
-            servicio.setServicioNombre(serv);
-            servicio = servDao.ConsultarServicio(servicio).get(0);
-            mercadoView = servicio.getSmsCategoriasServicio().getSmsMercado();
-            mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
-            nombresCategoriasListView = new ArrayList<>();
-            nombresCategoriasListView = CategoriasSegunMercado(mercadoView);
-
+        if (merc.getMercadoNombre() != null) {
+            mercadoView = mercadoDao.consultarMercadoConCategorias(merc).get(0);
+            categoriasListView = catDao.consultarCategoriasSegunMercado(mercadoView);
+            boolean existe = false;
+            for (int j = 0; j < categoriasListView.size(); j++) {
+                for (int i = 0; i < nombresCategoriasListView.size(); i++) {
+                    if (categoriasListView.get(j).getCategoriaNombre().equalsIgnoreCase(nombresCategoriasListView.get(i))) {
+                        existe = true;
+                    }
+                }
+                if (!existe) {
+                    nombresCategoriasListView.add(categoriasListView.get(j).getCategoriaNombre());
+                }
+                existe = false;
+            }
         }
         return nombresCategoriasListView;
     }

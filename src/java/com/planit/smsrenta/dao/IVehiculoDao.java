@@ -25,5 +25,6 @@ public interface IVehiculoDao {
     public List<SmsVehiculo> filtrarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String categoria, String espacioInicio, String espacioLlegada, String mercado);
     public List<SmsVehiculo> consultarVehiculosCiudad(SmsCiudad ciudad);
     public List<SmsVehiculo> filtrarVehiculosCiudad(SmsCiudad ciudad, String categoria);
+    public List<SmsVehiculo> filtrarVehiculoSegunProveedor(String valor,SmsProveedor proveedor);
     public List<SmsVehiculo> consultarVehiculosSegunProveedor(SmsProveedor proveedor);
     }

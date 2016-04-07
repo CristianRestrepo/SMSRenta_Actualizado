@@ -6,7 +6,6 @@
 package com.planit.smsrenta.dao;
 
 import com.planit.smsrenta.modelos.SmsCategoriasServicio;
-import com.planit.smsrenta.modelos.SmsMercado;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -29,7 +28,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
         List<SmsCategoriasServicio> categorias = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoriasServicio as catServicio left join fetch catServicio.smsMercado");
+            Query query = session.createQuery("from SmsCategoriasServicio as catServicio");
             categorias = (List<SmsCategoriasServicio>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -47,7 +46,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
         List<SmsCategoriasServicio> categorias = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoriasServicio as catServicio where catServicio.catNombre = '" + catServicio.getCatNombre() + "' and catServicio.smsMercado.mercadoNombre = '" + catServicio.getSmsMercado().getMercadoNombre() + "'");
+            Query query = session.createQuery("from SmsCategoriasServicio as catServicio where catServicio.catNombre = '" + catServicio.getCatNombre() + "'");
             categorias = (List<SmsCategoriasServicio>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -58,25 +57,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
         }
         return categorias;
     }
-
-    @Override
-    public List<SmsCategoriasServicio> consultarCategoriasServiciosSegunMercado(SmsMercado mercado) {
-        Session session = null;
-        List<SmsCategoriasServicio> categorias = new ArrayList<>();
-        try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoriasServicio as catServicio where catServicio.smsMercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
-            categorias = (List<SmsCategoriasServicio>) query.list();
-        } catch (HibernateException e) {
-            e.getMessage();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return categorias;
-    }
-
+  
     @Override
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria) {
         Session session = null;

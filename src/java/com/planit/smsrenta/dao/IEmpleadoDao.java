@@ -9,30 +9,33 @@ import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsProveedor;
 import com.planit.smsrenta.modelos.SmsUsuario;
+import com.planit.smsrenta.modelos.SmsVehiculo;
 import java.util.List;
 
 public interface IEmpleadoDao {
 
     //Definicion metodos CRUD
     public List<SmsEmpleado> mostrarEmpleados();
-    
-    public List<SmsEmpleado> consultarEmpleadosSegunProveedor(String Proveedor);
 
     public void registrarEmpleado(SmsEmpleado empleado);
 
     public void modificarEmpleado(SmsEmpleado empleado);
 
     public void eliminarEmpleado(SmsEmpleado empleado);
-    
+
     public List<SmsUsuario> consultarUsuariosEmpleados();
-    
+
     public List<SmsEmpleado> filtrarUsuariosEmpleados(String valor);
+    
+    public List<SmsEmpleado> filtrarUsuariosEmpleadosSegunProveedor(String valor, SmsProveedor proveedor);
 
     public List<SmsEmpleado> consultarEmpleado(SmsUsuario usuario);
 
-    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String espacioInicio, String espacioLlegada, String Proveedor);
-    
+    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada, String Proveedor, SmsVehiculo vehiculo);
+
     public List<SmsEmpleado> consultarEmpleadosCiudad(SmsCiudad ciudad);
-    
+
     public List<SmsEmpleado> consultarEmpleadosSegunProveedor(SmsProveedor proveedor);
+    
+    public List<SmsEmpleado> consultarEmpleadosSegunVehiculo(SmsVehiculo vehiculo);
 }

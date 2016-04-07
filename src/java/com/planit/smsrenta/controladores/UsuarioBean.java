@@ -62,9 +62,7 @@ public class UsuarioBean implements Serializable {
     //Variables
     protected String password;
     protected String estadoFoto;
-
    
-
     public UsuarioBean() {
         usuarioView = new SmsUsuario();
         nombresUsuarios = new ArrayList<>();

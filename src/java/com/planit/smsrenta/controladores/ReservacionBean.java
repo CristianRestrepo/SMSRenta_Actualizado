@@ -27,10 +27,12 @@ import com.planit.smsrenta.dao.ImpUsuarioDao;
 import com.planit.smsrenta.dao.ImpVehiculoDao;
 import com.planit.smsrenta.metodos.Sesion;
 import com.planit.smsrenta.modelos.SmsCategoria;
+import com.planit.smsrenta.modelos.SmsCategoriasServicio;
 import com.planit.smsrenta.modelos.SmsCostosservicios;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsEstado;
 import com.planit.smsrenta.modelos.SmsMercado;
+import com.planit.smsrenta.modelos.SmsServicios;
 import com.planit.smsrenta.modelos.SmsUsuario;
 import com.planit.smsrenta.modelos.SmsVehiculo;
 import java.io.IOException;
@@ -62,6 +64,7 @@ public class ReservacionBean implements Serializable {
     private List<SmsVehiculo> vehiculosListView;
     private List<SmsEmpleado> empleadoListView;
     private SmsMercado mercadoSeleccionado;
+    private int categoriaServicio;
 
     private SmsReservacion reservaView;
     private SmsReservacion modReservacionView;
@@ -91,7 +94,6 @@ public class ReservacionBean implements Serializable {
     EmpleadoBean empleadoController;
     FacturaBean facturaController;
     Sesion sesionController;
-   
 
     //variables para vista de reservacion    
     private List<SmsReservacion> listaReservaciones;
@@ -118,6 +120,7 @@ public class ReservacionBean implements Serializable {
         estadoView = new SmsEstado();
         costoServicioView = new SmsCostosservicios();
         empleadoView = new SmsEmpleado();
+        categoriaServicio = 0;
 
         vehiculosListView = new ArrayList<>();
         empleadoListView = new ArrayList<>();
@@ -138,6 +141,7 @@ public class ReservacionBean implements Serializable {
         eventoModelo = new DefaultScheduleModel();
         evento = new DefaultScheduleEvent();
 
+        //Conexion con los dao
         ciuDao = new ImpCiudadDao();
         resDao = new ImpReservacionDao();
         usuDao = new ImpUsuarioDao();
@@ -145,7 +149,6 @@ public class ReservacionBean implements Serializable {
         empleadoDao = new ImpEmpleadoDao();
         costoDao = new ImpCostosServiciosDao();
         estadoDao = new ImpEstadoDao();
-
         catServicioDao = new ImpCategoriasServicioDao();
         vehiculoDao = new ImpVehiculoDao();
 
@@ -322,6 +325,14 @@ public class ReservacionBean implements Serializable {
         this.modReservacionView = modReservacionView;
     }
 
+    public int getCategoriaServicio() {
+        return categoriaServicio;
+    }
+
+    public void setCategoriaServicio(int categoriaServicio) {
+        this.categoriaServicio = categoriaServicio;
+    }
+
     //Metodos    
     //CRUD
     public String registrarReservacion() throws JRException, IOException {
@@ -351,6 +362,8 @@ public class ReservacionBean implements Serializable {
 
         horaInicio = "";
         horaEntrega = "";
+        fechaInicio = "";
+        fechaEntrega = "";
         minutosEntrega = "";
         minutosInicio = "";
 
@@ -420,6 +433,17 @@ public class ReservacionBean implements Serializable {
                     break;
                 case "Vehiculo":
                     SelecVeh = false;
+                    
+                    switch(categoriaServicio){
+                    
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                    
+                    }
 
                     if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                         reservaView.setSmsUsuario(sesion);
@@ -463,7 +487,7 @@ public class ReservacionBean implements Serializable {
                     }
                     SelecCon = false;
                     if (resDao.mostrarReservaciones().isEmpty()) {
-                        empleadoListView = empleadoDao.consultarEmpleadosSegunProveedor(reservaView.getSmsVehiculo().getSmsProveedor().getProveedorRazonSocial());
+                        empleadoListView = empleadoDao.consultarEmpleadosSegunVehiculo(reservaView.getSmsVehiculo());
                     } else {
                         empleadoListView = empleadoController.consultarEmpleadosDisponibles(reservaView);
                     }
@@ -581,11 +605,24 @@ public class ReservacionBean implements Serializable {
         evento = (ScheduleEvent) selectEvent.getObject();
     }
 
+    public void actualizarListasReservaciones() {
+        consultarReservacionesSegunUsuario();
+        addEventoCalendario();
+    }
+
     public String irVistaReserva() {
         String Ruta = "";
         modReservacionView.setIdReservacion(Integer.parseInt(evento.getTitle()));
         modReservacionView = resDao.consultarReservacionId(modReservacionView).get(0);
+        SimpleDateFormat formatDate;
+        SimpleDateFormat formatTime;
+        formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        formatTime = new SimpleDateFormat("HH:mm:ss");
 
+        fechaInicio = formatDate.format(modReservacionView.getReservacionFechaInicio());
+        fechaEntrega = formatDate.format(modReservacionView.getReservacionFechaLlegada());
+        horaInicio = formatTime.format(modReservacionView.getReservacionHoraInicio());
+        horaEntrega = formatTime.format(modReservacionView.getReservacionHoraLlegada());
         switch (sesion.getSmsRol().getRolNombre()) {
             case "Administrador Principal":
                 Ruta = "VistaReservaAdminP";
@@ -802,6 +839,46 @@ public class ReservacionBean implements Serializable {
 
         }
         return costo;
+    }
+
+    public void consultarCategoria(SmsServicios servicio) {
+        if (!servicio.getServicioNombre().isEmpty()) {
+            SmsCategoriasServicio catServicio = servicioDao.ConsultarServicio(servicio).get(0).getSmsCategoriasServicio();
+            if (catServicio.getCatNombre().equalsIgnoreCase("Renta")) {
+                categoriaServicio = 1;
+            } else if (catServicio.getCatNombre().equalsIgnoreCase("Tiempo")) {
+                categoriaServicio = 2;
+            } else if (catServicio.getCatNombre().equalsIgnoreCase("Traslado")) {
+                categoriaServicio = 3;
+            }
+        }else{
+        categoriaServicio = 0;
+        }
+    }
+    
+    
+    public String iniciarProcesoReservacion(){
+        reservaView = new SmsReservacion();
+        modReservacionView = new SmsReservacion();
+        estadoView = new SmsEstado();
+        costoServicioView = new SmsCostosservicios();
+        empleadoView = new SmsEmpleado();
+        categoriaServicio = 0;
+        SelecVeh = false;
+        SelecCon = false;
+        
+        
+        String ruta = "";
+        if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")){
+            ruta = "AdminPReservacion";
+        }else if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Secundario")){
+            ruta = "AdminSReserva";
+        }else if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")){
+            ruta = "ClienteReservacion";
+        }
+            
+        return ruta;
+         
     }
 
 }

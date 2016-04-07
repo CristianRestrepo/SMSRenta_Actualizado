@@ -13,7 +13,7 @@
             <b:container fluid="true">
                 <b:row>
                     <h:form>
-                        
+
                         <b:column col-lg="12" col-md="12" col-sm="6" col-xs="12">
                             <div class="box espacio-arriba">
                                 <div class="box-header with-border">
@@ -29,12 +29,13 @@
                                 </div>
                             </div>
                         </b:column>
-                        
+
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12"  >
                             <div class="box box-info">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-calendar"/>
                                     <h2 class="box-title">Horarios <srtong>SMS Renta</srtong></h2>
+                                    <p:commandButton style="width: 20%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class="box-tools btn btn-block btn-success" value="Actualizar reservaciones"/>
                                 </div>
                                 <div class="box-body">
                                     <!-- CALENDARIO PRINCIPAL -->
@@ -73,7 +74,7 @@
                                 </div>
                             </div>
                         </b:column>
-                                             
+
 
 
                     </h:form>

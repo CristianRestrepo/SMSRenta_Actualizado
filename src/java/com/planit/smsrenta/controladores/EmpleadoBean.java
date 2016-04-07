@@ -406,7 +406,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
 
-        empleadosListView = empleadoDao.consultarEmpleadosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre(), espacioinicio, espacioLlegada, reserva.getSmsVehiculo().getSmsProveedor().getProveedorRazonSocial());
+        empleadosListView = empleadoDao.consultarEmpleadosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre(), espacioinicio, espacioLlegada, reserva.getSmsVehiculo().getSmsProveedor().getProveedorRazonSocial(), reserva.getSmsVehiculo());
         List<SmsEmpleado> lista = new ArrayList<>();
 //        for (int i = 0; i < empleadosListView.size(); i++) {
 //            lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));
@@ -419,7 +419,28 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         nombresUsuarios = new ArrayList<>();
         empleadosListView = empleadoDao.consultarEmpleadosSegunProveedor(proveedor);
         for (int i = 0; i < empleadosListView.size(); i++) {
-           nombresUsuarios.add(empleadosListView.get(i).getSmsUsuario().getUsuarioNombre());
+            nombresUsuarios.add(empleadosListView.get(i).getSmsUsuario().getUsuarioNombre());
+        }
+        return nombresUsuarios;
+    }
+
+    public List<String> filtrarEmpleado(SmsProveedor proveedor) {
+        nombresUsuarios = new ArrayList<>();
+        empleadosListView = new ArrayList<>();
+        if (buscar == null) {
+            if (proveedor.getProveedorRazonSocial() != null) {
+                empleadosListView = empleadoDao.consultarEmpleadosSegunProveedor(proveedor);
+                for (int i = 0; i < empleadosListView.size(); i++) {
+                    nombresUsuarios.add(empleadosListView.get(i).getSmsUsuario().getUsuarioNombre());
+                }
+            }
+        } else {
+            if (proveedor.getProveedorRazonSocial() != null) {
+                empleadosListView = empleadoDao.filtrarUsuariosEmpleadosSegunProveedor(buscar, proveedor);
+                for (int i = 0; i < empleadosListView.size(); i++) {
+                    nombresUsuarios.add(empleadosListView.get(i).getSmsUsuario().getUsuarioNombre());
+                }
+            }
         }
         return nombresUsuarios;
     }

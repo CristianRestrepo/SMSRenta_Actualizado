@@ -53,6 +53,8 @@ public class VehiculoBean {
     //Objetos de vista 
     private SmsVehiculo vehiculoView;
     private SmsEstadovehiculo estadoVehiculoView;
+    private SmsProveedor proveedorView;
+    private SmsEmpleado empleadoView;
     private List<SmsVehiculo> vehiculosListView;
     private List<String> placasVehiculos;
 
@@ -83,6 +85,9 @@ public class VehiculoBean {
     public VehiculoBean() {
 
         vehiculoView = new SmsVehiculo();
+        proveedorView = new SmsProveedor();
+        empleadoView = new SmsEmpleado();
+
         vehiculosListView = new ArrayList<>();
         estadoVehiculoView = new SmsEstadovehiculo();
         placasVehiculos = new ArrayList<>();
@@ -112,6 +117,7 @@ public class VehiculoBean {
     @PostConstruct
     public void init() {
         vehiculosListView = vehDao.mostrarVehiculo();
+
     }
 
     //Getters & Setters 
@@ -195,6 +201,23 @@ public class VehiculoBean {
         this.placasVehiculos = placasVehiculos;
     }
 
+    public SmsProveedor getProveedorView() {
+        return proveedorView;
+    }
+
+    public void setProveedorView(SmsProveedor proveedorView) {
+        this.proveedorView = proveedorView;
+    }
+
+    public SmsEmpleado getEmpleadoView() {
+        return empleadoView;
+    }
+
+    public void setEmpleadoView(SmsEmpleado empleadoView) {
+        this.empleadoView = empleadoView;
+    }
+
+    
     //Definicion de metodos VEHICULO
     public void registrar() {
 
@@ -399,7 +422,7 @@ public class VehiculoBean {
         vehiculosListView = new ArrayList<>();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
         String mercadoSeleccionado = mercado.getMercadoNombre();
-                
+
         Calendar calInicio = Calendar.getInstance();
         calInicio.setTime(reserva.getReservacionHoraInicio());
         calInicio.add(Calendar.HOUR, -1);
@@ -487,11 +510,11 @@ public class VehiculoBean {
         return vehiculosListView;
     }
 
-    public void asociarVehiculo(SmsEmpleado empleado) {
+    public void asociarVehiculo() {
         //Consultamos objetos
         vehiculoView = vehDao.consultarVehiculo(vehiculoView).get(0);
         IEmpleadoDao empleadoDao = new ImpEmpleadoDao();
-        SmsEmpleado empleadoView = empleadoDao.consultarEmpleado(empleado.getSmsUsuario()).get(0);
+        empleadoView = empleadoDao.consultarEmpleado(empleadoView.getSmsUsuario()).get(0);
 
         //asociamos vehiculo y conductor
         vehiculoView.getSmsEmpleados().add(empleadoView);
@@ -500,5 +523,28 @@ public class VehiculoBean {
         vehDao.modificarVehiculo(vehiculoView);
 
         vehiculoView = new SmsVehiculo();
+        empleadoView = new SmsEmpleado();
+        proveedorView = new SmsProveedor();
+    }
+
+    public List<String> filtrarVehiculo(SmsProveedor proveedor) {
+        placasVehiculos = new ArrayList<>();
+        vehiculosListView = new ArrayList<>();
+        if (buscar == null) {
+            if (proveedor.getProveedorRazonSocial() != null) {
+                vehiculosListView = vehDao.consultarVehiculosSegunProveedor(proveedor);
+                for (int i = 0; i < vehiculosListView.size(); i++) {
+                    placasVehiculos.add(vehiculosListView.get(i).getVehPlaca());
+                }
+            }
+        } else {
+            if (proveedor.getProveedorRazonSocial() != null) {
+                vehiculosListView = vehDao.filtrarVehiculoSegunProveedor(buscar, proveedor);
+                for (int i = 0; i < vehiculosListView.size(); i++) {
+                    placasVehiculos.add(vehiculosListView.get(i).getVehPlaca());
+                }
+            }
+        }
+        return placasVehiculos;
     }
 }

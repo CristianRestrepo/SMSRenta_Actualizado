@@ -13,6 +13,7 @@ public class SmsServicios  implements java.io.Serializable {
 
      private Integer idServicio;
      private SmsCategoriasServicio smsCategoriasServicio;
+     private SmsMercado smsMercado;
      private String servicioNombre;
      private String servicioDescripcion;
      private Integer servicioDuracion;
@@ -22,13 +23,15 @@ public class SmsServicios  implements java.io.Serializable {
 
     public SmsServicios() {
         this.smsCategoriasServicio = new SmsCategoriasServicio();
+        this.smsMercado = new SmsMercado();
         this.servicioDuracion = 0;      
     }
 	
-    public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, int servicioDuracion) {
+    public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, int servicioDuracion,  SmsMercado smsMercado) {
         this.smsCategoriasServicio = smsCategoriasServicio;
         this.servicioNombre = servicioNombre;
         this.servicioDuracion = servicioDuracion;
+        this.smsMercado = smsMercado;
     }
     
     public SmsServicios(SmsCategoriasServicio smsCategoriasServicio, String servicioNombre, String servicioDescripcion, Set<SmsCostosservicios> smsCostosservicioses, Set<SmsReservacion> smsReservacions) {
@@ -97,6 +100,14 @@ public class SmsServicios  implements java.io.Serializable {
 
     public void setServicioConductor(Integer servicioConductor) {
         this.servicioConductor = servicioConductor;
+    }
+
+    public SmsMercado getSmsMercado() {
+        return smsMercado;
+    }
+
+    public void setSmsMercado(SmsMercado smsMercado) {
+        this.smsMercado = smsMercado;
     }
 
     

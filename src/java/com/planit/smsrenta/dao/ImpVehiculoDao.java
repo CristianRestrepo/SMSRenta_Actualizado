@@ -281,4 +281,23 @@ public class ImpVehiculoDao implements IVehiculoDao {
         return vehiculos;
     }
 
+    @Override
+    public List<SmsVehiculo> filtrarVehiculoSegunProveedor(String valor,SmsProveedor proveedor) {
+        Session session = null;
+        List<SmsVehiculo> vehiculos = null;
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad as ciudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor where vehiculo.vehPlaca LIKE '%" + valor + "%' and proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
+            vehiculos = (List<SmsVehiculo>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vehiculos;
+    }
+
 }

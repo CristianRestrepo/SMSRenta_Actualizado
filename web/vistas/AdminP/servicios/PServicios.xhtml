@@ -36,7 +36,7 @@
                                 <div class="box-body">
                                     <div class="table-responsive form-group">                                        
                                         <h:panelGrid width="100%" id="PServicio" columns="2" cellspacing="5">
-                                            <p:selectOneMenu required="true" requiredMessage="Seleccione Mercado" label="Mercado al que pertenece el servicio" id="SMMercado" value="#{serviciosBean.mercadoView.mercadoNombre}" style="width: 100%">                                                            
+                                            <p:selectOneMenu required="true" requiredMessage="Seleccione Mercado" label="Mercado al que pertenece el servicio" id="SMMercado" value="#{serviciosBean.servicioView.smsMercado.mercadoNombre}" style="width: 100%">                                                            
                                                 <f:selectItem itemLabel="Seleccione Mercado" noSelectionOption="true"/>
                                                 <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>
                                                 <p:ajax event="change" update=":formularioCostos:SMCatVehiculo SMCatServicio"/> 
@@ -45,7 +45,7 @@
 
                                             <p:selectOneMenu required="true" requiredMessage="Seleccione categoría del servicio" value="#{serviciosBean.servicioView.smsCategoriasServicio.catNombre}" label="Categoría del servicio" style="width: 100%" id="SMCatServicio"> 
                                                 <f:selectItem itemLabel="Seleccione categoría del servicio" noSelectionOption="true"/>
-                                                <f:selectItems value="#{categoriasServiciosBean.consultarCategoriasSegunMercado(serviciosBean.mercadoView)}"/>                                               
+                                                <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>                                               
                                             </p:selectOneMenu>
                                             <p:message for="SMCatServicio"/>
 
@@ -141,9 +141,16 @@
                                 <div class="box-body">
                                     <div class="table-responsive form-group">    
                                         <h:panelGrid id="PCostos" width="100%" columns="2" cellspacing="5"> 
+                                            <p:selectOneMenu required="true" requiredMessage="Seleccione Mercado" value="#{costosServicioBean.mercadoView.mercadoNombre}"  style="width: 100%" id="SMMercado"> 
+                                                <f:selectItem itemLabel="Seleccione mercado" noSelectionOption="true"/>
+                                                <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>                                                
+                                                <p:ajax event="change" update="SMServicios"/>
+                                            </p:selectOneMenu>
+                                            <p:message for="SMMercado"/>
+                                            
                                             <p:selectOneMenu required="true" requiredMessage="Seleccione Servicio" value="#{costosServicioBean.costoView.smsServicios.servicioNombre}"  style="width: 100%" id="SMServicios"> 
                                                 <f:selectItem itemLabel="Seleccione servicio" noSelectionOption="true"/>
-                                                <f:selectItems value="#{serviciosBean.nombreServiciosListView}"/>                                                
+                                                <f:selectItems value="#{serviciosBean.seleccionarServiciosSegunMercado(costosServicioBean.mercadoView)}"/>                                                
                                                 <p:ajax event="change" update="SMCatVehiculo"/>
                                             </p:selectOneMenu>
                                             <p:message for="SMServicios"/>
@@ -151,36 +158,48 @@
                                             <b:selectOneMenu required="true" requiredMessage="Seleccione categoría del vehículo" 
                                                              tooltip="Categoría del vehículo" value="#{costosServicioBean.costoView.smsCategoria.categoriaNombre}"  style="width: 100%" id="SMCatVehiculo"> 
                                                 <f:selectItem itemLabel="Seleccione categoría del vehículo" noSelectionOption="true"/>
-                                                <f:selectItems value="#{categoriaBean.CategoriasSegunServicio(costosServicioBean.costoView.smsServicios.servicioNombre)}"/>                                                
+                                                <f:selectItems value="#{categoriaBean.CategoriasSegunMercado(costosServicioBean.mercadoView)}"/>                                                
                                             </b:selectOneMenu>
                                             <p:message for="SMCatVehiculo"/>
-
-                                            <p:selectOneMenu value="#{costosServicioBean.ciudadView.ciudadNombre}" label="Ciudad" style="width: 100%" id="SMCiudad"> 
+                                        </h:panelGrid>
+                                        <p:separator/>
+                                        <p>Si el costo del servicio depende del lugar de partida y destino, seleccione ciudad de inicio y destino y lugar de inicio y destino, en caso de no ser asi, solo asigne el costo correspondiente.</p>
+                                        <h:panelGrid id="PCostosDatosLugares" width="100%" columns="2" cellspacing="5"> 
+                                            <p:selectOneMenu value="#{costosServicioBean.ciudadInicioView.ciudadNombre}" label="Ciudad" style="width: 100%" id="SMCiudadInicio"> 
                                                 <f:selectItem itemLabel="Seleccione ciudad" noSelectionOption="true"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
-                                                <p:ajax event="change" listener="#{costosServicioBean.habilitarListas(costosServicioBean.ciudadView.ciudadNombre)}" update="SMLugarInicio SMLugarDestino" />
+                                                <p:ajax event="change" listener="#{costosServicioBean.habilitarListas(costosServicioBean.ciudadInicioView.ciudadNombre)}" update="SMLugarInicio" />
                                             </p:selectOneMenu>
-                                            <p:message for="SMCiudad"/>
+                                            <p:message for="SMCiudadInicio"/>
 
                                             <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugarInicioView.lugarNombre}" 
                                                              style="width: 100%" tooltip="Lugar de recojida" id="SMLugarInicio"> 
                                                 <f:selectItem itemLabel="Seleccione lugar de recojida" noSelectionOption="true"/>
-                                                <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadView)}"/>
+                                                <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadInicioView)}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SMLugarInicio"/>
 
-                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugsrDestinoView.lugarNombre}" 
+                                            <p:selectOneMenu value="#{costosServicioBean.ciudadDestinoView.ciudadNombre}" label="Ciudad de destino" style="width: 100%" id="SMCiudadDestino"> 
+                                                <f:selectItem itemLabel="Seleccione ciudad de destino" noSelectionOption="true"/>
+                                                <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                <p:ajax event="change" listener="#{costosServicioBean.habilitarListas(costosServicioBean.ciudadDestinoView.ciudadNombre)}" update="SMLugarDestino" />
+                                            </p:selectOneMenu>
+                                            <p:message for="SMCiudadDestino"/>
+
+                                            <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugarDestinoView.lugarNombre}" 
                                                              style="width: 100%" tooltip="Lugar de destino" id="SMLugarDestino"> 
                                                 <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
-                                                <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadView)}"/>
+                                                <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadDestinoView)}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SMLugarDestino"/>
-
+                                        </h:panelGrid>
+                                        <p:separator/>
+                                        <h:panelGrid id="PCosto" width="100%" columns="2" cellspacing="5"> 
                                             <b:inputText id="TCostoServicio" tooltip="Costo del servicio" value="#{costosServicioBean.costoView.costoServicioPrecio}" 
                                                          style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
                                             <p:message for="TCostoServicio"/>
                                         </h:panelGrid>
-                                        <p:commandButton id="BTCosto" class="btn btn-block btn-primary" update="msgServicios BTCosto DTCostos PCostos" action="#{costosServicioBean.metodo()}" value="#{costosServicioBean.nombre}" style="width: 100%"/>
+                                        <p:commandButton id="BTCosto" class="btn btn-block btn-primary" update="msgServicios BTCosto DTCostos PCostos PCostosDatosLugares PCosto" action="#{costosServicioBean.metodo()}" value="#{costosServicioBean.nombre}" style="width: 100%"/>
                                     </div>
                                 </div>
                             </div>

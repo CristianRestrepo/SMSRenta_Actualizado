@@ -182,8 +182,7 @@ public class ServiciosBean implements Serializable {
 
     public void seleccionarCRUD(int i) {
         estado = i;
-        if (estado == 1) {
-            mercadoView = servicioView.getSmsCategoriasServicio().getSmsMercado();
+        if (estado == 1) {            
             nombre = "Modificar Servicio";
         }
     }
@@ -192,7 +191,7 @@ public class ServiciosBean implements Serializable {
     public void registrar() {
 
         //Se consulta la informacion de la categoria del servicio seleccionado
-        servicioView.getSmsCategoriasServicio().setSmsMercado(mercadoDao.consultarMercadoConCategorias(mercadoView).get(0));
+        servicioView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(servicioView.getSmsMercado()).get(0));
         servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriaServicio(servicioView.getSmsCategoriasServicio()).get(0));
         servicioDao.registrarServicio(servicioView);
 
@@ -203,7 +202,10 @@ public class ServiciosBean implements Serializable {
     }
 
     public void modificar() {
+        servicioView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(servicioView.getSmsMercado()).get(0));
+        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriaServicio(servicioView.getSmsCategoriasServicio()).get(0));        
         servicioDao.modificarServicio(servicioView);
+        
         servicioView = new SmsServicios();
         mercadoView = new SmsMercado();
         serviciosListView = servicioDao.mostrarServicios();

@@ -13,8 +13,8 @@ public class SmsMercado implements java.io.Serializable {
     private String mercadoNombre;
     private String mercadoDescripcion;
     private String mercadoFotoNombre;
-    private String mercadoFotoRuta;
-    private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>();   
+    private String mercadoFotoRuta;  
+    private Set<SmsServicios> smsServicios = new HashSet<>();
     private Set<SmsProveedor> smsProveedors = new HashSet<>();
     private Set<SmsCategoria> smsCategorias = new HashSet<>();
 
@@ -28,14 +28,14 @@ public class SmsMercado implements java.io.Serializable {
         this.mercadoFotoRuta = mercadoFotoRuta;
     }
 
-    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsCategoriasServicio> smsCategoriasServicios) {
+    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsServicios> smsServicios) {
         this.mercadoNombre = mercadoNombre;
         this.mercadoDescripcion = mercadoDescripcion;
         this.mercadoFotoNombre = mercadoFotoNombre;
         this.mercadoFotoRuta = mercadoFotoRuta;       
         this.smsProveedors = smsProveedors;
         this.smsCategorias = smsCategorias;
-        this.smsCategoriasServicios = smsCategoriasServicios;
+        this.smsServicios = smsServicios;
     }
 
     public Integer getIdMercado() {
@@ -92,15 +92,16 @@ public class SmsMercado implements java.io.Serializable {
 
     public void setSmsCategorias(Set<SmsCategoria> smsCategorias) {
         this.smsCategorias = smsCategorias;
+    }   
+
+    public Set<SmsServicios> getSmsServicios() {
+        return smsServicios;
     }
 
-    public Set<SmsCategoriasServicio> getSmsCategoriasServicios() {
-        return smsCategoriasServicios;
+    public void setSmsServicios(Set<SmsServicios> smsServicios) {
+        this.smsServicios = smsServicios;
     }
-
-    public void setSmsCategoriasServicios(Set<SmsCategoriasServicio> smsCategoriasServicios) {
-        this.smsCategoriasServicios = smsCategoriasServicios;
-    }
-
     
-}
+    
+
+    }

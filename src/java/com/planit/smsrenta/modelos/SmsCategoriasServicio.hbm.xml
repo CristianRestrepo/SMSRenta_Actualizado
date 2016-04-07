@@ -12,10 +12,7 @@
     </property>
     <property name="catDescripcion" type="string">
       <column length="45" name="Cat_descripcion"/>
-    </property>
-    <many-to-one class="com.planit.smsrenta.modelos.SmsMercado" fetch="join" name="smsMercado">
-      <column name="idMercado" not-null="true"/>
-    </many-to-one>
+    </property>    
     <set fetch="select" inverse="true" lazy="true" name="smsServicioses" table="sms_servicios">
       <key>
         <column name="idCategoria_Servicio" not-null="true"/>
@@ -51,6 +48,6 @@
       <many-to-many class="com.planit.smsrenta.modelos.SmsLugares">
         <column name="idLugar" not-null="true"/>
       </many-to-many>
-    </set>
+    </set>    
   </class>
 </hibernate-mapping>

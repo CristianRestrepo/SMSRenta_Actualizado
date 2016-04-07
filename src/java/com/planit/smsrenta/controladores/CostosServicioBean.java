@@ -8,14 +8,17 @@ package com.planit.smsrenta.controladores;
 import com.planit.smsrenta.dao.ICategoriaDao;
 import com.planit.smsrenta.dao.ICostosServiciosDao;
 import com.planit.smsrenta.dao.ILugarDao;
+import com.planit.smsrenta.dao.IMercadoDao;
 import com.planit.smsrenta.dao.IServicioDao;
 import com.planit.smsrenta.dao.ImpCategoriaDao;
 import com.planit.smsrenta.dao.ImpCostosServiciosDao;
 import com.planit.smsrenta.dao.ImpLugarDao;
+import com.planit.smsrenta.dao.ImpMercadoDao;
 import com.planit.smsrenta.dao.ImpServicioDao;
 import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsCostosservicios;
 import com.planit.smsrenta.modelos.SmsLugares;
+import com.planit.smsrenta.modelos.SmsMercado;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +32,11 @@ public class CostosServicioBean implements Serializable {
 
     //Objetos necesarios ne vista
     private SmsCostosservicios costoView;
-    private SmsCiudad ciudadView;
+    private SmsCiudad ciudadInicioView;
+    private SmsCiudad ciudadDestinoView;
     private SmsLugares lugarInicioView;
-    private SmsLugares lugsrDestinoView;
+    private SmsLugares lugarDestinoView;
+    private SmsMercado mercadoView;
 
     private List<SmsCostosservicios> costosListView;
 
@@ -40,6 +45,7 @@ public class CostosServicioBean implements Serializable {
     IServicioDao serDao;
     ICostosServiciosDao cosDao;
     ILugarDao lugarDao;
+    IMercadoDao mercadoDao;
 
     //Variables
     private int estado; //Controla la operacion a realizar
@@ -51,9 +57,11 @@ public class CostosServicioBean implements Serializable {
     public CostosServicioBean() {
 
         costoView = new SmsCostosservicios();
-        ciudadView = new SmsCiudad();
+        ciudadInicioView = new SmsCiudad();
+        ciudadDestinoView = new SmsCiudad();
         lugarInicioView = new SmsLugares();
-        lugsrDestinoView = new SmsLugares();
+        lugarDestinoView = new SmsLugares();
+        mercadoView = new SmsMercado();
 
         costosListView = new ArrayList<>();
         lugarDao = new ImpLugarDao();
@@ -65,6 +73,7 @@ public class CostosServicioBean implements Serializable {
         catDao = new ImpCategoriaDao();
         serDao = new ImpServicioDao();
         cosDao = new ImpCostosServiciosDao();
+        mercadoDao = new ImpMercadoDao();
 
         habilitar = false;
     }
@@ -107,14 +116,22 @@ public class CostosServicioBean implements Serializable {
         this.costoView = costoView;
     }
 
-    public SmsCiudad getCiudadView() {
-        return ciudadView;
+    public SmsCiudad getCiudadInicioView() {
+        return ciudadInicioView;
     }
 
-    public void setCiudadView(SmsCiudad ciudadView) {
-        this.ciudadView = ciudadView;
+    public void setCiudadInicioView(SmsCiudad ciudadInicioView) {
+        this.ciudadInicioView = ciudadInicioView;
     }
 
+    public SmsCiudad getCiudadDestinoView() {
+        return ciudadDestinoView;
+    }
+
+    public void setCiudadDestinoView(SmsCiudad ciudadDestinoView) {
+        this.ciudadDestinoView = ciudadDestinoView;
+    }
+    
     public List<SmsCostosservicios> getCostosListView() {
         return costosListView;
     }
@@ -140,22 +157,32 @@ public class CostosServicioBean implements Serializable {
         this.lugarInicioView = lugarInicioView;
     }
 
-    public SmsLugares getLugsrDestinoView() {
-        return lugsrDestinoView;
+    public SmsLugares getLugarDestinoView() {
+        return lugarDestinoView;
     }
 
-    public void setLugsrDestinoView(SmsLugares lugsrDestinoView) {
-        this.lugsrDestinoView = lugsrDestinoView;
+    public void setLugarDestinoView(SmsLugares lugarDestinoView) {
+        this.lugarDestinoView = lugarDestinoView;
     }
+
+    public SmsMercado getMercadoView() {
+        return mercadoView;
+    }
+
+    public void setMercadoView(SmsMercado mercadoView) {
+        this.mercadoView = mercadoView;
+    }
+
+   
 
     public void registrar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
         costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
         costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()).get(0));
 
-        if (lugarInicioView.getLugarNombre() != null && lugsrDestinoView.getLugarNombre() != null) {
+        if (lugarInicioView.getLugarNombre() != null && lugarDestinoView.getLugarNombre() != null) {
             costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(lugarInicioView).get(0));
-            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(lugsrDestinoView).get(0));
+            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(lugarDestinoView).get(0));
         }
 
         //Registramos el costo
@@ -164,7 +191,8 @@ public class CostosServicioBean implements Serializable {
 
         //Limpiamos objetos
         costoView = new SmsCostosservicios();
-        ciudadView = new SmsCiudad();
+        ciudadInicioView = new SmsCiudad();
+        ciudadDestinoView = new SmsCiudad();
     }
 
     public void habilitarListas(String valor) {
@@ -192,7 +220,9 @@ public class CostosServicioBean implements Serializable {
 
         //Limpiamos objetos
         costoView = new SmsCostosservicios();
-        ciudadView = new SmsCiudad();
+        ciudadInicioView = new SmsCiudad();
+        ciudadDestinoView = new SmsCiudad();
+        mercadoView = new SmsMercado();
     }
 
     public void filtrar() {
@@ -234,11 +264,13 @@ public class CostosServicioBean implements Serializable {
         if (estado == 1) {
             nombre = "Modificar Costo Servicio";
             if (costoView.getSmsLugaresByIdLugarInicio() != null) {
-                ciudadView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
+                ciudadInicioView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
+                ciudadDestinoView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
                 lugarInicioView = costoView.getSmsLugaresByIdLugarInicio();
-                lugsrDestinoView = costoView.getSmsLugaresByIdLugarDestino();
-
+                lugarDestinoView = costoView.getSmsLugaresByIdLugarDestino();                
+              
             }
+            mercadoView = costoView.getSmsServicios().getSmsMercado();
         }
     }
 

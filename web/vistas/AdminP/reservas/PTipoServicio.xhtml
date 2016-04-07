@@ -46,7 +46,7 @@
                                         <p>#{Mercado.mercadoDescripcion}</p>
                                     </div>
                                     <div class="panel-footer text-center">
-                                        <p:commandButton value="Reserve aquí #{Mercado.mercadoNombre}" action="AdminPReservacion" class="btn btn-primary btn-block">
+                                        <p:commandButton value="Reserve aquí #{Mercado.mercadoNombre}" action="#{reservacionBean.iniciarProcesoReservacion()}" class="btn btn-primary btn-block">
                                             <f:setPropertyActionListener value="#{Mercado}" target="#{reservacionBean.mercadoSeleccionado}"/>
                                         </p:commandButton>
                                     </div>
