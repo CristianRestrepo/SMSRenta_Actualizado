@@ -64,7 +64,6 @@ public class CostosServicioBean implements Serializable {
         mercadoView = new SmsMercado();
 
         costosListView = new ArrayList<>();
-        lugarDao = new ImpLugarDao();
 
         buscar = null;
         estado = 0;
@@ -74,6 +73,7 @@ public class CostosServicioBean implements Serializable {
         serDao = new ImpServicioDao();
         cosDao = new ImpCostosServiciosDao();
         mercadoDao = new ImpMercadoDao();
+        lugarDao = new ImpLugarDao();
 
         habilitar = false;
     }
@@ -131,7 +131,7 @@ public class CostosServicioBean implements Serializable {
     public void setCiudadDestinoView(SmsCiudad ciudadDestinoView) {
         this.ciudadDestinoView = ciudadDestinoView;
     }
-    
+
     public List<SmsCostosservicios> getCostosListView() {
         return costosListView;
     }
@@ -172,8 +172,6 @@ public class CostosServicioBean implements Serializable {
     public void setMercadoView(SmsMercado mercadoView) {
         this.mercadoView = mercadoView;
     }
-
-   
 
     public void registrar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
@@ -245,6 +243,9 @@ public class CostosServicioBean implements Serializable {
         nombre = "Registrar Costo Servicio";
 
         costosListView = cosDao.consultarCostos();//Recargamos la lista de costos
+        ciudadInicioView = new SmsCiudad();
+        ciudadDestinoView = new SmsCiudad();
+        mercadoView = new SmsMercado();
     }
 
     //Metodos Propios
@@ -267,8 +268,8 @@ public class CostosServicioBean implements Serializable {
                 ciudadInicioView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
                 ciudadDestinoView = costoView.getSmsLugaresByIdLugarInicio().getSmsCiudad();
                 lugarInicioView = costoView.getSmsLugaresByIdLugarInicio();
-                lugarDestinoView = costoView.getSmsLugaresByIdLugarDestino();                
-              
+                lugarDestinoView = costoView.getSmsLugaresByIdLugarDestino();
+
             }
             mercadoView = costoView.getSmsServicios().getSmsMercado();
         }

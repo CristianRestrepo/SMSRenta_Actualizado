@@ -7,6 +7,7 @@ package com.planit.smsrenta.dao;
 
 import com.planit.smsrenta.modelos.SmsCategoria;
 import com.planit.smsrenta.modelos.SmsCostosservicios;
+import com.planit.smsrenta.modelos.SmsLugares;
 import com.planit.smsrenta.modelos.SmsServicios;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,14 @@ public class ImpCostosServiciosDao implements ICostosServiciosDao {
         List<SmsCostosservicios> Costos = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCostosservicios as costo left join fetch costo.smsLugaresByIdLugarInicio as lugarInicio left join fetch lugarInicio.smsCiudad left join fetch costo.smsLugaresByIdLugarDestino as lugarDestino left join fetch lugarDestino.smsCiudad left join fetch costo.smsCategoria as categoria left join fetch costo.smsServicios as servicios where categoria.idCategoria = '" + categoria.getIdCategoria() + "' and servicios.idServicio = '" + servicio.getIdServicio()+ "'");
+            Query query = session.createQuery("from SmsCostosservicios as costo "
+                    + "left join fetch costo.smsLugaresByIdLugarInicio as lugarInicio "
+                    + "left join fetch lugarInicio.smsCiudad "
+                    + "left join fetch costo.smsLugaresByIdLugarDestino as lugarDestino "
+                    + "left join fetch lugarDestino.smsCiudad "
+                    + "left join fetch costo.smsCategoria as categoria "
+                    + "left join fetch costo.smsServicios as servicios "
+                    + "where categoria.idCategoria = '" + categoria.getIdCategoria() + "' and servicios.idServicio = '" + servicio.getIdServicio() + "'");
             Costos = (List<SmsCostosservicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -59,14 +67,46 @@ public class ImpCostosServiciosDao implements ICostosServiciosDao {
         }
         return Costos;
     }
-    
+
     @Override
     public List<SmsCostosservicios> consultarCostoServicio(SmsServicios servicio) {
         Session session = null;
         List<SmsCostosservicios> Costos = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCostosservicios as costo left join fetch costo.smsLugaresByIdLugarInicio as lugarInicio left join fetch lugarInicio.smsCiudad left join fetch costo.smsLugaresByIdLugarDestino as lugarDestino left join fetch lugarDestino.smsCiudad left join fetch costo.smsCategoria as categoria left join fetch costo.smsServicios as servicios where servicios = '" + servicio.getIdServicio()+ "' ");
+            Query query = session.createQuery("from SmsCostosservicios as costo "
+                    + "left join fetch costo.smsLugaresByIdLugarInicio as lugarInicio "
+                    + "left join fetch lugarInicio.smsCiudad "
+                    + "left join fetch costo.smsLugaresByIdLugarDestino as lugarDestino "
+                    + "left join fetch lugarDestino.smsCiudad "
+                    + "left join fetch costo.smsCategoria as categoria "
+                    + "left join fetch costo.smsServicios as servicios "
+                    + "where servicios = '" + servicio.getIdServicio() + "' ");
+            Costos = (List<SmsCostosservicios>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return Costos;
+    }
+
+    @Override
+    public List<SmsCostosservicios> consultarCostoServicioTraslado(SmsServicios servicio, SmsCategoria categoria, SmsLugares lugarInicio, SmsLugares lugarDestino) {
+        Session session = null;
+        List<SmsCostosservicios> Costos = new ArrayList<>();
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsCostosservicios as costo "
+                    + "left join fetch costo.smsLugaresByIdLugarInicio as lugarInicio "
+                    + "left join fetch lugarInicio.smsCiudad "
+                    + "left join fetch costo.smsLugaresByIdLugarDestino as lugarDestino "
+                    + "left join fetch lugarDestino.smsCiudad "
+                    + "left join fetch costo.smsCategoria as categoria "
+                    + "left join fetch costo.smsServicios as servicios where servicios = '" + servicio.getIdServicio() + "' and categoria.idCategoria = '" + categoria.getIdCategoria() + "' and "
+                    + "((lugarInicio.idLugar ='" + lugarInicio.getIdLugar() + "' and lugarDestino.idLugar = '" + lugarDestino.getIdLugar() + "') or ((lugarInicio.idLugar ='" + lugarDestino.getIdLugar() + "' and lugarDestino.idLugar = '" + lugarInicio.getIdLugar() + "'))");
             Costos = (List<SmsCostosservicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -157,6 +197,6 @@ public class ImpCostosServiciosDao implements ICostosServiciosDao {
             }
         }
         return Costos;
-    }
+    }   
 
 }

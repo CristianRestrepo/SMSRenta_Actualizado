@@ -6,8 +6,10 @@
 package com.planit.smsrenta.controladores;
 
 import com.planit.smsrenta.dao.ICiudadDao;
+import com.planit.smsrenta.dao.ILocalidadDao;
 import com.planit.smsrenta.dao.ILugarDao;
 import com.planit.smsrenta.dao.ImpCiudadDao;
+import com.planit.smsrenta.dao.ImpLocalidadDao;
 import com.planit.smsrenta.dao.ImpLugarDao;
 import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsLugares;
@@ -30,6 +32,7 @@ public class LugarBean implements Serializable {
     //Conexion con el DAO
     ICiudadDao ciudadDao;
     ILugarDao lugarDao;
+    ILocalidadDao localidadDao;
 
     //Variables
     private int estado; //Controla la operacion a realizar
@@ -47,6 +50,7 @@ public class LugarBean implements Serializable {
 
         ciudadDao = new ImpCiudadDao();
         lugarDao = new ImpLugarDao();
+        localidadDao = new ImpLocalidadDao();
     }
 
     @PostConstruct
@@ -108,7 +112,8 @@ public class LugarBean implements Serializable {
     public void registrar() {
 
         LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()).get(0));
-
+        LugarView.setSmsLocalidad(localidadDao.consultarLocalidad(LugarView.getSmsLocalidad()).get(0));
+        
         lugarDao.registrarLugar(LugarView);
         LugaresListView = lugarDao.consultarLugares();
         LugarView = new SmsLugares();
@@ -117,6 +122,7 @@ public class LugarBean implements Serializable {
     public void modificar() {
 
         LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()).get(0));
+        LugarView.setSmsLocalidad(localidadDao.consultarLocalidad(LugarView.getSmsLocalidad()).get(0));
 
         lugarDao.modificarLugar(LugarView);
         LugaresListView = lugarDao.consultarLugares();

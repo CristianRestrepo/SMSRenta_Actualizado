@@ -12,6 +12,7 @@ import com.planit.smsrenta.dao.ICiudadDao;
 import com.planit.smsrenta.dao.ICostosServiciosDao;
 import com.planit.smsrenta.dao.IEmpleadoDao;
 import com.planit.smsrenta.dao.IEstadoDao;
+import com.planit.smsrenta.dao.ILugarDao;
 import com.planit.smsrenta.dao.IReservacionDao;
 import com.planit.smsrenta.dao.IServicioDao;
 import com.planit.smsrenta.dao.IUsuarioDao;
@@ -21,6 +22,7 @@ import com.planit.smsrenta.dao.ImpCiudadDao;
 import com.planit.smsrenta.dao.ImpCostosServiciosDao;
 import com.planit.smsrenta.dao.ImpEmpleadoDao;
 import com.planit.smsrenta.dao.ImpEstadoDao;
+import com.planit.smsrenta.dao.ImpLugarDao;
 import com.planit.smsrenta.dao.ImpReservacionDao;
 import com.planit.smsrenta.dao.ImpServicioDao;
 import com.planit.smsrenta.dao.ImpUsuarioDao;
@@ -31,6 +33,7 @@ import com.planit.smsrenta.modelos.SmsCategoriasServicio;
 import com.planit.smsrenta.modelos.SmsCostosservicios;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsEstado;
+import com.planit.smsrenta.modelos.SmsLugares;
 import com.planit.smsrenta.modelos.SmsMercado;
 import com.planit.smsrenta.modelos.SmsServicios;
 import com.planit.smsrenta.modelos.SmsUsuario;
@@ -446,7 +449,7 @@ public class ReservacionBean implements Serializable {
                     }
 
                     switch (categoriaServicio) {
-                        case 1:                            
+                        case 1:
                             fechaInicio = formatDate.format(fechaActual);
                             fechaEntrega = formatDate.format(fechaActual);
 
@@ -459,7 +462,7 @@ public class ReservacionBean implements Serializable {
 
                             reservaView.setReservacionFechaInicio(fechaActual);
                             reservaView.setReservacionFechaLlegada(fechaActual);
-                            
+
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                             break;
@@ -476,7 +479,7 @@ public class ReservacionBean implements Serializable {
 
                             reservaView.setReservacionFechaInicio(fechaActual);
                             reservaView.setReservacionFechaLlegada(fechaActual);
-                            
+
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                             break;
@@ -497,7 +500,7 @@ public class ReservacionBean implements Serializable {
                     }
 
                     reservaView.setSmsVehiculo(new SmsVehiculo());
-                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));
+                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));//Consulta de servicio
 
                     reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
                     reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
@@ -712,7 +715,7 @@ public class ReservacionBean implements Serializable {
     //Metodos para la reservacion
     public int calcularCostoReservacion(SmsReservacion reserva) {
         //Instacia de variable propias del metodo
-        int costo = 0;       
+        int costo = 0;
 
         // Crear 2 instancias de Calendar
         Calendar calFechaInicio = Calendar.getInstance();
@@ -731,17 +734,6 @@ public class ReservacionBean implements Serializable {
         long diffHourDifferentDay;
         long diffMinutes;
 
-        
-        if (categoriaServicio == 1) { //servicios por Tiempo
-            
-        }else if(categoriaServicio == 2) { // traslados
-        
-        }else if(categoriaServicio == 3){ //Renta
-        
-            
-        }
-        
-        
         //asignamos a los objetos calendar la fecha de inicio con la hora de inicio y la fecha de llegada
         //con su hora de llegada
         calFechaInicio.setTime(reserva.getReservacionFechaInicio());
@@ -749,8 +741,14 @@ public class ReservacionBean implements Serializable {
         calHoraInicio.setTime(reserva.getReservacionHoraInicio());
         calHoraLlegada.setTime(reserva.getReservacionHoraLlegada());
 
-        costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
-        if (reservaView.getSmsServicios().getServicioDuracion() == 0) {
+//id tipos duracion servicio
+//        1 = minuto
+//        2 = hora        
+//        3 = dia
+//        4 = semana
+//        5 = mes       
+        if (categoriaServicio == 1) { //Tiempo
+            costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
             milis1 = calFechaInicio.getTimeInMillis();
             milis2 = calFechaLlegada.getTimeInMillis();
 
@@ -773,104 +771,117 @@ public class ReservacionBean implements Serializable {
             diffHours = diffHourDifferentDay - (diffDays * 24);
 
             // calcular la diferencia en horas
-            if (reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("30 minutos")) {
-                costo = (((int) diffMinutes) / 30) * costoServicioView.getCostoServicioPrecio();
-            } else if (reservaView.getSmsServicios().getServicioNombre().equalsIgnoreCase("60 minutos")) {
-                costo = ((int) diffHours) * costoServicioView.getCostoServicioPrecio();
+            if (reserva.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) {
+                costo = (((int) diffMinutes) / reservaView.getSmsServicios().getServicioDuracion()) * costoServicioView.getCostoServicioPrecio();
+            } else if (reserva.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {
+                costo = ((int) diffHours) / reservaView.getSmsServicios().getServicioDuracion() * costoServicioView.getCostoServicioPrecio();
             }
 
-        } else if (reservaView.getSmsServicios().getServicioDuracion() < 7 && reservaView.getSmsServicios().getServicioDuracion() >= 1) {//Renta por dias
+        } else if (categoriaServicio == 2) { // traslados
+            SmsLugares lugarInicio = new SmsLugares();
+            SmsLugares lugarDestino = new SmsLugares();
 
-            milis1 = calFechaInicio.getTimeInMillis();
-            milis2 = calFechaLlegada.getTimeInMillis();
+            ILugarDao lugarDao = new ImpLugarDao();
+            lugarInicio.setLugarNombre(reservaView.getReservacionLugarLlegada());
+            lugarInicio = lugarDao.consultarLugar(lugarInicio).get(0);
+            lugarDestino.setLugarNombre(reservaView.getReservacionLugarDestino());
+            lugarDestino = lugarDao.consultarLugar(lugarDestino).get(0);
 
-            // calcular la diferencia en dias
-            diff = milis2 - milis1;
-            diffDays = diff / (24 * 60 * 60 * 1000);
+            costoServicioView = costoDao.consultarCostoServicioTraslado(reservaView.getSmsServicios(), categoriaView, lugarInicio, lugarDestino).get(0);
+            costo = costoServicioView.getCostoServicioPrecio();
+        } else if (categoriaServicio == 3) { // Renta
+            costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
+            if (reserva.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 3) {
 
-            milis1 = calHoraInicio.getTimeInMillis();
-            milis2 = calHoraLlegada.getTimeInMillis();
+                milis1 = calFechaInicio.getTimeInMillis();
+                milis2 = calFechaLlegada.getTimeInMillis();
 
-            diff = milis1 - milis2;
-            diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
+                // calcular la diferencia en dias
+                diff = milis2 - milis1;
+                diffDays = diff / (24 * 60 * 60 * 1000);
 
-            diffDays = diffHourDifferentDay / 24;
+                milis1 = calHoraInicio.getTimeInMillis();
+                milis2 = calHoraLlegada.getTimeInMillis();
 
-            // calcular la diferencia en horas
-            diffHours = diffHourDifferentDay - (diffDays * 24);
+                diff = milis1 - milis2;
+                diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
 
-            costo = ((int) diffDays) * costoServicioView.getCostoServicioPrecio();
+                diffDays = diffHourDifferentDay / 24;
 
-            if ((int) diffHours > 4) {
-                //Obtenemos el costo de la hora
-                costo = costo + (costoServicioView.getCostoServicioPrecio() / 2);
-            } else if ((int) diffHours > 12) {
-                costo = costo + (costoServicioView.getCostoServicioPrecio());
-            }
-        } else if (reservaView.getSmsServicios().getServicioDuracion() >= 7 && reservaView.getSmsServicios().getServicioDuracion() < 30) {
+                // calcular la diferencia en horas
+                diffHours = diffHourDifferentDay - (diffDays * 24);
 
-            // conseguir la representacion de la fecha en milisegundos
-            milis1 = calFechaInicio.getTimeInMillis();
-            milis2 = calFechaLlegada.getTimeInMillis();
+                costo = (((int) diffDays) / reservaView.getSmsServicios().getServicioDuracion()) * costoServicioView.getCostoServicioPrecio();
 
-            // calcular la diferencia en dias
-            diff = milis2 - milis1;
-            diffDays = (diff / (24 * 60 * 60 * 1000));
-            diffWeek = diffDays / 7;
+                if ((int) diffHours > 4) {
+                    //Obtenemos el costo de la hora
+                    costo = costo + (costoServicioView.getCostoServicioPrecio() / 2);
+                } else if ((int) diffHours > 12) {
+                    costo = costo + (costoServicioView.getCostoServicioPrecio());
+                }
+            } else if (reserva.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 4) {
 
-            costo = ((int) diffWeek) * costoServicioView.getCostoServicioPrecio();
+                // conseguir la representacion de la fecha en milisegundos
+                milis1 = calFechaInicio.getTimeInMillis();
+                milis2 = calFechaLlegada.getTimeInMillis();
 
-            diffDays = diffDays - (diffWeek * 7);
+                // calcular la diferencia en dias
+                diff = milis2 - milis1;
+                diffDays = (diff / (24 * 60 * 60 * 1000));
+                diffWeek = diffDays / 7;
 
-            milis1 = calHoraInicio.getTimeInMillis();
-            milis2 = calHoraLlegada.getTimeInMillis();
+                costo = ((int) diffWeek) * costoServicioView.getCostoServicioPrecio();
 
-            diff = milis1 - milis2;
-            diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
+                diffDays = diffDays - (diffWeek * 7);
 
-            diffDays = diffHourDifferentDay / 24;
+                milis1 = calHoraInicio.getTimeInMillis();
+                milis2 = calHoraLlegada.getTimeInMillis();
 
-            //Calculamos costo del dia
-            if ((int) diffDays > 2) {
-                costo = costo + ((costoServicioView.getCostoServicioPrecio()) / 2);
-            } else if ((int) diffDays > 4) {
-                costo = costo + ((costoServicioView.getCostoServicioPrecio()));
-            }
+                diff = milis1 - milis2;
+                diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
 
-        } else if (reservaView.getSmsServicios().getServicioDuracion() >= 30) {
+                diffDays = diffHourDifferentDay / 24;
 
-            // conseguir la representacion de la fecha en milisegundos
-            int diaInicio = reserva.getReservacionFechaInicio().getDay();
-            int diaEntrega = reserva.getReservacionFechaLlegada().getDay();
+                //Calculamos costo del dia
+                if ((int) diffDays > 2) {
+                    costo = costo + ((costoServicioView.getCostoServicioPrecio()) / 2);
+                } else if ((int) diffDays > 4) {
+                    costo = costo + ((costoServicioView.getCostoServicioPrecio()));
+                }
 
-            // calcular la diferencia en dias
-            diffDays = diaEntrega - diaInicio;
+            } else if (reserva.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 5) {
 
-            int startMes = (calFechaInicio.get(Calendar.YEAR) * 12) + calFechaInicio.get(Calendar.MONTH);
-            int endMes = (calFechaLlegada.get(Calendar.YEAR) * 12) + calFechaLlegada.get(Calendar.MONTH);
+                // conseguir la representacion de la fecha en milisegundos
+                int diaInicio = reserva.getReservacionFechaInicio().getDay();
+                int diaEntrega = reserva.getReservacionFechaLlegada().getDay();
 
-            int daysInMonth = calFechaInicio.getActualMaximum(Calendar.DAY_OF_MONTH);
+                // calcular la diferencia en dias
+                diffDays = diaEntrega - diaInicio;
 
-            milis1 = calHoraInicio.getTimeInMillis();
-            milis2 = calHoraLlegada.getTimeInMillis();
+                int startMes = (calFechaInicio.get(Calendar.YEAR) * 12) + calFechaInicio.get(Calendar.MONTH);
+                int endMes = (calFechaLlegada.get(Calendar.YEAR) * 12) + calFechaLlegada.get(Calendar.MONTH);
+              
+                milis1 = calHoraInicio.getTimeInMillis();
+                milis2 = calHoraLlegada.getTimeInMillis();
 
-            diff = milis1 - milis2;
-            diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
+                diff = milis1 - milis2;
+                diffHourDifferentDay = (diffDays * 24) - (diff / (60 * 60 * 1000));
 
-            diffDays = diffHourDifferentDay / 24;
+                diffDays = diffHourDifferentDay / 24;
 
-            //Diferencia en meses entre las dos fechas
-            diffMonth = endMes - startMes;
-            costo = ((int) diffMonth) * costoServicioView.getCostoServicioPrecio();
+                //Diferencia en meses entre las dos fechas
+                diffMonth = endMes - startMes;
+                costo = (((int) diffMonth) / reservaView.getSmsServicios().getServicioDuracion()) * costoServicioView.getCostoServicioPrecio();
 
-            if ((int) diffDays < 7) {
-                costo = costo + (costoServicioView.getCostoServicioPrecio() / 4);
-            } else if ((int) diffDays > 7 && (int) diffDays < 15) {
-                costo = costo + (costoServicioView.getCostoServicioPrecio() / 3);
-            } else if ((int) diffDays > 15 && (int) diffDays < 21) {
-                costo = costo + (costoServicioView.getCostoServicioPrecio() / 2);
-            } else if ((int) diffDays > 29) {
-                costo = costo + (costoServicioView.getCostoServicioPrecio());
+                if ((int) diffDays < 7) {
+                    costo = costo + (costoServicioView.getCostoServicioPrecio() / 4);
+                } else if ((int) diffDays > 7 && (int) diffDays < 15) {
+                    costo = costo + (costoServicioView.getCostoServicioPrecio() / 3);
+                } else if ((int) diffDays > 15 && (int) diffDays < 21) {
+                    costo = costo + (costoServicioView.getCostoServicioPrecio() / 2);
+                } else if ((int) diffDays > 29) {
+                    costo = costo + (costoServicioView.getCostoServicioPrecio());
+                }
             }
 
         }

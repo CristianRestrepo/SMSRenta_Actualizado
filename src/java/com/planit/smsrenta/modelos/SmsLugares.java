@@ -23,6 +23,7 @@ public class SmsLugares  implements java.io.Serializable {
      
     public SmsLugares() {
         this.smsCiudad = new SmsCiudad();
+        this.smsLocalidad = new SmsLocalidad();
     }
 	
     public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, SmsLocalidad smsLocalidad) {

@@ -593,5 +593,14 @@
             <to-view-id>/vistas/AdminS/reservas/SReservacion.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
+    <managed-bean>
+        <managed-bean-name>tipoDuracionBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.TipoDuracionBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>localidadBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.LocalidadBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

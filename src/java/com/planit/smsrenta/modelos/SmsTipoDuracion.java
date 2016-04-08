@@ -13,7 +13,7 @@ import java.util.Set;
  * @author Desarrollo_Planit
  */
 public class SmsTipoDuracion {
-    
+
     private Integer idTipoDuracion;
     private String tipoDuracionNombre;
     private Set<SmsServicios> smsServicios = new HashSet<>(0);
@@ -50,8 +50,4 @@ public class SmsTipoDuracion {
     public void setSmsServicios(Set<SmsServicios> smsServicios) {
         this.smsServicios = smsServicios;
     }
-    
-    
-    
-    
 }

@@ -145,11 +145,18 @@
                                 <div class="box-body">
                                     <div class="table-responsive">
                                         <h:panelGrid id="PLugar" columns="2" cellpadding="5" style="width: 100%">
-                                            <b:selectOneMenu id="SCiudades" tooltip="Selecciones Ciudad o municipio al que pertenece el lugar" required="true" requiredMessage="Seleccione Ciudad o municipio" value="#{lugarBean.lugarView.smsCiudad.ciudadNombre}">
+                                            <p:selectOneMenu style="width: 100%" id="SCiudades" required="true" requiredMessage="Seleccione Ciudad o municipio" value="#{lugarBean.lugarView.smsCiudad.ciudadNombre}">
                                                 <f:selectItem itemLabel="Seleccione ciudad o municipio"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
-                                            </b:selectOneMenu>
+                                                <p:ajax event="change" update="SLocalidades"/>
+                                            </p:selectOneMenu>
                                             <p:message for="SCiudades"/>
+
+                                            <b:selectOneMenu id="SLocalidades" tooltip="Seleccione Localidad a la que pertenece el lugar o barrio" required="true" requiredMessage="Seleccione Localidad" value="#{lugarBean.lugarView.smsLocalidad.localidadNombre}">
+                                                <f:selectItem itemLabel="Seleccione Localidad"/>
+                                                <f:selectItems value="#{localidadBean.consultarLocalidadesSegunCiudad(lugarBean.lugarView.smsCiudad)}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SLocalidades"/>
 
                                             <b:inputText maxlength="50" label="Nombre del lugar" id="TNombreLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Nombre del lugar"  value="#{lugarBean.lugarView.lugarNombre}" style="width: 100%"></b:inputText>                                            
                                             <p:message for="TNombreLugar"/>
