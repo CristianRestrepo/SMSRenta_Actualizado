@@ -36,5 +36,7 @@
     <mapping resource="com/planit/smsrenta/modelos/SmsNacionalidad.hbm.xml"/>
     <mapping resource="com/planit/smsrenta/modelos/SmsFactura.hbm.xml"/>
     <mapping resource="com/planit/smsrenta/modelos/SmsContrato.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsLocalidad.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsTipoDuracion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -55,6 +55,9 @@
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SCiudades"/>
+                                            
+                                            <b:inputText maxlength="45" id="TdirCli" tooltip="Direccion de residencia" placeholder="Direccion de residencia" value="#{clienteBean.usuarioView.usuarioDireccion}" style="width: 100%"></b:inputText>
+                                            <p:message for="TdirCli"/>
                                         </h:panelGrid>
                                         <hr/>  
                                     </div>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class catalog="smsrenta_actualizada" name="com.planit.smsrenta.modelos.SmsTipoDuracion" optimistic-lock="version" table="sms_tipo_duracion">
+        <id name="idTipoDuracion" type="java.lang.Integer">
+            <column name="idTipoDuracion"/>
+            <generator class="identity"/>
+        </id>
+        <property name="tipoDuracionNombre" type="string">
+            <column length="45" name="TipoDuracionNombre" not-null="true"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="smsServicios" table="sms_servicios">
+            <key>
+                <column name="idTipoDuracion" not-null="true"/>
+            </key>
+            <one-to-many class="com.planit.smsrenta.modelos.SmsServicios"/>
+        </set>
+    </class>
+    
+    
+
+</hibernate-mapping>

@@ -15,6 +15,7 @@ public class SmsLugares  implements java.io.Serializable {
      private SmsCiudad smsCiudad;
      private String lugarNombre;
      private String lugarDireccion;
+     private SmsLocalidad smsLocalidad;
      private Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio = new HashSet<>(0);
      private Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino = new HashSet<>(0);
      private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
@@ -23,14 +24,14 @@ public class SmsLugares  implements java.io.Serializable {
     public SmsLugares() {
         this.smsCiudad = new SmsCiudad();
     }
-
 	
-    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre) {
+    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, SmsLocalidad smsLocalidad) {
         this.smsCiudad = smsCiudad;
         this.lugarNombre = lugarNombre;
+        this.smsLocalidad = smsLocalidad;
     }
     
-    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, String lugarDireccion, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino, Set<SmsVehiculo> smsVehiculos, Set<SmsCategoriasServicio> smsCategoriasServicios) {
+    public SmsLugares(SmsCiudad smsCiudad, String lugarNombre, String lugarDireccion, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarInicio, Set<SmsCostosservicios> smsCostosserviciosesForIdLugarDestino, Set<SmsVehiculo> smsVehiculos, Set<SmsCategoriasServicio> smsCategoriasServicios, SmsLocalidad smsLocalidad) {
        this.smsCiudad = smsCiudad;
        this.lugarNombre = lugarNombre;
        this.lugarDireccion = lugarDireccion;
@@ -38,6 +39,7 @@ public class SmsLugares  implements java.io.Serializable {
        this.smsCostosserviciosesForIdLugarDestino = smsCostosserviciosesForIdLugarDestino;
        this.smsCategoriasServicios = smsCategoriasServicios;
        this.smsVehiculos = smsVehiculos;
+       this.smsLocalidad = smsLocalidad;
     }
    
     public Integer getIdLugar() {
@@ -99,10 +101,13 @@ public class SmsLugares  implements java.io.Serializable {
         this.smsCategoriasServicios = smsCategoriasServicios;
     }
 
-    
-    
+    public SmsLocalidad getSmsLocalidad() {
+        return smsLocalidad;
+    }
 
-
+    public void setSmsLocalidad(SmsLocalidad smsLocalidad) {
+        this.smsLocalidad = smsLocalidad;
+    }   
 
 }
 

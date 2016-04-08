@@ -37,4 +37,6 @@
   <table-filter match-name="sms_lugar_sms_vehiculo"/>
   <table-filter match-name="sms_vehiculo_sms_empleado"/>
   <table-filter match-name="sms_vehiculo"/>
+  <table-filter match-name="sms_localidad"/>
+  <table-filter match-name="sms_tipo_duracion"/>
 </hibernate-reverse-engineering>

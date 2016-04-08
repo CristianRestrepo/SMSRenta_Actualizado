@@ -10,6 +10,9 @@
     <many-to-one class="com.planit.smsrenta.modelos.SmsCiudad" fetch="select" name="smsCiudad">
       <column name="idCiudad" not-null="true"/>
     </many-to-one>
+    <many-to-one class="com.planit.smsrenta.modelos.SmsLocalidad" fetch="select" name="smsLocalidad">
+      <column name="idLocalidad" not-null="true"/>
+    </many-to-one>
     <property name="lugarNombre" type="string">
       <column length="200" name="Lugar_nombre" not-null="true"/>
     </property>

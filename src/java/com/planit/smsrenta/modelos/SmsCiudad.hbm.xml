@@ -46,5 +46,11 @@
       </key>
       <one-to-many class="com.planit.smsrenta.modelos.SmsReservacion"/>
     </set>
+    <set fetch="select" inverse="true" lazy="true" name="smsLocalidades" table="sms_localidad">
+      <key>
+        <column name="idCiudad" not-null="true"/>
+      </key>
+      <one-to-many class="com.planit.smsrenta.modelos.SmsLocalidad"/>
+    </set>
   </class>
 </hibernate-mapping>

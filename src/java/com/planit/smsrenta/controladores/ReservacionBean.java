@@ -379,7 +379,6 @@ public class ReservacionBean implements Serializable {
 
         //Limpieza de objetos         
         reservaView = new SmsReservacion();
-
         return ruta;
     }
 
@@ -713,10 +712,7 @@ public class ReservacionBean implements Serializable {
     //Metodos para la reservacion
     public int calcularCostoReservacion(SmsReservacion reserva) {
         //Instacia de variable propias del metodo
-        int costo = 0;
-
-        //instancia de objetos relacionados a los DAO necesarios
-        ICostosServiciosDao cosDao = new ImpCostosServiciosDao();
+        int costo = 0;       
 
         // Crear 2 instancias de Calendar
         Calendar calFechaInicio = Calendar.getInstance();
@@ -735,6 +731,17 @@ public class ReservacionBean implements Serializable {
         long diffHourDifferentDay;
         long diffMinutes;
 
+        
+        if (categoriaServicio == 1) { //servicios por Tiempo
+            
+        }else if(categoriaServicio == 2) { // traslados
+        
+        }else if(categoriaServicio == 3){ //Renta
+        
+            
+        }
+        
+        
         //asignamos a los objetos calendar la fecha de inicio con la hora de inicio y la fecha de llegada
         //con su hora de llegada
         calFechaInicio.setTime(reserva.getReservacionFechaInicio());
@@ -742,7 +749,7 @@ public class ReservacionBean implements Serializable {
         calHoraInicio.setTime(reserva.getReservacionHoraInicio());
         calHoraLlegada.setTime(reserva.getReservacionHoraLlegada());
 
-        costoServicioView = cosDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
+        costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
         if (reservaView.getSmsServicios().getServicioDuracion() == 0) {
             milis1 = calFechaInicio.getTimeInMillis();
             milis2 = calFechaLlegada.getTimeInMillis();
