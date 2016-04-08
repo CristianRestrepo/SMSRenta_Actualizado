@@ -31,6 +31,9 @@
     <property name="usuarioEmail" type="string">
       <column length="100" name="Usuario_email" not-null="true"/>
     </property>
+    <property name="usuarioDireccion" type="string">
+      <column length="100" name="Usuario_direccion"/>
+    </property>
     <property name="usuarioPassword" type="string">
       <column length="45" name="Usuario_password"/>
     </property>

@@ -433,17 +433,12 @@ public class ReservacionBean implements Serializable {
                     break;
                 case "Vehiculo":
                     SelecVeh = false;
-                    
-                    switch(categoriaServicio){
-                    
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                    
-                    }
+
+                    SimpleDateFormat formatTime;
+                    SimpleDateFormat formatDate;
+                    formatTime = new SimpleDateFormat("HH:mm:ss");
+                    formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                    Date fechaActual = new Date();
 
                     if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                         reservaView.setSmsUsuario(sesion);
@@ -451,25 +446,59 @@ public class ReservacionBean implements Serializable {
                         reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
                     }
 
-                    reservaView.setSmsVehiculo(new SmsVehiculo());
-                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));
+                    switch (categoriaServicio) {
+                        case 1:                            
+                            fechaInicio = formatDate.format(fechaActual);
+                            fechaEntrega = formatDate.format(fechaActual);
 
-                    SimpleDateFormat formatTime;
-                    SimpleDateFormat formatDate;
-                    formatTime = new SimpleDateFormat("HH:mm:ss");
-                    formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                            try {
+                                reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                                reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
+                            } catch (ParseException pe) {
+                                pe.getMessage();
+                            }
 
-                    try {
-                        reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-                        reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
-                    } catch (ParseException pe) {
-                        pe.getMessage();
+                            reservaView.setReservacionFechaInicio(fechaActual);
+                            reservaView.setReservacionFechaLlegada(fechaActual);
+                            
+                            horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                            horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                            break;
+                        case 2:
+                            fechaInicio = formatDate.format(fechaActual);
+                            fechaEntrega = formatDate.format(fechaActual);
+
+                            try {
+                                reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                                reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
+                            } catch (ParseException pe) {
+                                pe.getMessage();
+                            }
+
+                            reservaView.setReservacionFechaInicio(fechaActual);
+                            reservaView.setReservacionFechaLlegada(fechaActual);
+                            
+                            horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                            horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                            break;
+                        case 3:
+                            try {
+                                reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                                reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
+                            } catch (ParseException pe) {
+                                pe.getMessage();
+                            }
+
+                            fechaInicio = formatDate.format(reservaView.getReservacionFechaInicio());
+                            fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
+                            horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                            horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                            break;
+
                     }
 
-                    fechaInicio = formatDate.format(reservaView.getReservacionFechaInicio());
-                    fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
-                    horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
-                    horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                    reservaView.setSmsVehiculo(new SmsVehiculo());
+                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));
 
                     reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
                     reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
@@ -845,19 +874,18 @@ public class ReservacionBean implements Serializable {
         if (!servicio.getServicioNombre().isEmpty()) {
             SmsCategoriasServicio catServicio = servicioDao.ConsultarServicio(servicio).get(0).getSmsCategoriasServicio();
             if (catServicio.getCatNombre().equalsIgnoreCase("Renta")) {
-                categoriaServicio = 1;
-            } else if (catServicio.getCatNombre().equalsIgnoreCase("Tiempo")) {
-                categoriaServicio = 2;
-            } else if (catServicio.getCatNombre().equalsIgnoreCase("Traslado")) {
                 categoriaServicio = 3;
+            } else if (catServicio.getCatNombre().equalsIgnoreCase("Tiempo")) {
+                categoriaServicio = 1;
+            } else if (catServicio.getCatNombre().equalsIgnoreCase("Traslado")) {
+                categoriaServicio = 2;
             }
-        }else{
-        categoriaServicio = 0;
+        } else {
+            categoriaServicio = 0;
         }
     }
-    
-    
-    public String iniciarProcesoReservacion(){
+
+    public String iniciarProcesoReservacion() {
         reservaView = new SmsReservacion();
         modReservacionView = new SmsReservacion();
         estadoView = new SmsEstado();
@@ -866,19 +894,18 @@ public class ReservacionBean implements Serializable {
         categoriaServicio = 0;
         SelecVeh = false;
         SelecCon = false;
-        
-        
+
         String ruta = "";
-        if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")){
+        if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")) {
             ruta = "AdminPReservacion";
-        }else if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Secundario")){
+        } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Secundario")) {
             ruta = "AdminSReserva";
-        }else if(sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")){
+        } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {
             ruta = "ClienteReservacion";
         }
-            
+
         return ruta;
-         
+
     }
 
 }
