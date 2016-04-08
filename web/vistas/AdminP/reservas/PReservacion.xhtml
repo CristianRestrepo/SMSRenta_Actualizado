@@ -716,9 +716,17 @@
                                                     <div class="row no-print">
                                                         <div class="col-xs-12" align="right">
                                                             <h:panelGrid columns="3">
-                                                                <p:commandLink action="#{pathBean.ir_AdminPCondicionUso()}"
+                                                                <p:growl id="condiciones-usos" showDetail="true"/>
+
+                                                                <p:commandLink  update="condiciones-usos"
                                                                                value="Al darle click en Reservar está aceptando lor Terminos y Condiciones de Uso de SMS Renta ."  >                                                               
                                                                 </p:commandLink>
+
+                                                                <p:confirmDialog global="true"  showEffect="fade" hideEffect="fade"> 
+                                                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                                </p:confirmDialog>
+
                                                                 <b:commandButton iconAwesome="fa fa-arrow-right" onclick="PrimeFaces.monitorDownload(start, stop);" update=":formularioAgenda" value="Confirmar Reservación" action="#{reservacionBean.registrarReservacion()}" class="btn btn-success btn-lg"/>
                                                             </h:panelGrid>
                                                             <script type="text/javascript">

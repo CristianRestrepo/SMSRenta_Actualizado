@@ -2,9 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="425"/>
 	<parameter name="idContrato" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{Contrato_objeto}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT r.Reservacion_lugar_llegada , r.Reservacion_lugar_destino , 
@@ -19,15 +22,15 @@ conductor.Usuario_nombre , conductor.Usuario_CC , empl.Empleado_numero_licencia,
 #DATOS DE CONTRATO
 cont.idContrato , cont.Contrato_objeto
 from sms_contrato as cont, sms_reservacion as r , sms_vehiculo as v , sms_referencia as ref , 
-sms_marca as m , sms_categoria cat , sms_usuario as cliente , sms_usuario as conductor , sms_empleado as empl 
-where cont.idContrato = r.idReservacion AND
+sms_marca as m , sms_categoria cat , sms_usuario as conductor , sms_empleado as empl 
+where cont.idReservacion = r.idReservacion AND
 	  r.idVehiculo = v.idVehiculo AND
-      r.idCliente = cliente.idUsuario AND
       r.idEmpleado = empl.idEmpleado AND
       empl.idEmpleado = conductor.idUsuario AND
       v.idReferencia = ref.idReferencia AND
       ref.Referencia_idMarca = m.idMarca AND
-      v.idCategoria = cat.idCategoria]]>
+      v.idCategoria = cat.idCategoria AND
+	cont.idContrato = $P{idContrato}]]>
 	</queryString>
 	<field name="Reservacion_lugar_llegada" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -91,25 +94,6 @@ where cont.idContrato = r.idReservacion AND
 			<rectangle>
 				<reportElement x="0" y="0" width="304" height="80" forecolor="#666666" uuid="8b6da278-b1cc-4f4f-91a2-c7299e1dbce6"/>
 			</rectangle>
-			<image>
-				<reportElement x="5" y="14" width="294" height="57" uuid="10f37f18-de0f-4f69-9819-95e4fa49b0e0"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
-				</box>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\minitraspret.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="372" y="9" width="183" height="62" uuid="87596e1e-4ca2-4f60-9e86-c35665a7ba95"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\coopenal.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="315" y="14" width="57" height="63" uuid="c120a713-037e-48dd-8ea6-a645e31e0c9a"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\super_transporte.png"]]></imageExpression>
-			</image>
 			<rectangle>
 				<reportElement x="0" y="80" width="555" height="65" forecolor="#666666" uuid="72b5db4a-d733-4f36-ace6-27de8f7e1c9b"/>
 			</rectangle>
@@ -134,6 +118,18 @@ where cont.idContrato = r.idReservacion AND
 				</textElement>
 				<text><![CDATA[N° 425526302    201600600370]]></text>
 			</staticText>
+			<image>
+				<reportElement x="3" y="14" width="298" height="53" uuid="5d54a4d7-d329-47be-bb6a-5af8564681a1"/>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\minitraspret.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="313" y="8" width="58" height="66" uuid="d7101ca8-626c-4108-ad06-dd1c3d0a91c5"/>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\super_transporte.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="376" y="14" width="176" height="59" uuid="1fab9720-41de-45b7-94ac-6edfa542a97a"/>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -148,10 +144,6 @@ where cont.idContrato = r.idReservacion AND
 				</textElement>
 				<text><![CDATA[TRANSPORTE DE CARGA, ESPECIAL Y MENSAJERÍA]]></text>
 			</staticText>
-			<image>
-				<reportElement x="304" y="3" width="153" height="50" uuid="9fe0bb8e-c113-4c16-aa58-e3344475c8a3"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\coopenal.jpg"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="443" y="26" width="61" height="12" forecolor="#666666" uuid="0dc23057-dc10-4a23-9979-a87e6a13a290"/>
 				<textElement>
@@ -159,6 +151,10 @@ where cont.idContrato = r.idReservacion AND
 				</textElement>
 				<text><![CDATA[Nit: 850.020.381-7]]></text>
 			</staticText>
+			<image>
+				<reportElement x="317" y="3" width="140" height="50" uuid="04cd25ef-3536-4079-8ae7-c5e5dc73ac1f"/>
+				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -184,7 +180,19 @@ where cont.idContrato = r.idReservacion AND
 				<text><![CDATA[CONTRATO N°]]></text>
 			</staticText>
 		</band>
-		<band height="44"/>
+		<band height="44">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="44" forecolor="#666666" uuid="4a8868c0-bce2-49d3-bbec-aa5f452714f3"/>
+			</rectangle>
+			<subreport>
+				<reportElement x="17" y="0" width="509" height="44" uuid="39067d27-7827-48ca-8825-9ae554254de0"/>
+				<subreportParameter name="idContrato_sub">
+					<subreportParameterExpression><![CDATA[$P{idContrato}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subReporte_Cliente_Copenal.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 		<band height="239">
 			<rectangle>
 				<reportElement x="0" y="128" width="555" height="54" forecolor="#666666" uuid="3f87503d-cdcc-4839-8234-384aefa84791"/>
@@ -339,7 +347,7 @@ where cont.idContrato = r.idReservacion AND
 				<textFieldExpression><![CDATA[$F{Reservacion_lugar_destino}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="254">
+		<band height="277">
 			<rectangle>
 				<reportElement x="225" y="44" width="117" height="210" forecolor="#666666" uuid="568f461f-1176-44de-8943-396924126294"/>
 			</rectangle>
@@ -563,15 +571,22 @@ where cont.idContrato = r.idReservacion AND
 				<textFieldExpression><![CDATA[$F{Empleado_numero_licencia}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="50"/>
+		<band height="127">
+			<rectangle>
+				<reportElement x="0" y="1" width="555" height="93" forecolor="#666666" uuid="d572b6d4-f3d5-42c7-bbb8-a990acc399e5"/>
+			</rectangle>
+		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="70" splitType="Stretch">
+		<band height="93" splitType="Stretch">
 			<rectangle>
-				<reportElement x="342" y="0" width="213" height="70" forecolor="#666666" uuid="49e7da01-4e9c-4778-91cd-68c53cf27fb3"/>
+				<reportElement x="0" y="4" width="555" height="70" forecolor="#666666" uuid="75eccea7-8f3d-423f-96dc-9b971ee97fc6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="4" width="213" height="70" forecolor="#666666" uuid="49e7da01-4e9c-4778-91cd-68c53cf27fb3"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="30" y="19" width="299" height="16" uuid="7779bd37-8c69-49d9-ba68-16472df63921"/>
