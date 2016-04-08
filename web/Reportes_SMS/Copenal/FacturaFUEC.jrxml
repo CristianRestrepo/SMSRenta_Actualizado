@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="425"/>
+	<property name="ireport.y" value="420"/>
 	<parameter name="idContrato" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{Contrato_objeto}]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["..\\Reportes_SMS\\Copenal\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT r.Reservacion_lugar_llegada , r.Reservacion_lugar_destino , 
@@ -120,15 +120,15 @@ where cont.idReservacion = r.idReservacion AND
 			</staticText>
 			<image>
 				<reportElement x="3" y="14" width="298" height="53" uuid="5d54a4d7-d329-47be-bb6a-5af8564681a1"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\minitraspret.png"]]></imageExpression>
+				<imageExpression><![CDATA["..\\Reportes_SMS\\Copenal\\minitraspret.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="313" y="8" width="58" height="66" uuid="d7101ca8-626c-4108-ad06-dd1c3d0a91c5"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\super_transporte.png"]]></imageExpression>
+				<imageExpression><![CDATA["..\\Reportes_SMS\\Copenal\\super_transporte.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="376" y="14" width="176" height="59" uuid="1fab9720-41de-45b7-94ac-6edfa542a97a"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["..\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -153,7 +153,7 @@ where cont.idReservacion = r.idReservacion AND
 			</staticText>
 			<image>
 				<reportElement x="317" y="3" width="140" height="50" uuid="04cd25ef-3536-4079-8ae7-c5e5dc73ac1f"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["..\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
@@ -180,12 +180,12 @@ where cont.idReservacion = r.idReservacion AND
 				<text><![CDATA[CONTRATO N°]]></text>
 			</staticText>
 		</band>
-		<band height="44">
+		<band height="22">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="44" forecolor="#666666" uuid="4a8868c0-bce2-49d3-bbec-aa5f452714f3"/>
+				<reportElement x="0" y="0" width="555" height="22" forecolor="#666666" uuid="4a8868c0-bce2-49d3-bbec-aa5f452714f3"/>
 			</rectangle>
 			<subreport>
-				<reportElement x="17" y="0" width="509" height="44" uuid="39067d27-7827-48ca-8825-9ae554254de0"/>
+				<reportElement x="3" y="4" width="552" height="15" uuid="39067d27-7827-48ca-8825-9ae554254de0"/>
 				<subreportParameter name="idContrato_sub">
 					<subreportParameterExpression><![CDATA[$P{idContrato}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -347,9 +347,9 @@ where cont.idReservacion = r.idReservacion AND
 				<textFieldExpression><![CDATA[$F{Reservacion_lugar_destino}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="277">
+		<band height="236">
 			<rectangle>
-				<reportElement x="225" y="44" width="117" height="210" forecolor="#666666" uuid="568f461f-1176-44de-8943-396924126294"/>
+				<reportElement x="225" y="44" width="117" height="192" forecolor="#666666" uuid="568f461f-1176-44de-8943-396924126294"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="29" width="555" height="15" forecolor="#666666" uuid="587c4952-b7e3-42b8-b7a3-9ed8653bc16a"/>
@@ -365,10 +365,10 @@ where cont.idReservacion = r.idReservacion AND
 				<text><![CDATA[CARACTERISTICAS DEL VEHÍCULO]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="342" y="44" width="213" height="210" forecolor="#666666" uuid="061650c5-addb-4c1f-8388-1c54bbdb4864"/>
+				<reportElement x="342" y="44" width="213" height="192" forecolor="#666666" uuid="061650c5-addb-4c1f-8388-1c54bbdb4864"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="44" width="225" height="210" forecolor="#666666" uuid="14d05661-9617-476d-a0b4-a7742b2e97ff"/>
+				<reportElement x="0" y="44" width="225" height="192" forecolor="#666666" uuid="14d05661-9617-476d-a0b4-a7742b2e97ff"/>
 			</rectangle>
 			<line>
 				<reportElement x="0" y="84" width="555" height="1" forecolor="#666666" uuid="5a049ebd-5cbe-408b-ad9b-87e4d4a048c4"/>
@@ -380,7 +380,7 @@ where cont.idReservacion = r.idReservacion AND
 				<reportElement x="0" y="169" width="555" height="1" forecolor="#666666" uuid="78c2f0aa-28d4-4a36-bc53-00a82387252d"/>
 			</line>
 			<line>
-				<reportElement x="0" y="211" width="555" height="1" forecolor="#666666" uuid="2c934df8-2935-4cc5-9c27-790bc0c9c284"/>
+				<reportElement x="0" y="200" width="555" height="1" forecolor="#666666" uuid="2c934df8-2935-4cc5-9c27-790bc0c9c284"/>
 			</line>
 			<staticText>
 				<reportElement x="17" y="47" width="44" height="13" forecolor="#333333" uuid="2fffb2a8-1557-4f40-b863-72c44b52aeea"/>
@@ -474,21 +474,14 @@ where cont.idReservacion = r.idReservacion AND
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
+				<text><![CDATA[DATOS DEL CONDUCTOR 1]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="19" y="175" width="125" height="13" forecolor="#333333" uuid="467f869e-f6bf-4bab-b6a7-600d5479ab13"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="19" y="217" width="125" height="13" forecolor="#333333" uuid="0b8f6a7c-1217-4073-b647-17b7432a767d"/>
-				<textElement>
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[DATOS DEL CONDUCTOR]]></text>
+				<text><![CDATA[DATOS DEL CONDUCTOR 2]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="247" y="130" width="70" height="13" forecolor="#333333" uuid="e34790b6-a10c-4ab4-bfe6-2457e69db3cc"/>
@@ -505,13 +498,6 @@ where cont.idReservacion = r.idReservacion AND
 				<text><![CDATA[N° de CÉDULA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="247" y="214" width="70" height="13" forecolor="#333333" uuid="95c246d3-fa1f-4181-b00e-a551c6e89692"/>
-				<textElement>
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° de CÉDULA]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="347" y="130" width="132" height="13" forecolor="#333333" uuid="1173ba81-c7ae-4464-852b-fed4c1b9f1c8"/>
 				<textElement>
 					<font size="9" isBold="true"/>
@@ -519,17 +505,10 @@ where cont.idReservacion = r.idReservacion AND
 				<text><![CDATA[N° LICENCIA CONDUCCIÓN]]></text>
 			</staticText>
 			<line>
-				<reportElement x="482" y="127" width="1" height="127" forecolor="#666666" uuid="542d01d1-cbf1-417e-a416-41318531c8c2"/>
+				<reportElement x="482" y="127" width="1" height="74" forecolor="#666666" uuid="542d01d1-cbf1-417e-a416-41318531c8c2"/>
 			</line>
 			<staticText>
 				<reportElement x="347" y="172" width="132" height="13" forecolor="#333333" uuid="f339292c-80d2-4057-b61b-ce3acbf5759e"/>
-				<textElement>
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[N° LICENCIA CONDUCCIÓN]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="347" y="213" width="132" height="13" forecolor="#333333" uuid="107c0d6a-4975-4f0c-9e9a-e52b6d2e62d6"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -549,13 +528,6 @@ where cont.idReservacion = r.idReservacion AND
 				</textElement>
 				<text><![CDATA[VIGENCIA]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="493" y="213" width="56" height="13" forecolor="#333333" uuid="751143c0-11d8-45df-994d-0ab8a2197899"/>
-				<textElement>
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[VIGENCIA]]></text>
-			</staticText>
 			<textField>
 				<reportElement x="41" y="146" width="166" height="20" uuid="ee9c4fd0-0ad6-49e8-82b2-1e90930fee58"/>
 				<textElement textAlignment="Center"/>
@@ -570,39 +542,34 @@ where cont.idReservacion = r.idReservacion AND
 				<reportElement x="353" y="149" width="120" height="16" uuid="bb7b3d15-b128-4a77-a013-6094d9953f08"/>
 				<textFieldExpression><![CDATA[$F{Empleado_numero_licencia}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="15" y="201" width="540" height="35" uuid="e17af436-e9fd-45cf-92fb-9bb9a6341af1"/>
+				<subreportParameter name="idContr_footer">
+					<subreportParameterExpression><![CDATA[$P{idContrato}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subReporte_Cliente_Copenal_footer.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
-		<band height="127">
+		<band height="57">
 			<rectangle>
-				<reportElement x="0" y="1" width="555" height="93" forecolor="#666666" uuid="d572b6d4-f3d5-42c7-bbb8-a990acc399e5"/>
-			</rectangle>
-		</band>
-	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="93" splitType="Stretch">
-			<rectangle>
-				<reportElement x="0" y="4" width="555" height="70" forecolor="#666666" uuid="75eccea7-8f3d-423f-96dc-9b971ee97fc6"/>
+				<reportElement x="0" y="0" width="555" height="57" forecolor="#666666" uuid="75eccea7-8f3d-423f-96dc-9b971ee97fc6"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="342" y="4" width="213" height="70" forecolor="#666666" uuid="49e7da01-4e9c-4778-91cd-68c53cf27fb3"/>
+				<reportElement x="342" y="0" width="213" height="57" forecolor="#666666" uuid="49e7da01-4e9c-4778-91cd-68c53cf27fb3"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="30" y="19" width="299" height="16" uuid="7779bd37-8c69-49d9-ba68-16472df63921"/>
+				<reportElement x="34" y="13" width="299" height="16" uuid="7779bd37-8c69-49d9-ba68-16472df63921"/>
 				<textElement textAlignment="Center">
 					<font isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[Carrera 26a N° 1D 53 Santa Isabel (57 1) 201 24 15]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="31" y="35" width="299" height="16" uuid="a2b5c0c1-5565-4e89-a103-e9c03e5b2f95"/>
+				<reportElement x="35" y="29" width="299" height="16" uuid="a2b5c0c1-5565-4e89-a103-e9c03e5b2f95"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[info@copenal]]></text>
 			</staticText>
 		</band>
-	</pageFooter>
-	<summary>
-		<band height="18" splitType="Stretch"/>
-	</summary>
+	</detail>
 </jasperReport>
