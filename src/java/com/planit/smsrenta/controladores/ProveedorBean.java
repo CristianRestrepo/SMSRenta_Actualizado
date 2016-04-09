@@ -172,29 +172,37 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         proveedorView.getSmsUsuario().setSmsRol(rolDao.consultarRol(proveedorView.getSmsUsuario().getSmsRol()).get(0));//Asociamos un rol a un usuario
         proveedorView.getSmsUsuario().setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
         proveedorView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(proveedorView.getSmsUsuario().getSmsNacionalidad()).get(0));
+
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(proveedorView.getSmsUsuario());
 
         //Asignamos la informacion de usuario al proveedor a registrar
-        proveedorView.setSmsUsuario(usuarioDao.consultarUsuario(proveedorView.getSmsUsuario()).get(0));
+        //proveedorView.setSmsUsuario(usuarioDao.consultarUsuario(proveedorView.getSmsUsuario()).get(0));
 
         //Registramos al usuario como proveedor
         proveedorDao.registrarProveedor(proveedorView);
-        proveedorView = proveedorDao.consultarProveedor(proveedorView).get(0);
+        //proveedorView = proveedorDao.consultarProveedor(proveedorView).get(0);
 
+        List<SmsMercado> mercados = new ArrayList<>();
         for (int i = 0; i < mercadosSeleccionados.size(); i++) { //Relacionamos la categoria con los mercados seleccionados
             mercadoView.setMercadoNombre(mercadosSeleccionados.get(i));
             mercadoView = mercadoDao.consultarMercadoConProveedores(mercadoView).get(0);
-            mercadoView.getSmsProveedors().add(proveedorView);//Se relaciona el proveedor al mercado 
-            proveedorView.getSmsMercados().add(mercadoView);//Se relaciona el mercado al proveedor
+            mercados.add(mercadoView);
+            mercadoView = new SmsMercado();
         }
-
+        
+        for (int i = 0; i < mercados.size(); i++) {
+            mercados.get(i).getSmsProveedors().add(proveedorView);
+            proveedorView.getSmsMercados().add(mercados.get(i));
+        }
+        
         proveedorDao.modificarProveedor(proveedorView);//Modificamos el proveedor recien registrado para agregar los mercados a los que pertenece
         email.sendEmailProveedor(proveedorView.getSmsUsuario(), proveedorView, password);//Enviamos correo al proveedor, confirmando su registro al sistema, y enviando datos de sesion
         proveedorListView = proveedorDao.mostrarProveedores();//Recargamos la lista de proveedores
 
         //Limpiamos objetos      
         proveedorView = new SmsProveedor();
+        mercadoView = new SmsMercado();
         mercadosSeleccionados = new ArrayList<>();
         password = null;
     }
@@ -203,7 +211,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
 
         boolean valor = false;
         List<SmsMercado> mercadoList = mercadoDao.consultarMercadosSegunProveedor(proveedorView);
-        for (int j = 0; j < mercadosSeleccionados.size(); j++) {            
+        for (int j = 0; j < mercadosSeleccionados.size(); j++) {
             for (SmsMercado mercado : mercadoList) {
                 if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
                     valor = true;
@@ -302,6 +310,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         //Reiniciamos los objetos
         mercadosSeleccionados = new ArrayList<>();
         contraseñaModificada = false;
+        operacion = 0;
         habilitarCancelar = true;
         nombreOperacion = "Registrar Proveedor";
 

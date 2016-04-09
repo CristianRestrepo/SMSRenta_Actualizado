@@ -18,10 +18,8 @@ public class SmsCategoria  implements java.io.Serializable {
      private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
      private Set<SmsMercado> smsMercados = new HashSet<>(0);
 
-    public SmsCategoria() {
-        categoriaNombre = "";
+    public SmsCategoria() {        
     }
-
 	
     public SmsCategoria(String categoriaNombre) {
         this.categoriaNombre = categoriaNombre;

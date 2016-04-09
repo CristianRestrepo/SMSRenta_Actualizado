@@ -145,12 +145,12 @@ public class MercadoBean implements Serializable {
     //Metodos
     public void registrarMercado() {
 
-        mercadoDao.registrarMercado(mercadoView);
-        mercadoView = new SmsMercado();
+        mercadoDao.registrarMercado(mercadoView);        
         mercadoListView = mercadoDao.consultarMercados();
-
+        mercadoView = new SmsMercado();
+        
         estadoFoto = "";
-        habilitarRegistro = true;
+        habilitarRegistro = true;        
     }
 
     public void modificarMercado() {
@@ -165,8 +165,8 @@ public class MercadoBean implements Serializable {
     public void eliminarMercado() {
         mercadoDao.eliminarMercado(mercadoView);
         mercadoListView = mercadoDao.consultarMercados();
-
         mercadoView = new SmsMercado();
+        
         estadoFoto = "";
         nombre = "Registrar Mercado";
         habilitarRegistro = true;

@@ -5,7 +5,6 @@
  */
 package com.planit.smsrenta.dao;
 
-import com.planit.smsrenta.modelos.SmsMercado;
 import com.planit.smsrenta.modelos.SmsProveedor;
 import com.planit.smsrenta.modelos.SmsUsuario;
 import java.util.List;

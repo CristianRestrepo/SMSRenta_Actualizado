@@ -8,15 +8,12 @@ package com.planit.smsrenta.controladores;
 import com.planit.smsrenta.dao.ICategoriaDao;
 import com.planit.smsrenta.dao.IMercadoDao;
 import com.planit.smsrenta.dao.IProveedorDao;
-import com.planit.smsrenta.dao.IServicioDao;
 import com.planit.smsrenta.dao.ImpCategoriaDao;
 import com.planit.smsrenta.dao.ImpMercadoDao;
 import com.planit.smsrenta.dao.ImpProveedorDao;
-import com.planit.smsrenta.dao.ImpServicioDao;
 import com.planit.smsrenta.modelos.SmsCategoria;
 import com.planit.smsrenta.modelos.SmsMercado;
 import com.planit.smsrenta.modelos.SmsProveedor;
-import com.planit.smsrenta.modelos.SmsServicios;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,16 +141,23 @@ public class CategoriaBean implements Serializable {
 
     public void registrar() {
         catDao.registrarCategoria(categoriaView);//Se registra la categoria        
-        categoriaView = catDao.consultarCategoria(categoriaView).get(0);//Consultamos la categoria recien registrada
+        //categoriaView = catDao.consultarCategoria(categoriaView).get(0);//Consultamos la categoria recien registrada
 
-        for (int i = 0; i < mercadosSeleccionados.size(); i++) { //Relacionamos la categoria con los mercados seleccionados
+        List<SmsMercado> mercados = new ArrayList();
+        for (int i = 0; i < mercadosSeleccionados.size(); i++) { 
             mercadoView.setMercadoNombre(mercadosSeleccionados.get(i));
             mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
-            mercadoView.getSmsCategorias().add(categoriaView);//Se relaciona la categoria al mercado 
-            categoriaView.getSmsMercados().add(mercadoView);//Se relaciona el mercado a la categoria
-            catDao.agregarMercadosCategoria(categoriaView);//se registra la relacion entre la categoria y los mercados
+            mercados.add(mercadoView);
             mercadoView = new SmsMercado();
         }
+        
+        //Relacionamos la categoria con los mercados seleccionados
+        for (int i = 0; i < mercados.size(); i++) {            
+            mercados.get(i).getSmsCategorias().add(categoriaView);
+            categoriaView.getSmsMercados().add(mercados.get(i));
+        }
+       
+        catDao.agregarMercadosCategoria(categoriaView);//se registra la relacion entre la categoria y los mercados
 
         //Limpiamos objetos
         categoriaView = new SmsCategoria();

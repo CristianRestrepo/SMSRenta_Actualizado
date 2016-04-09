@@ -137,7 +137,9 @@ public class ImpMercadoDao implements IMercadoDao {
         List<SmsMercado> mercados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsCategorias as categorias where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
+            Query query = session.createQuery("from SmsMercado as mercado "
+                    + "left join fetch mercado.smsCategorias as categorias "
+                    + "left join fetch categorias.smsMercados where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
             mercados = (List<SmsMercado>) query.list();
 
         } catch (HibernateException e) {
@@ -175,7 +177,9 @@ public class ImpMercadoDao implements IMercadoDao {
         List<SmsMercado> mercados = new ArrayList<>();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsMercado as mercado left join fetch mercado.smsProveedors as proveedores where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
+            Query query = session.createQuery("from SmsMercado as mercado "
+                    + "left join fetch mercado.smsProveedors as proveedores "
+                    + "left join fetch proveedores.smsMercados where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
             mercados = (List<SmsMercado>) query.list();
 
         } catch (HibernateException e) {
@@ -192,9 +196,12 @@ public class ImpMercadoDao implements IMercadoDao {
     public List<SmsMercado> consultarMercadoSegunCategoria(SmsCategoria categoria) {
         Session session = null;
         List<SmsMercado> mercados = new ArrayList<>();
+        int id = categoria.getIdCategoria();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("select mercado from SmsCategoria as cat left outer join cat.smsMercados as mercado where cat.idCategoria ='" + categoria.getIdCategoria() + "'");
+            Query query = session.createQuery("select mercado from SmsCategoria as cat "
+                    + "left outer join cat.smsMercados as mercado "
+                    + "where cat.idCategoria ='" + id + "'");
             mercados = (List<SmsMercado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -209,11 +216,12 @@ public class ImpMercadoDao implements IMercadoDao {
     public List<SmsMercado> consultarMercadosSegunProveedor(SmsProveedor proveedor) {
         Session session = null;
         List<SmsMercado> mercados = new ArrayList<>();
+        int id = proveedor.getIdProveedor();
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("select mercado from SmsProveedor as prov "
                     + "left outer join prov.smsMercados as mercado "
-                    + "where prov.idProveedor = '" + proveedor.getIdProveedor() + "'");
+                    + "where prov.idProveedor = '" + id + "'");
             mercados = (List<SmsMercado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

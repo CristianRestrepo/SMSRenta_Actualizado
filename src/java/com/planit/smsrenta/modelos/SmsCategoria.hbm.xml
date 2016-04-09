@@ -25,7 +25,7 @@
       </key>
       <one-to-many class="com.planit.smsrenta.modelos.SmsVehiculo"/>
     </set>
-    <set cascade="save-update" fetch="select" inverse="true" name="smsMercados" table="sms_mercado_sms_categoria">
+    <set cascade="save-update" fetch="select" lazy="false" inverse="true" name="smsMercados" table="sms_mercado_sms_categoria">
       <key>
         <column name="idCategoria" not-null="true"/>
       </key>
