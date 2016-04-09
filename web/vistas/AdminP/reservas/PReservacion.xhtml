@@ -204,87 +204,9 @@
                                                                         <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
                                                                         <f:selectItem itemLabel="45:00" itemValue="45:00"/>                                                
                                                                     </b:selectOneMenu>
-                                                                </h:panelGrid>
-
-                                                                <label class="mrg-reserva-1">Hora de devolucion</label>
-                                                                <h:panelGrid columns="2" cellpadding="5" width="100%">
-                                                                    <b:selectOneMenu id="SHoraEntrega" value="#{reservacionBean.horaEntrega}" style="width: 100%">
-                                                                        <f:selectItem itemLabel="00" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="01" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="02" itemValue="02"/>
-                                                                        <f:selectItem itemLabel="03" itemValue="03"/>
-                                                                        <f:selectItem itemLabel="04" itemValue="04"/>
-                                                                        <f:selectItem itemLabel="05" itemValue="05"/>
-                                                                        <f:selectItem itemLabel="06" itemValue="06"/>
-                                                                        <f:selectItem itemLabel="07" itemValue="07"/>
-                                                                        <f:selectItem itemLabel="08" itemValue="08"/>
-                                                                        <f:selectItem itemLabel="10" itemValue="10"/>
-                                                                        <f:selectItem itemLabel="11" itemValue="11"/>
-                                                                        <f:selectItem itemLabel="12" itemValue="12"/>
-                                                                        <f:selectItem itemLabel="13" itemValue="13"/> 
-                                                                        <f:selectItem itemLabel="14" itemValue="14"/>                                                    
-                                                                        <f:selectItem itemLabel="15" itemValue="15"/> 
-                                                                        <f:selectItem itemLabel="16" itemValue="16"/> 
-                                                                        <f:selectItem itemLabel="17" itemValue="17"/> 
-                                                                        <f:selectItem itemLabel="18" itemValue="18"/> 
-                                                                        <f:selectItem itemLabel="19" itemValue="19"/> 
-                                                                        <f:selectItem itemLabel="20" itemValue="20"/> 
-                                                                        <f:selectItem itemLabel="21" itemValue="21"/> 
-                                                                        <f:selectItem itemLabel="22" itemValue="22"/>
-                                                                        <f:selectItem itemLabel="23" itemValue="23"/>
-                                                                    </b:selectOneMenu> 
-                                                                    <b:selectOneMenu value="#{reservacionBean.minutosEntrega}" id="SMinutosLlegada"  style="width: 100%">
-                                                                        <f:selectItem itemLabel="00:00" itemValue="00:00"/>
-                                                                        <f:selectItem itemLabel="15:00" itemValue="15:00"/>
-                                                                        <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
-                                                                        <f:selectItem itemLabel="45:00" itemValue="45:00"/>                                                                         
-                                                                    </b:selectOneMenu>
-                                                                </h:panelGrid>
-
+                                                                </h:panelGrid>                                                                
                                                             </c:when>
                                                             <c:when test="${reservacionBean.categoriaServicio == 1}">                                                               
-                                                                <h:panelGrid columns="2" cellpadding="5" width="100%">
-                                                                    <b:selectOneMenu id="SHoraEntrega" binding="#{HEntrega}" value="#{reservacionBean.horaEntrega}" style="width: 100%">
-                                                                        <f:selectItem itemLabel="00" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="01" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="02" itemValue="02"/>
-                                                                        <f:selectItem itemLabel="03" itemValue="03"/>
-                                                                        <f:selectItem itemLabel="04" itemValue="04"/>
-                                                                        <f:selectItem itemLabel="05" itemValue="05"/>
-                                                                        <f:selectItem itemLabel="06" itemValue="06"/>
-                                                                        <f:selectItem itemLabel="07" itemValue="07"/>
-                                                                        <f:selectItem itemLabel="08" itemValue="08"/>
-                                                                        <f:selectItem itemLabel="10" itemValue="10"/>
-                                                                        <f:selectItem itemLabel="11" itemValue="11"/>
-                                                                        <f:selectItem itemLabel="12" itemValue="12"/>
-                                                                        <f:selectItem itemLabel="13" itemValue="13"/> 
-                                                                        <f:selectItem itemLabel="14" itemValue="14"/>                                                    
-                                                                        <f:selectItem itemLabel="15" itemValue="15"/> 
-                                                                        <f:selectItem itemLabel="16" itemValue="16"/> 
-                                                                        <f:selectItem itemLabel="17" itemValue="17"/> 
-                                                                        <f:selectItem itemLabel="18" itemValue="18"/> 
-                                                                        <f:selectItem itemLabel="19" itemValue="19"/> 
-                                                                        <f:selectItem itemLabel="20" itemValue="20"/> 
-                                                                        <f:selectItem itemLabel="21" itemValue="21"/> 
-                                                                        <f:selectItem itemLabel="22" itemValue="22"/>
-                                                                        <f:selectItem itemLabel="23" itemValue="23"/>
-                                                                    </b:selectOneMenu> 
-                                                                    <b:selectOneMenu value="#{reservacionBean.minutosEntrega}" id="SMinutosLlegada"  style="width: 100%">
-                                                                        <f:selectItem itemLabel="00:00" itemValue="00:00"/>
-                                                                        <f:selectItem itemLabel="15:00" itemValue="15:00"/>
-                                                                        <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
-                                                                        <f:selectItem itemLabel="45:00" itemValue="45:00"/> 
-                                                                        <f:attribute name="fechaInicio" value="#{FInicio.value}"/>
-                                                                        <f:attribute name="horaInicio" value="#{HInicio.value}"/>
-                                                                        <f:attribute name="minutosInicio" value="#{MInicio.value}"/>
-                                                                        <f:attribute name="fechaEntrega" value="#{FEntrega.value}"/>
-                                                                        <f:attribute name="horaEntrega" value="#{HEntrega.value}"/>
-                                                                        <f:attribute name="servicio" value="#{Servicio.value}"/>
-                                                                        <f:validator validatorId="dateTimeValidator"/>
-                                                                    </b:selectOneMenu>
-                                                                </h:panelGrid>
-                                                            </c:when>
-                                                            <c:when test="${reservacionBean.categoriaServicio == 2}">                                                                
                                                                 <label class="mrg-reserva-1">Hora de Inicio</label>
                                                                 <h:panelGrid columns="2" cellpadding="5" width="100%">                                                            
                                                                     <b:selectOneMenu id="SHoraInicio" value="#{reservacionBean.horaInicio}" style="width: 100%">
@@ -318,44 +240,8 @@
                                                                         <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
                                                                         <f:selectItem itemLabel="45:00" itemValue="45:00"/>                                                
                                                                     </b:selectOneMenu>
-                                                                </h:panelGrid>
-
-                                                                <label class="mrg-reserva-1">Hora de devolucion</label>
-                                                                <h:panelGrid columns="2" cellpadding="5" width="100%">
-                                                                    <b:selectOneMenu id="SHoraEntrega" value="#{reservacionBean.horaEntrega}" style="width: 100%">
-                                                                        <f:selectItem itemLabel="00" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="01" itemValue="01"/>
-                                                                        <f:selectItem itemLabel="02" itemValue="02"/>
-                                                                        <f:selectItem itemLabel="03" itemValue="03"/>
-                                                                        <f:selectItem itemLabel="04" itemValue="04"/>
-                                                                        <f:selectItem itemLabel="05" itemValue="05"/>
-                                                                        <f:selectItem itemLabel="06" itemValue="06"/>
-                                                                        <f:selectItem itemLabel="07" itemValue="07"/>
-                                                                        <f:selectItem itemLabel="08" itemValue="08"/>
-                                                                        <f:selectItem itemLabel="10" itemValue="10"/>
-                                                                        <f:selectItem itemLabel="11" itemValue="11"/>
-                                                                        <f:selectItem itemLabel="12" itemValue="12"/>
-                                                                        <f:selectItem itemLabel="13" itemValue="13"/> 
-                                                                        <f:selectItem itemLabel="14" itemValue="14"/>                                                    
-                                                                        <f:selectItem itemLabel="15" itemValue="15"/> 
-                                                                        <f:selectItem itemLabel="16" itemValue="16"/> 
-                                                                        <f:selectItem itemLabel="17" itemValue="17"/> 
-                                                                        <f:selectItem itemLabel="18" itemValue="18"/> 
-                                                                        <f:selectItem itemLabel="19" itemValue="19"/> 
-                                                                        <f:selectItem itemLabel="20" itemValue="20"/> 
-                                                                        <f:selectItem itemLabel="21" itemValue="21"/> 
-                                                                        <f:selectItem itemLabel="22" itemValue="22"/>
-                                                                        <f:selectItem itemLabel="23" itemValue="23"/>
-                                                                    </b:selectOneMenu> 
-                                                                    <b:selectOneMenu value="#{reservacionBean.minutosEntrega}" id="SMinutosLlegada"  style="width: 100%">
-                                                                        <f:selectItem itemLabel="00:00" itemValue="00:00"/>
-                                                                        <f:selectItem itemLabel="15:00" itemValue="15:00"/>
-                                                                        <f:selectItem itemLabel="30:00" itemValue="30:00"/>                                                   
-                                                                        <f:selectItem itemLabel="45:00" itemValue="45:00"/>                                                                         
-                                                                    </b:selectOneMenu>
-                                                                </h:panelGrid>
-
-                                                            </c:when>
+                                                                </h:panelGrid> 
+                                                            </c:when>                                                            
                                                         </c:choose>
                                                         <h:panelGrid columns="1" width="100%">
                                                             <p:inputTextarea rows="3" style="width: 100%" placeholder="Observaciones sobre la reservación" />
@@ -719,7 +605,7 @@
                                                                 <p:growl id="condiciones-usos" showDetail="true"/>
 
                                                                 <p:commandLink  update="condiciones-usos"
-                                                                               value="Al darle click en Reservar está aceptando lor Terminos y Condiciones de Uso de SMS Renta ."  >                                                               
+                                                                                value="Al darle click en Reservar está aceptando lor Terminos y Condiciones de Uso de SMS Renta ."  >                                                               
                                                                 </p:commandLink>
 
                                                                 <p:confirmDialog global="true"  showEffect="fade" hideEffect="fade"> 

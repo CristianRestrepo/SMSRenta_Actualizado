@@ -67,7 +67,7 @@ public class ReservacionBean implements Serializable {
     private List<SmsVehiculo> vehiculosListView;
     private List<SmsEmpleado> empleadoListView;
     private SmsMercado mercadoSeleccionado;
-    private int categoriaServicio;
+    private int categoriaServicio; //Controla el tipo de servicio elegido, con lo cual se calcula el la reservacion funciona de maneras distintas
 
     private SmsReservacion reservaView;
     private SmsReservacion modReservacionView;
@@ -448,14 +448,37 @@ public class ReservacionBean implements Serializable {
                         reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
                     }
 
+                    reservaView.setSmsVehiculo(new SmsVehiculo());
+                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));//Consulta de servicio
+
+                    reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
+                    reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
+                    reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
+
+                    //id tipos duracion servicio
+//        1 = minuto
+//        2 = hora        
+//        3 = dia
+//        4 = semana
+//        5 = mes    
                     switch (categoriaServicio) {
+
                         case 1:
                             fechaInicio = formatDate.format(fechaActual);
                             fechaEntrega = formatDate.format(fechaActual);
 
                             try {
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-                                reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
+
+                                Calendar calInicio1 = Calendar.getInstance();
+                                calInicio1.setTime(reservaView.getReservacionHoraInicio());
+                                if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) { //duracion minutos
+                                    calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
+                                } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
+                                    calInicio1.add(Calendar.HOUR, reservaView.getSmsServicios().getServicioDuracion());
+                                }
+
+                                reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
                             } catch (ParseException pe) {
                                 pe.getMessage();
                             }
@@ -472,7 +495,16 @@ public class ReservacionBean implements Serializable {
 
                             try {
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-                                reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
+
+                                Calendar calInicio1 = Calendar.getInstance();
+                                calInicio1.setTime(reservaView.getReservacionHoraInicio());
+                                if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) {//duracion minutos
+                                    calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
+                                } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
+                                    calInicio1.add(Calendar.HOUR, reservaView.getSmsServicios().getServicioDuracion());
+                                }
+
+                                reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
                             } catch (ParseException pe) {
                                 pe.getMessage();
                             }
@@ -498,13 +530,6 @@ public class ReservacionBean implements Serializable {
                             break;
 
                     }
-
-                    reservaView.setSmsVehiculo(new SmsVehiculo());
-                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));//Consulta de servicio
-
-                    reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
-                    reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
-                    reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
 
                     if (resDao.mostrarReservaciones().isEmpty()) {
                         vehiculosListView = vehiculoDao.mostrarVehiculo();
@@ -787,7 +812,7 @@ public class ReservacionBean implements Serializable {
             lugarDestino.setLugarNombre(reservaView.getReservacionLugarDestino());
             lugarDestino = lugarDao.consultarLugar(lugarDestino).get(0);
 
-            costoServicioView = costoDao.consultarCostoServicioTraslado(reservaView.getSmsServicios(), categoriaView, lugarInicio, lugarDestino).get(0);
+            costoServicioView = costoDao.consultarCostoServicioTraslado(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria(), lugarInicio, lugarDestino).get(0);
             costo = costoServicioView.getCostoServicioPrecio();
         } else if (categoriaServicio == 3) { // Renta
             costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
@@ -860,7 +885,7 @@ public class ReservacionBean implements Serializable {
 
                 int startMes = (calFechaInicio.get(Calendar.YEAR) * 12) + calFechaInicio.get(Calendar.MONTH);
                 int endMes = (calFechaLlegada.get(Calendar.YEAR) * 12) + calFechaLlegada.get(Calendar.MONTH);
-              
+
                 milis1 = calHoraInicio.getTimeInMillis();
                 milis2 = calHoraLlegada.getTimeInMillis();
 

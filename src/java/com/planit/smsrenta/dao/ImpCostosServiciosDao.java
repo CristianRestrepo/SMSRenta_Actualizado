@@ -105,8 +105,8 @@ public class ImpCostosServiciosDao implements ICostosServiciosDao {
                     + "left join fetch costo.smsLugaresByIdLugarDestino as lugarDestino "
                     + "left join fetch lugarDestino.smsCiudad "
                     + "left join fetch costo.smsCategoria as categoria "
-                    + "left join fetch costo.smsServicios as servicios where servicios = '" + servicio.getIdServicio() + "' and categoria.idCategoria = '" + categoria.getIdCategoria() + "' and "
-                    + "((lugarInicio.idLugar ='" + lugarInicio.getIdLugar() + "' and lugarDestino.idLugar = '" + lugarDestino.getIdLugar() + "') or ((lugarInicio.idLugar ='" + lugarDestino.getIdLugar() + "' and lugarDestino.idLugar = '" + lugarInicio.getIdLugar() + "'))");
+                    + "left join fetch costo.smsServicios as servicios where servicios.idServicio = '" + servicio.getIdServicio() + "' and categoria.idCategoria = '" + categoria.getIdCategoria() + "' and "
+                    + "((lugarInicio.idLugar ='" + lugarInicio.getIdLugar() + "' and lugarDestino.idLugar = '" + lugarDestino.getIdLugar() + "') or (lugarInicio.idLugar ='" + lugarDestino.getIdLugar() + "' and lugarDestino.idLugar = '" + lugarInicio.getIdLugar() + "'))");
             Costos = (List<SmsCostosservicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
