@@ -20,7 +20,7 @@
       <column length="65535" name="Mercado_foto_ruta" not-null="true"/>
     </property>   
     
-    <set cascade="save-update" fetch="select" lazy="false" inverse="false" name="smsProveedors" table="sms_mercado_sms_proveedor">
+    <set fetch="select" lazy="false" inverse="true" name="smsProveedors" table="sms_mercado_sms_proveedor">
       <key>
         <column name="idMercado" not-null="true"/>
       </key>
@@ -28,7 +28,7 @@
         <column name="idProveedor" not-null="true"/>
       </many-to-many>
     </set>
-    <set cascade="save-update" fetch="select" lazy="false" inverse="false" name="smsCategorias" table="sms_mercado_sms_categoria">
+    <set fetch="select" lazy="false" inverse="true" name="smsCategorias" table="sms_mercado_sms_categoria">
       <key>
         <column name="idMercado" not-null="true"/>
       </key>

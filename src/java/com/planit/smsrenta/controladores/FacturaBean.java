@@ -98,16 +98,7 @@ public class FacturaBean {
         facturaDao.eliminarFactura(facturaView);
         facturaView = new SmsFactura();
     }
-
-    public void crearFactura(SmsReservacion reservacion) throws JRException, IOException {
-        if(tipo.equalsIgnoreCase("Computador")){
-            generarFactura(reservacion);
-        }else if(tipo.equalsIgnoreCase("POS")){
-            generarFacturaPos(reservacion);
-        }
-    }
-    
-    
+       
     public void generarFactura(SmsReservacion reservacion) throws JRException, IOException {
         if (facturaDao.consultarFacturaSegunReservacion(reservacion).isEmpty()) {
             registrar(reservacion);

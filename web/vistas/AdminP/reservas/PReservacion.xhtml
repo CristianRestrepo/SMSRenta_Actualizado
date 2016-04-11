@@ -105,6 +105,7 @@
                                                                         <f:selectItem itemLabel="06" itemValue="06"/>
                                                                         <f:selectItem itemLabel="07" itemValue="07"/>
                                                                         <f:selectItem itemLabel="08" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="09" itemValue="09"/>
                                                                         <f:selectItem itemLabel="10" itemValue="10"/>
                                                                         <f:selectItem itemLabel="11" itemValue="11"/>
                                                                         <f:selectItem itemLabel="12" itemValue="12"/>
@@ -140,6 +141,7 @@
                                                                         <f:selectItem itemLabel="06" itemValue="06"/>
                                                                         <f:selectItem itemLabel="07" itemValue="07"/>
                                                                         <f:selectItem itemLabel="08" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="09" itemValue="09"/>
                                                                         <f:selectItem itemLabel="10" itemValue="10"/>
                                                                         <f:selectItem itemLabel="11" itemValue="11"/>
                                                                         <f:selectItem itemLabel="12" itemValue="12"/>
@@ -183,6 +185,7 @@
                                                                         <f:selectItem itemLabel="06" itemValue="06"/>
                                                                         <f:selectItem itemLabel="07" itemValue="07"/>
                                                                         <f:selectItem itemLabel="08" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="09" itemValue="09"/>
                                                                         <f:selectItem itemLabel="10" itemValue="10"/>
                                                                         <f:selectItem itemLabel="11" itemValue="11"/>
                                                                         <f:selectItem itemLabel="12" itemValue="12"/>
@@ -219,6 +222,7 @@
                                                                         <f:selectItem itemLabel="06" itemValue="06"/>
                                                                         <f:selectItem itemLabel="07" itemValue="07"/>
                                                                         <f:selectItem itemLabel="08" itemValue="08"/>
+                                                                        <f:selectItem itemLabel="09" itemValue="09"/>
                                                                         <f:selectItem itemLabel="10" itemValue="10"/>
                                                                         <f:selectItem itemLabel="11" itemValue="11"/>
                                                                         <f:selectItem itemLabel="12" itemValue="12"/>
@@ -637,8 +641,8 @@
                                     </p:wizard>
                                     <div class="box-footer" align="right">
                                         <h:panelGrid width="30%" columns="2">
-                                            <h:outputLink value="#" onclick="PF('wiz').back();">Atrás</h:outputLink>
-                                            <h:outputLink value="#" onclick="PF('wiz').next();">Siguiente</h:outputLink>
+                                            <p:commandButton class="btn btn-block btn-danger" rendered="#{reservacionBean.atras}" update="@form" value="Atrás" onclick="PF('wiz').back();"/>
+                                            <p:commandButton class="btn btn-block btn-success" rendered="#{reservacionBean.siguiente}" update="@form" value="Siguiente" onclick="PF('wiz').next();"/>
                                         </h:panelGrid>
                                     </div>                             
                                 </h:form>

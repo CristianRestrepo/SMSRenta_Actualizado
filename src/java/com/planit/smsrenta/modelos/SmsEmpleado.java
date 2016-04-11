@@ -1,6 +1,7 @@
 package com.planit.smsrenta.modelos;
 // Generated 02-mar-2016 12:47:17 by Hibernate Tools 4.3.1
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ public class SmsEmpleado implements java.io.Serializable {
     private SmsUsuario smsUsuario;
     private SmsEstado smsEstado;
     private String empleadoNumeroLicencia;
+    private Date empleadoLicenciaVigencia;
     private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>(0);
     private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
     private Set<SmsVehiculo> smsVehiculos = new HashSet<>(0);
@@ -31,15 +33,16 @@ public class SmsEmpleado implements java.io.Serializable {
         this.smsUsuario = smsUsuario;
     }
 
-    public SmsEmpleado(SmsHojavida smsHojavida, SmsEstado smsEstado, SmsProveedor smsProveedor, SmsUsuario smsUsuario, Set<SmsCategoriasServicio> smsCategoriasServicios, Set<SmsReservacion> smsReservacions,Set<SmsVehiculo> smsVehiculos) {
+    public SmsEmpleado(SmsHojavida smsHojavida, SmsProveedor smsProveedor, SmsUsuario smsUsuario, SmsEstado smsEstado, String empleadoNumeroLicencia, Date empleadoLicenciaVigencia) {
         this.smsHojavida = smsHojavida;
         this.smsProveedor = smsProveedor;
         this.smsUsuario = smsUsuario;
         this.smsEstado = smsEstado;
-        this.smsCategoriasServicios = smsCategoriasServicios;
-        this.smsReservacions = smsReservacions;
-        this.smsVehiculos = smsVehiculos;
+        this.empleadoNumeroLicencia = empleadoNumeroLicencia;
+        this.empleadoLicenciaVigencia = empleadoLicenciaVigencia;
     }
+
+   
 
     public Integer getIdEmpleado() {
         return this.idEmpleado;
@@ -111,6 +114,14 @@ public class SmsEmpleado implements java.io.Serializable {
 
     public void setEmpleadoNumeroLicencia(String empleadoNumeroLicencia) {
         this.empleadoNumeroLicencia = empleadoNumeroLicencia;
+    }
+
+    public Date getEmpleadoLicenciaVigencia() {
+        return empleadoLicenciaVigencia;
+    }
+
+    public void setEmpleadoLicenciaVigencia(Date empleadoLicenciaVigencia) {
+        this.empleadoLicenciaVigencia = empleadoLicenciaVigencia;
     }
     
     

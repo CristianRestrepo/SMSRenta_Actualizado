@@ -31,13 +31,17 @@
                                 </div>
                             </div>
                         </b:column>
-                        
+
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12"  >
                             <div class="box box-info">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-calendar"/>
                                     <h2 class="box-title">Horarios <strong>SMS Renta</strong></h2>
-                                    <p:commandButton style="width: 20%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class="box-tools btn btn-block btn-success" value="Actualizar reservaciones"/>
+                                    <h:panelGrid class="box-tools" columns="2">
+                                        <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
+                                        <p:commandButton style="width: 100%" action="irListaReservacionesAdminP" update="schedule" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
+                                    
+                                    </h:panelGrid>
                                 </div>
                                 <div class="box-body">
                                     <!-- CALENDARIO PRINCIPAL -->                                    
@@ -73,7 +77,7 @@
                                 </div>
                             </div>
                         </b:column>
-                                             
+
 
 
                     </h:form>

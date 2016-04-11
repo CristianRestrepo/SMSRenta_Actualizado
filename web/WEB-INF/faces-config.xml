@@ -152,7 +152,18 @@
         <managed-bean-name>sesionActivaBean</managed-bean-name>
         <managed-bean-class>com.planit.smsrenta.controladores.SesionActivaBean</managed-bean-class>    
         <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+     <managed-bean>
+        <managed-bean-name>tipoDuracionBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.TipoDuracionBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>localidadBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.LocalidadBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>    
+    
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
@@ -541,7 +552,21 @@
             <to-view-id>/vistas/AdminP/vehiculos/PAdminVehiculos.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-        
+        <navigation-case>
+            <from-outcome>irListaReservacionesAdminP</from-outcome>
+            <to-view-id>/vistas/AdminP/reservas/PListaReservaciones.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>irListaReservacionesAdminS</from-outcome>
+            <to-view-id>/vistas/AdminS/reservas/SListaReservaciones.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>irListaReservacionesConductor</from-outcome>
+            <to-view-id>/vistas/Conductor/reservas/CndListaReservaciones.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
                     
     <navigation-rule>
@@ -594,13 +619,8 @@
         </navigation-case>
     </navigation-rule>
     <managed-bean>
-        <managed-bean-name>tipoDuracionBean</managed-bean-name>
-        <managed-bean-class>com.planit.smsrenta.controladores.TipoDuracionBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>localidadBean</managed-bean-name>
-        <managed-bean-class>com.planit.smsrenta.controladores.LocalidadBean</managed-bean-class>
+        <managed-bean-name>contratoBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.ContratoBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
 </faces-config>

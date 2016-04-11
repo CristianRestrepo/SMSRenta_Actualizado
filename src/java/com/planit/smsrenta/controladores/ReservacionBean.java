@@ -85,11 +85,15 @@ public class ReservacionBean implements Serializable {
     private String minutosEntrega;
     private String fechaInicio;
     private String fechaEntrega;
+    private String buscar;
 
     private boolean skip = false;//Controla la transicion entre las pestañas del panel de reserva
     //Controlan la seleccion de los vehiculos y los empleados
     private boolean SelecVeh;
     private boolean SelecCon;
+    //controla la aparicion del boton siguiente en el proceso de reservacion
+    private boolean siguiente;
+    private boolean atras;
 
     //Clases
     SendEmail emailController;
@@ -124,6 +128,7 @@ public class ReservacionBean implements Serializable {
         costoServicioView = new SmsCostosservicios();
         empleadoView = new SmsEmpleado();
         categoriaServicio = 0;
+        buscar = null;
 
         vehiculosListView = new ArrayList<>();
         empleadoListView = new ArrayList<>();
@@ -134,6 +139,8 @@ public class ReservacionBean implements Serializable {
         facturaController = new FacturaBean();
         sesionController = new Sesion();
 
+        siguiente = true;
+        atras = false;
         SelecVeh = false;
         SelecCon = false;
 
@@ -336,6 +343,30 @@ public class ReservacionBean implements Serializable {
         this.categoriaServicio = categoriaServicio;
     }
 
+    public boolean isSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(boolean siguiente) {
+        this.siguiente = siguiente;
+    }
+
+    public boolean isAtras() {
+        return atras;
+    }
+
+    public void setAtras(boolean atras) {
+        this.atras = atras;
+    }
+
+    public String getBuscar() {
+        return buscar;
+    }
+
+    public void setBuscar(String buscar) {
+        this.buscar = buscar;
+    }
+
     //Metodos    
     //CRUD
     public String registrarReservacion() throws JRException, IOException {
@@ -380,8 +411,10 @@ public class ReservacionBean implements Serializable {
             ruta = "RegresarAdminSReservacion";
         }
 
-        //Limpieza de objetos         
+        //Limpieza de objetos 
         reservaView = new SmsReservacion();
+        siguiente = true;
+        atras = false;
         return ruta;
     }
 
@@ -420,6 +453,14 @@ public class ReservacionBean implements Serializable {
 
     //Especificos 
     ///Controla el flujo de la vista de reservacion
+    public void filtrarReservaciones() {
+        if (buscar == null) {
+            reservacionesListView = listaReservaciones;
+        } else {
+            reservacionesListView = resDao.filtrarReservacionSegunCliente(buscar);
+        }
+    }
+
     public String flujoDeReservacion(FlowEvent event) {
         if (skip) {
             skip = false;   //reset in case user goes back
@@ -428,6 +469,7 @@ public class ReservacionBean implements Serializable {
 
             switch (event.getNewStep()) {
                 case "Agenda":
+                    atras = false;
                     horaInicio = "";
                     horaEntrega = "";
                     minutosEntrega = "";
@@ -435,6 +477,7 @@ public class ReservacionBean implements Serializable {
                     break;
                 case "Vehiculo":
                     SelecVeh = false;
+                    atras = true;
 
                     SimpleDateFormat formatTime;
                     SimpleDateFormat formatDate;
@@ -463,7 +506,7 @@ public class ReservacionBean implements Serializable {
 //        5 = mes    
                     switch (categoriaServicio) {
 
-                        case 1:
+                        case 1: //tiempo
                             fechaInicio = formatDate.format(fechaActual);
                             fechaEntrega = formatDate.format(fechaActual);
 
@@ -489,7 +532,7 @@ public class ReservacionBean implements Serializable {
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                             break;
-                        case 2:
+                        case 2://traslado
                             fechaInicio = formatDate.format(fechaActual);
                             fechaEntrega = formatDate.format(fechaActual);
 
@@ -515,7 +558,7 @@ public class ReservacionBean implements Serializable {
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                             break;
-                        case 3:
+                        case 3://renta
                             try {
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
                                 reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
@@ -538,6 +581,7 @@ public class ReservacionBean implements Serializable {
                     }
                     break;
                 case "Conductor":
+                    siguiente = true;
                     if (reservaView.getSmsServicios().getServicioConductor() == 1) {
                         reservaView.setSmsEmpleado(new SmsEmpleado());
                     }
@@ -550,13 +594,14 @@ public class ReservacionBean implements Serializable {
                     reservaView.setReservacionCosto(calcularCostoReservacion(reservaView));
                     break;
                 case "Confirmacion":
-
+                    siguiente = false;
                     if (empleadoView.getIdEmpleado() != null) {
                         reservaView.setSmsEmpleado(empleadoView);
                     }
                     break;
             }
             if (event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
+                siguiente = false;
                 return "Confirmacion";
             } else {
                 return event.getNewStep();

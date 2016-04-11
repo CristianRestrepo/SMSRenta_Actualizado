@@ -40,9 +40,9 @@
     <property name="reservacionNotas" type="string">
       <column length="65535" name="Reservacion_notas"/>
     </property>
-    <property name="reservacionFechaInicio" type="date">
-      <column length="0" name="Reservacion_fechaInicio" not-null="true"/>
-    </property>
+        <property name="reservacionFechaInicio" type="date">
+          <column length="0" name="Reservacion_fechaInicio" not-null="true"/>
+        </property>
     <property name="reservacionFechaLlegada" type="date">
       <column length="0" name="Reservacion_fechaLlegada"/>
     </property>

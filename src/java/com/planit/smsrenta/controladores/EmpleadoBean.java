@@ -198,7 +198,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         empleadoView.getSmsUsuario().setUsuarioPassword(md.getMD5(password));//Se encripta la contreseña
         empleadoView.getSmsUsuario().setUsuarioRememberToken(md.getMD5(password));
 
-        registrarHojaVida(empleadoView.getSmsHojavida());
+        registrarHojaVida(empleadoView.getSmsHojavida());//Se registra la hoja de vida
 
         empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
         empleadoView.getSmsUsuario().setSmsRol(rolDao.consultarRol(empleadoView.getSmsUsuario().getSmsRol()).get(0));//Asociamos un rol a un usuario
@@ -265,6 +265,10 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
         empleadoView = new SmsEmpleado();
         empleadosListView = empleadoDao.mostrarEmpleados();
+        habilitarCancelar = true;
+        operacion = 0;
+        hojavidaActualizada = false;
+        nombreOperacion = "Registrar Empleado";
     }
 
     public void filtrarEmpleados() {
@@ -317,6 +321,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     public void cancelar() {
         //Limpiamos objetos utilizados
         empleadoView = new SmsEmpleado();
+        operacion = 0;
 
         //Reiniciamos los objetos
         habilitarCancelar = true;

@@ -60,7 +60,8 @@ public class ImpReservacionDao implements IReservacionDao {
             if (session != null) {
                 session.close();
             }
-        }FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     @Override
@@ -80,7 +81,8 @@ public class ImpReservacionDao implements IReservacionDao {
             if (session != null) {
                 session.close();
             }
-        }FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     @Override
@@ -215,6 +217,41 @@ public class ImpReservacionDao implements IReservacionDao {
             Query query = session.createQuery("from SmsReservacion as reservacion left join fetch reservacion.smsCategoriasServicio left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino left join fetch reservacion.smsEmpleado as empleado left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor left join fetch reservacion.smsEstado as estado left join fetch reservacion.smsServicios as servicio left join fetch reservacion.smsUsuario as cliente left join fetch reservacion.smsVehiculo as vehiculo left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsColor left join fetch referencia.smsMarca where cliente.idUsuario = '" + reserva.getSmsUsuario().getIdUsuario() + "' and vehiculo.idVehiculo = '" + reserva.getSmsVehiculo().getIdVehiculo() + "' and "
                     + "reservacion.reservacionFechaInicio = '" + FechaInicio + "' and reservacion.reservacionFechaLlegada = '" + FechaLlegada + "' and reservacion.reservacionHoraInicio = '" + HoraInicio + "' and "
                     + "reservacion.reservacionHoraLlegada = '" + HoraLlegada + "'");
+            reservas = (List<SmsReservacion>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return reservas;
+    }
+
+    @Override
+    public List<SmsReservacion> filtrarReservacionSegunCliente(String valor) {
+        Session session = null;
+        List<SmsReservacion> reservas = new ArrayList<>();
+
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
+                    + "where cliente.usuarioCc LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioNombre LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioEmail LIKE '" + valor + "'");
             reservas = (List<SmsReservacion>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

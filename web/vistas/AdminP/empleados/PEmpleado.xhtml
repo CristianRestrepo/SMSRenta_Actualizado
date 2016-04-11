@@ -59,9 +59,7 @@
 
                                             <b:inputText id="TCcEmp" maxlength="45" placeholder="Cédula de ciudadania" value="#{empleadoBean.empleadoView.smsUsuario.usuarioCc}" style="width: 100%" ></b:inputText>
                                             <p:message for="TCcEmp"/>
-                                            
-                                            <b:inputText id="TNumLicencia" maxlength="15" placeholder="Numero de licencia" value="#{empleadoBean.empleadoView.empleadoNumeroLicencia}" style="width: 100%" ></b:inputText>
-                                            <p:message for="TNumLicencia"/>
+                                                                                                                                                                 
 
                                             <b:inputText id="TTelEmp" maxlength="45" placeholder="Número de teléfono fijo o celular" value="#{empleadoBean.empleadoView.smsUsuario.usuarioTelefono}" style="width: 100%" ></b:inputText> 
                                             <p:message for="TTelEmp"/>
@@ -79,6 +77,12 @@
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
                                             </b:selectOneMenu>
                                             <p:message for="SCiudades"/>
+                                            
+                                            <b:inputText id="TNumLicencia" maxlength="15" placeholder="Numero de licencia" value="#{empleadoBean.empleadoView.empleadoNumeroLicencia}" style="width: 100%" ></b:inputText>
+                                            <p:message for="TNumLicencia"/>
+
+                                            <p:calendar id="CFechaVigencia" style="width: 100%" styleClass="dateTimeField" placeholder="Seleccione fecha de vigencia de la licencia"  pattern="yyyy-MM-dd" value="#{empleadoBean.empleadoView.empleadoLicenciaVigencia}" required="true"/>
+                                            <p:message for="CFechaVigencia"/>
                                         </h:panelGrid>
                                     </div>
                                 </div>                               

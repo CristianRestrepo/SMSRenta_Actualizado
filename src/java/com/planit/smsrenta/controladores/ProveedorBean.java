@@ -185,13 +185,14 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
 
         List<SmsMercado> mercados = new ArrayList<>();
         for (int i = 0; i < mercadosSeleccionados.size(); i++) { //Relacionamos la categoria con los mercados seleccionados
+            //Consultamos los mercados seleccionado y guardamos los objetos completos en una lista
             mercadoView.setMercadoNombre(mercadosSeleccionados.get(i));
             mercadoView = mercadoDao.consultarMercadoConProveedores(mercadoView).get(0);
             mercados.add(mercadoView);
             mercadoView = new SmsMercado();
         }
         
-        for (int i = 0; i < mercados.size(); i++) {
+        for (int i = 0; i < mercados.size(); i++) {//asociamos los mercados con el proveedor
             mercados.get(i).getSmsProveedors().add(proveedorView);
             proveedorView.getSmsMercados().add(mercados.get(i));
         }
