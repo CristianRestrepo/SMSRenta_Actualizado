@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[$F{Contrato_objeto}]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["../Reportes_SMS/Copenal/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT r.Reservacion_lugar_llegada , r.Reservacion_lugar_destino , 
@@ -129,15 +129,15 @@ where cont.idReservacion = r.idReservacion AND
 			</staticText>
 			<image>
 				<reportElement x="3" y="14" width="298" height="53" uuid="5d54a4d7-d329-47be-bb6a-5af8564681a1"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\minitraspret.png"]]></imageExpression>
+				<imageExpression><![CDATA["../Reportes_SMS/Copenal/minitraspret.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="313" y="8" width="58" height="66" uuid="d7101ca8-626c-4108-ad06-dd1c3d0a91c5"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\super_transporte.png"]]></imageExpression>
+				<imageExpression><![CDATA["../Reportes_SMS/Copenal/super_transporte.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="376" y="14" width="176" height="59" uuid="1fab9720-41de-45b7-94ac-6edfa542a97a"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../Reportes_SMS/Copenal/coopenal.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -165,7 +165,7 @@ where cont.idReservacion = r.idReservacion AND
 			</staticText>
 			<image>
 				<reportElement x="317" y="3" width="140" height="50" uuid="04cd25ef-3536-4079-8ae7-c5e5dc73ac1f"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../Reportes_SMS/Copenal/coopenal.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
