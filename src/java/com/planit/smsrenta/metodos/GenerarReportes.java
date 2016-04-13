@@ -77,7 +77,7 @@ public class GenerarReportes {
         Map parametro = new HashMap();
         parametro.put("idContrato", contrato.getIdContrato());
 
-        File jasper = new File(getPath() + "/Reportes_SMS/Copenal/FacturaFUEC.jasper");
+        File jasper = new File(getPath() + "/Reportes_SMS/FacturaFUEC.jasper");
         JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
