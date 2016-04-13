@@ -153,7 +153,7 @@
         <managed-bean-class>com.planit.smsrenta.controladores.SesionActivaBean</managed-bean-class>    
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-     <managed-bean>
+    <managed-bean>
         <managed-bean-name>tipoDuracionBean</managed-bean-name>
         <managed-bean-class>com.planit.smsrenta.controladores.TipoDuracionBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
@@ -166,14 +166,12 @@
     
     <navigation-rule>
         <from-view-id>*</from-view-id>
-        <navigation-case>
-            
+        <navigation-case>            
             <!-- ADMIN PRINCIPAL -->   
             <from-outcome>AdminPUsuario</from-outcome>
             <to-view-id>/vistas/AdminP/usuarios/PUsuario.xhtml</to-view-id>
             <redirect/>            
-        </navigation-case>
-        
+        </navigation-case>        
         <navigation-case>
             <from-outcome>AdminPCliente</from-outcome>
             <to-view-id>/vistas/AdminP/clientes/PClientes.xhtml</to-view-id>
@@ -286,10 +284,8 @@
             <from-outcome>AdminPCondicionesUso</from-outcome>
             <to-view-id>/vistas/AdminP/reservas/PReserva_Terminos_Condiciones_de_Uso.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>    
-                
-        
-        
+        </navigation-case>   
+                       
         <!-- ADMIN PRINCIPAL -->   
         <!-- ADMIN SECUNDARIO --> 
         <navigation-case>
@@ -391,10 +387,7 @@
             <from-outcome>AdminSCategoriaServicio</from-outcome>
             <to-view-id>/vistas/AdminS/servicios/SCategoriasServicios.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>
-            
-        
-         
+        </navigation-case>            
         <!-- ADMIN SECUNDARIO -->
         <!-- CONDUCTOR -->
         <navigation-case>
@@ -416,8 +409,7 @@
             <from-outcome>VistaReservaConductor</from-outcome>
             <to-view-id>/vistas/Conductor/general/vistaReserva.xhtml</to-view-id>  
             <redirect/>          
-        </navigation-case>
-        
+        </navigation-case>        
         <!-- CONDUCTOR -->
         <!-- Proveedor -->
         <navigation-case>

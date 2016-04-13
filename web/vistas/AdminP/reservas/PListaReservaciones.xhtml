@@ -13,7 +13,7 @@
             <ui:define name="content">
                 <b:container fluid="true">
                     <h:form id="formularioReservaciones">
-
+                        <p:growl autoUpdate="true" life="2500" />
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="espacio-arriba" style="text-align: center" align="center">
                                 <h4 style="font-size: x-large">RESERVACIONES</h4><br/>
@@ -77,7 +77,7 @@
                         <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
                             <h:form>
                                 <div class="espacio-arriba" style="text-align: right" align="center">
-                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="AdminPEditarPerfil" look="success" value="Regresar"/>
+                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.regresarTableroPrincipal()}" look="success" value="Regresar"/>
                                 </div>
                             </h:form>
                         </b:column> 

@@ -11,6 +11,8 @@ import com.planit.smsrenta.metodos.GenerarReportes;
 import com.planit.smsrenta.modelos.SmsContrato;
 import com.planit.smsrenta.modelos.SmsReservacion;
 import java.io.IOException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
 
 /**
@@ -44,14 +46,21 @@ public class ContratoBean {
     }
 
     public void generarFuec(SmsReservacion reservacion) throws JRException, IOException {
-        if (contratoDao.consultarContrañoSegunReservacion(reservacion).isEmpty()) {
-            contratoView.setSmsReservacion(reservacion);
-            contratoView.setContratoObjeto("Servicio de transporte");
-            contratoDao.registrarContrato(contratoView);
+        FacesMessage message;
+        if (!reservacion.getSmsServicios().getSmsMercado().getMercadoNombre().equalsIgnoreCase("Renta")) {
+            if (contratoDao.consultarContratoSegunReservacion(reservacion).isEmpty()) {
+                contratoView.setSmsReservacion(reservacion);
+                contratoView.setContratoObjeto("Servicio de transporte");
+                contratoDao.registrarContrato(contratoView);
+            }
+            GenerarReportes reporte = new GenerarReportes();
+            contratoView = contratoDao.consultarContratoSegunReservacion(reservacion).get(0);
+            reporte.generarFUEC(contratoView);
+        }else{ 
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Este tipo de servicio no necesita de documento FUEC", "");
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
-        GenerarReportes reporte = new GenerarReportes();
-        contratoView = contratoDao.consultarContrañoSegunReservacion(reservacion).get(0);
-        reporte.generarFUEC(contratoView);
+        
     }
 
 }

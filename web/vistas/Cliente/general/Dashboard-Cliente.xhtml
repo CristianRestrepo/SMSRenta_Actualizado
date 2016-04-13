@@ -42,9 +42,11 @@
                             <div class="box box-info">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-calendar"/>
-                                    <h2 class="box-title">Calendario de Eventos <srtong>SMS Renta</srtong></h2>
-                                    <p:commandButton style="width: 20%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class="box-tools btn btn-block btn-success" value="Actualizar reservaciones"/>
-                                </div>
+                                    <h2 class="box-title">Calendario de Eventos <strong>SMS Renta</strong></h2>
+                                    <h:panelGrid class="box-tools" columns="2">
+                                        <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
+                                        <p:commandButton style="width: 100%" action="#{pathBean.ir_ClienteReservaciones()}" update="schedule" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
+                                    </h:panelGrid></div>
                                 <div class="box-body">
                                     <!-- CALENDARIO PRINCIPAL -->
                                     <p:growl id="messages" showDetail="true" />

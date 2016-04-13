@@ -9,7 +9,7 @@
 
     <ui:composition template="./../temp-admin2.xhtml">
         <ui:define name="content1">
-            <b:container fluid="true">
+           <b:container fluid="true">
                 <b:row>
 
 
@@ -95,11 +95,17 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink process="@this" update="@form" class="fa fa-pencil btn btn-block btn-success" style="color: white"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
+                                            <p:commandLink process="@this" update="@form" class="fa fa-pencil btn btn-block btn-success" style="color: white; padding: 8px"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
                                             </p:commandLink>
                                         </p:column>
 
+                                        <p:column style="width: 35px"> 
+                                            <p:commandLink process="@this" update="@form" class="fa fa-trash btn btn-block btn-danger" style="color: white; padding: 8px" action="#{ciudadBean.eliminar()}" title="Eliminar">
+                                                <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
+                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta ciudad?" icon="ui-icon-alert" /> 
+                                            </p:commandLink>
+                                        </p:column>
                                     </p:dataTable>    
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                         <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
@@ -121,7 +127,7 @@
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-map-marker"/>
-                                    <h4 class="box-title">Registro de Ciudades</h4>
+                                    <h4 class="box-title">Registro de Lugares</h4>
                                 </div> 
                                 <div class="box-body">
                                     <p style="text-justify: auto">En este panel de registro podrá registrar la 
@@ -139,11 +145,18 @@
                                 <div class="box-body">
                                     <div class="table-responsive">
                                         <h:panelGrid id="PLugar" columns="2" cellpadding="5" style="width: 100%">
-                                            <b:selectOneMenu id="SCiudades" tooltip="Selecciones Ciudad o municipio al que pertenece el lugar" required="true" requiredMessage="Seleccione Ciudad o municipio" value="#{lugarBean.lugarView.smsCiudad.ciudadNombre}">
+                                            <p:selectOneMenu style="width: 100%" id="SCiudades" required="true" requiredMessage="Seleccione Ciudad o municipio" value="#{lugarBean.lugarView.smsCiudad.ciudadNombre}">
                                                 <f:selectItem itemLabel="Seleccione ciudad o municipio"/>
                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
-                                            </b:selectOneMenu>
+                                                <p:ajax event="change" update="SLocalidades"/>
+                                            </p:selectOneMenu>
                                             <p:message for="SCiudades"/>
+
+                                            <b:selectOneMenu id="SLocalidades" tooltip="Seleccione Localidad a la que pertenece el lugar o barrio" required="true" requiredMessage="Seleccione Localidad" value="#{lugarBean.lugarView.smsLocalidad.localidadNombre}">
+                                                <f:selectItem itemLabel="Seleccione Localidad"/>
+                                                <f:selectItems value="#{localidadBean.consultarLocalidadesSegunCiudad(lugarBean.lugarView.smsCiudad)}"/>
+                                            </b:selectOneMenu>
+                                            <p:message for="SLocalidades"/>
 
                                             <b:inputText maxlength="50" label="Nombre del lugar" id="TNombreLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Nombre del lugar"  value="#{lugarBean.lugarView.lugarNombre}" style="width: 100%"></b:inputText>                                            
                                             <p:message for="TNombreLugar"/>

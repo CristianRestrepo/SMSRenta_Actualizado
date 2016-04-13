@@ -26,11 +26,11 @@
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>bootstrap</param-value>
-    </context-param>
+    </context-param>   
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.planit.smsrenta.filtros.LoginFilter</filter-class>
-    </filter>
+    </filter>    
     <!-- Font Awesome -->
     <mime-mapping>
         <extension>eot</extension>

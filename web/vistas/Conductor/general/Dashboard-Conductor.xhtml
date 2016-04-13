@@ -19,6 +19,11 @@
                             <div class="box-header with-border">
                                 <i class="fa fa-5x fa-road"></i>
                                 <h1 class="box-title">Horarios de Conductores</h1>
+                                <h:panelGrid class="box-tools" columns="2">
+                                    <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
+                                    <p:commandButton style="width: 100%" action="irListaReservacionesConductor" update="schedule" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
+
+                                </h:panelGrid>
                             </div>
                             <div class="box-body">
                                 <h:form>

@@ -14,52 +14,96 @@
             <ui:define name="content1">
                 <b:container fluid="true">
                     <b:row>
-                        <h:form>                        
-                            <p:messages id="msg" closable="true"/>
+
+                        <h:form id="formularioCostos">
                             <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                                 <div class="box box-info espacio-arriba">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-briefcase"/>
-                                        <h4 class="box-title">Registro de Costos-Servicios</h4>
+                                        <h4 class="box-title">Registro de Costos</h4>
                                     </div>
                                     <div class="box-body">
                                         <p style="text-justify: auto">En este panel de registro podrá registrar la información 
-                                            referente al costo de cada servicio según la categoría de los vehículos.</p> 
+                                            referente al costo de los diferentes servicios
+                                            que presta SMS Renta.</p> 
                                     </div>
                                 </div>                            
-                            </b:column>                        
+                            </b:column>
+
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <p:messages id="msgCostos" closable="true"/>
+                            </b:column>
 
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
-                                <div class="box box-danger">
-                                    <div class="box-header with-border">                              
-                                        <i class="fa fa-2x fa-list-alt"/>
-                                        <h4 class="box-title">Registro Costo Servicio</h4>
-                                    </div> 
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-tag"/>
+                                        <h3 class="box-title">Costos SMS Renta</h3>
+                                    </div>
                                     <div class="box-body">
-                                        <div class="table-responsive">
-                                            <h:panelGrid id="PCostosServicio" columns="3" cellpadding="5" style="width: 100%">
-                                                <p:outputLabel value="Categoria:"/>
-                                                <b:selectOneMenu id="SCategoriasVehiculos" value="#{costosServicioBean.categoriaView.categoriaNombre}" style="width: 100%" required="true">                                            
-                                                    <f:selectItem itemLabel="Seleccione Categoria" noSelectionOption="true"/>
-                                                    <f:selectItems value="#{categoriaBean.nombresCategoriasListView}" />
-                                                </b:selectOneMenu>
-                                                <p:message for="SCategoriasVehiculos"/>
+                                        <div class="table-responsive form-group">    
+                                            <h:panelGrid id="PCostos" width="100%" columns="2" cellspacing="5"> 
+                                                <p:selectOneMenu required="true" requiredMessage="Seleccione Mercado" value="#{costosServicioBean.mercadoView.mercadoNombre}"  style="width: 100%" id="SMMercado"> 
+                                                    <f:selectItem itemLabel="Seleccione mercado" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>                                                
+                                                    <p:ajax event="change" update="SMServicios"/>
+                                                </p:selectOneMenu>
+                                                <p:message for="SMMercado"/>
 
-                                                <p:outputLabel value="Servicio:"/>
-                                                <b:selectOneMenu id="SServicios" required="true" value="#{costosServicioBean.servicioView.serviciosNombre}">
-                                                    <f:selectItem itemLabel="Seleccione Servicio" noSelectionOption="true"/>
-                                                    <f:selectItems value="#{serviciosBean.nombreServiciosListView}" />
-                                                </b:selectOneMenu>
-                                                <p:message for="SServicios"/>
+                                                <p:selectOneMenu required="true" requiredMessage="Seleccione Servicio" value="#{costosServicioBean.costoView.smsServicios.servicioNombre}"  style="width: 100%" id="SMServicios"> 
+                                                    <f:selectItem itemLabel="Seleccione servicio" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{serviciosBean.seleccionarServiciosSegunMercado(costosServicioBean.mercadoView)}"/>                                                
+                                                    <p:ajax event="change" update="SMCatVehiculo"/>
+                                                </p:selectOneMenu>
+                                                <p:message for="SMServicios"/>
 
-                                                <p:outputLabel value="Costo: "/>
-                                                <b:inputText id="TCosto" placeholder="Costo del servicio" required="true" requiredMessage="Ingrese el valor del servicio" value="#{costosServicioBean.costoView.smsPrecio}" style="width: 100%"/>
-                                                <p:message for="TCosto"/>
+                                                <b:selectOneMenu required="true" requiredMessage="Seleccione categoría del vehículo" 
+                                                                 tooltip="Categoría del vehículo" value="#{costosServicioBean.costoView.smsCategoria.categoriaNombre}"  style="width: 100%" id="SMCatVehiculo"> 
+                                                    <f:selectItem itemLabel="Seleccione categoría del vehículo" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{categoriaBean.CategoriasSegunMercado(costosServicioBean.mercadoView)}"/>                                                
+                                                </b:selectOneMenu>
+                                                <p:message for="SMCatVehiculo"/>
                                             </h:panelGrid>
+                                            <p:separator/>
+                                            <p>Si el costo del servicio depende del lugar de partida y destino, seleccione ciudad de inicio y destino y lugar de inicio y destino, en caso de no ser asi, solo asigne el costo correspondiente.</p>
+                                            <h:panelGrid id="PCostosDatosLugares" width="100%" columns="2" cellspacing="5"> 
+                                                <p:selectOneMenu value="#{costosServicioBean.ciudadInicioView.ciudadNombre}" label="Ciudad" style="width: 100%" id="SMCiudadInicio"> 
+                                                    <f:selectItem itemLabel="Seleccione ciudad" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                    <p:ajax event="change" listener="#{costosServicioBean.habilitarListas(costosServicioBean.ciudadInicioView.ciudadNombre)}" update="SMLugarInicio" />
+                                                </p:selectOneMenu>
+                                                <p:message for="SMCiudadInicio"/>
+
+                                                <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugarInicioView.lugarNombre}" 
+                                                                 style="width: 100%" tooltip="Lugar de recojida" id="SMLugarInicio"> 
+                                                    <f:selectItem itemLabel="Seleccione lugar de recojida" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadInicioView)}"/>
+                                                </b:selectOneMenu>
+                                                <p:message for="SMLugarInicio"/>
+
+                                                <p:selectOneMenu value="#{costosServicioBean.ciudadDestinoView.ciudadNombre}" label="Ciudad de destino" style="width: 100%" id="SMCiudadDestino"> 
+                                                    <f:selectItem itemLabel="Seleccione ciudad de destino" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                    <p:ajax event="change" listener="#{costosServicioBean.habilitarListas(costosServicioBean.ciudadDestinoView.ciudadNombre)}" update="SMLugarDestino" />
+                                                </p:selectOneMenu>
+                                                <p:message for="SMCiudadDestino"/>
+
+                                                <b:selectOneMenu disabled="#{!costosServicioBean.habilitar}" value="#{costosServicioBean.lugarDestinoView.lugarNombre}" 
+                                                                 style="width: 100%" tooltip="Lugar de destino" id="SMLugarDestino"> 
+                                                    <f:selectItem itemLabel="Seleccione lugar de destino" noSelectionOption="true"/>
+                                                    <f:selectItems value="#{lugarBean.consultarLugaresCiudades(costosServicioBean.ciudadDestinoView)}"/>
+                                                </b:selectOneMenu>
+                                                <p:message for="SMLugarDestino"/>
+                                            </h:panelGrid>
+                                            <p:separator/>
+                                            <h:panelGrid id="PCosto" width="100%" columns="2" cellspacing="5"> 
+                                                <b:inputText id="TCostoServicio" tooltip="Costo del servicio" value="#{costosServicioBean.costoView.costoServicioPrecio}" 
+                                                             style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
+                                                <p:message for="TCostoServicio"/>
+                                            </h:panelGrid>
+                                            <p:commandButton id="BTCosto" class="btn btn-block btn-primary" update="msgCostos BTCosto DTCostos PCostos PCostosDatosLugares PCosto" action="#{costosServicioBean.metodo()}" value="#{costosServicioBean.nombre}" style="width: 100%"/>
                                         </div>
-                                        <hr/>
-                                        <p:commandButton id="BTCosto" update="@form" action="#{costosServicioBean.metodo()}" class="btn btn-block btn-danger" value="#{costosServicioBean.nombre}"/>                           
-                                    </div>                               
+                                    </div>
                                 </div>
                             </b:column>
 
@@ -71,43 +115,44 @@
                                     </div>
                                     <div class="box-body">
                                         <b:inputText placeholder="Buscar" value="#{costosServicioBean.buscar}" style="width: 100%">
-                                            <p:ajax event="keyup" listener="#{costosServicioBean.filtrar()}" process="@this" update="DTCostosServicios"/>
+                                            <p:ajax event="keyup" listener="#{costosServicioBean.filtrar()}" process="@this" update="DTCostos"/>
                                         </b:inputText>
-                                        <p:dataTable id="DTCostosServicios" var="costos" value="#{costosServicioBean.costosListView}" 
+                                        <p:dataTable id="DTCostos" var="costo" value="#{costosServicioBean.costosListView}" 
                                                      rows="5"
                                                      paginator="true"
                                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                      rowsPerPageTemplate="5,10,15" emptyMessage="Costos no registrados">
 
-                                            <p:column headerText="Categoria">
-                                                <h:outputText value="#{costos.smsCategoria.categoriaNombre}"/>
+                                            <p:column headerText="Nombre del servicio">
+                                                <h:outputText value="#{costo.smsServicios.servicioNombre}"/>
                                             </p:column>
 
-                                            <p:column headerText="Servicio">
-                                                <h:outputText value="#{costos.smsServicios.serviciosNombre}"/>
+                                            <p:column headerText="Costo del servicio">
+                                                <h:outputText value="#{costo.costoServicioPrecio}"/>
                                             </p:column>
 
-                                            <p:column headerText="Costo">
-                                                <h:outputText value="#{costos.smsPrecio}"/>
-                                            </p:column>
-
-                                            
                                             <p:column style="width: 35px">
-                                                <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
-                                                    <f:setPropertyActionListener value="#{costos}" target="#{costosServicioBean.costoView}"/>
+                                                <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
+                                                    <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>
                                                 </p:commandLink>
                                             </p:column>
 
-                                            
-                                        </p:dataTable>                               
+                                            <p:column style="width: 35px">
+                                                <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger btn-padding" process="@this" update="@form" action="#{costosServicioBean.eliminar()}" title="Eliminar">
+                                                    <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>
+                                                    <p:confirm header="Confirmación" message="Está seguro que desea eliminar este costo?" icon="ui-icon-alert" /> 
+                                                </p:commandLink>
+                                            </p:column>
+                                        </p:dataTable>                                
+
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                             <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
                                             <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
                                         </p:confirmDialog>
                                     </div>                             
                                 </div>
-                            </b:column>
-                        </h:form>
+                            </b:column> 
+                        </h:form> 
                     </b:row>
                 </b:container>
             </ui:define>

@@ -102,9 +102,6 @@ public class ReservacionBean implements Serializable {
     FacturaBean facturaController;
     Sesion sesionController;
 
-    //variables para vista de reservacion    
-    private List<SmsReservacion> listaReservaciones;
-
     //VARIABLES PARA CREAR EL SCHEDULE DE PRIMEFACES
     private ScheduleModel eventoModelo;
     private ScheduleEvent evento;
@@ -144,9 +141,6 @@ public class ReservacionBean implements Serializable {
         SelecVeh = false;
         SelecCon = false;
 
-        //VARIABLES PARA MOSTRAR RESERVACION DE LA AGENDA       
-        listaReservaciones = new ArrayList<>();
-
         //VARIABLES PARA CREAR EL CALENDARIO DE PRIMEFACES
         eventoModelo = new DefaultScheduleModel();
         evento = new DefaultScheduleEvent();
@@ -170,9 +164,9 @@ public class ReservacionBean implements Serializable {
     public void init() {
         //Obtenemos la informacion de sesion del usuario autentificado 
         sesion = sesionController.obtenerSesion();
-        consultarReservacionesSegunUsuario();
+
         addEventoCalendario();
-        reservacionesListView = listaReservaciones;
+        reservacionesListView = consultarReservacionesSegunUsuario();
     }
 
     public SmsCostosservicios getCostoServicioView() {
@@ -261,14 +255,6 @@ public class ReservacionBean implements Serializable {
 
     public void setReservaView(SmsReservacion reservaView) {
         this.reservaView = reservaView;
-    }
-
-    public List<SmsReservacion> getListaReservaciones() {
-        return listaReservaciones;
-    }
-
-    public void setListaReservaciones(List<SmsReservacion> listaReservaciones) {
-        this.listaReservaciones = listaReservaciones;
     }
 
     public String getMinutosInicio() {
@@ -387,7 +373,7 @@ public class ReservacionBean implements Serializable {
             emailController.sendEmailClienteWithout(reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
         }
 
-        consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
+        //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
 
         //Habilitamos la seleccion de vehiculos y conductores
@@ -413,6 +399,7 @@ public class ReservacionBean implements Serializable {
 
         //Limpieza de objetos 
         reservaView = new SmsReservacion();
+        reservacionesListView = consultarReservacionesSegunUsuario();
         siguiente = true;
         atras = false;
         return ruta;
@@ -446,7 +433,7 @@ public class ReservacionBean implements Serializable {
 
         consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
         addEventoCalendario();
-
+        reservacionesListView = consultarReservacionesSegunUsuario();
         modReservacionView = new SmsReservacion();
         return Ruta;
     }
@@ -455,7 +442,7 @@ public class ReservacionBean implements Serializable {
     ///Controla el flujo de la vista de reservacion
     public void filtrarReservaciones() {
         if (buscar == null) {
-            reservacionesListView = listaReservaciones;
+            reservacionesListView = consultarReservacionesSegunUsuario();
         } else {
             reservacionesListView = resDao.filtrarReservacionSegunCliente(buscar);
         }
@@ -477,6 +464,7 @@ public class ReservacionBean implements Serializable {
                     break;
                 case "Vehiculo":
                     SelecVeh = false;
+                    siguiente = true;
                     atras = true;
 
                     SimpleDateFormat formatTime;
@@ -499,11 +487,11 @@ public class ReservacionBean implements Serializable {
                     reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
 
                     //id tipos duracion servicio
-//        1 = minuto
-//        2 = hora        
-//        3 = dia
-//        4 = semana
-//        5 = mes    
+                    //        1 = minuto
+                    //        2 = hora        
+                    //        3 = dia   
+                    //        4 = semana
+                    //        5 = mes    
                     switch (categoriaServicio) {
 
                         case 1: //tiempo
@@ -582,6 +570,7 @@ public class ReservacionBean implements Serializable {
                     break;
                 case "Conductor":
                     siguiente = true;
+                    atras = true;
                     if (reservaView.getSmsServicios().getServicioConductor() == 1) {
                         reservaView.setSmsEmpleado(new SmsEmpleado());
                     }
@@ -595,6 +584,7 @@ public class ReservacionBean implements Serializable {
                     break;
                 case "Confirmacion":
                     siguiente = false;
+                    atras = true;
                     if (empleadoView.getIdEmpleado() != null) {
                         reservaView.setSmsEmpleado(empleadoView);
                     }
@@ -602,6 +592,7 @@ public class ReservacionBean implements Serializable {
             }
             if (event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
                 siguiente = false;
+                atras = true;
                 return "Confirmacion";
             } else {
                 return event.getNewStep();
@@ -622,8 +613,7 @@ public class ReservacionBean implements Serializable {
     }
 
     public void filtrar() {
-
-        if (categoriaView.getCategoriaNombre().equalsIgnoreCase("")) {
+        if (categoriaView != null && categoriaView.getCategoriaNombre().isEmpty()) {
             if (resDao.mostrarReservaciones().isEmpty()) {
                 vehiculosListView = new ArrayList<>();
                 vehiculosListView = vehiculoDao.consultarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio());
@@ -642,10 +632,24 @@ public class ReservacionBean implements Serializable {
         }
     }
 
-    // CONTROLADOR PARA SACAR DATOS DE RESERVACION 
-    public void consultarReservacionesSegunUsuario() { //carga la agendas de las reservaciones hechan en el sistema segun el tipo de usuario conectado
+    public void filtrarVehiculoSegunPlaca() {
+        if (buscar == null) {
+            if (resDao.mostrarReservaciones().isEmpty()) {
+                vehiculosListView = new ArrayList<>();
+                vehiculosListView = vehiculoDao.consultarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio());
+            } else {
+                vehiculosListView = new ArrayList<>();
+                vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
+            }
+        } else {
+            vehiculosListView = vehiculoController.buscarVehiculoSegunPlaca(reservaView, mercadoSeleccionado, buscar);
+        }        
+    }
 
-        listaReservaciones = new ArrayList<>();
+    // CONTROLADOR PARA SACAR DATOS DE RESERVACION 
+    public List<SmsReservacion> consultarReservacionesSegunUsuario() { //carga la agendas de las reservaciones hechan en el sistema segun el tipo de usuario conectado
+
+        List<SmsReservacion> listaReservaciones = new ArrayList<>();
 
         switch (sesion.getSmsRol().getRolNombre()) {
 
@@ -663,6 +667,8 @@ public class ReservacionBean implements Serializable {
                 listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
                 break;
         }
+
+        return listaReservaciones;
 
     }
 
@@ -682,12 +688,13 @@ public class ReservacionBean implements Serializable {
         formatCompleteDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         eventoModelo = new DefaultScheduleModel();
-        for (int i = 0; i < listaReservaciones.size(); i++) {
+        List<SmsReservacion> reservaciones = consultarReservacionesSegunUsuario();
+        for (int i = 0; i < reservaciones.size(); i++) {
 
-            String FechaInicio = formatDate.format(listaReservaciones.get(i).getReservacionFechaInicio());
-            String FechaLlegada = formatDate.format(listaReservaciones.get(i).getReservacionFechaLlegada());
-            String HInicio = formatTime.format(listaReservaciones.get(i).getReservacionHoraInicio());
-            String HLlegada = formatTime.format(listaReservaciones.get(i).getReservacionHoraLlegada());
+            String FechaInicio = formatDate.format(reservaciones.get(i).getReservacionFechaInicio());
+            String FechaLlegada = formatDate.format(reservaciones.get(i).getReservacionFechaLlegada());
+            String HInicio = formatTime.format(reservaciones.get(i).getReservacionHoraInicio());
+            String HLlegada = formatTime.format(reservaciones.get(i).getReservacionHoraLlegada());
 
             try {
                 fechaInicio = formatCompleteDate.parse(FechaInicio + " " + HInicio);
@@ -696,8 +703,8 @@ public class ReservacionBean implements Serializable {
                 pe.getMessage();
             }
 
-            evento = new DefaultScheduleEvent("" + listaReservaciones.get(i).getIdReservacion(), fechaInicio, fechaLlegada);
-            evento.setId("" + listaReservaciones.get(i).getIdReservacion());
+            evento = new DefaultScheduleEvent("" + reservaciones.get(i).getIdReservacion(), fechaInicio, fechaLlegada);
+            evento.setId("" + reservaciones.get(i).getIdReservacion());
             eventoModelo.addEvent(evento);
         }
     }
@@ -707,7 +714,6 @@ public class ReservacionBean implements Serializable {
     }
 
     public void actualizarListasReservaciones() {
-        consultarReservacionesSegunUsuario();
         addEventoCalendario();
     }
 
@@ -982,7 +988,8 @@ public class ReservacionBean implements Serializable {
         categoriaServicio = 0;
         SelecVeh = false;
         SelecCon = false;
-
+        siguiente = true;
+        atras = false;
         String ruta = "";
         if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")) {
             ruta = "AdminPReservacion";
@@ -995,5 +1002,8 @@ public class ReservacionBean implements Serializable {
         return ruta;
 
     }
+    
+    
+    
 
 }

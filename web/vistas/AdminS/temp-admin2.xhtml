@@ -84,12 +84,12 @@
                                         <li class="user-footer">
                                             <div class="pull-left">
                                                 <h:form>
-                                                    <p:commandButton value="Editar Perfil" action="#{usuarioBean.ir_editarPerfil()}" class="btn btn-default btn-block "/>
+                                                    <p:commandButton value="Editar Perfil" immediate="true" action="#{usuarioBean.ir_editarPerfil()}" class="btn btn-default btn-block "/>
                                                 </h:form>
                                             </div>
                                             <div class="pull-right">
                                                 <h:form>
-                                                    <p:commandButton value="Cerrar Sesion" action="#{sesionActivaBean.cerrarSession()}" class="btn btn-default btn-block "/>
+                                                    <p:commandButton value="Cerrar Sesion" immediate="true" action="#{sesionActivaBean.cerrarSession()}" class="btn btn-default btn-block "/>
                                                 </h:form> 
                                             </div>
                                         </li>
@@ -222,8 +222,8 @@
                                                     </h:link>
                                                 </li>
                                                 <li>
-                                                    <h:link outcome="#{pathBean.ir_SCategoServicio()}">
-                                                        <i class="fa fa-circle-o"></i> Categorias Servicios 
+                                                    <h:link outcome="#{pathBean.ir_SCostoServicio()}">
+                                                        <i class="fa fa-circle-o"></i> Costos de servicios
                                                     </h:link>
                                                 </li>
 

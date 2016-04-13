@@ -42,7 +42,7 @@ public class ImpContratoDao implements IContratoDao {
     }
 
     @Override
-    public List<SmsContrato> consultarContrañoSegunReservacion(SmsReservacion reservacion) {
+    public List<SmsContrato> consultarContratoSegunReservacion(SmsReservacion reservacion) {
         Session session = null;
         List<SmsContrato> contratos = new ArrayList<>();
         try {

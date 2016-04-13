@@ -61,17 +61,15 @@ public class ClienteBean extends UsuarioBean implements Serializable {
     @PostConstruct
     public void init() {
         usuariosListView = clienteDao.consultarUsuariosClientes();
-//                clienteDao.consultarUsuariosClientes();
+        nombresClientesListView = new ArrayList<>();
+        for (int i = 0; i < usuariosListView.size(); i++) {
+            nombresClientesListView.add(usuariosListView.get(i).getUsuarioNombre());
+        }
     }
 
     //Getters & Setters
     public List<String> getNombresClientesListView() {
-        nombresClientesListView = new ArrayList<>();
-        usuariosListView = new ArrayList<>();
-        usuariosListView = clienteDao.consultarUsuariosClientes();
-        for (int i = 0; i < usuariosListView.size(); i++) {
-            nombresClientesListView.add(usuariosListView.get(i).getUsuarioNombre());
-        }
+
         return nombresClientesListView;
     }
 
@@ -217,6 +215,24 @@ public class ClienteBean extends UsuarioBean implements Serializable {
             usuariosListView = clienteDao.consultarUsuariosClientes();
         } else {
             usuariosListView = clienteDao.filtrarUsuariosClientes(buscar);
+        }
+    }
+
+    public void filtrarCliente() {
+        usuariosListView = new ArrayList<>();
+        nombresClientesListView = new ArrayList<>();
+        if (buscar == null) {
+            usuariosListView = clienteDao.consultarUsuariosClientes();
+
+            for (int i = 0; i < usuariosListView.size(); i++) {
+                nombresClientesListView.add(usuariosListView.get(i).getUsuarioNombre());
+            }
+        } else {
+            usuariosListView = clienteDao.filtrarUsuariosClientes(buscar);
+            for (int i = 0; i < usuariosListView.size(); i++) {
+                nombresClientesListView.add(usuariosListView.get(i).getUsuarioNombre());
+            }
+
         }
     }
 

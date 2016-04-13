@@ -5,7 +5,10 @@
  */
 package com.planit.smsrenta.controladores;
 
+import com.planit.smsrenta.metodos.Sesion;
+import com.planit.smsrenta.modelos.SmsUsuario;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 
 /**
  *
@@ -13,10 +16,26 @@ import java.io.Serializable;
  */
 public class PathBean implements Serializable {
 
-    public PathBean() {
+    private SmsUsuario sesion;
+    private final Sesion sesionController;
 
+    public PathBean() {
+        sesionController = new Sesion();
+    }
+
+    @PostConstruct
+    public void init() {
+        sesion = sesionController.obtenerSesion();
     }
     /* / ADMIN PRINCIPAL / */
+
+    public SmsUsuario getSesion() {
+        return sesion;
+    }
+
+    public void setSesion(SmsUsuario sesion) {
+        this.sesion = sesion;
+    }
 
     public String ir_PUsuario() {
         return "AdminPUsuario";
@@ -125,7 +144,7 @@ public class PathBean implements Serializable {
     public String ir_AdminPReserva() {
         return "AdminPTipoServicio";
     }
-    
+
     public String ir_AdminPCondicionUso() {
         return "AdminPCondicionesUso";
     }
@@ -249,7 +268,7 @@ public class PathBean implements Serializable {
     public String ir_ClienteReservacion() {
         return "ClienteReservacion";
     }
-    
+
     public String ir_ClienteReservaciones() {
         return "ClienteReservaciones";
     }
@@ -273,6 +292,41 @@ public class PathBean implements Serializable {
 
     public String ir_Login() {
         return "Login";
+    }
+
+    public String regresarTableroPrincipal() {
+        String ruta = "";
+        switch (sesion.getSmsRol().getRolNombre()) {
+            case "Administrador Principal":
+                ruta = "AdminPPrincipal";
+                break;
+            case "Administrador Secundario":
+                ruta = "AdminSGeneral";
+                break;
+            case "Cliente":
+                ruta = "ClienteDash";
+                break;
+            case "Conductor":
+                ruta = "ConductorDash";
+                break;
+            case "Proveedor":
+                ruta = "ProveedorDash";
+                break;
+        }
+        return ruta;
+    }
+
+    public String irRegistroCliente() {
+        String ruta = "";
+        switch (sesion.getSmsRol().getRolNombre()) {
+            case "Administrador Principal":
+                ruta = "AdminPCliente";
+                break;
+            case "Administrador Secundario":
+                ruta = "AdminSClientes";
+                break;
+        }
+        return ruta;
     }
 
 }

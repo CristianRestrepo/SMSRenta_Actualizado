@@ -1,36 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
-	<property name="ireport.zoom" value="1.5"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FUEC" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idContrato" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[$F{Contrato_objeto}]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[$F{idContrato}]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["../Reportes_SMS/Copenal/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT r.Reservacion_lugar_llegada , r.Reservacion_lugar_destino , 
-r.Reservacion_fechaInicio , r.Reservacion_fechaLlegada , 
-r.Reservacion_horaInicio , r.Reservacion_horaLlegada , 
-# CAMPOS DE LA TABLA VEHICULO, CON ASOCIACIONES EN REFERENCIA Y EN MARCA
-v.Veh_placa , v.Veh_modelo , 
-v.Veh_numero_interno , v.Veh_numero_tarjeta_operacion , 
-m.Marca_nombre , cat.Categoria_nombre ,
-#DATOS DEL CONDUCTOR
-conductor.Usuario_nombre , conductor.Usuario_CC , empl.Empleado_numero_licencia,
-#DATOS DE CONTRATO
-cont.idContrato , cont.Contrato_objeto
-from sms_contrato as cont, sms_reservacion as r , sms_vehiculo as v , sms_referencia as ref , 
-sms_marca as m , sms_categoria cat , sms_usuario as conductor , sms_empleado as empl 
-where cont.idReservacion = r.idReservacion AND
-	  r.idVehiculo = v.idVehiculo AND
-      r.idEmpleado = empl.idEmpleado AND
-      empl.idEmpleado = conductor.idUsuario AND
-      v.idReferencia = ref.idReferencia AND
-      ref.Referencia_idMarca = m.idMarca AND
-      v.idCategoria = cat.idCategoria AND
-	cont.idContrato = $P{idContrato}]]>
+		<![CDATA[SELECT reservacion.Reservacion_lugar_llegada, reservacion.Reservacion_lugar_destino, 
+reservacion.Reservacion_fechaInicio, reservacion.Reservacion_fechaLlegada, 
+reservacion.Reservacion_horaInicio, reservacion.Reservacion_horaLlegada, 
+vehiculo.Veh_placa, vehiculo.Veh_modelo, 
+vehiculo.Veh_numero_interno, vehiculo.Veh_numero_tarjeta_operacion, marca.Marca_nombre, cat.Categoria_nombre, conductor.Usuario_nombre, conductor.Usuario_CC, empleado.Empleado_numero_licencia, empleado.Empleado_licencia_vigencia, contrato.idContrato, contrato.Contrato_objeto from sms_contrato as contrato, sms_reservacion as reservacion, sms_vehiculo as vehiculo, sms_referencia as ref, sms_marca as marca , sms_categoria as cat, sms_usuario as conductor , sms_empleado as empleado where contrato.idReservacion = reservacion.idReservacion and 
+reservacion.idVehiculo = vehiculo.idVehiculo AND
+reservacion.idEmpleado = empleado.idEmpleado AND
+empleado.idUsuario = conductor.idUsuario AND
+vehiculo.idReferencia = ref.idReferencia AND
+ref.Referencia_idMarca = marca.idMarca AND
+vehiculo.idCategoria = cat.idCategoria AND 
+contrato.idContrato = $P{idContrato}]]>
 	</queryString>
 	<field name="Reservacion_lugar_llegada" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -77,12 +68,13 @@ where cont.idReservacion = r.idReservacion AND
 	<field name="Empleado_numero_licencia" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="idContrato" class="java.lang.Long">
+	<field name="idContrato" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Contrato_objeto" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="Empleado_licencia_vigencia" class="java.util.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -128,16 +120,16 @@ where cont.idReservacion = r.idReservacion AND
 				<text><![CDATA[N° 425526302    201600600370]]></text>
 			</staticText>
 			<image>
-				<reportElement x="3" y="14" width="298" height="53" uuid="5d54a4d7-d329-47be-bb6a-5af8564681a1"/>
+				<reportElement x="0" y="11" width="304" height="62" uuid="25dcea61-fe41-4c20-8fbc-fb5fba2a6c6c"/>
 				<imageExpression><![CDATA["../Reportes_SMS/Copenal/minitraspret.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="313" y="8" width="58" height="66" uuid="d7101ca8-626c-4108-ad06-dd1c3d0a91c5"/>
-				<imageExpression><![CDATA["../Reportes_SMS/Copenal/super_transporte.png"]]></imageExpression>
+				<reportElement x="368" y="11" width="181" height="69" uuid="cdc6c55f-ccb8-4026-9108-70883c4404b5"/>
+				<imageExpression><![CDATA["../Reportes_SMS/Copenal/coopenal.jpg"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="376" y="14" width="176" height="59" uuid="1fab9720-41de-45b7-94ac-6edfa542a97a"/>
-				<imageExpression><![CDATA["../Reportes_SMS/Copenal/coopenal.jpg"]]></imageExpression>
+				<reportElement x="314" y="11" width="54" height="69" uuid="147b0329-dbfd-4731-b1bc-0d6efba6ecb3"/>
+				<imageExpression><![CDATA["../Reportes_SMS/Copenal/super_transporte.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -164,7 +156,7 @@ where cont.idReservacion = r.idReservacion AND
 				<text><![CDATA[Nit: 850.020.381-7]]></text>
 			</staticText>
 			<image>
-				<reportElement x="317" y="3" width="140" height="50" uuid="04cd25ef-3536-4079-8ae7-c5e5dc73ac1f"/>
+				<reportElement x="304" y="2" width="139" height="55" uuid="fd74cf0a-111c-47cf-aeef-a793f15f776d"/>
 				<imageExpression><![CDATA["../Reportes_SMS/Copenal/coopenal.jpg"]]></imageExpression>
 			</image>
 		</band>
@@ -173,7 +165,7 @@ where cont.idReservacion = r.idReservacion AND
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="17" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="0" width="555" height="17" forecolor="#666666" backcolor="#F3F3F3" uuid="1fb0b9b6-72d3-4825-9fba-ba932860c2c5"/>
 				<graphicElement>
@@ -203,12 +195,12 @@ where cont.idReservacion = r.idReservacion AND
 				</graphicElement>
 			</rectangle>
 			<subreport>
-				<reportElement x="3" y="4" width="552" height="15" uuid="39067d27-7827-48ca-8825-9ae554254de0"/>
+				<reportElement x="0" y="0" width="555" height="22" uuid="3d9ad7d8-555d-45f5-bd08-113326982445"/>
 				<subreportParameter name="idContrato_sub">
 					<subreportParameterExpression><![CDATA[$P{idContrato}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subReporte_Cliente_Copenal.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\subReporte_Cliente_Copenal.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="239">
@@ -612,13 +604,17 @@ where cont.idReservacion = r.idReservacion AND
 				<textFieldExpression><![CDATA[$F{Empleado_numero_licencia}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="15" y="201" width="540" height="35" uuid="e17af436-e9fd-45cf-92fb-9bb9a6341af1"/>
+				<reportElement x="0" y="201" width="555" height="35" uuid="2cb642c6-192f-4cf8-a7b4-32538343cb31"/>
 				<subreportParameter name="idContr_footer">
-					<subreportParameterExpression><![CDATA[$P{idContrato}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{idContrato}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subReporte_Cliente_Copenal_footer.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\subReporte_Cliente_Copenal_footer.jasper"]]></subreportExpression>
 			</subreport>
+			<textField pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement x="493" y="149" width="56" height="16" uuid="de9d24bb-8d58-4da3-839e-cfa79d3f484f"/>
+				<textFieldExpression><![CDATA[$F{Empleado_licencia_vigencia}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="57">
 			<rectangle>

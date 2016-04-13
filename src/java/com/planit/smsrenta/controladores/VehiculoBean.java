@@ -509,6 +509,25 @@ public class VehiculoBean {
         vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada, mercadoSeleccionado);
         return vehiculosListView;
     }
+    
+    public List<SmsVehiculo> buscarVehiculoSegunPlaca(SmsReservacion reserva, SmsMercado mercado, String placa) {
+        vehiculosListView = new ArrayList<>();       
+        String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
+        String mercadoSeleccionado = mercado.getMercadoNombre();
+     
+        SimpleDateFormat formatDate;
+        SimpleDateFormat formatTime;
+        formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        formatTime = new SimpleDateFormat("HH:mm:ss");
+
+        String FechaInicio = formatDate.format(reserva.getReservacionFechaInicio());
+        String FechaLlegada = formatDate.format(reserva.getReservacionFechaLlegada());
+        String HoraInicio = formatTime.format(reserva.getReservacionHoraInicio());
+        String HoraLlegada = formatTime.format(reserva.getReservacionHoraLlegada());
+
+        vehiculosListView = vehDao.consultarVehiculoDisponibleSegunPlaca(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, mercadoSeleccionado, placa);
+        return vehiculosListView;
+    }
 
     public void asociarVehiculo() {
         //Consultamos objetos
