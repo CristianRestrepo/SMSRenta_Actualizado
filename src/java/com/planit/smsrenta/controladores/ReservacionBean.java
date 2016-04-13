@@ -453,7 +453,6 @@ public class ReservacionBean implements Serializable {
             skip = false;   //reset in case user goes back
             return "Confirmacion";
         } else {
-
             switch (event.getNewStep()) {
                 case "Agenda":
                     atras = false;
@@ -486,12 +485,6 @@ public class ReservacionBean implements Serializable {
                     reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
                     reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
 
-                    //id tipos duracion servicio
-                    //        1 = minuto
-                    //        2 = hora        
-                    //        3 = dia   
-                    //        4 = semana
-                    //        5 = mes    
                     switch (categoriaServicio) {
 
                         case 1: //tiempo
@@ -590,10 +583,14 @@ public class ReservacionBean implements Serializable {
                     }
                     break;
             }
-            if (event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
+            if (event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {// 0 = sin conductor 
                 siguiente = false;
                 atras = true;
                 return "Confirmacion";
+            } else if (event.getOldStep().equalsIgnoreCase("conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
+                siguiente = true;
+                atras = true;
+                return "Vehiculo";
             } else {
                 return event.getNewStep();
             }
@@ -643,7 +640,7 @@ public class ReservacionBean implements Serializable {
             }
         } else {
             vehiculosListView = vehiculoController.buscarVehiculoSegunPlaca(reservaView, mercadoSeleccionado, buscar);
-        }        
+        }
     }
 
     // CONTROLADOR PARA SACAR DATOS DE RESERVACION 
@@ -1002,8 +999,5 @@ public class ReservacionBean implements Serializable {
         return ruta;
 
     }
-    
-    
-    
 
 }

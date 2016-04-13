@@ -8,9 +8,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <body>
-
         <ui:composition template="./../temp-admin2.xhtml">
-
             <ui:define name="content1">
                 <b:container fluid="true">
                     <b:row>
@@ -101,10 +99,25 @@
                                                              style="width: 100%" required="true" requiredMessage="Ingrese costo del servicio" placeholder="Costo del servicio"/>
                                                 <p:message for="TCostoServicio"/>
                                             </h:panelGrid>
-                                            <p:commandButton id="BTCosto" class="btn btn-block btn-primary" update="msgCostos BTCosto DTCostos PCostos PCostosDatosLugares PCosto" action="#{costosServicioBean.metodo()}" value="#{costosServicioBean.nombre}" style="width: 100%"/>
+                                            <h:panelGrid columns="2" width="100%">
+                                                <p:commandButton id="BTCosto" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-primary" update="@form" action="#{costosServicioBean.metodo()}" value="#{costosServicioBean.nombre}" style="width: 100%"/>
+                                                <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{costosServicioBean.habilitarCancelar}" action="#{costosServicioBean.cancelar()}" update="@form" value="Cancelar" />                                    
+                                            </h:panelGrid>
+                                            <script type="text/javascript">
+                                                function start() {
+                                                    PF('statusDialog').show();
+                                                }
+                                                function stop() {
+                                                    PF('statusDialog').hide();
+                                                }
+                                            </script>
+                                            <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                            </p:dialog>
                                         </div>
-                                    </div>
+                                    </div>                            
                                 </div>
+
                             </b:column>
 
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
@@ -143,7 +156,8 @@
                                                     <p:confirm header="Confirmación" message="Está seguro que desea eliminar este costo?" icon="ui-icon-alert" /> 
                                                 </p:commandLink>
                                             </p:column>
-                                        </p:dataTable>                                
+                                        </p:dataTable>
+
 
                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                             <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
@@ -156,8 +170,6 @@
                     </b:row>
                 </b:container>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

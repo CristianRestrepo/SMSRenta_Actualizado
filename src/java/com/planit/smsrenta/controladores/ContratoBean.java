@@ -54,13 +54,15 @@ public class ContratoBean {
                 contratoDao.registrarContrato(contratoView);
             }
             GenerarReportes reporte = new GenerarReportes();
-            contratoView = contratoDao.consultarContratoSegunReservacion(reservacion).get(0);
+            if (contratoView.getIdContrato() == null) {
+                contratoView = contratoDao.consultarContratoSegunReservacion(reservacion).get(0);
+            }
             reporte.generarFUEC(contratoView);
-        }else{ 
+        } else {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Este tipo de servicio no necesita de documento FUEC", "");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
-        
+
     }
 
 }

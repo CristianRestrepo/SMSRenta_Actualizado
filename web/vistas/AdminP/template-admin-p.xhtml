@@ -82,7 +82,7 @@
                                         <li class="user-footer">
                                             <div class="pull-left">
                                                 <h:form>
-                                                    <p:commandButton value="Editar Perfil" immediate="true" action="#{usuarioBean.ir_editarPerfil()}" class="btn btn-default btn-block "/>
+                                                    <p:commandButton value="Editar Perfil" process="@this" ajax="false" immediate="true" action="#{usuarioBean.ir_editarPerfil()}" class="btn btn-default btn-block "/>
                                                 </h:form>
                                             </div>
                                             <div class="pull-right">

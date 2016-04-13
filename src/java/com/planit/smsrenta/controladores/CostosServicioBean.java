@@ -19,6 +19,7 @@ import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsCostosservicios;
 import com.planit.smsrenta.modelos.SmsLugares;
 import com.planit.smsrenta.modelos.SmsMercado;
+import com.planit.smsrenta.modelos.SmsUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,9 @@ public class CostosServicioBean implements Serializable {
     private String buscar;
 
     private boolean habilitar;
+    
+    //Banderas    
+    private boolean habilitarCancelar;
 
     public CostosServicioBean() {
 
@@ -76,6 +80,7 @@ public class CostosServicioBean implements Serializable {
         lugarDao = new ImpLugarDao();
 
         habilitar = false;
+        habilitarCancelar = true;
     }
 
     @PostConstruct
@@ -173,6 +178,16 @@ public class CostosServicioBean implements Serializable {
         this.mercadoView = mercadoView;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+    
+    
+
     public void registrar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
         costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
@@ -191,6 +206,7 @@ public class CostosServicioBean implements Serializable {
         costoView = new SmsCostosservicios();
         ciudadInicioView = new SmsCiudad();
         ciudadDestinoView = new SmsCiudad();
+        mercadoView = new SmsMercado();
     }
 
     public void habilitarListas(String valor) {
@@ -255,6 +271,7 @@ public class CostosServicioBean implements Serializable {
         } else if (estado == 1) {
             modificar();
             estado = 0;
+            habilitarCancelar = true;
             nombre = "Registrar Costo Servicio";
         }
 
@@ -272,7 +289,20 @@ public class CostosServicioBean implements Serializable {
 
             }
             mercadoView = costoView.getSmsServicios().getSmsMercado();
+            habilitarCancelar = false;
         }
+    }
+    
+    public void cancelar() {
+        //Limpiamos objetos utilizados      
+        
+        habilitarCancelar = true;
+        costoView = new SmsCostosservicios();
+        ciudadInicioView = new SmsCiudad();
+        ciudadDestinoView = new SmsCiudad();
+        mercadoView = new SmsMercado();
+        estado = 0;
+        nombre = "Registrar Costo Servicio";
     }
 
 }

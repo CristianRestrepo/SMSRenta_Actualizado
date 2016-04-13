@@ -15,17 +15,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Sesion {
 
-    private final HttpServletRequest httpServletRequest;
-    private final FacesContext faceContext;
+    private HttpServletRequest httpServletRequest;
+    private FacesContext faceContext;
 
     public Sesion() {
+    }
+
+    public SmsUsuario obtenerSesion() {
         faceContext = FacesContext.getCurrentInstance();
         httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
-    }
-    
-    public SmsUsuario obtenerSesion(){
         SmsUsuario usuario;
-        usuario = (SmsUsuario) httpServletRequest.getSession().getAttribute("Sesion");        
+        usuario = (SmsUsuario) httpServletRequest.getSession().getAttribute("Sesion");
         return usuario;
     }
 

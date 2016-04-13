@@ -184,7 +184,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
     public void cancelar() {
         //Limpiamos objetos utilizados
         usuarioView = new SmsUsuario();
-
+        operacion = 0;
         //Reiniciamos los objetos
         habilitarCancelar = true;
         nombreOperacion = "Registrar Proveedor";

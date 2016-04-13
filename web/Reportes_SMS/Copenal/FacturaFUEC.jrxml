@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FUEC" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="2"/>
 	<parameter name="idContrato" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{idContrato}]]></defaultValueExpression>
 	</parameter>
@@ -81,7 +81,7 @@ contrato.idContrato = $P{idContrato}]]>
 	<title>
 		<band height="145" splitType="Stretch">
 			<rectangle>
-				<reportElement x="304" y="0" width="251" height="80" forecolor="#666666" uuid="78aa99e6-edac-43e1-9cfa-ca842b0df155"/>
+				<reportElement x="304" y="1" width="251" height="80" forecolor="#666666" uuid="78aa99e6-edac-43e1-9cfa-ca842b0df155"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
@@ -120,16 +120,16 @@ contrato.idContrato = $P{idContrato}]]>
 				<text><![CDATA[N° 425526302    201600600370]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="11" width="304" height="62" uuid="25dcea61-fe41-4c20-8fbc-fb5fba2a6c6c"/>
-				<imageExpression><![CDATA["../Reportes_SMS/Copenal/minitraspret.png"]]></imageExpression>
+				<reportElement x="0" y="13" width="304" height="67" uuid="230622cd-5f36-47a1-a036-0bdbefe1642e"/>
+				<imageExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\minitraspret.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="368" y="11" width="181" height="69" uuid="cdc6c55f-ccb8-4026-9108-70883c4404b5"/>
-				<imageExpression><![CDATA["../Reportes_SMS/Copenal/coopenal.jpg"]]></imageExpression>
+				<reportElement x="313" y="13" width="49" height="67" uuid="8721aa38-cb9d-4183-8332-386c1fe3334b"/>
+				<imageExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\super_transporte.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="314" y="11" width="54" height="69" uuid="147b0329-dbfd-4731-b1bc-0d6efba6ecb3"/>
-				<imageExpression><![CDATA["../Reportes_SMS/Copenal/super_transporte.png"]]></imageExpression>
+				<reportElement x="368" y="13" width="187" height="67" uuid="50917a18-b00b-4884-84e7-a5c03c46fef2"/>
+				<imageExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -156,8 +156,8 @@ contrato.idContrato = $P{idContrato}]]>
 				<text><![CDATA[Nit: 850.020.381-7]]></text>
 			</staticText>
 			<image>
-				<reportElement x="304" y="2" width="139" height="55" uuid="fd74cf0a-111c-47cf-aeef-a793f15f776d"/>
-				<imageExpression><![CDATA["../Reportes_SMS/Copenal/coopenal.jpg"]]></imageExpression>
+				<reportElement x="304" y="7" width="139" height="50" uuid="db3f9843-ce1a-4e98-bea5-973eaf1aa7b3"/>
+				<imageExpression><![CDATA["C:\\Users\\CristianCamilo\\Documents\\NetBeansProjects\\SMSRenta_Actualizado\\web\\Reportes_SMS\\Copenal\\coopenal.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
