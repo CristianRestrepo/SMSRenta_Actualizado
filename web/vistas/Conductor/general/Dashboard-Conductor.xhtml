@@ -10,26 +10,23 @@
     <ui:composition template="./../temp-conductor.xhtml">
 
         <ui:define name="content3">
-
             <b:container fluid="true">
                 <b:row>
-                    <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12" class="espacio-arriba">
+                    <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" class="espacio-arriba">
+                        <h:form>
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-5x fa-road"></i>
+                                    <h1 class="box-title">Horarios de Conductores</h1>
+                                    <h:panelGrid class="box-tools" columns="2">
+                                        <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
+                                        <p:commandButton style="width: 100%" action="irListaReservacionesConductor" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
+                                    </h:panelGrid>
+                                </div>
+                                <div class="box-body">
 
-                        <div class="box box-info">
-                            <div class="box-header with-border">
-                                <i class="fa fa-5x fa-road"></i>
-                                <h1 class="box-title">Horarios de Conductores</h1>
-                                <h:panelGrid class="box-tools" columns="2">
-                                    <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
-                                    <p:commandButton style="width: 100%" action="irListaReservacionesConductor" update="schedule" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
-
-                                </h:panelGrid>
-                            </div>
-                            <div class="box-body">
-                                <h:form>
                                     <p:growl id="messages" showDetail="true" />
                                     <h:panelGrid columnClasses="value">
-
                                         <p:schedule id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
                                             <p:ajax event="eventSelect" listener="#{reservacionBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                                         </p:schedule>
@@ -50,65 +47,16 @@
                                         </h:panelGrid>
                                     </p:dialog>    
 
-                                </h:form>
-                                <style type="text/css">
-                                    .value {
-                                        width: 1000px;
-                                    }
-                                </style>
-                            </div> 
-                        </div>
 
-                    </b:column>
-
-                    <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12"  class="espacio-arriba" >
-
-                        <div class="box box-solid bg-light-blue-gradient">
-                            <div class="box-header ui-sortable-handle with-border">
-                                <i class="fa fa-5x fa-road"></i>
-                                <h1 class="box-title">Horarios de Conductores</h1>
+                                    <style type="text/css">
+                                        .value {
+                                            width: 1000px;
+                                        }
+                                    </style>
+                                </div> 
                             </div>
-                            <div class="box-body">
-                                En este espacio podrá encontrar los horarios de los conductores que están asignados a
-                                un cliente con su respectiva reservación.
-                            </div> 
-                        </div>
-
-                    </b:column>
-
-                    <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
-                        <div class="box box-danger ">
-                            <div class="box-header with-border">
-                                <i class="fa fa-2x fa-list-alt"/>
-                                <h3 class="box-title">Listado de Clientes</h3>
-                            </div>
-                            <div class="box-body">
-                                <p:dataTable var="car" value="#{dtBasicView.cars}">
-                                    <p:column headerText="Fecha de registro">
-                                        <h:outputText value="#{car.id}" />
-                                    </p:column>
-
-                                    <p:column headerText="Nombre">
-                                        <h:outputText value="#{car.year}" />
-                                    </p:column>
-
-                                    <p:column headerText="Apellido">
-                                        <h:outputText value="#{car.brand}" />
-                                    </p:column>
-
-                                    <p:column headerText="Vehículo reservado">
-                                        <h:outputText value="#{car.reser}" />
-                                    </p:column>
-                                    <p:column headerText="Consultar">
-
-                                    </p:column>
-                                </p:dataTable>
-                            </div>
-                        </div>
-                    </b:column>
-
-
-
+                        </h:form>
+                    </b:column>                                      
                 </b:row>
             </b:container>
 
