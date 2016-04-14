@@ -41,8 +41,7 @@ public class SesionActivaBean {
         }
     }
     
-    public String cerrarSession()
-    {
+    public String cerrarSession()    {
         Usuario = new SmsUsuario();
         faceContext=FacesContext.getCurrentInstance();
         httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();       

@@ -37,12 +37,17 @@ public class CiudadBean implements Serializable {
     IDepartamentoDao departamentoDao;
     ITipoLugarDao tipoLugarDao;
     ICiudadDao ciudadDao;
+    
+     //Banderas    
+    private boolean habilitarCancelar;
 
     public CiudadBean() {
         ciudadView = new SmsCiudad();
         ciudadesListView = new ArrayList<>();
         nombresCiudadesListView = new ArrayList<>();
 
+        habilitarCancelar = true;
+        
         buscar = null;
         estado = 0;
         nombre = "Registrar Ciudad";
@@ -111,11 +116,22 @@ public class CiudadBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+    
+    
+
     //Metodos propios
     public void seleccionarCrud(int i) {
         estado = i;
         if (estado == 1) {
             nombre = "Modificar Ciudad";
+             habilitarCancelar = false;
         }
     }
 
@@ -124,6 +140,7 @@ public class CiudadBean implements Serializable {
             registrar();
         } else if (estado == 1) {
             modificar();
+             habilitarCancelar = true;
             estado = 0;
             nombre = "Registrar Ciudad";
         }
@@ -177,5 +194,14 @@ public class CiudadBean implements Serializable {
         } else {
             ciudadesListView = ciudadDao.filtrarCiudad(buscar);
         }
+    }
+    
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        ciudadView = new SmsCiudad();
+        estado = 0;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombre = "Registrar Ciudad";
     }
 }

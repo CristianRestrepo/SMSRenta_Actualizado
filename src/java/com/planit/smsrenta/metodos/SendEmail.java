@@ -411,4 +411,40 @@ public class SendEmail {
 
     }
 
+    
+    public void sendEmailNuevaContrasena(SmsUsuario usuario, String password) {
+        init();
+        try {
+            MimeMessage message = new MimeMessage(session);
+
+            //quien envia
+            message.setFrom(new InternetAddress("smsrenta@gmail.com"));
+
+            // a donde se envia
+            message.addRecipient(
+                    Message.RecipientType.TO,
+                    new InternetAddress("" + usuario.getUsuarioEmail()));
+            message.setSubject("Nueva contraseña para SMS Renta");
+            message.setText("Señor(a) " + usuario.getUsuarioNombre() + ","
+                    + "\n"
+                    + "Mediante este mensaje enviamos una contraseña provisional para acceder al sistema SMS Renta."
+                    + "Los datos de sesion para acceder al sistema son:\n"
+                    + "Nombre de sesion o email: " + usuario.getUsuarioEmail() + "\n"
+                    + "La nueva contraseña es: " + password + "\n"
+                    + "Por favor no olvide editar su perfil para crear una contraseña personalizada.\n"
+                    + "Atentamente, SMS Renta");
+
+            Transport t = session.getTransport("smtp");
+            t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
+            t.sendMessage(message, message.getAllRecipients());
+            t.close();
+        } catch (MessagingException me) {
+            me.getMessage();
+            //Aqui se deberia o mostrar un mensaje de error o en lugar
+            //de no hacer nada con la excepcion, lanzarla para que el modulo
+            //superior la capture y avise al usuario con un popup, por ejemplo.
+            return;
+        }
+
+    }
 }

@@ -289,6 +289,10 @@ public class PathBean implements Serializable {
     public String ir_Registrarse() {
         return "Register";
     }
+    
+    public String ir_olvideContrasena(){
+        return "OlvideContrasena";
+    }
 
     public String ir_Login() {
         return "Login";

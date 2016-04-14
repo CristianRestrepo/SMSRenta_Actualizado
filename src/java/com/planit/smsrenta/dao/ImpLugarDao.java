@@ -29,7 +29,7 @@ public class ImpLugarDao implements ILugarDao {
 
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsLugares as lugar left join fetch lugar.smsCiudad as ciudad");
+            Query query = session.createQuery("from SmsLugares as lugar left join fetch lugar.smsCiudad as ciudad left join fetch lugar.smsLocalidad");
             lugares = (List<SmsLugares>) query.list();
 
         } catch (HibernateException e) {

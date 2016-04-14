@@ -37,6 +37,10 @@ public class LoginFilter implements Filter {
         if (urlStr.endsWith("/register.xhtml")) {
             return true;
         }
+        
+        if (urlStr.endsWith("/olvideContrasena.xhtml")) {
+            return true;
+        }
 
         if (urlStr.contains("/javax.faces.resource/")) {
             return true;

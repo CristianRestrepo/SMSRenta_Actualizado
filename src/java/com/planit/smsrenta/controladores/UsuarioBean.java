@@ -15,6 +15,8 @@ import com.planit.smsrenta.dao.ImpCiudadDao;
 import com.planit.smsrenta.dao.ImpNacionalidadDao;
 import com.planit.smsrenta.dao.ImpRolDao;
 import com.planit.smsrenta.dao.ImpUsuarioDao;
+import com.planit.smsrenta.metodos.GenerarPassword;
+import com.planit.smsrenta.metodos.SendEmail;
 import com.planit.smsrenta.metodos.Sesion;
 import static com.planit.smsrenta.metodos.Upload.getMapPathFotosUsuario;
 import com.planit.smsrenta.modelos.SmsUsuario;
@@ -48,7 +50,7 @@ public class UsuarioBean implements Serializable {
     boolean habilitado;
 
     //Relacion con clases  
-    protected Upload fileController;  
+    protected Upload fileController;
     protected Sesion sesionController;
     //Sesion
     protected SmsUsuario Usuario;
@@ -56,13 +58,16 @@ public class UsuarioBean implements Serializable {
     //Conexion con el Dao
     ICiudadDao ciudadDao;
     IRolDao rolDao;
-    
+    IUsuarioDao usuarioDao;
+
+    private FacesMessage message;
+
     INacionalidadDao nacionalidadDao;
 
     //Variables
     protected String password;
     protected String estadoFoto;
-   
+
     public UsuarioBean() {
         usuarioView = new SmsUsuario();
         nombresUsuarios = new ArrayList<>();
@@ -73,9 +78,10 @@ public class UsuarioBean implements Serializable {
 
         fileController = new Upload();
         sesionController = new Sesion();
-        
+
         ciudadDao = new ImpCiudadDao();
         rolDao = new ImpRolDao();
+        usuarioDao = new ImpUsuarioDao();
         nacionalidadDao = new ImpNacionalidadDao();
 
     }
@@ -143,8 +149,8 @@ public class UsuarioBean implements Serializable {
 
     public void setNombresUsuarios(List<String> nombresUsuarios) {
         this.nombresUsuarios = nombresUsuarios;
-    }    
-    
+    }
+
     //Declaracion de metodos
     //Metodos CRUD
     public void modificarPerfil() {
@@ -165,10 +171,32 @@ public class UsuarioBean implements Serializable {
         repitaContraseña = "";
     }
 
+    public String generarNuevaContraseñaDeSesion() {
+        GenerarPassword gpassword = new GenerarPassword();
+        MD5 md5 = new MD5();
+        SendEmail email = new SendEmail();
+
+        String pass = gpassword.generarPass(6);
+        usuarioView = usuarioDao.consultarDatosSesionUsuario(usuarioView).get(0);
+        usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
+        usuarioView.setUsuarioPassword(md5.getMD5(pass));
+        usuarioView.setUsuarioRememberToken(md5.getMD5(pass));
+        usuarioDao.modificarContraseñaUsuario(usuarioView);
+
+        email.sendEmailNuevaContrasena(usuarioView, pass);
+
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La nueva contraseña ha sido enviada, por favor revise su correo.", null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+
+        usuarioView = new SmsUsuario();
+        return "Login";
+
+    }
+
     public String ir_editarPerfil() {
         Usuario = sesionController.obtenerSesion();
         estadoFoto = "Foto subida:" + Usuario.getUsuarioFotoNombre();
-        
+
         String ruta = "";
         switch (Usuario.getSmsRol().getIdRol()) {
             case 1:
@@ -180,7 +208,7 @@ public class UsuarioBean implements Serializable {
             case 3:
                 ruta = "ClienteEdicionPerfil";
                 break;
-            case 4:                
+            case 4:
                 ruta = "CondEdicionPerfil";
                 break;
             case 5:

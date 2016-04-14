@@ -10,6 +10,7 @@ import com.planit.smsrenta.dao.ImpMercadoDao;
 import com.planit.smsrenta.metodos.Upload;
 import static com.planit.smsrenta.metodos.Upload.getMapPathFotosMercado;
 import com.planit.smsrenta.modelos.SmsMercado;
+import com.planit.smsrenta.modelos.SmsUsuario;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class MercadoBean implements Serializable {
     //Mensajes emergentes 
     private FacesMessage message;
 
+    //Banderas    
+    private boolean habilitarCancelar;
+
     public MercadoBean() {
         mercadoDao = new ImpMercadoDao();
 
@@ -64,6 +68,7 @@ public class MercadoBean implements Serializable {
         nombre = "Registrar Mercado";
 
         habilitarRegistro = true;
+        habilitarCancelar = true;
 
     }
 
@@ -142,15 +147,23 @@ public class MercadoBean implements Serializable {
         this.nombre = nombre;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+
     //Metodos
     public void registrarMercado() {
 
-        mercadoDao.registrarMercado(mercadoView);        
+        mercadoDao.registrarMercado(mercadoView);
         mercadoListView = mercadoDao.consultarMercados();
         mercadoView = new SmsMercado();
-        
+
         estadoFoto = "";
-        habilitarRegistro = true;        
+        habilitarRegistro = true;
     }
 
     public void modificarMercado() {
@@ -166,7 +179,7 @@ public class MercadoBean implements Serializable {
         mercadoDao.eliminarMercado(mercadoView);
         mercadoListView = mercadoDao.consultarMercados();
         mercadoView = new SmsMercado();
-        
+
         estadoFoto = "";
         nombre = "Registrar Mercado";
         habilitarRegistro = true;
@@ -207,6 +220,7 @@ public class MercadoBean implements Serializable {
     public void seleccionarCrud(int i) {
         estado = i;
         if (estado == 1) {
+            habilitarCancelar = false;
             estadoFoto = "Foto de portada:" + mercadoView.getMercadoFotoNombre();
             nombre = "Modificar Mercado";
             habilitarRegistro = false;
@@ -218,9 +232,21 @@ public class MercadoBean implements Serializable {
             registrarMercado();
         } else if (estado == 1) {
             modificarMercado();
+            habilitarCancelar = true;
             estado = 0;
             nombre = "Registrar Mercado";
         }
     }
 
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        mercadoView = new SmsMercado();
+
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        estadoFoto = "";
+        estado = 0;
+        habilitarRegistro = true;
+        nombre = "Registrar Mercado";
+    }
 }

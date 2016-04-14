@@ -266,6 +266,5 @@ public class SmsVehiculo implements java.io.Serializable {
     public void setVehNumeroTarjetaOperacion(String vehNumeroTarjetaOperacion) {
         this.vehNumeroTarjetaOperacion = vehNumeroTarjetaOperacion;
     }
-
     
 }

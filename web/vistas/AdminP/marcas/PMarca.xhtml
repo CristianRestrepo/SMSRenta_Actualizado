@@ -11,7 +11,7 @@
     <ui:composition template="./../template-admin-p.xhtml">
         <ui:define name="content">
             <b:container fluid="true">
-                <b:row>
+                <b:row>                   
 
                     <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                         <div class="box box-info espacio-arriba">
@@ -25,62 +25,8 @@
                         </div>
                     </b:column>
 
-                    <h:form id="formularioMarca">
-                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <p:messages id="msg" closable="true"/>                       
-                        </b:column>
-                        <b:column col-lg="3" col-md="3" col-sm="12" col-xs="12">
-                            <div class="box box-danger">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-car"/>
-                                    <h4 class="box-title">Registro de Marcas</h4>
-                                </div> 
-                                <div class="box-body">
-                                    <div class="table-responsive">
-
-                                        <h:panelGrid cellpadding="5" columns="" id="PMarca" style="width: 100%">
-                                            <b:inputText tooltip="Nombre de la marca a registrar" placeholder="Nombre de marca" id="TNombreMrc" required="true" requiredMessage="Ingrese nombre" style="width: 100%" value="#{marcaBean.marcaView.marcaNombre}"/>
-                                            <p:message for="TNombreMrc"/>
-                                        </h:panelGrid>
-                                    </div>
-                                    <hr/>                                
-                                    <p:commandButton id="BTMarca" class="btn btn-block btn-danger" update=":formularioMarca :formularioFotografia :formularioDatos:DTMarcas" value="#{marcaBean.nombre}" action="#{marcaBean.metodo()}"/>
-                                </div>                                    
-                            </div>
-                        </b:column>
-                    </h:form>
-
-
-
-                    <h:form id="formularioFotografia" enctype="multipart/form-data">
-                       
-                        <b:column col-lg="4" col-md="4" col-sm="12" col-xs="12" >                            
-
-                            <div class="box box-primary">
-                                <p:fragment autoUpdate="true">
-                                    <div class="box-header with-border">    
-                                        <i class="fa fa-2x fa-camera"/>
-                                        <h4 class="box-title">Logo de la marca</h4>
-                                    </div>
-                                    <div class="box-body">
-                                        <p:outputLabel id="TEstadoFoto" value="#{marcaBean.estadoFoto}"/>
-                                        <div class="table-responsive">
-                                            <p:fileUpload id="fileIdPhoto" fileUploadListener="#{marcaBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
-                                                          process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formularioFotografia" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
-
-                                            <p:messages id="messages" closable="true" />
-                                        </div> 
-                                    </div>
-                                </p:fragment>
-                            </div>
-
-                        </b:column>
-                    </h:form>
-
-                    
-
                     <h:form id="formularioDatos">
-                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
                             <div class="box box-success">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-list-ol"/>
@@ -121,6 +67,68 @@
                             </div>
                         </b:column>
                     </h:form> 
+
+                    <h:form id="formularioMarca">
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <p:messages id="msg" closable="true"/>                       
+                        </b:column>
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-car"/>
+                                    <h4 class="box-title">Registro de Marcas</h4>
+                                </div> 
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <h:panelGrid cellpadding="5" columns="" id="PMarca" style="width: 100%">
+                                            <b:inputText tooltip="Nombre de la marca a registrar" placeholder="Nombre de marca" id="TNombreMrc" required="true" requiredMessage="Ingrese nombre" style="width: 100%" value="#{marcaBean.marcaView.marcaNombre}"/>
+                                            <p:message for="TNombreMrc"/>
+                                        </h:panelGrid>
+                                    </div>
+                                    <hr/>
+                                    <h:panelGrid columns="2" width="100%">
+                                        <p:commandButton id="BTMarca" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" update=":formularioMarca :formularioFotografia :formularioDatos:DTMarcas" value="#{marcaBean.nombre}" action="#{marcaBean.metodo()}"/>
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{marcaBean.habilitarCancelar}" action="#{marcaBean.cancelar()}" update=":formularioMarca :formularioFotografia :formularioDatos" value="Cancelar" />
+                                    </h:panelGrid>
+                                    <script type="text/javascript">
+                                        function start() {
+                                            PF('statusDialog').show();
+                                        }
+                                        function stop() {
+                                            PF('statusDialog').hide();
+                                        }
+                                    </script>
+                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                    </p:dialog>
+                                </div>                                    
+                            </div>
+                        </b:column>
+                    </h:form>
+
+                    <h:form id="formularioFotografia" enctype="multipart/form-data">
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >                            
+                            <div class="box box-primary">
+                                <p:fragment autoUpdate="true">
+                                    <div class="box-header with-border">    
+                                        <i class="fa fa-2x fa-camera"/>
+                                        <h4 class="box-title">Logo de la marca</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <p:outputLabel id="TEstadoFoto" value="#{marcaBean.estadoFoto}"/>
+                                        <div class="table-responsive">
+                                            <p:fileUpload id="fileIdPhoto" fileUploadListener="#{marcaBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
+                                                          process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formularioFotografia" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+
+                                            <p:messages id="messages" closable="true" />
+                                        </div> 
+                                    </div>
+                                </p:fragment>
+                            </div>
+                        </b:column>
+                    </h:form>
+
+
                 </b:row>
             </b:container>
         </ui:define>

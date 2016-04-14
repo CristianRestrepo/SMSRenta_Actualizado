@@ -8,6 +8,7 @@ package com.planit.smsrenta.controladores;
 import com.planit.smsrenta.dao.IPaisDao;
 import com.planit.smsrenta.dao.ImpPaisDao;
 import com.planit.smsrenta.modelos.SmsPais;
+import com.planit.smsrenta.modelos.SmsUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class PaisBean implements Serializable {
     private int estado; //Controla la operacion a realizar
     private String nombre;
     private String buscar;
+    
+    //Banderas    
+    private boolean habilitarCancelar;
 
     public PaisBean() {
         paisView = new SmsPais();
@@ -35,6 +39,8 @@ public class PaisBean implements Serializable {
         buscar = null;
         estado = 0;
         nombre = "Registrar Pais";
+        
+        habilitarCancelar = true;
     }
 
     @PostConstruct
@@ -97,6 +103,15 @@ public class PaisBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+
+    
     //Metodos que se comunicar con el controlador    
     public void registrar() {
         paisDao.registrarPais(paisView);
@@ -132,6 +147,7 @@ public class PaisBean implements Serializable {
         estado = i;
         if (estado == 1) {
             nombre = "Modificar Pais";
+            habilitarCancelar = false;
         }
     }
 
@@ -141,8 +157,18 @@ public class PaisBean implements Serializable {
         } else if (estado == 1) {
             modificar();
             estado = 0;
+            habilitarCancelar = true;
             nombre = "Registrar Pais";
         }
+    }
+    
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        paisView = new SmsPais();
+        estado = 0;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombre = "Registrar Pais";
     }
 
 }

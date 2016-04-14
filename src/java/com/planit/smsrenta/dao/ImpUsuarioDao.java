@@ -140,8 +140,6 @@ public class ImpUsuarioDao implements IUsuarioDao {
         return usuarios;
     }
 
-    
-
     @Override
     public List<SmsUsuario> verificarLoginDisponible(String valor) {
         Session session = null;
@@ -159,7 +157,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
         }
         return usuarios;
     }
-    
+
     @Override
     public List<SmsUsuario> verificarEmailDisponible(String valor) {
         Session session = null;
@@ -175,5 +173,26 @@ public class ImpUsuarioDao implements IUsuarioDao {
                 session.close();
             }
         }
-        return usuarios;}
+        return usuarios;
+    }
+
+    @Override
+    public void modificarContraseñaUsuario(SmsUsuario usuario) {
+        Session session = null;
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(usuario);
+            session.getTransaction().commit();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+            session.getTransaction().rollback();
+
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }        
+    }
 }

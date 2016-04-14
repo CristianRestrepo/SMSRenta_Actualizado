@@ -36,6 +36,10 @@ public class CategoriaBean implements Serializable {
     //Conexion con el DAO
     ICategoriaDao catDao;
     IMercadoDao mercadoDao;
+    
+    
+    //Banderas    
+    private boolean habilitarCancelar;
 
     public CategoriaBean() {//CONSTRUCTOR
         categoriaView = new SmsCategoria();
@@ -47,6 +51,8 @@ public class CategoriaBean implements Serializable {
         buscar = null;
         estado = 0;
         nombre = "Registrar Categoria";
+        
+        habilitarCancelar = true;
 
         catDao = new ImpCategoriaDao();
         mercadoDao = new ImpMercadoDao();
@@ -111,6 +117,16 @@ public class CategoriaBean implements Serializable {
     public void setMercadosSeleccionados(List<String> mercadosSeleccionados) {
         this.mercadosSeleccionados = mercadosSeleccionados;
     }
+
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+    
+    
 
     //METODOS QUE DEVUELVEN DATOS PARA VISTAS
     public void modificar() {
@@ -238,6 +254,7 @@ public class CategoriaBean implements Serializable {
         if (estado == 0) {
             registrar();
         } else if (estado == 1) {
+             habilitarCancelar = true;
             modificar();
             estado = 0;
             nombre = "Registrar Categoria";
@@ -248,11 +265,22 @@ public class CategoriaBean implements Serializable {
         estado = i;
         mercadosSeleccionados = new ArrayList<>();
         if (estado == 1) {
+            habilitarCancelar = false;
             nombre = "Modificar Categoria";
             mercadoList = mercadoDao.consultarMercadoSegunCategoria(categoriaView);
             for (int j = 0; j < mercadoList.size(); j++) {
                 mercadosSeleccionados.add(mercadoList.get(j).getMercadoNombre());
             }
         }
+    }
+    
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        categoriaView = new SmsCategoria();
+        mercadosSeleccionados = new ArrayList<>();
+        estado = 0;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombre = "Registrar Proveedor";
     }
 }

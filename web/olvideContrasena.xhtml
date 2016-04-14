@@ -49,39 +49,39 @@
                                     <div class="box-body">
 
                                         <f:facet name="anchor"><b:iconAwesome name="user" size="1x"  /></f:facet>
-                                        <!-- <form accept-charset="UTF-8" role="form">-->
                                         <fieldset>
-                                            <p:fragment autoUpdate="true">
-                                                <p:growl id="messages" life="2000"/>
-                                                <div class="form-group centro">
-                                                    <img src="resources/images/logo.jpg" class="cntr-1 img-thumbnail "/>
-                                                    <b:inputText placeholder="Correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{sesionBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px"/>
-                                                    <b:inputSecret  placeholder="Contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{sesionBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
-                                                </div>
-                                                <h:panelGrid columns="2" width="100%" >                                                    
-                                                    <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrese aqui"/>
-                                                    <p:commandLink process="@this" immediate="true"   action="#{pathBean.ir_olvideContrasena()}" value="Olvido su contraseña?"/>
-                                                </h:panelGrid>
-                                                <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"  class="btn btn-lg btn-block btn-danger" update="messages"
-                                                                  action="#{sesionBean.iniciarSesion()}" value="Ingrese Aquí"/>
-                                                <script type="text/javascript">
-                                                    function start() {
-                                                        PF('statusDialog').show();
-                                                    }
-                                                    function stop() {
-                                                        PF('statusDialog').hide();
-                                                    }
-                                                </script>
-                                                <p:dialog modal="true" widgetVar="statusDialog" header="Iniciando Sesion, espere" draggable="false" closable="false" resizable="false">
-                                                    <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
-                                                </p:dialog>
-                                            </p:fragment>
 
-                                        </fieldset>
-                                        <!--</form>-->
+                                            <p:growl id="messages" life="2000"/>
+                                            <div class="form-group centro"> 
+                                                <p align="center">Ingrese su correo electronico para recibir una nueva contraseña.</p>
+                                                <b:inputText  placeholder="Ingrese correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
+                                                </b:inputText>
+                                            </div>
+                                            <p:commandLink value="Iniciar sesion" 
+                                                           process="@this" 
+                                                           immediate="true" 
+                                                           action="#{pathBean.ir_Login()}"/>
+                                            <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-danger" 
+                                                             ajax="false"
+                                                             action="#{usuarioBean.generarNuevaContraseñaDeSesion()}"
+                                                             value="Solicitar nueva contraseña"
+                                                             />
+                                            <script type="text/javascript">
+                                                 function start() {
+                                                    PF('statusDialog').show();
+                                                 }
+                                                 function stop() {
+                                                    PF('statusDialog').hide();
+                                                 }
+                                            </script>
+                                            <p:dialog modal="true" widgetVar="statusDialog" header="Generando nueva contraseña, espere" draggable="false" closable="false" resizable="false">
+                                                <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                            </p:dialog>
+
+
+                                        </fieldset>                                        
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -90,4 +90,6 @@
         </h:form>
     </h:body>
 </html>
+
+
 

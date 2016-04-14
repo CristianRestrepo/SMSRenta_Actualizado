@@ -91,5 +91,6 @@ public class SesionBean implements Serializable {
         usuarioView = new SmsUsuario();
 
         return ruta;
-    }
+    }    
+    
 }

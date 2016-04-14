@@ -12,22 +12,24 @@
         <ui:define name="content">
             <b:container fluid="true">
                 <b:row>
-                    <h:form>
-                        <p:messages id="msg" autoUpdate="true" closable="true"/>
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <div class="box box-info espacio-arriba">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-tags"/>
-                                    <h3 class="box-title">Categorías SMS Renta</h3>
-                                </div>
-                                <div class="box-body">
-                                    <p class="text-justify"> En este panel podrá ingresar el nombre y la descripción respecto a las categorías 
-                                        de los Vehículos de SMS Renta. Un ejemplo de Categoría puede ser Categoría Blindado, Categorías 
-                                        Business, Categoría VIV, etc.</p>
-                                </div>
-                            </div>
-                        </b:column>
 
+                    <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                        <div class="box box-info espacio-arriba">
+                            <div class="box-header with-border">
+                                <i class="fa fa-2x fa-tags"/>
+                                <h3 class="box-title">Categorías SMS Renta</h3>
+                            </div>
+                            <div class="box-body">
+                                <p class="text-justify"> En este panel podrá ingresar el nombre y la descripción respecto a las categorías 
+                                    de los Vehículos de SMS Renta. Un ejemplo de Categoría puede ser Categoría Blindado, Categorías 
+                                    Business, Categoría VIV, etc.</p>
+                            </div>
+                        </div>
+                    </b:column>
+                    <h:form id="formularioCategorias">
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <p:messages id="msg" autoUpdate="true" closable="true"/>
+                        </b:column>
                         <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
                             <div class="box box-danger">
                                 <div class="box-header with-border">
@@ -37,15 +39,15 @@
                                 <div class="box-body">
                                     <div class="table-responsive">
                                         <h:panelGrid id="PCategoria" columns="2" style="width: 100%" cellpadding="5">
-                                            
+
                                             <p:outputLabel value="Mercados"/>
                                             <p:outputLabel/>
-                                            
+
                                             <p:selectManyCheckbox columns="3" layout="grid" id="SMMercado" required="true" value="#{categoriaBean.mercadosSeleccionados}" label="Mercado" style="width: 100%">
                                                 <f:selectItems value="#{mercadoBean.nombresMercadosListView}" var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}"/>
                                             </p:selectManyCheckbox>
                                             <p:message for="SMMercado"/>
-                                                                                        
+
                                             <b:inputText maxlength="50" style="width: 100%" id="TNombreCat" required="true" requiredMessage="Ingrese nombre" placeholder="Nombre de categoria" value="#{categoriaBean.categoriaView.categoriaNombre}"/>
                                             <p:message for="TNombreCat"/>
 
@@ -53,11 +55,26 @@
                                             <p:message for="TDescCat"/>
                                         </h:panelGrid>
                                     </div>
-                                    <p:commandButton id="BTCategoria" class="btn btn-block btn-danger" update="msg PCategoria DTCategoria BTCategoria" value="#{categoriaBean.nombre}" action="#{categoriaBean.metodo()}"/>
+                                    <h:panelGrid columns="2" width="100%">
+                                        <p:commandButton id="BTCategoria" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" update=":formularioCategorias :formularioDatosCategorias:DTCategoria" value="#{categoriaBean.nombre}" action="#{categoriaBean.metodo()}"/>
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{categoriaBean.habilitarCancelar}" action="#{categoriaBean.cancelar()}" update="@form" value="Cancelar" />
+                                    </h:panelGrid>
+                                    <script type="text/javascript">
+                                        function start() {
+                                            PF('statusDialog').show();
+                                        }
+                                        function stop() {
+                                            PF('statusDialog').hide();
+                                        }
+                                    </script>
+                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                    </p:dialog>
                                 </div>                                 
                             </div>
-                        </b:column>                        
-
+                        </b:column>    
+                    </h:form>
+                    <h:form id="formularioDatosCategorias">
                         <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
                             <div class="box box-success">
                                 <div class="box-header with-border">
@@ -81,15 +98,15 @@
                                         <p:column headerText="Descripción">
                                             <h:outputText value="#{Categorias.categoriaDescripcion}" />
                                         </p:column>
-                                                                                                                        
+
                                         <p:column style="width: 35px">
-                                            <p:commandLink class="fa fa-pencil btn btn-block btn-success btn-padding" style="color: white" process="@this" update="@form" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink class="fa fa-pencil btn btn-block btn-success btn-padding" style="color: white" process="@this" update=":formularioCategorias" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink class="fa fa-close btn btn-block btn-danger btn-padding" style="color: white" process="@this" update="@form" action="#{categoriaBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink class="fa fa-trash btn btn-block btn-danger btn-padding" style="color: white" process="@this" update="@form" action="#{categoriaBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta categoria?" icon="ui-icon-alert" /> 
                                             </p:commandLink>

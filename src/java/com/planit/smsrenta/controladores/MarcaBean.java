@@ -47,6 +47,9 @@ public class MarcaBean implements Serializable {
     private String buscar;
     protected String estadoFoto;
 
+    //Banderas    
+    private boolean habilitarCancelar;
+
     public MarcaBean() {
         marcaView = new SmsMarca();
         marcasListView = new ArrayList<>();
@@ -55,6 +58,8 @@ public class MarcaBean implements Serializable {
         buscar = "";
         estado = 0;
         nombre = "Registrar Marca";
+
+        habilitarCancelar = true;
 
         marcaDao = new ImpMarcaDao();
         fileController = new Upload();
@@ -124,6 +129,14 @@ public class MarcaBean implements Serializable {
         return estadoFoto;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+
     public void setEstadoFoto(String estadoFoto) {
         this.estadoFoto = estadoFoto;
     }
@@ -147,11 +160,11 @@ public class MarcaBean implements Serializable {
     }
 
     public void registrar() {
-        if(marcaView.getMarcaFotoRuta() == null){
+        if (marcaView.getMarcaFotoRuta() == null) {
             marcaView.setMarcaFotoRuta(getPathDefaultMarca());
             marcaView.setMarcaFotoNombre(getNameDefaultMarca());
         }
-        
+
         marcaDao.registrarMarca(marcaView);
         marcaView = new SmsMarca();
         marcasListView = marcaDao.mostrarMarcas();
@@ -177,8 +190,11 @@ public class MarcaBean implements Serializable {
     public void metodo() {
         if (estado == 0) {
             registrar();
+            estadoFoto = "Foto sin subir";
         } else if (estado == 1) {
             modificar();
+            estadoFoto = "Foto sin subir";
+            habilitarCancelar = true;
             estado = 0;
             nombre = "Registrar Marca";
         }
@@ -187,6 +203,7 @@ public class MarcaBean implements Serializable {
     public void seleccionarCRUD(int i) {
         estado = i;
         if (estado == 1) {
+            habilitarCancelar = false;
             nombre = "Modificar Marca";
             estadoFoto = "Foto subida:" + marcaView.getMarcaFotoNombre();
         }
@@ -210,6 +227,16 @@ public class MarcaBean implements Serializable {
         } catch (Exception ex) {
             ex.getMessage();
         }
+    }
+
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        marcaView = new SmsMarca();
+        estado = 0;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        estadoFoto = "Foto sin subir";
+        nombre = "Registrar Marca";
     }
 
 }

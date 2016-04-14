@@ -12,21 +12,24 @@
         <ui:define name="content">
             <b:container fluid="true">
                 <b:row>
-                    <h:form>   
-                        <p:messages id="msg" closable="true"/>
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <div class="box box-info espacio-arriba">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-tags"/>
-                                    <h3 class="box-title">Referencias SMS Renta</h3>
-                                </div>
-                                <div class="box-body">
-                                    <p>En este panel podrá registrar las referencias de los vehículos a manejar en SMS Renta, 
-                                        relacionando esta referencia con su respectiva marca.</p>
-                                </div>
-                            </div>
-                        </b:column>
 
+                    <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                        <div class="box box-info espacio-arriba">
+                            <div class="box-header with-border">
+                                <i class="fa fa-2x fa-tags"/>
+                                <h3 class="box-title">Referencias SMS Renta</h3>
+                            </div>
+                            <div class="box-body">
+                                <p>En este panel podrá registrar las referencias de los vehículos a manejar en SMS Renta, 
+                                    relacionando esta referencia con su respectiva marca.</p>
+                            </div>
+                        </div>
+                    </b:column>
+
+                    <h:form id="formularioReferencias">   
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <p:messages id="msg" closable="true"/>
+                        </b:column>
                         <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
                             <div class="box box-danger ">
                                 <div class="box-header with-border">
@@ -49,11 +52,27 @@
                                         </h:panelGrid>
                                     </div> 
                                     <hr/>
-                                    <p:commandButton  id="BTReferencia" update="msg BTReferencia PReferencias DTReferencias" class="btn btn-block btn-danger" value="#{referenciaBean.nombre}" action="#{referenciaBean.metodo()}"/>                                   
+                                    <h:panelGrid columns="2" width="100%">                                        
+                                        <p:commandButton  id="BTReferencia" onclick="PrimeFaces.monitorDownload(start, stop);" update=":formularioReferencias :formularioDatosReferencias:DTReferencias" class="btn btn-block btn-success" value="#{referenciaBean.nombre}" action="#{referenciaBean.metodo()}"/>                                   
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{referenciaBean.habilitarCancelar}" action="#{referenciaBean.cancelar()}" update="@form" value="Cancelar" />
+                                    </h:panelGrid>
+                                    <script type="text/javascript">
+                                        function start() {
+                                            PF('statusDialog').show();
+                                        }
+                                        function stop() {
+                                            PF('statusDialog').hide();
+                                        }
+                                    </script>
+                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                    </p:dialog>
                                 </div>                                  
                             </div>
                         </b:column>
+                    </h:form>  
 
+                    <h:form id="formularioDatosReferencias">   
                         <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
                             <div class="box box-success">
                                 <div class="box-header with-border">
@@ -78,13 +97,13 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this"  update="@form" action="#{referenciaBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this"  update=":formularioReferencias :formularioDatosReferencias" action="#{referenciaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.referenciaView}"/>
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">                                                    
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{referenciaBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formularioReferencias :formularioDatosReferencias" action="#{referenciaBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.referenciaView}"/>
                                                 <p:confirm header="Confirmación" message="Está seguro que desea eliminar este referencia de vehiculos?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
@@ -98,7 +117,6 @@
                                 </div>
                             </div>
                         </b:column>
-
                     </h:form> 
                 </b:row>
             </b:container>

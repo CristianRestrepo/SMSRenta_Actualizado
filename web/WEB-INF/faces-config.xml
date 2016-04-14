@@ -580,6 +580,11 @@
             <to-view-id>/register.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>OlvideContrasena</from-outcome>
+            <to-view-id>/olvideContrasena.xhtml</to-view-id>
+            <redirect/>                  
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/register.xhtml</from-view-id>

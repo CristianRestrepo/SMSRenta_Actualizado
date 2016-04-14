@@ -41,10 +41,11 @@
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-tag"/>
-                                        <h3 class="box-title">Fotografia de portada para mercados</h3>
+                                        <h3 class="box-title">Fotografía de portada para mercados</h3>
                                     </div>
                                     <div class="box-body">
-                                        <p>Por favor ingrese la fotografia que servira como portada para el mercado en el momento de realizar una reservacion.</p>
+                                        <p>Por favor ingrese la fotografía que servirá como portada para el 
+                                            mercado en el momento de realizar una reservación.</p>
                                     </div>
                                 </div>
                             </b:column> 
@@ -61,7 +62,8 @@
                                             <p:outputLabel id="TEstadoFoto" value="#{mercadoBean.estadoFoto}"/>
                                             <div class="table-responsive">
                                                 <p:fileUpload id="fileIdPhoto" fileUploadListener="#{mercadoBean.uploadPhoto}" mode="advanced" dragDropSupport="false"
-                                                              process="@this" uploadLabel="Subir Fotografia" cancelLabel="Cancelar" update=":formularioMercado:BTMercado :formularioSubidaArchivos" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
+                                                              process="@this" uploadLabel="Subir Fotografía" cancelLabel="Cancelar" 
+                                                              update=":formularioMercado:BTMercado :formularioSubidaArchivos" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
 
                                                 <p:messages id="messages" closable="true" />
                                             </div> 
@@ -83,13 +85,42 @@
                                         <div class="table-responsive">                                            
                                             <div class="form-group">
                                                 <h:panelGrid cellpadding="5" width="100%" columns="2" id="PMercado">
-                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true" tooltip="Nombre del mercado" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
+                                                    <b:inputText placeholder="Nombre del mercado" id="TNombreMrd" required="true"
+                                                                 tooltip="Nombre del mercado" requiredMessage="Ingrese nombre del mercado" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoNombre}"/>
                                                     <p:message for="TNombreMrd"/>
 
-                                                    <p:inputTextarea rows="6" placeholder="Descripcion del mercado" id="TDescripcionMrd" style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
+                                                    <p:inputTextarea rows="6" placeholder="Descripción del mercado" id="TDescripcionMrd" 
+                                                                     style="width: 100%" value="#{mercadoBean.mercadoView.mercadoDescripcion}"/>
                                                     <p:message for="TDescripcionMrd"/>
                                                 </h:panelGrid>
-                                                <p:commandButton id="BTMercado" disabled="#{mercadoBean.habilitarRegistro}" class="btn btn-block btn-danger" style="width: 100%" update=":formularioMercado:BTMercado :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg :formularioSubidaArchivos:messages" value="#{mercadoBean.nombre}" action="#{mercadoBean.metodo()}"/>
+                                                <h:panelGrid columns="2" width="100%">
+                                                    <p:commandButton id="BTMercado" disabled="#{mercadoBean.habilitarRegistro}"
+                                                                     onclick="PrimeFaces.monitorDownload(start, stop);"
+                                                                     class="btn btn-block btn-success" style="width: 100%" 
+                                                                     update=":formularioMercado:BTMercado :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg :formularioSubidaArchivos:messages" 
+                                                                     value="#{mercadoBean.nombre}" 
+                                                                     action="#{mercadoBean.metodo()}"/>
+                                                    <p:commandButton id="BTCancelar" style="width: 100%" 
+                                                                     process="@this" 
+                                                                     immediate="true" 
+                                                                     class="btn btn-block btn-danger" 
+                                                                     disabled="#{mercadoBean.habilitarCancelar}" 
+                                                                     action="#{mercadoBean.cancelar()}" 
+                                                                     update=":formularioSubidaArchivos :formularioMercado" 
+                                                                     value="Cancelar" />
+
+                                                </h:panelGrid>
+                                                <script type="text/javascript">
+                                                    function start() {
+                                                        PF('statusDialog').show();
+                                                    }
+                                                    function stop() {
+                                                        PF('statusDialog').hide();
+                                                    }
+                                                </script>
+                                                <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                    <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                </p:dialog>
                                             </div>
                                         </div>
                                     </div>
@@ -127,13 +158,7 @@
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
                                                     </p:commandLink>
                                                 </p:column>
-
-                                            </p:dataTable>
-
-                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
-                                                <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                            </p:confirmDialog>                                      
+                                            </p:dataTable>                                                                                
                                         </div>                                                                       
                                     </div> 
                                 </div>
@@ -141,7 +166,7 @@
                         </h:form>
 
                     </b:row>
-                </b:container>                
+                </b:container>            
             </ui:define>
 
         </ui:composition>

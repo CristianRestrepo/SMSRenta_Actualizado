@@ -25,11 +25,14 @@ public class ReferenciaBean implements Serializable {
     private SmsReferencia referenciaView;
     private List<SmsReferencia> referenciasListView;
     private List<String> nombresReferenciaListView;
-   
+
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
     private String buscar;
+
+    //Banderas    
+    private boolean habilitarCancelar;
 
     //Conexion con el DAO
     IReferenciaDao referenciaDao;
@@ -40,11 +43,12 @@ public class ReferenciaBean implements Serializable {
         referenciasListView = new ArrayList<>();
 
         nombresReferenciaListView = new ArrayList<>();
+        habilitarCancelar = true;
 
         buscar = null;
         estado = 0;
         nombre = "Registrar Referencia";
-     
+
         referenciaDao = new ImpReferenciaDao();
         marcaDao = new ImpMarcaDao();
     }
@@ -108,6 +112,14 @@ public class ReferenciaBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+
     //Metodos
     public void modificar() {
 
@@ -156,6 +168,7 @@ public class ReferenciaBean implements Serializable {
         if (estado == 0) {
             registrar();
         } else if (estado == 1) {
+            habilitarCancelar = true;
             modificar();
             estado = 0;
             nombre = "Registrar Referencia";
@@ -165,8 +178,18 @@ public class ReferenciaBean implements Serializable {
     public void seleccionarCRUD(int i) {
         estado = i;
         if (estado == 1) {
+            habilitarCancelar = false;
             nombre = "Modificar Referencia";
         }
+    }
+
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        referenciaView = new SmsReferencia();
+        estado = 0;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombre = "Registrar Referencia";
     }
 
 }

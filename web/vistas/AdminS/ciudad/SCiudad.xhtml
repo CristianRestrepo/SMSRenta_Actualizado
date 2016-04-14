@@ -9,14 +9,14 @@
 
     <ui:composition template="./../temp-admin2.xhtml">
         <ui:define name="content1">
-           <b:container fluid="true">
+            <b:container fluid="true">
                 <b:row>
 
 
                     <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                         <div class="espacio-arriba" style="text-align: center" align="center">
                             <h4 style="font-size: x-large">CIUDADES Y LUGARES</h4><br/>
-                            <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre}</p>
+                            <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
                         </div>
                     </b:column>
 
@@ -40,6 +40,7 @@
                                 </div>
                             </div>
                         </b:column>
+
                         <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
                             <div class="box box-danger ">
                                 <div class="box-header with-border">
@@ -65,11 +66,15 @@
                                             <p:message for="TNombreCiudad"/>
                                         </h:panelGrid>
                                     </div><hr/>
-                                    <p:commandButton class="btn btn-block btn-danger" id="BTCiudad" action="#{ciudadBean.metodo()}" update=":formularioCiudades :formularioLugares:SCiudades" value="#{ciudadBean.nombre}"/>                                       
+                                    <h:panelGrid columns="2" width="100%">
+                                        <p:commandButton class="btn btn-block btn-success" id="BTCiudad" action="#{ciudadBean.metodo()}" update=":formularioCiudades :formularioDatosCiudades :formularioLugares:SCiudades" value="#{ciudadBean.nombre}"/>                                       
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{ciudadBean.habilitarCancelar}" action="#{ciudadBean.cancelar()}" update="@form" value="Cancelar" />
+                                    </h:panelGrid>
                                 </div>
                             </div>                            
                         </b:column>
-
+                    </h:form>
+                    <h:form id="formularioDatosCiudades">
                         <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
                             <div class="box box-success ">
                                 <div class="box-header with-border">
@@ -95,22 +100,11 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink process="@this" update="@form" class="fa fa-pencil btn btn-block btn-success" style="color: white; padding: 8px"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
+                                            <p:commandLink process="@this" update=":formularioCiudades :formularioDatosCiudades" class="fa fa-pencil btn btn-block btn-success" style="color: white; padding: 8px"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
                                             </p:commandLink>
                                         </p:column>
-
-                                        <p:column style="width: 35px"> 
-                                            <p:commandLink process="@this" update="@form" class="fa fa-trash btn btn-block btn-danger" style="color: white; padding: 8px" action="#{ciudadBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta ciudad?" icon="ui-icon-alert" /> 
-                                            </p:commandLink>
-                                        </p:column>
-                                    </p:dataTable>    
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
-                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                    </p:confirmDialog>
+                                    </p:dataTable>   
                                 </div>
                             </div> 
                         </b:column>
@@ -165,11 +159,16 @@
                                             <p:message for="TDireccionLugar"/>
                                         </h:panelGrid>
                                     </div><hr/>
-                                    <p:commandButton class="btn btn-block btn-danger" id="BTLugares" action="#{lugarBean.metodo()}" update=":formularioLugares" value="#{lugarBean.nombre}"/>                                       
+                                    <h:panelGrid columns="2" width="100%">
+                                        <p:commandButton class="btn btn-block btn-success" id="BTLugares" action="#{lugarBean.metodo()}" update=":formularioLugares :formularioDatosLugares:DTLugares" value="#{lugarBean.nombre}"/>                                       
+                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{lugarBean.habilitarCancelar}" action="#{lugarBean.cancelar()}" update="@form" value="Cancelar" />
+
+                                    </h:panelGrid>
                                 </div>
                             </div>                            
                         </b:column>
-
+                    </h:form>
+                    <h:form id="formularioDatosLugares">
                         <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
                             <div class="box box-success ">
                                 <div class="box-header with-border">
@@ -199,22 +198,11 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink process="@this" update="@form" class="fa fa-pencil btn btn-block btn-success" style="color: white"  action="#{lugarBean.seleccionarCrud(1)}" title="Modificar">
+                                            <p:commandLink process="@this" update=":formularioLugares" class="fa fa-pencil btn btn-block btn-success" style="color: white"  action="#{lugarBean.seleccionarCrud(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Lugares}" target="#{lugarBean.lugarView}"/>
                                             </p:commandLink>
-                                        </p:column>
-
-                                        <p:column style="width: 35px"> 
-                                            <p:commandLink process="@this" update=":formularioLugares" class="fa fa-trash btn btn-block btn-danger" style="color: white" action="#{lugarBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{Lugares}" target="#{lugarBean.lugarView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta ciudad?" icon="ui-icon-alert" /> 
-                                            </p:commandLink>
-                                        </p:column>
-                                    </p:dataTable>    
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
-                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                    </p:confirmDialog>
+                                        </p:column>                                       
+                                    </p:dataTable>   
                                 </div>
                             </div> 
                         </b:column>                       

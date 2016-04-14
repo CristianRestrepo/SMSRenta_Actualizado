@@ -11,6 +11,7 @@ import com.planit.smsrenta.dao.ImpDepartamentoDao;
 import com.planit.smsrenta.dao.ImpPaisDao;
 import com.planit.smsrenta.modelos.SmsDepartamento;
 import com.planit.smsrenta.modelos.SmsPais;
+import com.planit.smsrenta.modelos.SmsUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -30,6 +31,9 @@ public class DepartamentoBean {
     IDepartamentoDao departamentoDao;
     IPaisDao paisDao;
 
+    //Banderas    
+    private boolean habilitarCancelar;
+    
     //Variables
     private int estado; //Controla la operacion a realizar
     private String nombre;
@@ -44,9 +48,11 @@ public class DepartamentoBean {
         departamentoListView = new ArrayList<>();
         nombresDepartamentoListView = new ArrayList<>();
         
+        habilitarCancelar = true;
+        
         buscar = null;
         estado = 0;
-        nombre = "Registrar Pais";
+        nombre = "Registrar Departamento";
 
     }
     
@@ -117,9 +123,15 @@ public class DepartamentoBean {
         this.buscar = buscar;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }      
     
     //Metodos
-    
     public void registrarDepartamento(){
         
         //Se consulta la informacion completa del pais al que pertenece el departamento
@@ -168,7 +180,8 @@ public class DepartamentoBean {
     public void seleccionarCrud(int i) {
         estado = i;
         if (estado == 1) {
-            nombre = "Modificar departamento";
+            nombre = "Modificar Departamento";
+            habilitarCancelar = false;
         }
     }
 
@@ -177,8 +190,9 @@ public class DepartamentoBean {
             registrarDepartamento();
         } else if (estado == 1) {
             ModificarDepartamento();
+            habilitarCancelar = true;
             estado = 0;
-            nombre = "Registrar departamento";
+            nombre = "Registrar Departamento";
         }
     }
     
@@ -189,5 +203,14 @@ public class DepartamentoBean {
         } else {
             departamentoListView = departamentoDao.filtrarDepartamentos(buscar);
         }
+    }
+     
+     public void cancelar() {
+        //Limpiamos objetos utilizados
+        departamentoView = new SmsDepartamento();
+        estado = 0;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombre = "Registrar Departamento";
     }
 }

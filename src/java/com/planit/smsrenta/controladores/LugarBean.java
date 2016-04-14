@@ -39,6 +39,9 @@ public class LugarBean implements Serializable {
     private String nombre;
     private String buscar;
 
+    //Banderas    
+    private boolean habilitarCancelar;
+
     public LugarBean() {
         LugarView = new SmsLugares();
         LugaresListView = new ArrayList<>();
@@ -47,6 +50,8 @@ public class LugarBean implements Serializable {
         buscar = null;
         estado = 0;
         nombre = "Registrar Lugar";
+
+        habilitarCancelar = true;
 
         ciudadDao = new ImpCiudadDao();
         lugarDao = new ImpLugarDao();
@@ -78,13 +83,12 @@ public class LugarBean implements Serializable {
     public List<String> getNombresLugaresListView() {
         LugaresListView = new ArrayList<>();
         nombresLugaresListView = new ArrayList<>();
-        
+
         LugaresListView = lugarDao.consultarLugares();
         for (int i = 0; i < LugaresListView.size(); i++) {
             nombresLugaresListView.add(LugaresListView.get(i).getLugarNombre());
         }
-        
-        
+
         return nombresLugaresListView;
     }
 
@@ -108,12 +112,20 @@ public class LugarBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public boolean isHabilitarCancelar() {
+        return habilitarCancelar;
+    }
+
+    public void setHabilitarCancelar(boolean habilitarCancelar) {
+        this.habilitarCancelar = habilitarCancelar;
+    }
+
     //Metodos CRUD
     public void registrar() {
 
         LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()).get(0));
         LugarView.setSmsLocalidad(localidadDao.consultarLocalidad(LugarView.getSmsLocalidad()).get(0));
-        
+
         lugarDao.registrarLugar(LugarView);
         LugaresListView = lugarDao.consultarLugares();
         LugarView = new SmsLugares();
@@ -144,6 +156,7 @@ public class LugarBean implements Serializable {
         estado = i;
         if (estado == 1) {
             nombre = "Modificar Lugar";
+            habilitarCancelar = false;
         }
     }
 
@@ -153,6 +166,7 @@ public class LugarBean implements Serializable {
         } else if (estado == 1) {
             modificar();
             estado = 0;
+            habilitarCancelar = true;
             nombre = "Registrar Lugar";
         }
     }
@@ -173,6 +187,15 @@ public class LugarBean implements Serializable {
         for (int i = 0; i < LugaresListView.size(); i++) {
             nombresLugaresListView.add(LugaresListView.get(i).getLugarNombre());
         }
-     return nombresLugaresListView;
+        return nombresLugaresListView;
+    }
+    
+    public void cancelar() {
+        //Limpiamos objetos utilizados
+        LugarView = new SmsLugares();
+        estado = 0;
+        //Reiniciamos los objetos
+        habilitarCancelar = true;
+        nombre = "Registrar Lugar";
     }
 }
