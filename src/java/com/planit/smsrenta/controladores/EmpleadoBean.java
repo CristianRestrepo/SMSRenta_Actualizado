@@ -325,7 +325,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
         //Reiniciamos los objetos
         habilitarCancelar = true;
-        nombreOperacion = "Registrar Proveedor";
+        nombreOperacion = "Registrar Empleado";
         estadoFoto = "Foto sin subir";
         estadoArchivo = "Hoja de vida sin subir";
     }

@@ -148,7 +148,8 @@ public class ImpVehiculoDao implements IVehiculoDao {
                     + "reservacion.reservacionHoraInicio = '" + horaInicio + "' and "
                     + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo) "
                     + "and "
-                    + "(('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
+                    + "("
+                    + "('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
                     + "not exists(from SmsReservacion as reservacion where "
                     + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
                     + "("
@@ -190,8 +191,8 @@ public class ImpVehiculoDao implements IVehiculoDao {
                     + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
                     + "reservacion.reservacionFechaInicio = '" + fechaLlegada + "' and "
                     + "reservacion.reservacionHoraInicio < '" + horaLlegada + "')"
-                    + "))"
-            );
+                    + ")"
+                    + ")");
             vehiculos = (List<SmsVehiculo>) query.list();
 
         } catch (HibernateException e) {
