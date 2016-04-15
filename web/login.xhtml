@@ -38,10 +38,10 @@
                 <h:form>
                     <div class="container">
                         <div class="row vertical-offset-100">
-                            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-10
-                                 col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 " >
+                            <div class="col-lg-5 col-md-5 col-sm-8 col-xs-10
+                                 col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-1 bg-login " >
 
-                                <div class="box box-danger">                                   
+                                <div class="box box-sms-renta">                                   
                                     <div class="box-body">
 
                                         <f:facet name="anchor"><b:iconAwesome name="user" size="1x"  /></f:facet>
@@ -49,19 +49,34 @@
                                         <fieldset>
                                             <p:fragment autoUpdate="true">
                                                 <p:growl id="messages" life="2000"/>
-                                                <div class="form-group centro">
-                                                    <img src="resources/images/logo.jpg" class="cntr-1 img-thumbnail "/>
-                                                    <b:inputText placeholder="Correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{sesionBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px"/>
-                                                    <b:inputSecret  placeholder="Contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{sesionBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
+                                                <div class="form-group">
+                                                    
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-sm-offset-3">
+                                                                <img src="resources/images/logo.jpg" class="img-logo img-thumbnail center-block "/>
+                                                                <h3 class="text-center title-login"> SMS Renta  </h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-8 col-sm-offset-2 bg-margin-login">
+                                                                
+                                                                <b:inputText placeholder="Correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{sesionBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px"/>
+                                                                <b:inputSecret  placeholder="Contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{sesionBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
+
+                                                                <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrese aqui"/>
+
+                                                                <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"  class="btn btn-lg btn-block btn-danger" update="messages"
+                                                                                  action="#{sesionBean.iniciarSesion()}" value="Iniciar Sesion"/>
+                                                                <div align="center">
+                                                                    <p:commandLink process="@this" immediate="true"   action="#{pathBean.ir_olvideContrasena()}" value="He olvidado mi contraseña"/>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrese aqui"/>
-
-                                                <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"  class="btn btn-lg btn-block btn-danger" update="messages"
-                                                                  action="#{sesionBean.iniciarSesion()}" value="Iniciar Sesion"/>
-                                                <div align="center">
-                                                    <p:commandLink process="@this" immediate="true"   action="#{pathBean.ir_olvideContrasena()}" value="He olvidado mi contraseña"/>
-                                                </div>
 
                                                 <script type="text/javascript">
                                                     function start() {

@@ -1529,7 +1529,7 @@ a:focus {
  */
 .box {
     position: relative;
-    border-radius: 3px;
+    border-radius: 23px;
     background: #ffffff;
     border-top: 3px solid #d2d6de;
     margin-bottom: 20px;
@@ -1545,6 +1545,10 @@ a:focus {
 .box.box-danger {
     border-top-color: #dd4b39;
 }
+.box.box-sms-renta {
+    border-top-color: #FF5D35;
+}
+
 .box.box-warning {
     border-top-color: #f39c12;
 }

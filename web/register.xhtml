@@ -38,10 +38,10 @@
                 <h:form>
                     <div class="container">
                         <div class="row vertical-offset-100">
-                            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-10
-                                 col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 " >
+                            <div class="col-lg-5 col-md-5 col-sm-8 col-xs-10
+                                 col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-1 bg-login bg-position-register" >
 
-                                <div class="box box-danger">
+                                <div class="box box-sms-renta">
                                     <div class="box-body">
 
                                         <f:facet name="anchor"><b:iconAwesome name="user-plus" size="1x"  /></f:facet>
@@ -57,29 +57,36 @@
                                                 </div>       
                                                 <div class="box-body">
                                                     <div class="table-responsive">
-                                                        <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="2" style="width: 100%;">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-sm-10 col-sm-offset-1">
+                                                                    
+                                                                    <h:panelGrid id="seccionDatosUsuario" cellpadding="5" columns="2" style="width: 100%;">
 
-                                                            <b:inputText maxlength="60" id="TNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.usuarioView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
-                                                            <p:message for="TNombreApCli"/>
+                                                                        <b:inputText maxlength="60" id="TNombreApCli" required="true" requiredMessage="Ingrese nombre y apellido" placeholder="Nombres y apellidos" value="#{clienteBean.usuarioView.usuarioNombre}" style="width: 100%;"></b:inputText>                       
+                                                                        <p:message for="TNombreApCli"/>
 
-                                                            <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%"/>
-                                                            <p:message for="TEmailCli"/>
+                                                                        <b:inputText maxlength="100" validator="emailValidator" id="TEmailCli" required="true" requiredMessage="Ingrese Email valido" placeholder="Direccion de correo electronico" value="#{clienteBean.usuarioView.usuarioEmail}" style="width: 100%"/>
+                                                                        <p:message for="TEmailCli"/>
 
-                                                            <b:selectOneMenu value="#{clienteBean.usuarioView.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
-                                                                <f:selectItem itemLabel="Seleccione nacionalidad" noSelectionOption="true"/>
-                                                                <f:selectItems value="#{nacionalidadBean.nombresNacionalidades}"/>
-                                                            </b:selectOneMenu>
-                                                            <p:message for="SNacionalidad"/>
+                                                                        <b:selectOneMenu value="#{clienteBean.usuarioView.smsNacionalidad.nacionalidadNombre}" id="SNacionalidad">
+                                                                            <f:selectItem itemLabel="Seleccione nacionalidad" noSelectionOption="true"/>
+                                                                            <f:selectItems value="#{nacionalidadBean.nombresNacionalidades}"/>
+                                                                        </b:selectOneMenu>
+                                                                        <p:message for="SNacionalidad"/>
 
-                                                            <b:inputText maxlength="45" id="TCcCli" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" value="#{clienteBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
-                                                            <p:message for="TCcCli"/>
+                                                                        <b:inputText maxlength="45" id="TCcCli" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" value="#{clienteBean.usuarioView.usuarioCc}" style="width: 100%" ></b:inputText>
+                                                                        <p:message for="TCcCli"/>
 
-                                                            <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{clienteBean.usuarioView.smsCiudad.ciudadNombre}" style="width: 100%">
-                                                                <f:selectItem itemLabel="Seleccione ciudad"/>
-                                                                <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
-                                                            </b:selectOneMenu>
-                                                            <p:message for="SCiudades"/>
-                                                        </h:panelGrid>
+                                                                        <b:selectOneMenu required="true" requiredMessage="Seleccione ciudad" id="SCiudades" value="#{clienteBean.usuarioView.smsCiudad.ciudadNombre}" style="width: 100%">
+                                                                            <f:selectItem itemLabel="Seleccione ciudad"/>
+                                                                            <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
+                                                                        </b:selectOneMenu>
+                                                                        <p:message for="SCiudades"/>
+                                                                    </h:panelGrid>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="box-header with-border">
@@ -88,22 +95,29 @@
                                                 </div>
                                                 <div class="box-body">                                  
                                                     <div class="table-responsive">
-                                                        <h:panelGrid cellpadding="5" columns="2" id="seccionDatosSesion" style="width: 100%">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-sm-10 col-sm-offset-1">
+                                                                    <h:panelGrid cellpadding="5" columns="2" id="seccionDatosSesion" style="width: 100%">
 
-                                                            <b:inputSecret label="Contraseña" id="TPassCli" binding="#{pass}"  maxlength="20" style="width: 100%" value="#{clienteBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
-                                                                <f:validateLength minimum="6"/>
-                                                            </b:inputSecret>
-                                                            <p:message for="TPassCli"/>
+                                                                        <b:inputSecret label="Contraseña" id="TPassCli" binding="#{pass}"  maxlength="20" style="width: 100%" value="#{clienteBean.usuarioView.usuarioPassword}" placeholder="Contraseña de sesion">
+                                                                            <f:validateLength minimum="6"/>
+                                                                        </b:inputSecret>
+                                                                        <p:message for="TPassCli"/>
 
 
-                                                            <b:inputSecret label="Repita contraseña" id="TRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion">
-                                                                <f:validator validatorId="repeatPasswordValidator" />
-                                                                <f:attribute name="password" value="#{pass.value}"/>
-                                                                <f:validateLength minimum="6" />
-                                                            </b:inputSecret> 
-                                                            <p:message id="msgPass" for="TRemPassCli"/>
+                                                                        <b:inputSecret label="Repita contraseña" id="TRemPassCli" maxlength="20" style="width: 100%" value="#{clienteBean.usuarioView.usuarioRememberToken}" placeholder="Repita contraseña de sesion">
+                                                                            <f:validator validatorId="repeatPasswordValidator" />
+                                                                            <f:attribute name="password" value="#{pass.value}"/>
+                                                                            <f:validateLength minimum="6" />
+                                                                        </b:inputSecret> 
+                                                                        <p:message id="msgPass" for="TRemPassCli"/>
 
-                                                        </h:panelGrid>
+                                                                    </h:panelGrid>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div><hr/>
                                                     <p:commandLink value="Iniciar sesion" process="@this" immediate="true" action="#{pathBean.ir_Login()}"/>
                                                     <p:commandButton id="BTCliente" class="btn btn-lg btn-block btn-success" onclick="PrimeFaces.monitorDownload(start, stop);" action="#{clienteBean.registrarCliente()}" value="Registrar" />

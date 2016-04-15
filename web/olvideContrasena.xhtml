@@ -15,7 +15,7 @@
         <h:outputStylesheet name="./adminLT/css/AdminLTE.css"/>
         <h:outputStylesheet name="./adminLT/css/skins/_all-skins.min.css"/>
 
-        <title>Login | Registro de SMS</title>
+        <title>Recuperar Contraseña | Registro de SMS</title>
     </h:head>
     <script>
         $(document).ready(function () {
@@ -38,45 +38,52 @@
                 <h:form>
                     <div class="container">
                         <div class="row vertical-offset-100">
-                            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-10
-                                 col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 " >
+                            <div class="col-lg-5 col-md-5 col-sm-8 col-xs-10
+                                 col-lg-offset-4 col-md-offset-4 col-sm-offset-2 col-xs-offset-1 bg-login " >         
 
                                 <div class="box box-danger">                                        
                                     <div class="box-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-sm-10 col-sm-offset-1">
+                                                    <f:facet name="anchor"><b:iconAwesome name="user" size="1x"  /></f:facet>
+                                                    <fieldset>
 
-                                        <f:facet name="anchor"><b:iconAwesome name="user" size="1x"  /></f:facet>
-                                        <fieldset>
+                                                        <p:growl id="messages" life="3500"/>
+                                                        <div class="form-group centro"> 
+                                                            <p align="center">Ingrese su correo electronico para recibir una nueva contraseña.</p>
+                                                            <b:inputText  placeholder="Ingrese correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
+                                                            </b:inputText>
+                                                        </div>                                           
+                                                        <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);"
+                                                                         update="@form" ajax="false"
+                                                                         class="btn btn-lg btn-block btn-danger" 
+                                                                         action="#{usuarioBean.generarNuevaContraseñaDeSesion()}"
+                                                                         value="Solicitar nueva contraseña"
+                                                                         />
+                                                        <div align="center"> <p:commandLink value="Iniciar sesion" 
+                                                                                            process="@this" 
+                                                                                            immediate="true" 
+                                                                                            action="#{pathBean.ir_Login()}"/>
+                                                        </div>
+                                                        <script type="text/javascript">
+                                                            function start() {
+                                                                PF('statusDialog').show();
+                                                            }
+                                                            function stop() {
+                                                                PF('statusDialog').hide();
+                                                            }
+                                                        </script>
 
-                                            <p:growl id="messages" life="3500"/>
-                                            <div class="form-group centro"> 
-                                                <p align="center">Ingrese su correo electronico para recibir una nueva contraseña.</p>
-                                                <b:inputText  placeholder="Ingrese correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
-                                                </b:inputText>
-                                            </div>                                           
-                                            <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);"
-                                                             update="@form" ajax="false"
-                                                             class="btn btn-lg btn-block btn-danger" 
-                                                             action="#{usuarioBean.generarNuevaContraseñaDeSesion()}"
-                                                             value="Solicitar nueva contraseña"
-                                                             />
-                                            <div align="center"> <p:commandLink value="Iniciar sesion" 
-                                                           process="@this" 
-                                                           immediate="true" 
-                                                           action="#{pathBean.ir_Login()}"/></div>
-                                            <script type="text/javascript">
-                                                 function start() {
-                                                    PF('statusDialog').show();
-                                                 }
-                                                 function stop() {
-                                                    PF('statusDialog').hide();
-                                                 }
-                                            </script>
-                                            <p:dialog modal="true" widgetVar="statusDialog" header="Generando nueva contraseña, espere" draggable="false" closable="false" resizable="false">
-                                                <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
-                                            </p:dialog>
+                                                        <p:dialog modal="true" widgetVar="statusDialog" header="Generando nueva contraseña, espere" draggable="false" closable="false" resizable="false">
+                                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                                        </p:dialog>
+                                                    </fieldset>                                        
+                                                </div>
+                                            </div>
+                                        </div>
 
 
-                                        </fieldset>                                        
                                     </div>
                                 </div>
                             </div>
