@@ -583,17 +583,116 @@ public class ReservacionBean implements Serializable {
                     }
                     break;
             }
-            if (event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {// 0 = sin conductor 
+
+            String newtab;          
+            newtab = event.getNewStep();
+           
+            if (event.getOldStep().equalsIgnoreCase("Vehiculo") && event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {// 0 = sin conductor 
                 siguiente = false;
                 atras = true;
-                return "Confirmacion";
-            } else if (event.getOldStep().equalsIgnoreCase("conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
+                newtab = "Confirmacion";
+            }
+
+            if (event.getOldStep().equalsIgnoreCase("Confirmacion") && event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {
+                SelecVeh = false;
                 siguiente = true;
                 atras = true;
-                return "Vehiculo";
-            } else {
-                return event.getNewStep();
-            }
+                SimpleDateFormat formatTime;
+                SimpleDateFormat formatDate;
+                formatTime = new SimpleDateFormat("HH:mm:ss");
+                formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechaActual = new Date();
+
+                if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
+                    reservaView.setSmsUsuario(sesion);
+                } else {
+                    reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
+                }
+
+                reservaView.setSmsVehiculo(new SmsVehiculo());
+                reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));//Consulta de servicio
+
+                reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
+                reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
+                reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
+
+                switch (categoriaServicio) {
+
+                    case 1: //tiempo
+                        fechaInicio = formatDate.format(fechaActual);
+                        fechaEntrega = formatDate.format(fechaActual);
+
+                        try {
+                            reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+
+                            Calendar calInicio1 = Calendar.getInstance();
+                            calInicio1.setTime(reservaView.getReservacionHoraInicio());
+                            if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) { //duracion minutos
+                                calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
+                            } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
+                                calInicio1.add(Calendar.HOUR, reservaView.getSmsServicios().getServicioDuracion());
+                            }
+
+                            reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
+                        } catch (ParseException pe) {
+                            pe.getMessage();
+                        }
+
+                        reservaView.setReservacionFechaInicio(fechaActual);
+                        reservaView.setReservacionFechaLlegada(fechaActual);
+
+                        horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                        horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                        break;
+                    case 2://traslado
+                        fechaInicio = formatDate.format(fechaActual);
+                        fechaEntrega = formatDate.format(fechaActual);
+
+                        try {
+                            reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+
+                            Calendar calInicio1 = Calendar.getInstance();
+                            calInicio1.setTime(reservaView.getReservacionHoraInicio());
+                            if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) {//duracion minutos
+                                calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
+                            } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
+                                calInicio1.add(Calendar.HOUR, reservaView.getSmsServicios().getServicioDuracion());
+                            }
+
+                            reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
+                        } catch (ParseException pe) {
+                            pe.getMessage();
+                        }
+
+                        reservaView.setReservacionFechaInicio(fechaActual);
+                        reservaView.setReservacionFechaLlegada(fechaActual);
+
+                        horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                        horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                        break;
+                    case 3://renta
+                        try {
+                            reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                            reservaView.setReservacionHoraLlegada(formatTime.parse(horaEntrega + ":" + minutosEntrega));
+                        } catch (ParseException pe) {
+                            pe.getMessage();
+                        }
+
+                        fechaInicio = formatDate.format(reservaView.getReservacionFechaInicio());
+                        fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
+                        horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
+                        horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
+                        break;
+
+                }
+
+                if (resDao.mostrarReservaciones().isEmpty()) {
+                    vehiculosListView = vehiculoDao.mostrarVehiculo();
+                } else {
+                    vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
+                }                
+                newtab = "Vehiculo";
+            }return newtab;
         }
     }
 

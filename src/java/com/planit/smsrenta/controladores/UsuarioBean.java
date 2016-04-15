@@ -83,7 +83,6 @@ public class UsuarioBean implements Serializable {
         rolDao = new ImpRolDao();
         usuarioDao = new ImpUsuarioDao();
         nacionalidadDao = new ImpNacionalidadDao();
-
     }
 
     //Getters & Setters  
@@ -171,7 +170,7 @@ public class UsuarioBean implements Serializable {
         repitaContraseña = "";
     }
 
-    public String generarNuevaContraseñaDeSesion() {
+    public void generarNuevaContraseñaDeSesion() {
         GenerarPassword gpassword = new GenerarPassword();
         MD5 md5 = new MD5();
         SendEmail email = new SendEmail();
@@ -181,16 +180,30 @@ public class UsuarioBean implements Serializable {
         usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
         usuarioView.setUsuarioPassword(md5.getMD5(pass));
         usuarioView.setUsuarioRememberToken(md5.getMD5(pass));
-        usuarioDao.modificarContraseñaUsuario(usuarioView);
+        usuarioDao.modificarSesionUsuario(usuarioView);
 
         email.sendEmailNuevaContrasena(usuarioView, pass);
-
+        usuarioView = new SmsUsuario();
+        
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La nueva contraseña ha sido enviada, por favor revise su correo.", null);
         FacesContext.getCurrentInstance().addMessage(null, message);
 
-        usuarioView = new SmsUsuario();
-        return "Login";
+        
+       
+    }
 
+    public void habilitar_deshabilitarCuenta(SmsUsuario usuario) {
+        if (usuario.getUsuarioEstadoUsuario() == 0) {
+            usuario.setUsuarioEstadoUsuario(1);
+            usuarioDao.modificarSesionUsuario(usuario);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La cuenta de usuario ha sido activada.", null);
+            
+        } else if (usuario.getUsuarioEstadoUsuario() == 1) {
+            usuario.setUsuarioEstadoUsuario(0);
+            usuarioDao.modificarSesionUsuario(usuario);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La cuenta de usuario ha sido desactivada.", null);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public String ir_editarPerfil() {

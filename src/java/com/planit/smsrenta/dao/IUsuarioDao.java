@@ -21,7 +21,7 @@ public interface IUsuarioDao {
 
     public void modificarUsuario(SmsUsuario usuario);
     
-    public void modificarContraseñaUsuario(SmsUsuario usuario);
+    public void modificarSesionUsuario(SmsUsuario usuario);
 
     public void eliminarUsuario(SmsUsuario usuario);
 

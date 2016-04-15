@@ -48,36 +48,35 @@
                                                             <hr/>   
                                                             
 
-                                                            <label class="mrg-reserva-1">Ciudad donde desea recoger su vehiculo</label>
+                                                            <label class="mrg-reserva-1">Ciudad donde desea iniciar el servicio</label>
                                                             <p:selectOneMenu value="#{reservacionBean.reservaView.smsCiudadByIdCiudadInicio.ciudadNombre}" style="width: 100%">
-                                                                <f:selectItem itemLabel="Seleccione ciudad de recogida"  noSelectionOption="true"/>
+                                                                <f:selectItem itemLabel="Seleccione ciudad de inicio del servicio"  noSelectionOption="true"/>
                                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}" />
                                                                 <p:ajax event="change" update="SMLugarInicio"/>
                                                             </p:selectOneMenu>                                                        
 
-                                                            <label class="mrg-reserva-1">Lugar de recogida</label>
-                                                            <b:selectOneMenu id="SMLugarInicio" tooltip="Lugar donde recogera su vehículo" required="true" requiredMessage="Seleccione lugar de recojida del vehiculo" value="#{reservacionBean.reservaView.reservacionLugarLlegada}" style="width: 100%">
-                                                                <f:selectItem itemLabel="Seleccione lugar de recogida del vehículo" noSelectionOption="true"/>
+                                                            <label class="mrg-reserva-1">Lugar de inicio del servicio</label>
+                                                            <b:selectOneMenu id="SMLugarInicio" tooltip="Lugar, barrio o direccion donde iniciara el servicio" required="true" requiredMessage="Seleccione lugar de recojida del vehiculo" value="#{reservacionBean.reservaView.reservacionLugarLlegada}" style="width: 100%">
+                                                                <f:selectItem itemLabel="Seleccione lugar de inicio del servicio" noSelectionOption="true"/>
                                                                 <f:selectItems value="#{lugarBean.consultarLugaresCiudades(reservacionBean.reservaView.smsCiudadByIdCiudadInicio)}"/>
                                                             </b:selectOneMenu>
                                                             <p:message  for="SMLugarInicio"/>
 
                                                             <hr/>
 
-                                                            <label class="mrg-reserva-1">Ciudad de devolucion</label>
+                                                            <label class="mrg-reserva-1">Ciudad de devolucion o finalizacion del servicio</label>
                                                             <p:selectOneMenu value="#{reservacionBean.reservaView.smsCiudadByIdCiudadDestino.ciudadNombre}" style="width: 100%">
-                                                                <f:selectItem itemLabel="Seleccione ciudad donde entregará el vehículo"  noSelectionOption="true"/>
+                                                                <f:selectItem itemLabel="Seleccione ciudad donde culminara el servicio"  noSelectionOption="true"/>
                                                                 <f:selectItems value="#{ciudadBean.nombresCiudadesListView}" />
                                                                 <p:ajax event="change" update="SMLugarDestino"/>
                                                             </p:selectOneMenu>
 
-                                                            <label class="mrg-reserva-1">Lugar de devolucion</label>
-                                                            <b:selectOneMenu id="SMLugarDestino" tooltip="Lugar donde hará devolución del vehículo rentado" required="true" requiredMessage="Seleccione lugar de entrega del vehiculo"  value="#{reservacionBean.reservaView.reservacionLugarDestino}" style="width: 100%">
-                                                                <f:selectItem itemLabel="Seleccione lugar de entrega del vehículo" noSelectionOption="true"/>
+                                                            <label class="mrg-reserva-1">Lugar de devolucion o destino</label>
+                                                            <b:selectOneMenu id="SMLugarDestino" tooltip="Lugar donde hará devolución del vehículo rentado, o donde desea culminar su servicio" required="true" requiredMessage="Seleccione lugar de entrega del vehiculo"  value="#{reservacionBean.reservaView.reservacionLugarDestino}" style="width: 100%">
+                                                                <f:selectItem itemLabel="Seleccione lugar de destino o entrega del vehiculo" noSelectionOption="true"/>
                                                                 <f:selectItems value="#{lugarBean.consultarLugaresCiudades(reservacionBean.reservaView.smsCiudadByIdCiudadDestino)}"/>
                                                             </b:selectOneMenu>
                                                             <p:message for="SMLugarDestino"/>
-
                                                             <hr/>
 
                                                             <c:choose>

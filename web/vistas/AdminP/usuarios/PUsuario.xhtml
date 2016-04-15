@@ -138,6 +138,12 @@
                                                 <p:confirm header="Confirmación" message="Está seguro que desea eliminar este administrador?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
+                                        
+                                        <p:column style="width: 35px"> 
+                                            <p:commandLink style="color: white; padding: 8px" class="fa fa-user-times btn btn-block btn-warning" process="@this" update="@form" action="#{usuarioBean.habilitar_deshabilitarCuenta(usuario)}" title="Habilitar/Desahibilitar cuenta">
+                                                <p:confirm header="Confirmación" message="Está seguro que desea habilitar/deshabilitar la cuenta de este usuario?" icon="ui-icon-alert" /> 
+                                            </p:commandLink>
+                                        </p:column>
                                     </p:dataTable>
 
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

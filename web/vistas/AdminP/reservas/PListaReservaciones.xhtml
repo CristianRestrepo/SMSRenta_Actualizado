@@ -56,20 +56,20 @@
                                 </p:column>
 
                                 <p:column headerText="PC" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura(reservacionBean.modReservacionView)}" title="Generar Factura">
-                                        <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
+                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura(reservacion)}" title="Generar Factura">
+                                        
                                     </p:commandLink>
                                 </p:column>  
                                 
                                 <p:column headerText="POS" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-danger" process="@this" ajax="false" action="#{facturaBean.generarFacturaPos(reservacionBean.modReservacionView)}" title="Generar Factura POS">
-                                        <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
+                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-danger" process="@this" ajax="false" action="#{facturaBean.generarFacturaPos(reservacion)}" title="Generar Factura POS">
+                                      
                                     </p:commandLink>
                                 </p:column> 
                                 
                                 <p:column headerText="FUEC" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacionBean.modReservacionView)}" title="Generar FUEC">
-                                        <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
+                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacion)}" title="Generar FUEC">
+                                       
                                     </p:commandLink>
                                 </p:column> 
                             </p:dataTable>                           

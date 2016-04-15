@@ -177,7 +177,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
     }
 
     @Override
-    public void modificarContraseñaUsuario(SmsUsuario usuario) {
+    public void modificarSesionUsuario(SmsUsuario usuario) {
         Session session = null;
         try {
             session = NewHibernateUtil.getSessionFactory().openSession();

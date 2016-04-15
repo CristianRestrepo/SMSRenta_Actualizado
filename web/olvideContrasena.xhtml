@@ -41,31 +41,28 @@
                             <div class="col-lg-6 col-md-6 col-sm-8 col-xs-10
                                  col-lg-offset-3 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 " >
 
-                                <div class="box box-danger">
-                                    <div class="box-header with-border">
-                                        <i class="fa fa-5x fa-desktop"></i>
-                                        <h3 class="box-title">Plataforma <stong>SMS Renta</stong></h3>
-                                    </div>
+                                <div class="box box-danger">                                        
                                     <div class="box-body">
 
                                         <f:facet name="anchor"><b:iconAwesome name="user" size="1x"  /></f:facet>
                                         <fieldset>
 
-                                            <p:growl id="messages" life="2000"/>
+                                            <p:growl id="messages" life="3500"/>
                                             <div class="form-group centro"> 
                                                 <p align="center">Ingrese su correo electronico para recibir una nueva contraseña.</p>
                                                 <b:inputText  placeholder="Ingrese correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
                                                 </b:inputText>
-                                            </div>
-                                            <p:commandLink value="Iniciar sesion" 
-                                                           process="@this" 
-                                                           immediate="true" 
-                                                           action="#{pathBean.ir_Login()}"/>
-                                            <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-lg btn-block btn-danger" 
-                                                             ajax="false"
+                                            </div>                                           
+                                            <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);"
+                                                             update="@form" ajax="false"
+                                                             class="btn btn-lg btn-block btn-danger" 
                                                              action="#{usuarioBean.generarNuevaContraseñaDeSesion()}"
                                                              value="Solicitar nueva contraseña"
                                                              />
+                                            <div align="center"> <p:commandLink value="Iniciar sesion" 
+                                                           process="@this" 
+                                                           immediate="true" 
+                                                           action="#{pathBean.ir_Login()}"/></div>
                                             <script type="text/javascript">
                                                  function start() {
                                                     PF('statusDialog').show();
