@@ -15,6 +15,6 @@ import java.util.List;
 public interface INacionalidadDao {
     
     public List<SmsNacionalidad> consultarNacionalidades();
-    public List<SmsNacionalidad> consultarNacionalidad(SmsNacionalidad nacionalidad);
+    public SmsNacionalidad consultarNacionalidad(SmsNacionalidad nacionalidad);
     
 }

@@ -48,14 +48,15 @@ public class ContratoBean {
     public void generarFuec(SmsReservacion reservacion) throws JRException, IOException {
         FacesMessage message;
         if (!reservacion.getSmsServicios().getSmsMercado().getMercadoNombre().equalsIgnoreCase("Renta")) {
-            if (contratoDao.consultarContratoSegunReservacion(reservacion).isEmpty()) {
+            SmsContrato contrato = contratoDao.consultarContratoSegunReservacion(reservacion);
+            if (contrato.getIdContrato() == null) {
                 contratoView.setSmsReservacion(reservacion);
                 contratoView.setContratoObjeto("Servicio de transporte");
                 contratoDao.registrarContrato(contratoView);
             }
             GenerarReportes reporte = new GenerarReportes();
             if (contratoView.getIdContrato() == null) {
-                contratoView = contratoDao.consultarContratoSegunReservacion(reservacion).get(0);
+                contratoView = contratoDao.consultarContratoSegunReservacion(reservacion);
             }
             reporte.generarFUEC(contratoView);
         } else {

@@ -107,10 +107,10 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
-        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
-        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
+        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()));//Asociamos una ciudad a un usuario
+        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()));//Asociamos un rol a un usuario
         usuarioView.setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
-        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
+        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()));
 
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(usuarioView);
@@ -126,9 +126,9 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
 
     public void modificarAdministrador() {
 
-        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
-        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()).get(0));//Asociamos un rol a un usuario
-        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()).get(0));
+        usuarioView.setSmsCiudad(ciudadDao.consultarCiudad(usuarioView.getSmsCiudad()));//Asociamos una ciudad a un usuario
+        usuarioView.setSmsRol(rolDao.consultarRol(usuarioView.getSmsRol()));//Asociamos un rol a un usuario
+        usuarioView.setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(usuarioView.getSmsNacionalidad()));
 
         usuarioDao.modificarUsuario(usuarioView);//modificamos la informacion de usuario
         //Modificamos el respaldo de la contraseña si esta fue modificada

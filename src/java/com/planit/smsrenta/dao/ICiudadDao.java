@@ -19,7 +19,7 @@ public interface ICiudadDao {
     public void registrarCiudad(SmsCiudad ciudad);
     public void modificarCiudad(SmsCiudad ciudad);
     public void eliminarCiudad(SmsCiudad ciudad);
-    public List<SmsCiudad> consultarCiudad(SmsCiudad ciudad);
+    public SmsCiudad consultarCiudad(SmsCiudad ciudad);
     public List<SmsCiudad> filtrarCiudad(String dato);
     
 }

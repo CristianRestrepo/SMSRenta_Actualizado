@@ -16,7 +16,7 @@ public interface ITipoLugarDao {
     
     public List<SmsTipoLugar> consultarTiposLugares();
     
-    public List<SmsTipoLugar> consultarTipoLugar(SmsTipoLugar tipoLugar);
+    public SmsTipoLugar consultarTipoLugar(SmsTipoLugar tipoLugar);
     
     public List<SmsTipoLugar> filtrarTipoLugar(String valor);
    

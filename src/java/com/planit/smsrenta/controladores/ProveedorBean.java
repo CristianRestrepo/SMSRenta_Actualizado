@@ -168,10 +168,10 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia, por ultimo persiste el usuario en la base de datos
-        proveedorView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(proveedorView.getSmsUsuario().getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
-        proveedorView.getSmsUsuario().setSmsRol(rolDao.consultarRol(proveedorView.getSmsUsuario().getSmsRol()).get(0));//Asociamos un rol a un usuario
+        proveedorView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(proveedorView.getSmsUsuario().getSmsCiudad()));//Asociamos una ciudad a un usuario
+        proveedorView.getSmsUsuario().setSmsRol(rolDao.consultarRol(proveedorView.getSmsUsuario().getSmsRol()));//Asociamos un rol a un usuario
         proveedorView.getSmsUsuario().setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
-        proveedorView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(proveedorView.getSmsUsuario().getSmsNacionalidad()).get(0));
+        proveedorView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(proveedorView.getSmsUsuario().getSmsNacionalidad()));
 
         //registramos el usuario y recargamos la lista de clientes
         usuarioDao.registrarUsuario(proveedorView.getSmsUsuario());
@@ -187,7 +187,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
         for (int i = 0; i < mercadosSeleccionados.size(); i++) { //Relacionamos la categoria con los mercados seleccionados
             //Consultamos los mercados seleccionado y guardamos los objetos completos en una lista
             mercadoView.setMercadoNombre(mercadosSeleccionados.get(i));
-            mercadoView = mercadoDao.consultarMercadoConProveedores(mercadoView).get(0);
+            mercadoView = mercadoDao.consultarMercadoConProveedores(mercadoView);
             mercados.add(mercadoView);
             mercadoView = new SmsMercado();
         }
@@ -220,7 +220,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
             }
             if (!valor) {
                 mercadoView.setMercadoNombre(mercadosSeleccionados.get(j));
-                mercadoView = mercadoDao.consultarMercadoConProveedores(mercadoView).get(0);
+                mercadoView = mercadoDao.consultarMercadoConProveedores(mercadoView);
                 mercadoView.getSmsProveedors().add(proveedorView);
                 proveedorView.getSmsMercados().add(mercadoView);
             }
@@ -230,9 +230,9 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
         //de la misma forma comprueba el rol y lo asocia        
-        proveedorView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(proveedorView.getSmsUsuario().getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
-        proveedorView.getSmsUsuario().setSmsRol(rolDao.consultarRol(proveedorView.getSmsUsuario().getSmsRol()).get(0));//Asociamos un rol a un usuario
-        proveedorView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(proveedorView.getSmsUsuario().getSmsNacionalidad()).get(0));
+        proveedorView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(proveedorView.getSmsUsuario().getSmsCiudad()));//Asociamos una ciudad a un usuario
+        proveedorView.getSmsUsuario().setSmsRol(rolDao.consultarRol(proveedorView.getSmsUsuario().getSmsRol()));//Asociamos un rol a un usuario
+        proveedorView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(proveedorView.getSmsUsuario().getSmsNacionalidad()));
 
         //Se modifica el usuario y se recarga la lista de proveedores
         usuarioDao.modificarUsuario(proveedorView.getSmsUsuario());

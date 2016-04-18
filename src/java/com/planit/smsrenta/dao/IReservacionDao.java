@@ -22,9 +22,9 @@ public interface IReservacionDao {
     public void modificarReservacion(SmsReservacion reservacion);
     public void eliminarReservacion(SmsReservacion reservacion); 
     public List<SmsReservacion> filtrarReservacionSegunCliente(String valor);
-    public List<SmsReservacion> consultarReservacionId(SmsReservacion reserva);
-    public List<SmsReservacion> consultarReserva(SmsReservacion reserva); 
-    public List<SmsReservacion> consultarReservacionSinEmpleado(SmsReservacion reserva); 
+    public SmsReservacion consultarReservacionId(SmsReservacion reserva);
+    public SmsReservacion consultarReserva(SmsReservacion reserva); 
+    public SmsReservacion consultarReservacionSinEmpleado(SmsReservacion reserva); 
     public List<SmsReservacion> mostrarReservacionCliente(SmsUsuario usuario);
     public List<SmsReservacion> mostrarReservacionConductores(SmsEmpleado conductor);
     

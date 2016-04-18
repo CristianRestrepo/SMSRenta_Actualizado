@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -20,14 +21,15 @@ import org.hibernate.Session;
 public class ImpMarcaDao implements IMarcaDao {
 
     private FacesMessage message;
-
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsMarca> mostrarMarcas() {
         Session session = null;
         List<SmsMarca> marcas = null;
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsMarca");
             marcas = (List<SmsMarca>) query.list();
 
@@ -45,7 +47,7 @@ public class ImpMarcaDao implements IMarcaDao {
     public void registrarMarca(SmsMarca marca) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(marca);
             session.getTransaction().commit();
@@ -66,7 +68,7 @@ public class ImpMarcaDao implements IMarcaDao {
     public void modificarMarca(SmsMarca marca) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(marca);
             session.getTransaction().commit();
@@ -87,7 +89,7 @@ public class ImpMarcaDao implements IMarcaDao {
     public void eliminarMarca(SmsMarca marca) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(marca);
             session.getTransaction().commit();
@@ -105,14 +107,15 @@ public class ImpMarcaDao implements IMarcaDao {
     }
 
     @Override
-    public List<SmsMarca> consultarMarca(SmsMarca marca) {
+    public SmsMarca consultarMarca(SmsMarca marca) {
         Session session = null;
-        List<SmsMarca> marcas = null;
+        SmsMarca marcas = new SmsMarca();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsMarca as marca where marca.marcaNombre = '" + marca.getMarcaNombre() + "'");
-            marcas = (List<SmsMarca>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsMarca as marca "
+                    + "where marca.marcaNombre = '" + marca.getMarcaNombre() + "'");
+            marcas = (SmsMarca) query.list().get(0);
 
         } catch (HibernateException e) {
             e.getMessage();
@@ -130,7 +133,7 @@ public class ImpMarcaDao implements IMarcaDao {
         List<SmsMarca> marcas = null;
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsMarca as marca where marca.marcaNombre LIKE '%" + dato + "%'");
             marcas = (List<SmsMarca>) query.list();
 

@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -21,13 +22,14 @@ import org.hibernate.Session;
 public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsCategoriasServicio> consultarCategoriasServicios() {
         Session session = null;
         List<SmsCategoriasServicio> categorias = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsCategoriasServicio as catServicio");
             categorias = (List<SmsCategoriasServicio>) query.list();
         } catch (HibernateException e) {
@@ -41,13 +43,14 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
     }
 
     @Override
-    public List<SmsCategoriasServicio> consultarCategoriaServicio(SmsCategoriasServicio catServicio) {
+    public SmsCategoriasServicio consultarCategoriaServicio(SmsCategoriasServicio catServicio) {
         Session session = null;
-        List<SmsCategoriasServicio> categorias = new ArrayList<>();
+        SmsCategoriasServicio categorias = new SmsCategoriasServicio();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoriasServicio as catServicio where catServicio.catNombre = '" + catServicio.getCatNombre() + "'");
-            categorias = (List<SmsCategoriasServicio>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsCategoriasServicio as catServicio"
+                    + " where catServicio.catNombre = '" + catServicio.getCatNombre() + "'");
+            categorias = (SmsCategoriasServicio) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -62,7 +65,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(categoria);
             session.getTransaction().commit();
@@ -83,7 +86,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
     public void modificarCategoriaServicio(SmsCategoriasServicio categoria) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(categoria);
             session.getTransaction().commit();
@@ -104,7 +107,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
     public void eliminarCategoriaServicio(SmsCategoriasServicio categoria) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(categoria);
             session.getTransaction().commit();

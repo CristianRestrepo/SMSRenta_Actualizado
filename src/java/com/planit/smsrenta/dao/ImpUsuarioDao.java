@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -21,13 +22,14 @@ import org.hibernate.Session;
 public class ImpUsuarioDao implements IUsuarioDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsUsuario> mostrarUsuario() {
         Session session = null;
         List<SmsUsuario> usuarios = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
@@ -45,7 +47,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
     public void registrarUsuario(SmsUsuario usuario) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(usuario);
             session.getTransaction().commit();
@@ -66,7 +68,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
     public void modificarUsuario(SmsUsuario usuario) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(usuario);
             session.getTransaction().commit();
@@ -87,7 +89,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
     public void eliminarUsuario(SmsUsuario usuario) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(usuario);
             session.getTransaction().commit();
@@ -105,13 +107,14 @@ public class ImpUsuarioDao implements IUsuarioDao {
     }
 
     @Override
-    public List<SmsUsuario> consultarDatosSesionUsuario(SmsUsuario user) {
+    public SmsUsuario consultarDatosSesionUsuario(SmsUsuario user) {
         Session session = null;
-        List<SmsUsuario> usuario = new ArrayList<>();
+        SmsUsuario usuario = new SmsUsuario();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario where usuario.usuarioEmail = '" + user.getUsuarioEmail() + "'");
-            usuario = (List<SmsUsuario>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsUsuario as usuario where"
+                    + " usuario.usuarioEmail = '" + user.getUsuarioEmail() + "'");
+            usuario = (SmsUsuario) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -123,13 +126,19 @@ public class ImpUsuarioDao implements IUsuarioDao {
     }
 
     @Override
-    public List<SmsUsuario> consultarUsuario(SmsUsuario usuario) {
+    public SmsUsuario consultarUsuario(SmsUsuario usuario) {
         Session session = null;
-        List<SmsUsuario> usuarios = new ArrayList<>();
+        SmsUsuario usuarios = new SmsUsuario();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad left join fetch usuario.smsNacionalidad where usuario.idUsuario = '" + usuario.getIdUsuario() + "' or usuario.usuarioNombre = '" + usuario.getUsuarioNombre() + "' or usuario.usuarioEmail = '" + usuario.getUsuarioEmail() + "'");
-            usuarios = (List<SmsUsuario>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsUsuario as usuario"
+                    + " left join fetch usuario.smsRol as rol"
+                    + " left join fetch usuario.smsCiudad as ciudad"
+                    + " left join fetch usuario.smsNacionalidad where"
+                    + " usuario.idUsuario = '" + usuario.getIdUsuario() + "' or"
+                    + " usuario.usuarioNombre = '" + usuario.getUsuarioNombre() + "' or"
+                    + " usuario.usuarioEmail = '" + usuario.getUsuarioEmail() + "'");
+            usuarios = (SmsUsuario) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -145,7 +154,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
         Session session = null;
         List<SmsUsuario> usuarios = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsUsuario as usuario where usuario.usuarioLogin = '" + valor + "'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
@@ -163,7 +172,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
         Session session = null;
         List<SmsUsuario> usuarios = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsUsuario as usuario where usuario.usuarioEmail = '" + valor + "'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
@@ -180,7 +189,7 @@ public class ImpUsuarioDao implements IUsuarioDao {
     public void modificarSesionUsuario(SmsUsuario usuario) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(usuario);
             session.getTransaction().commit();
@@ -193,6 +202,6 @@ public class ImpUsuarioDao implements IUsuarioDao {
             if (session != null) {
                 session.close();
             }
-        }        
+        }
     }
 }

@@ -100,20 +100,22 @@ public class FacturaBean {
     }
        
     public void generarFactura(SmsReservacion reservacion) throws JRException, IOException {
-        if (facturaDao.consultarFacturaSegunReservacion(reservacion).isEmpty()) {
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        if (facturaView.getIdFactura() == null) {
             registrar(reservacion);
         }
         GenerarReportes reporte = new GenerarReportes();
-        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion).get(0);
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
         reporte.generarFactura(facturaView);
     }
 
     public void generarFacturaPos(SmsReservacion reservacion) throws JRException, IOException {
-        if (facturaDao.consultarFacturaSegunReservacion(reservacion).isEmpty()) {
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        if (facturaView.getIdFactura() == null) {
             registrar(reservacion);
         }
         GenerarReportes reporte = new GenerarReportes();
-        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion).get(0);
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
         reporte.generarFacturaPOS(facturaView);
     }
 

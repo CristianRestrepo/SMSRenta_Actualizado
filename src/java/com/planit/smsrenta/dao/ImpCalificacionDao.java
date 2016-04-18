@@ -11,12 +11,15 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
  * @author Desarrollo_Planit
  */
 public class ImpCalificacionDao implements ICalificacionDao {
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
 
     @Override
     public List<SmsCalificacion> mostrarCalificaciones() {
@@ -24,7 +27,7 @@ public class ImpCalificacionDao implements ICalificacionDao {
         List<SmsCalificacion> calificaciones = new ArrayList<>();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsCalificacion");
             calificaciones = (List<SmsCalificacion>) query.list();
         } catch (HibernateException e) {
@@ -41,7 +44,7 @@ public class ImpCalificacionDao implements ICalificacionDao {
     public void registrarCalificacion(SmsCalificacion calificacion) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(calificacion);
             session.getTransaction().commit();
@@ -59,7 +62,7 @@ public class ImpCalificacionDao implements ICalificacionDao {
     public void modificarCalificacion(SmsCalificacion calificacion) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(calificacion);
             session.getTransaction().commit();
@@ -77,7 +80,7 @@ public class ImpCalificacionDao implements ICalificacionDao {
     public void eliminarCalificacion(SmsCalificacion calificacion) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(calificacion);
             session.getTransaction().commit();

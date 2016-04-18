@@ -156,9 +156,9 @@ public class ServiciosBean implements Serializable {
     //Metodos  
     public void registrar() {
         //Se consulta la informacion de la categoria del servicio seleccionado
-        servicioView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(servicioView.getSmsMercado()).get(0));
-        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriaServicio(servicioView.getSmsCategoriasServicio()).get(0));
-        servicioView.setSmsTipoDuracion(tipoDuracionDao.consultarTipoDuracion(servicioView.getSmsTipoDuracion()).get(0));
+        servicioView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(servicioView.getSmsMercado()));
+        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriaServicio(servicioView.getSmsCategoriasServicio()));
+        servicioView.setSmsTipoDuracion(tipoDuracionDao.consultarTipoDuracion(servicioView.getSmsTipoDuracion()));
         servicioDao.registrarServicio(servicioView);
 
         servicioView = new SmsServicios();
@@ -166,9 +166,9 @@ public class ServiciosBean implements Serializable {
     }
 
     public void modificar() {
-        servicioView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(servicioView.getSmsMercado()).get(0));
-        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriaServicio(servicioView.getSmsCategoriasServicio()).get(0));
-        servicioView.setSmsTipoDuracion(tipoDuracionDao.consultarTipoDuracion(servicioView.getSmsTipoDuracion()).get(0));
+        servicioView.setSmsMercado(mercadoDao.consultarMercadoConCategorias(servicioView.getSmsMercado()));
+        servicioView.setSmsCategoriasServicio(catServicioDao.consultarCategoriaServicio(servicioView.getSmsCategoriasServicio()));
+        servicioView.setSmsTipoDuracion(tipoDuracionDao.consultarTipoDuracion(servicioView.getSmsTipoDuracion()));
         servicioDao.modificarServicio(servicioView);
 
         servicioView = new SmsServicios();

@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -18,12 +19,14 @@ import org.hibernate.Session;
  */
 public class ImpColorDao implements IColorDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsColor> consultarColores() {
         List<SmsColor> colores = new ArrayList<>();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsColor");
             colores = (List<SmsColor>) query.list();
         } catch (HibernateException e) {
@@ -37,13 +40,14 @@ public class ImpColorDao implements IColorDao {
     }
 
     @Override
-    public List<SmsColor> consultarColor(SmsColor color) {
-        List<SmsColor> colores = new ArrayList<>();
+    public SmsColor consultarColor(SmsColor color) {
+        SmsColor colores = new SmsColor();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsColor as color where color.colorNombre = '" + color.getColorNombre() + "'");
-            colores = (List<SmsColor>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsColor as color where "
+                    + "color.colorNombre = '" + color.getColorNombre() + "'");
+            colores = (SmsColor) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

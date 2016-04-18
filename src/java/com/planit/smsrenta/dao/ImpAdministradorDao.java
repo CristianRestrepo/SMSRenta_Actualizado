@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -18,12 +19,14 @@ import org.hibernate.Session;
  */
 public class ImpAdministradorDao implements IAdministradorDao{
     
+     SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsUsuario> consultarUsuariosAdministradores() {
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad left join fetch usuario.smsNacionalidad where rol.rolNombre = 'Administrador Principal' or rol.rolNombre = 'Administrador Secundario'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
@@ -41,7 +44,7 @@ public class ImpAdministradorDao implements IAdministradorDao{
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where "
                     + "(usuario.usuarioNombre LIKE '%" + valor + "%' or usuario.usuarioCc LIKE '%" + valor + "%' or usuario.usuarioEmail LIKE '%" + valor + "%' or usuario.usuarioTelefono LIKE '%" + valor + "%' or "
                     + "ciudad.ciudadNombre LIKE '%" + valor + "%') and (rol.rolNombre = 'Administrador Principal' or rol.rolNombre = 'Administrador Secundario')");

@@ -23,7 +23,7 @@ public interface IRolDao {
 
     public void eliminarRol(SmsRol Rol);
 
-    public List<SmsRol> consultarRol(SmsRol rol); 
+    public SmsRol consultarRol(SmsRol rol); 
     
     public List<SmsRol> filtrarRol(String valor);
    

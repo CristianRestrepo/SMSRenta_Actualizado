@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -24,13 +25,14 @@ import org.hibernate.Session;
 public class ImpReservacionDao implements IReservacionDao {
 
     private FacesMessage message;
-
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsReservacion> mostrarReservaciones() {
         Session session = null;
         List<SmsReservacion> reservaciones = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsReservacion as reservacion "
                     + "left join fetch reservacion.smsCategoriasServicio "
                     + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
@@ -60,7 +62,7 @@ public class ImpReservacionDao implements IReservacionDao {
     public void registrarReservacion(SmsReservacion reservacion) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(reservacion);
             session.getTransaction().commit();
@@ -81,7 +83,7 @@ public class ImpReservacionDao implements IReservacionDao {
     public void modificarReservacion(SmsReservacion reservacion) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(reservacion);
             session.getTransaction().commit();
@@ -102,7 +104,7 @@ public class ImpReservacionDao implements IReservacionDao {
     public void eliminarReservacion(SmsReservacion reservacion) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(reservacion);
             session.getTransaction().commit();
@@ -120,9 +122,9 @@ public class ImpReservacionDao implements IReservacionDao {
     }
 
     @Override
-    public List<SmsReservacion> consultarReserva(SmsReservacion reserva) {
+    public SmsReservacion consultarReserva(SmsReservacion reserva) {
         Session session = null;
-        List<SmsReservacion> reservaciones = new ArrayList<>();
+        SmsReservacion reservaciones = new SmsReservacion();
         SimpleDateFormat formatDate;
         SimpleDateFormat formatTime;
         formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -135,11 +137,29 @@ public class ImpReservacionDao implements IReservacionDao {
         String HoraLlegada = formatTime.format(reserva.getReservacionHoraLlegada());
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsReservacion as reservacion left join fetch reservacion.smsCategoriasServicio left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino left join fetch reservacion.smsEmpleado as empleado left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor left join fetch reservacion.smsEstado as estado left join fetch reservacion.smsServicios as servicio left join fetch reservacion.smsUsuario as cliente left join fetch reservacion.smsVehiculo as vehiculo left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsColor left join fetch referencia.smsMarca where cliente.idUsuario = '" + reserva.getSmsUsuario().getIdUsuario() + "' and vehiculo.idVehiculo = '" + reserva.getSmsVehiculo().getIdVehiculo() + "' and empleado.idEmpleado = '" + reserva.getSmsEmpleado().getIdEmpleado() + "' and "
-                    + "reservacion.reservacionFechaInicio = '" + FechaInicio + "' and reservacion.reservacionFechaLlegada = '" + FechaLlegada + "' and reservacion.reservacionHoraInicio = '" + HoraInicio + "' and "
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
+                    + "cliente.idUsuario = '" + reserva.getSmsUsuario().getIdUsuario() + "' and "
+                    + "vehiculo.idVehiculo = '" + reserva.getSmsVehiculo().getIdVehiculo() + "' and "
+                    + "empleado.idEmpleado = '" + reserva.getSmsEmpleado().getIdEmpleado() + "' and "
+                    + "reservacion.reservacionFechaInicio = '" + FechaInicio + "' and "
+                    + "reservacion.reservacionFechaLlegada = '" + FechaLlegada + "' and "
+                    + "reservacion.reservacionHoraInicio = '" + HoraInicio + "' and "
                     + "reservacion.reservacionHoraLlegada = '" + HoraLlegada + "'");
-            reservaciones = (List<SmsReservacion>) query.list();
+            reservaciones = (SmsReservacion) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -157,8 +177,22 @@ public class ImpReservacionDao implements IReservacionDao {
         List<SmsReservacion> resevacionesHechas = null;
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsReservacion as reservacion left join fetch reservacion.smsCategoriasServicio left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino left join fetch reservacion.smsEmpleado as empleado left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor left join fetch reservacion.smsEstado as estado left join fetch reservacion.smsServicios as servicio left join fetch reservacion.smsUsuario as cliente left join fetch reservacion.smsVehiculo as vehiculo left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsColor left join fetch referencia.smsMarca  WHERE cliente.idUsuario = '" + usuario.getIdUsuario() + "'");
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca  where "
+                    + "cliente.idUsuario = '" + usuario.getIdUsuario() + "'");
             resevacionesHechas = (List<SmsReservacion>) query.list();
 
         } catch (HibernateException e) {
@@ -177,8 +211,21 @@ public class ImpReservacionDao implements IReservacionDao {
         List<SmsReservacion> resevacionesHechas = null;
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsReservacion as reservacion left join fetch reservacion.smsCategoriasServicio left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino left join fetch reservacion.smsEmpleado as empleado left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor left join fetch reservacion.smsEstado as estado left join fetch reservacion.smsServicios as servicio left join fetch reservacion.smsUsuario as cliente left join fetch reservacion.smsVehiculo as vehiculo left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsColor left join fetch referencia.smsMarca WHERE empleado.idEmpleado = '" + conductor.getIdEmpleado() + "'");
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
+                    + "empleado.idEmpleado = '" + conductor.getIdEmpleado() + "'");
             resevacionesHechas = (List<SmsReservacion>) query.list();
 
         } catch (HibernateException e) {
@@ -192,14 +239,28 @@ public class ImpReservacionDao implements IReservacionDao {
     }
 
     @Override
-    public List<SmsReservacion> consultarReservacionId(SmsReservacion reserva) {
+    public SmsReservacion consultarReservacionId(SmsReservacion reserva) {
         Session session = null;
-        List<SmsReservacion> reservas = new ArrayList<>();
+        SmsReservacion reservas = new SmsReservacion();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsReservacion as reservacion left join fetch reservacion.smsCategoriasServicio left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino left join fetch reservacion.smsEmpleado as empleado left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor left join fetch reservacion.smsEstado as estado left join fetch reservacion.smsServicios as servicio left join fetch reservacion.smsUsuario as cliente left join fetch reservacion.smsVehiculo as vehiculo left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsColor left join fetch referencia.smsMarca where reservacion.idReservacion = '" + reserva.getIdReservacion() + "'");
-            reservas = (List<SmsReservacion>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
+                    + "where reservacion.idReservacion = '" + reserva.getIdReservacion() + "'");
+            reservas = (SmsReservacion) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -211,9 +272,9 @@ public class ImpReservacionDao implements IReservacionDao {
     }
 
     @Override
-    public List<SmsReservacion> consultarReservacionSinEmpleado(SmsReservacion reserva) {
+    public SmsReservacion consultarReservacionSinEmpleado(SmsReservacion reserva) {
         Session session = null;
-        List<SmsReservacion> reservas = new ArrayList<>();
+        SmsReservacion reservas = new SmsReservacion();
         SimpleDateFormat formatDate;
         SimpleDateFormat formatTime;
         formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -226,11 +287,28 @@ public class ImpReservacionDao implements IReservacionDao {
         String HoraLlegada = formatTime.format(reserva.getReservacionHoraLlegada());
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsReservacion as reservacion left join fetch reservacion.smsCategoriasServicio left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino left join fetch reservacion.smsEmpleado as empleado left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor left join fetch reservacion.smsEstado as estado left join fetch reservacion.smsServicios as servicio left join fetch reservacion.smsUsuario as cliente left join fetch reservacion.smsVehiculo as vehiculo left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsColor left join fetch referencia.smsMarca where cliente.idUsuario = '" + reserva.getSmsUsuario().getIdUsuario() + "' and vehiculo.idVehiculo = '" + reserva.getSmsVehiculo().getIdVehiculo() + "' and "
-                    + "reservacion.reservacionFechaInicio = '" + FechaInicio + "' and reservacion.reservacionFechaLlegada = '" + FechaLlegada + "' and reservacion.reservacionHoraInicio = '" + HoraInicio + "' and "
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
+                    + "cliente.idUsuario = '" + reserva.getSmsUsuario().getIdUsuario() + "' and "
+                    + "vehiculo.idVehiculo = '" + reserva.getSmsVehiculo().getIdVehiculo() + "' and "
+                    + "reservacion.reservacionFechaInicio = '" + FechaInicio + "' and "
+                    + "reservacion.reservacionFechaLlegada = '" + FechaLlegada + "' and "
+                    + "reservacion.reservacionHoraInicio = '" + HoraInicio + "' and "
                     + "reservacion.reservacionHoraLlegada = '" + HoraLlegada + "'");
-            reservas = (List<SmsReservacion>) query.list();
+            reservas = (SmsReservacion) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -247,7 +325,7 @@ public class ImpReservacionDao implements IReservacionDao {
         List<SmsReservacion> reservas = new ArrayList<>();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsReservacion as reservacion "
                     + "left join fetch reservacion.smsCategoriasServicio "
                     + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "

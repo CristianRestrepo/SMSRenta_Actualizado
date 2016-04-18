@@ -358,7 +358,7 @@ public class ReservacionBean implements Serializable {
     public String registrarReservacion() throws JRException, IOException {
 
         estadoView.setEstadoNombre("Inactiva");
-        reservaView.setSmsEstado(estadoDao.consultarEstado(estadoView).get(0));
+        reservaView.setSmsEstado(estadoDao.consultarEstado(estadoView));
 
         //Registro
         resDao.registrarReservacion(reservaView);
@@ -475,14 +475,14 @@ public class ReservacionBean implements Serializable {
                     if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                         reservaView.setSmsUsuario(sesion);
                     } else {
-                        reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
+                        reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()));
                     }
 
                     reservaView.setSmsVehiculo(new SmsVehiculo());
-                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));//Consulta de servicio
+                    reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()));//Consulta de servicio
 
-                    reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
-                    reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
+                    reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()));
+                    reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()));
                     reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
 
                     switch (categoriaServicio) {
@@ -606,14 +606,14 @@ public class ReservacionBean implements Serializable {
                 if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                     reservaView.setSmsUsuario(sesion);
                 } else {
-                    reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()).get(0));
+                    reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()));
                 }
 
                 reservaView.setSmsVehiculo(new SmsVehiculo());
-                reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()).get(0));//Consulta de servicio
+                reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()));//Consulta de servicio
 
-                reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()).get(0));
-                reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()).get(0));
+                reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()));
+                reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()));
                 reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
 
                 switch (categoriaServicio) {
@@ -759,7 +759,7 @@ public class ReservacionBean implements Serializable {
                 listaReservaciones = resDao.mostrarReservacionCliente(sesion);
                 break;
             case "Conductor":
-                reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion).get(0));//Consultamos la informacion de usuario correspondiente al conductor
+                reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
                 listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
                 break;
         }
@@ -816,7 +816,7 @@ public class ReservacionBean implements Serializable {
     public String irVistaReserva() {
         String Ruta = "";
         modReservacionView.setIdReservacion(Integer.parseInt(evento.getTitle()));
-        modReservacionView = resDao.consultarReservacionId(modReservacionView).get(0);
+        modReservacionView = resDao.consultarReservacionId(modReservacionView);
         SimpleDateFormat formatDate;
         SimpleDateFormat formatTime;
         formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -920,7 +920,7 @@ public class ReservacionBean implements Serializable {
 //        4 = semana
 //        5 = mes       
         if (categoriaServicio == 1) { //Tiempo
-            costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
+            costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria());
             milis1 = calFechaInicio.getTimeInMillis();
             milis2 = calFechaLlegada.getTimeInMillis();
 
@@ -955,14 +955,14 @@ public class ReservacionBean implements Serializable {
 
             ILugarDao lugarDao = new ImpLugarDao();
             lugarInicio.setLugarNombre(reservaView.getReservacionLugarLlegada());
-            lugarInicio = lugarDao.consultarLugar(lugarInicio).get(0);
+            lugarInicio = lugarDao.consultarLugar(lugarInicio);
             lugarDestino.setLugarNombre(reservaView.getReservacionLugarDestino());
-            lugarDestino = lugarDao.consultarLugar(lugarDestino).get(0);
+            lugarDestino = lugarDao.consultarLugar(lugarDestino);
 
-            costoServicioView = costoDao.consultarCostoServicioTraslado(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria(), lugarInicio, lugarDestino).get(0);
+            costoServicioView = costoDao.consultarCostoServicioTraslado(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria(), lugarInicio, lugarDestino);
             costo = costoServicioView.getCostoServicioPrecio();
         } else if (categoriaServicio == 3) { // Renta
-            costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria()).get(0);
+            costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria());
             if (reserva.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 3) {
 
                 milis1 = calFechaInicio.getTimeInMillis();
@@ -1062,7 +1062,7 @@ public class ReservacionBean implements Serializable {
 
     public void consultarCategoria(SmsServicios servicio) {
         if (!servicio.getServicioNombre().isEmpty()) {
-            SmsCategoriasServicio catServicio = servicioDao.ConsultarServicio(servicio).get(0).getSmsCategoriasServicio();
+            SmsCategoriasServicio catServicio = servicioDao.ConsultarServicio(servicio).getSmsCategoriasServicio();
             if (catServicio.getCatNombre().equalsIgnoreCase("Renta")) {
                 categoriaServicio = 3;
             } else if (catServicio.getCatNombre().equalsIgnoreCase("Tiempo")) {

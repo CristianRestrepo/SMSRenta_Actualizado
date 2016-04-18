@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -22,13 +23,14 @@ import org.hibernate.Session;
 public class ImpVehiculoDao implements IVehiculoDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsVehiculo> mostrarVehiculo() {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor");
             vehiculos = (List<SmsVehiculo>) query.list();
@@ -46,7 +48,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
     public void registrarVehiculo(SmsVehiculo vehiculo) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(vehiculo);
             session.getTransaction().commit();
@@ -67,7 +69,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
     public void modificarVehiculo(SmsVehiculo vehiculo) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(vehiculo);
             session.getTransaction().commit();
@@ -88,7 +90,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
     public void eliminarVehiculo(SmsVehiculo vehiculo) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(vehiculo);
             session.getTransaction().commit();
@@ -106,14 +108,19 @@ public class ImpVehiculoDao implements IVehiculoDao {
     }
 
     @Override
-    public List<SmsVehiculo> consultarVehiculo(SmsVehiculo vehiculo) {
+    public SmsVehiculo consultarVehiculo(SmsVehiculo vehiculo) {
         Session session = null;
-        List<SmsVehiculo> vehiculos = null;
+        SmsVehiculo vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria as categoria left join fetch vehiculo.smsCiudad as ciudad"
-                    + " left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch vehiculo.smsEmpleados where vehiculo.vehPlaca = '" + vehiculo.getVehPlaca() + "'");
-            vehiculos = (List<SmsVehiculo>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsCategoria as categoria "
+                    + "left join fetch vehiculo.smsCiudad as ciudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsEmpleados where "
+                    + "vehiculo.vehPlaca = '" + vehiculo.getVehPlaca() + "'");
+            vehiculos = (SmsVehiculo) query.list().get(0);
 
         } catch (HibernateException e) {
             e.getMessage();
@@ -130,7 +137,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo "
                     + "left join fetch vehiculo.smsCategoria as categoria "
                     + "left join fetch vehiculo.smsCiudad "
@@ -210,7 +217,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCiudad as ciudad left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor where ciudad.ciudadNombre = '" + ciudad.getCiudadNombre() + "'");
             vehiculos = (List<SmsVehiculo>) query.list();
         } catch (HibernateException e) {
@@ -228,7 +235,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria as categoria left join fetch vehiculo.smsCiudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor "
                     + "where categoria in(select categoria from SmsMercado as mercado left outer join mercado.smsCategorias as categoria where mercado.mercadoNombre = '" + mercado + "') and "
@@ -293,7 +300,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad as ciudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor where ciudad.ciudadNombre = '" + ciudad.getCiudadNombre() + "' and vehiculo.smsCategoria.categoriaNombre = '" + categoria + "'");
             vehiculos = (List<SmsVehiculo>) query.list();
@@ -312,7 +319,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor where "
                     + "proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
@@ -332,7 +339,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria left join fetch vehiculo.smsCiudad as ciudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor where vehiculo.vehPlaca LIKE '%" + valor + "%' and proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
             vehiculos = (List<SmsVehiculo>) query.list();
@@ -351,7 +358,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
         Session session = null;
         List<SmsVehiculo> vehiculos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo left join fetch vehiculo.smsCategoria as categoria left join fetch vehiculo.smsCiudad "
                     + "left join fetch vehiculo.smsProveedor as proveedor left join fetch vehiculo.smsReferencia as referencia left join fetch referencia.smsMarca left join fetch vehiculo.smsEstado left join fetch vehiculo.smsColor "
                     + "where vehiculo.vehPlaca LIKE '%" + placa + "%' and categoria in(select categoria from SmsMercado as mercado left outer join mercado.smsCategorias as categoria where mercado.mercadoNombre = '" + mercado + "') and "

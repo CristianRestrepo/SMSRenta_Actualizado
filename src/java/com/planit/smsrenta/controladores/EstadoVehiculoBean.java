@@ -60,7 +60,7 @@ public class EstadoVehiculoBean implements Serializable{
         IVehiculoDao vehDao = new ImpVehiculoDao();
         //Obtenemos fecha actual en la cual se registra el estado del vehiculo
         java.util.Date fecha = new Date();
-        estVehView.setSmsVehiculo(vehDao.consultarVehiculo(estVehView.getSmsVehiculo()).get(0));
+        estVehView.setSmsVehiculo(vehDao.consultarVehiculo(estVehView.getSmsVehiculo()));
         estVehView.setFechaEstadoVehiculo(fecha);
         estVehDao.registrarEstadoVehiculo(estVehView);
     }
@@ -75,10 +75,6 @@ public class EstadoVehiculoBean implements Serializable{
         estVehDao.eliminarEstadoVehiculo(estVehView);
     }
 
-    public List<SmsEstadovehiculo> consultarEstado(SmsVehiculo v) {
-        estVehiculosView = new ArrayList<>();
-        estVehiculosView = estVehDao.consultarEstadoVehiculo(v);
-        return estVehiculosView;
-    }
+  
 
 }

@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -22,13 +23,14 @@ import org.hibernate.Session;
 public class ImpFacturaDao implements IFacturaDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsFactura> consultarFacturas() {
         Session session = null;
         List<SmsFactura> facturas = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsFactura as factura left join fetch factura.smsReservacion");
             facturas = (List<SmsFactura>) query.list();
         } catch (HibernateException e) {
@@ -46,7 +48,7 @@ public class ImpFacturaDao implements IFacturaDao {
         boolean bandera = false;
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(factura);
             bandera = true;
@@ -70,7 +72,7 @@ public class ImpFacturaDao implements IFacturaDao {
     public void eliminarFactura(SmsFactura factura) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(factura);
             session.getTransaction().commit();
@@ -87,13 +89,15 @@ public class ImpFacturaDao implements IFacturaDao {
     }
 
     @Override
-    public List<SmsFactura> consultarFacturaSegunReservacion(SmsReservacion reservacion) {
+    public SmsFactura consultarFacturaSegunReservacion(SmsReservacion reservacion) {
         Session session = null;
-        List<SmsFactura> facturas = new ArrayList<>();
+        SmsFactura facturas = new SmsFactura();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsFactura as factura left join fetch factura.smsReservacion as reservacion where reservacion.idReservacion = '" + reservacion.getIdReservacion() + "'");
-            facturas = (List<SmsFactura>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsFactura as factura "
+                    + "left join fetch factura.smsReservacion as reservacion "
+                    + "where reservacion.idReservacion = '" + reservacion.getIdReservacion() + "'");
+            facturas = (SmsFactura) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

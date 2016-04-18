@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -18,12 +19,14 @@ import org.hibernate.Session;
  */
 public class ImpEstadoDao implements IEstadoDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsEstado> consultarEstados() {
         List<SmsEstado> estados = new ArrayList<>();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEstado");
             estados = (List<SmsEstado>) query.list();
         } catch (HibernateException e) {
@@ -37,13 +40,14 @@ public class ImpEstadoDao implements IEstadoDao {
     }
 
     @Override
-    public List<SmsEstado> consultarEstado(SmsEstado estado) {
-        List<SmsEstado> estados = new ArrayList<>();
+    public SmsEstado consultarEstado(SmsEstado estado) {
+        SmsEstado estados = new SmsEstado();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEstado as estado where estado.estadoNombre = '" + estado.getEstadoNombre() + "'");
-            estados = (List<SmsEstado>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsEstado as estado "
+                    + "where estado.estadoNombre = '" + estado.getEstadoNombre() + "'");
+            estados = (SmsEstado) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

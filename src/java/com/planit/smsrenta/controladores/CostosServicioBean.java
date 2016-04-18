@@ -190,12 +190,12 @@ public class CostosServicioBean implements Serializable {
 
     public void registrar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
-        costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
-        costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()).get(0));
+        costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()));
+        costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()));
 
         if (lugarInicioView.getLugarNombre() != null && lugarDestinoView.getLugarNombre() != null) {
-            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(lugarInicioView).get(0));
-            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(lugarDestinoView).get(0));
+            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(lugarInicioView));
+            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(lugarDestinoView));
         }
 
         //Registramos el costo
@@ -221,12 +221,12 @@ public class CostosServicioBean implements Serializable {
 
     public void modificar() {
         //Consultamos la informacion completa de la categoria y el servicio elegido
-        costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()).get(0));
-        costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()).get(0));
+        costoView.setSmsCategoria(catDao.consultarCategoria(costoView.getSmsCategoria()));
+        costoView.setSmsServicios(serDao.ConsultarServicio(costoView.getSmsServicios()));
 
         if (costoView.getSmsLugaresByIdLugarInicio() != null && costoView.getSmsLugaresByIdLugarDestino() != null) {
-            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarInicio()).get(0));
-            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarDestino()).get(0));
+            costoView.setSmsLugaresByIdLugarInicio(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarInicio()));
+            costoView.setSmsLugaresByIdLugarDestino(lugarDao.consultarLugar(costoView.getSmsLugaresByIdLugarDestino()));
         }
 
         cosDao.modificarCostoServicio(costoView);//Modificamos el costo   

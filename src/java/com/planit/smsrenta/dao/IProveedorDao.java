@@ -16,7 +16,7 @@ import java.util.List;
 public interface IProveedorDao {
 
     //Definicion de metodos CRUD    
-    public List<SmsProveedor> consultarProveedor(SmsProveedor proveedor);
+    public SmsProveedor consultarProveedor(SmsProveedor proveedor);
     
     public List<SmsUsuario> consultarUsuariosProveedores();     
    

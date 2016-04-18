@@ -177,10 +177,10 @@ public class RolBean implements Serializable{
         if (estado == 1) {
             nombre = "Modificar Rol";
             List<SmsPermisos> permisos = permisoDao.mostrarPermisos();
-            List<SmsRol> rolPermisos = rolDao.consultarRol(rolView);
+            SmsRol rolPermisos = rolDao.consultarRol(rolView);
             String valor;
             for (int b = 0; b < permisos.size(); b++) {
-                valor = permisoController.validarPermiso(rolPermisos.get(0), permisos.get(b));
+                valor = permisoController.validarPermiso(rolPermisos, permisos.get(b));
                 if (valor != null) {
                     permisosSeleccionados.add(valor);
                 }

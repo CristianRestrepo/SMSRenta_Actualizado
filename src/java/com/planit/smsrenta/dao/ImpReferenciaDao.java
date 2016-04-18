@@ -5,6 +5,7 @@
  */
 package com.planit.smsrenta.dao;
 
+import com.planit.smsrenta.modelos.SmsCalificacion;
 import com.planit.smsrenta.modelos.SmsReferencia;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -20,15 +22,15 @@ import org.hibernate.Session;
  */
 public class ImpReferenciaDao implements IReferenciaDao {
 
-    private FacesMessage message;
-    private List<SmsReferencia> ArrayList;
-
+    private FacesMessage message;    
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsReferencia> mostrarReferencias() {
         Session session = null;
         List<SmsReferencia> referencias = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsReferencia as referencia left join fetch referencia.smsMarca");
             referencias = (List<SmsReferencia>) query.list();
 
@@ -46,7 +48,7 @@ public class ImpReferenciaDao implements IReferenciaDao {
     public void registrarReferencia(SmsReferencia referencia) {
         Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(referencia);
             session.getTransaction().commit();
@@ -67,7 +69,7 @@ public class ImpReferenciaDao implements IReferenciaDao {
     public void modificarReferencia(SmsReferencia referencia) {
        Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(referencia);
             session.getTransaction().commit();
@@ -88,7 +90,7 @@ public class ImpReferenciaDao implements IReferenciaDao {
     public void eliminarReferencia(SmsReferencia referencia) {
         Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(referencia);
             session.getTransaction().commit();
@@ -106,13 +108,14 @@ public class ImpReferenciaDao implements IReferenciaDao {
     }
 
     @Override
-    public List<SmsReferencia> consultarReferencias(SmsReferencia referencia) {
+    public SmsReferencia consultarReferencias(SmsReferencia referencia) {
         Session session = null;
-        List<SmsReferencia> referencias = new ArrayList<>();
+        SmsReferencia referencias = new SmsReferencia();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsReferencia as referencia where referencia.referenciaNombre='" + referencia.getReferenciaNombre() + "'");
-            referencias = (List<SmsReferencia>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReferencia as referencia where"
+                    + " referencia.referenciaNombre='" + referencia.getReferenciaNombre() + "'");
+            referencias = (SmsReferencia) query.list().get(0);
 
         } catch (HibernateException e) {
             e.getMessage();
@@ -129,7 +132,7 @@ public class ImpReferenciaDao implements IReferenciaDao {
 Session session = null;
         List<SmsReferencia> referencias = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsReferencia as referencia left join fetch referencia.smsMarca where referencia.referenciaNombre LIKE '%" + dato + "%'");
             referencias = (List<SmsReferencia>) query.list();
 

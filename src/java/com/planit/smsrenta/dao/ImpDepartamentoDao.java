@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -21,13 +22,14 @@ import org.hibernate.Session;
 public class ImpDepartamentoDao implements IDepartamentoDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsDepartamento> consultarDepartamentos() {
         List<SmsDepartamento> departamentos = new ArrayList<>();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsDepartamento as departamento left join fetch departamento.smsPais");
             departamentos = (List<SmsDepartamento>) query.list();
         } catch (HibernateException e) {
@@ -41,13 +43,14 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
     }
 
     @Override
-    public List<SmsDepartamento> consultarDepartamento(SmsDepartamento departamento) {
-        List<SmsDepartamento> departamentos = new ArrayList<>();
+    public SmsDepartamento consultarDepartamento(SmsDepartamento departamento) {
+        SmsDepartamento departamentos = new SmsDepartamento();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsDepartamento as departamento where departamento.departamentoNombre = '" + departamento.getDepartamentoNombre() + "'");
-            departamentos = (List<SmsDepartamento>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsDepartamento as departamento where "
+                    + "departamento.departamentoNombre = '" + departamento.getDepartamentoNombre() + "'");
+            departamentos = (SmsDepartamento) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -64,7 +67,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
         List<SmsDepartamento> departamentos = new ArrayList<>();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsDepartamento as departamento where departamento.departamentoNombre LIKE '%" + valor + "%'");
             departamentos = (List<SmsDepartamento>) query.list();
         } catch (HibernateException e) {
@@ -82,7 +85,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
     public void registrarDepartamento(SmsDepartamento departamento) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(departamento);
             session.getTransaction().commit();
@@ -105,7 +108,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
     public void modificarDepartamento(SmsDepartamento departamento) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(departamento);
             session.getTransaction().commit();
@@ -128,7 +131,7 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
     public void eliminarDepartamento(SmsDepartamento departamento) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(departamento);
             session.getTransaction().commit();

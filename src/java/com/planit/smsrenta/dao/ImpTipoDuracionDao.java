@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -18,12 +19,14 @@ import org.hibernate.Session;
  */
 public class ImpTipoDuracionDao implements ITipoDuracionDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsTipoDuracion> consultarTiposDuracion() {
         Session session = null;
         List<SmsTipoDuracion> tipos = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsTipoDuracion");
             tipos = (List<SmsTipoDuracion>) query.list();
         } catch (HibernateException e) {
@@ -37,14 +40,15 @@ public class ImpTipoDuracionDao implements ITipoDuracionDao {
     }
 
     @Override
-    public List<SmsTipoDuracion> consultarTipoDuracion(SmsTipoDuracion tipo) {
+    public SmsTipoDuracion consultarTipoDuracion(SmsTipoDuracion tipo) {
         Session session = null;
-        List<SmsTipoDuracion> tipos = new ArrayList<>();
+        SmsTipoDuracion tipos = new SmsTipoDuracion();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsTipoDuracion as tipo where tipo.idTipoDuracion = '" + tipo.getIdTipoDuracion() + "' or "
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsTipoDuracion as tipo where "
+                    + "tipo.idTipoDuracion = '" + tipo.getIdTipoDuracion() + "' or "
                     + "tipo.tipoDuracionNombre = '" + tipo.getTipoDuracionNombre() + "'");
-            tipos = (List<SmsTipoDuracion>) query.list();
+            tipos = (SmsTipoDuracion) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

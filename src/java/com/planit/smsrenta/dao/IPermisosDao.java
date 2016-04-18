@@ -23,7 +23,7 @@ public interface IPermisosDao {
 
     public void eliminarPermiso(SmsPermisos permiso);
 
-    public List<SmsPermisos> consultarPermiso(String permiso);
+    public SmsPermisos consultarPermiso(String permiso);
     
     public List<SmsPermisos> filtrarPermiso(String valor);
 

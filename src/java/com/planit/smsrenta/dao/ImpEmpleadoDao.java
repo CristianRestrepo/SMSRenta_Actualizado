@@ -15,15 +15,18 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public class ImpEmpleadoDao implements IEmpleadoDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsEmpleado> mostrarEmpleados() {
         Session session = null;
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsEstado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
@@ -40,7 +43,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
     public void registrarEmpleado(SmsEmpleado empleado) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(empleado);
             session.getTransaction().commit();
@@ -58,7 +61,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
     public void modificarEmpleado(SmsEmpleado empleado) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(empleado);
             session.getTransaction().commit();
@@ -76,7 +79,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
     public void eliminarEmpleado(SmsEmpleado empleado) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(empleado);
             session.getTransaction().commit();
@@ -91,13 +94,22 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
     }
 
     @Override
-    public List<SmsEmpleado> consultarEmpleado(SmsUsuario usuario) {
+    public SmsEmpleado consultarEmpleado(SmsUsuario usuario) {
         Session session = null;
-        List<SmsEmpleado> empleados = new ArrayList<>();
+        SmsEmpleado empleados = new SmsEmpleado();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida left join fetch empleado.smsVehiculos where usuario.idUsuario = '" + usuario.getIdUsuario() + "' or usuario.usuarioNombre = '" + usuario.getUsuarioNombre() + "'");
-            empleados = (List<SmsEmpleado>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsEmpleado as empleado "
+                    + "left join fetch empleado.smsProveedor as proveedor "
+                    + "left join fetch empleado.smsUsuario as usuario "
+                    + "left join fetch usuario.smsNacionalidad as nacionalidad "
+                    + "left join fetch usuario.smsCiudad "
+                    + "left join fetch usuario.smsRol "
+                    + "left join fetch empleado.smsHojavida as hojaVida "
+                    + "left join fetch empleado.smsVehiculos "
+                    + "where usuario.idUsuario = '" + usuario.getIdUsuario() + "' or "
+                    + "usuario.usuarioNombre = '" + usuario.getUsuarioNombre() + "'");
+            empleados = (SmsEmpleado) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -113,7 +125,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         Session session = null;
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado "
                     + "left join fetch empleado.smsProveedor as proveedor "
                     + "left join fetch empleado.smsUsuario as usuario "
@@ -170,7 +182,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         Session session = null;
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsUsuario as usuario where usuario.smsCiudad.ciudadNombre = '" + ciudad.getCiudadNombre() + "'");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
@@ -188,7 +200,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad as ciudad where rol.rolNombre = 'Empleado'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
@@ -206,7 +218,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         Session session = null;
         List<SmsEmpleado> conductores = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsUsuario as usuario "
                     + "left join fetch usuario.smsRol as rol "
                     + "left join fetch usuario.smsCiudad as ciudad "
@@ -236,7 +248,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         Session session = null;
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsEstado "
                     + "left join fetch empleado.smsProveedor as proveedor "
                     + "left join fetch empleado.smsUsuario as usuario "
@@ -261,7 +273,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         Session session = null;
         List<SmsEmpleado> conductores = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsUsuario as usuario "
                     + "left join fetch usuario.smsRol as rol "
                     + "left join fetch usuario.smsCiudad as ciudad "
@@ -291,7 +303,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         Session session = null;
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsEstado "
                     + "left join fetch empleado.smsProveedor as proveedor "
                     + "left join fetch empleado.smsUsuario as usuario "

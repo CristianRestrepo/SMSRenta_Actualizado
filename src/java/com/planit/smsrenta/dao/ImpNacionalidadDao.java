@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -18,12 +19,14 @@ import org.hibernate.Session;
  */
 public class ImpNacionalidadDao implements INacionalidadDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsNacionalidad> consultarNacionalidades() {
         List<SmsNacionalidad> nacionalidades = new ArrayList<>();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsNacionalidad");
             nacionalidades = (List<SmsNacionalidad>) query.list();
         } catch (HibernateException e) {
@@ -37,13 +40,14 @@ public class ImpNacionalidadDao implements INacionalidadDao {
     }
 
     @Override
-    public List<SmsNacionalidad> consultarNacionalidad(SmsNacionalidad nacionalidad) {
-        List<SmsNacionalidad> nacionalidades = new ArrayList<>();
+    public SmsNacionalidad consultarNacionalidad(SmsNacionalidad nacionalidad) {
+        SmsNacionalidad nacionalidades = new SmsNacionalidad();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsNacionalidad as nacionalidad where nacionalidad.nacionalidadNombre = '" + nacionalidad.getNacionalidadNombre() + "' ");
-            nacionalidades = (List<SmsNacionalidad>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsNacionalidad as nacionalidad "
+                    + "where nacionalidad.nacionalidadNombre = '" + nacionalidad.getNacionalidadNombre() + "'");
+            nacionalidades = (SmsNacionalidad) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

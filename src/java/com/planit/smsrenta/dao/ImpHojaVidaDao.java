@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -18,12 +19,14 @@ import org.hibernate.Session;
  */
 public class ImpHojaVidaDao implements IHojaVidaDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsHojavida> mostrarHojaVida() {
         Session session = null;
         List<SmsHojavida> HojasVida = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsHojavida");
             HojasVida = (List<SmsHojavida>) query.list();
         } catch (HibernateException e) {
@@ -40,7 +43,7 @@ public class ImpHojaVidaDao implements IHojaVidaDao {
     public void registrarHojaVida(SmsHojavida hojaVida) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(hojaVida);
             session.getTransaction().commit();
@@ -58,7 +61,7 @@ public class ImpHojaVidaDao implements IHojaVidaDao {
     public void modificarHojaVida(SmsHojavida hojaVida) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(hojaVida);
             session.getTransaction().commit();
@@ -76,7 +79,7 @@ public class ImpHojaVidaDao implements IHojaVidaDao {
     public void eliminarHojaVida(SmsHojavida hojaVida) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(hojaVida);
             session.getTransaction().commit();
@@ -91,13 +94,15 @@ public class ImpHojaVidaDao implements IHojaVidaDao {
     }
 
     @Override
-    public List<SmsHojavida> consultarHojaVida(SmsHojavida hojavida) {
+    public SmsHojavida consultarHojaVida(SmsHojavida hojavida) {
         Session session = null;
-        List<SmsHojavida> HojasVida = new ArrayList<>();
+        SmsHojavida HojasVida = new SmsHojavida();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsHojavida as hojavida where hojavida.hojaVidaNombre = '" + hojavida.getHojaVidaNombre() + "' or hojavida.hojaVidaRuta = '" + hojavida.getHojaVidaRuta() + "'");
-            HojasVida = (List<SmsHojavida>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsHojavida as hojavida "
+                    + "where hojavida.hojaVidaNombre = '" + hojavida.getHojaVidaNombre() + "' or "
+                    + "hojavida.hojaVidaRuta = '" + hojavida.getHojaVidaRuta() + "'");
+            HojasVida = (SmsHojavida) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

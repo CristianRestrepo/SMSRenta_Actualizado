@@ -16,7 +16,7 @@ import java.util.List;
 public interface ICategoriaDao {
     
     public List<SmsCategoria> mostrarCategorias();
-    public List<SmsCategoria> consultarCategoria(SmsCategoria categoria);   
+    public SmsCategoria consultarCategoria(SmsCategoria categoria);   
     public List<SmsCategoria> filtrarCategorias(String dato);
     public List<SmsCategoria> consultarCategoriasSegunMercado(SmsMercado mercado);
     public void registrarCategoria(SmsCategoria categoria);

@@ -179,13 +179,7 @@ public class MarcaBean implements Serializable {
             marcaView = new SmsMarca();
         }
     }
-
-    public List<SmsMarca> consultarMarca(SmsMarca marca) {
-        marcasListView = new ArrayList<>();
-        marcasListView = marcaDao.consultarMarca(marca);
-        return marcasListView;
-    }
-
+   
     //Metodos Propios
     public void metodo() {
         if (estado == 0) {

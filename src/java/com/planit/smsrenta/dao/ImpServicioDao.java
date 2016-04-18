@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -22,13 +23,14 @@ import org.hibernate.Session;
 public class ImpServicioDao implements IServicioDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsServicios> mostrarServicios() {
         Session session = null;
         List<SmsServicios> servicios = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsServicios as servicios left join fetch servicios.smsCategoriasServicio left join fetch servicios.smsTipoDuracion left join fetch servicios.smsMercado");
             servicios = (List<SmsServicios>) query.list();
         } catch (HibernateException e) {
@@ -45,7 +47,7 @@ public class ImpServicioDao implements IServicioDao {
     public void registrarServicio(SmsServicios servicio) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(servicio);
             session.getTransaction().commit();
@@ -66,7 +68,7 @@ public class ImpServicioDao implements IServicioDao {
     public void modificarServicio(SmsServicios servicio) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(servicio);
             session.getTransaction().commit();
@@ -87,7 +89,7 @@ public class ImpServicioDao implements IServicioDao {
     public void eliminarServicio(SmsServicios servicio) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(servicio);
             session.getTransaction().commit();
@@ -109,7 +111,7 @@ public class ImpServicioDao implements IServicioDao {
         Session session = null;
         List<SmsServicios> servicios = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsServicios as servicio left join fetch servicio.smsCategoriasServicio left join fetch servicio.smsTipoDuracion left join fetch servicio.smsMercado where servicio.servicioNombre LIKE '%" + dato + "%' or servicio.servicioDescripcion LIKE '%" + dato + "%'");
             servicios = (List<SmsServicios>) query.list();
         } catch (HibernateException e) {
@@ -123,13 +125,18 @@ public class ImpServicioDao implements IServicioDao {
     }
 
     @Override
-    public List<SmsServicios> ConsultarServicio(SmsServicios servicio) {
+    public SmsServicios ConsultarServicio(SmsServicios servicio) {
         Session session = null;
-        List<SmsServicios> servicios = new ArrayList<>();
+        SmsServicios servicios = new SmsServicios();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsServicios as servicio left join fetch servicio.smsCategoriasServicio left join fetch servicio.smsTipoDuracion left join fetch servicio.smsMercado where servicio.servicioNombre = '" + servicio.getServicioNombre() + "' or servicio.idServicio = '" + servicio.getIdServicio() + "'");
-            servicios = (List<SmsServicios>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsServicios as servicio "
+                    + "left join fetch servicio.smsCategoriasServicio "
+                    + "left join fetch servicio.smsTipoDuracion "
+                    + "left join fetch servicio.smsMercado where"
+                    + " servicio.servicioNombre = '" + servicio.getServicioNombre() + "' or "
+                    + "servicio.idServicio = '" + servicio.getIdServicio() + "'");
+            servicios = (SmsServicios) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -145,7 +152,7 @@ public class ImpServicioDao implements IServicioDao {
         Session session = null;
         List<SmsServicios> servicios = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsServicios as servicio left join fetch servicio.smsCategoriasServicio left join fetch servicio.smsTipoDuracion left join fetch servicio.smsMercado as mercado where mercado.idMercado = '" + mercado.getIdMercado() + "' or mercado.mercadoNombre = '"+mercado.getMercadoNombre()+"'");
             servicios = (List<SmsServicios>) query.list();
         } catch (HibernateException e) {

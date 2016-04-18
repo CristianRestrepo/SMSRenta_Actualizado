@@ -20,5 +20,5 @@ public interface IEstadoVehiculoDao {
     public void registrarEstadoVehiculo(SmsEstadovehiculo estado);
     public void modificarEstadoVehiculo(SmsEstadovehiculo estado);
     public void eliminarEstadoVehiculo(SmsEstadovehiculo estado);
-    public List<SmsEstadovehiculo> consultarEstadoVehiculo(SmsVehiculo  vehiculo);
+    public SmsEstadovehiculo consultarEstadoVehiculo(SmsVehiculo  vehiculo);
 }

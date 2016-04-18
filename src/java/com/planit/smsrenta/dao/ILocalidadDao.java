@@ -15,6 +15,6 @@ import java.util.List;
 public interface ILocalidadDao  {
     
     public List<SmsLocalidad> consultarLocalidades();
-    public List<SmsLocalidad> consultarLocalidad(SmsLocalidad localidad);
+    public SmsLocalidad consultarLocalidad(SmsLocalidad localidad);
     public List<SmsLocalidad> consultarLocalidadesSegunCiudad(SmsCiudad ciudad);
 }

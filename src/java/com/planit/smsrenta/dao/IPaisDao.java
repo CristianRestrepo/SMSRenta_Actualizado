@@ -19,6 +19,6 @@ public interface IPaisDao {
     public void registrarPais(SmsPais pais);
     public void modificarPais(SmsPais pais);
     public void eliminarPais(SmsPais pais);
-    public List<SmsPais> consultarPais(SmsPais pais);
+    public SmsPais consultarPais(SmsPais pais);
     public List<SmsPais> filtrarPais(String valor);
 }

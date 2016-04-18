@@ -140,7 +140,7 @@ public class CategoriaBean implements Serializable {
             }
             if (!valor) {
                 mercadoView.setMercadoNombre(mercadosSeleccionados.get(j));
-                mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
+                mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView);
                 mercadoView.getSmsCategorias().add(categoriaView);
                 categoriaView.getSmsMercados().add(mercadoView);
             }
@@ -162,7 +162,7 @@ public class CategoriaBean implements Serializable {
         List<SmsMercado> mercados = new ArrayList();
         for (int i = 0; i < mercadosSeleccionados.size(); i++) { 
             mercadoView.setMercadoNombre(mercadosSeleccionados.get(i));
-            mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView).get(0);
+            mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView);
             mercados.add(mercadoView);
             mercadoView = new SmsMercado();
         }
@@ -191,14 +191,7 @@ public class CategoriaBean implements Serializable {
         categoriasListView = catDao.mostrarCategorias();
         mercadosSeleccionados = new ArrayList<>();
 
-    }
-
-    //Consultar categoria
-    public List<SmsCategoria> consultarCategoria(SmsCategoria cat) {
-        categoriasListView = new ArrayList<>();
-        categoriasListView = catDao.consultarCategoria(cat);
-        return categoriasListView;
-    }
+    }    
 
     public void filtrar() {
         categoriasListView = new ArrayList<>();
@@ -216,7 +209,7 @@ public class CategoriaBean implements Serializable {
             SmsProveedor proveedor = new SmsProveedor();
             IProveedorDao provDao = new ImpProveedorDao();
             proveedor.setProveedorRazonSocial(prov);
-            proveedor = provDao.consultarProveedor(proveedor).get(0);
+            proveedor = provDao.consultarProveedor(proveedor);
 
             List<SmsMercado> mercados = mercadoDao.consultarMercadosSegunProveedor(proveedor);
 
@@ -231,7 +224,7 @@ public class CategoriaBean implements Serializable {
         nombresCategoriasListView = new ArrayList<>();
 
         if (merc.getMercadoNombre() != null) {
-            mercadoView = mercadoDao.consultarMercadoConCategorias(merc).get(0);
+            mercadoView = mercadoDao.consultarMercadoConCategorias(merc);
             categoriasListView = catDao.consultarCategoriasSegunMercado(mercadoView);
             boolean existe = false;
             for (int j = 0; j < categoriasListView.size(); j++) {

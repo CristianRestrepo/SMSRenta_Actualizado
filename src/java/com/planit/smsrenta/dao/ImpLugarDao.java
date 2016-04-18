@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -21,6 +22,7 @@ import org.hibernate.Session;
 public class ImpLugarDao implements ILugarDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsLugares> consultarLugares() {
@@ -28,7 +30,7 @@ public class ImpLugarDao implements ILugarDao {
         List<SmsLugares> lugares = new ArrayList<>();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsLugares as lugar left join fetch lugar.smsCiudad as ciudad left join fetch lugar.smsLocalidad");
             lugares = (List<SmsLugares>) query.list();
 
@@ -46,7 +48,7 @@ public class ImpLugarDao implements ILugarDao {
     public void registrarLugar(SmsLugares lugar) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(lugar);
             session.getTransaction().commit();
@@ -67,7 +69,7 @@ public class ImpLugarDao implements ILugarDao {
     public void modificarLugar(SmsLugares lugar) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(lugar);
             session.getTransaction().commit();
@@ -88,7 +90,7 @@ public class ImpLugarDao implements ILugarDao {
     public void eliminarLugar(SmsLugares lugar) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(lugar);
             session.getTransaction().commit();
@@ -111,7 +113,7 @@ public class ImpLugarDao implements ILugarDao {
         List<SmsLugares> lugares = new ArrayList<>();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsLugares as lugar left join fetch lugar.smsCiudad as ciudad where lugar.lugarNombre LIKE '%" + dato + "%' or  lugar.lugarDireccion LIKE '%" + dato + "%' or ciudad.ciudadNombre LIKE '%" + dato + "%'");
             lugares = (List<SmsLugares>) query.list();
 
@@ -131,7 +133,7 @@ public class ImpLugarDao implements ILugarDao {
         List<SmsLugares> lugares = new ArrayList<>();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsLugares as lugar left join fetch lugar.smsCiudad as ciudad where ciudad.ciudadNombre = '" + dato + "'");
             lugares = (List<SmsLugares>) query.list();
 
@@ -146,14 +148,14 @@ public class ImpLugarDao implements ILugarDao {
     }
 
      @Override
-    public List<SmsLugares> consultarLugar(SmsLugares lugar) {
+    public SmsLugares consultarLugar(SmsLugares lugar) {
         Session session = null;
-        List<SmsLugares> lugares = new ArrayList<>();
+        SmsLugares lugares = new SmsLugares();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsLugares as lugar where lugar.lugarNombre = '" + lugar.getLugarNombre()+ "'");
-            lugares = (List<SmsLugares>) query.list();
+            lugares = (SmsLugares) query.list().get(0);
 
         } catch (HibernateException e) {
             e.getMessage();

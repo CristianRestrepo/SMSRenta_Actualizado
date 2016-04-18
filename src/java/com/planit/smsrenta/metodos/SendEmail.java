@@ -54,7 +54,7 @@ public class SendEmail {
 
         init();
         IUsuarioDao usuDao = new ImpUsuarioDao();
-        SmsUsuario cliente = usuDao.consultarUsuario(Cliente).get(0);
+        SmsUsuario cliente = usuDao.consultarUsuario(Cliente);
 
         //Se formatean las fechas y horas
         String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());
@@ -99,7 +99,7 @@ public class SendEmail {
 
         init();
         IUsuarioDao usuDao = new ImpUsuarioDao();
-        SmsUsuario cliente = usuDao.consultarUsuario(Cliente).get(0);
+        SmsUsuario cliente = usuDao.consultarUsuario(Cliente);
 
         //Se formatean las fechas y horas
         String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());

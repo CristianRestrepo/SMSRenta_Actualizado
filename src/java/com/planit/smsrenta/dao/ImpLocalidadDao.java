@@ -12,6 +12,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -19,12 +20,14 @@ import org.hibernate.Session;
  */
 public class ImpLocalidadDao implements ILocalidadDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsLocalidad> consultarLocalidades() {
         Session session = null;
         List<SmsLocalidad> localidades = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsLocalidad as localidad left join fetch localidad.smsCiudad");
             localidades = (List<SmsLocalidad>) query.list();
 
@@ -39,13 +42,16 @@ public class ImpLocalidadDao implements ILocalidadDao {
     }
 
     @Override
-    public List<SmsLocalidad> consultarLocalidad(SmsLocalidad localidad) {
+    public SmsLocalidad consultarLocalidad(SmsLocalidad localidad) {
         Session session = null;
-        List<SmsLocalidad> localidades = new ArrayList<>();
+        SmsLocalidad localidades = new SmsLocalidad();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsLocalidad as localidad left join fetch localidad.smsCiudad where localidad.idLocalidad = '" + localidad.getIdLocalidad() + "' or localidad.localidadNombre = '" + localidad.getLocalidadNombre() + "'");
-            localidades = (List<SmsLocalidad>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsLocalidad as localidad "
+                    + "left join fetch localidad.smsCiudad "
+                    + "where localidad.idLocalidad = '" + localidad.getIdLocalidad() + "' or "
+                    + "localidad.localidadNombre = '" + localidad.getLocalidadNombre() + "'");
+            localidades = (SmsLocalidad) query.list().get(0);
 
         } catch (HibernateException e) {
             e.getMessage();
@@ -62,7 +68,7 @@ public class ImpLocalidadDao implements ILocalidadDao {
         Session session = null;
         List<SmsLocalidad> localidades = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsLocalidad as localidad left join fetch localidad.smsCiudad as ciudad where ciudad.ciudadNombre = '" + ciudad.getCiudadNombre() + "'");
             localidades = (List<SmsLocalidad>) query.list();
 

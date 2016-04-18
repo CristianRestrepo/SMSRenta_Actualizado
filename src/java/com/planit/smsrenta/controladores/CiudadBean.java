@@ -149,8 +149,8 @@ public class CiudadBean implements Serializable {
     //Definicion Metodos CRUD
     public void registrar() {
         //Consultamos los objetos completos del departamento y el tipo de lugar para asignarlos a nuestra ciudad
-        ciudadView.setSmsDepartamento(departamentoDao.consultarDepartamento(ciudadView.getSmsDepartamento()).get(0));
-        ciudadView.setSmsTipoLugar(tipoLugarDao.consultarTipoLugar(ciudadView.getSmsTipoLugar()).get(0));
+        ciudadView.setSmsDepartamento(departamentoDao.consultarDepartamento(ciudadView.getSmsDepartamento()));
+        ciudadView.setSmsTipoLugar(tipoLugarDao.consultarTipoLugar(ciudadView.getSmsTipoLugar()));
 
         //Se registra la ciudad
         ciudadDao.registrarCiudad(ciudadView);
@@ -164,8 +164,8 @@ public class CiudadBean implements Serializable {
 
     public void modificar() {
         //Consultamos los objetos completos del departamento y el tipo de lugar para asignarlos a nuestra ciudad
-        ciudadView.setSmsDepartamento(departamentoDao.consultarDepartamento(ciudadView.getSmsDepartamento()).get(0));
-        ciudadView.setSmsTipoLugar(tipoLugarDao.consultarTipoLugar(ciudadView.getSmsTipoLugar()).get(0));
+        ciudadView.setSmsDepartamento(departamentoDao.consultarDepartamento(ciudadView.getSmsDepartamento()));
+        ciudadView.setSmsTipoLugar(tipoLugarDao.consultarTipoLugar(ciudadView.getSmsTipoLugar()));
 
         //Se modifica la ciudad
         ciudadDao.modificarCiudad(ciudadView);

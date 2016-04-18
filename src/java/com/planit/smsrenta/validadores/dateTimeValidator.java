@@ -55,7 +55,7 @@ public class dateTimeValidator implements Validator {
         IServicioDao servDao = new ImpServicioDao();
         SmsServicios servicioElegido = new SmsServicios();
         servicioElegido.setServicioNombre(Servicio);
-        servicioElegido = servDao.ConsultarServicio(servicioElegido).get(0);
+        servicioElegido = servDao.ConsultarServicio(servicioElegido);
 
         fechaInicio = sdf.format((Date) component.getAttributes().get("fechaInicio"));
         fechaEntrega = sdf.format((Date) component.getAttributes().get("fechaEntrega"));

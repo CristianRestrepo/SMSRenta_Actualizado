@@ -123,8 +123,8 @@ public class LugarBean implements Serializable {
     //Metodos CRUD
     public void registrar() {
 
-        LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()).get(0));
-        LugarView.setSmsLocalidad(localidadDao.consultarLocalidad(LugarView.getSmsLocalidad()).get(0));
+        LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()));
+        LugarView.setSmsLocalidad(localidadDao.consultarLocalidad(LugarView.getSmsLocalidad()));
 
         lugarDao.registrarLugar(LugarView);
         LugaresListView = lugarDao.consultarLugares();
@@ -133,8 +133,8 @@ public class LugarBean implements Serializable {
 
     public void modificar() {
 
-        LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()).get(0));
-        LugarView.setSmsLocalidad(localidadDao.consultarLocalidad(LugarView.getSmsLocalidad()).get(0));
+        LugarView.setSmsCiudad(ciudadDao.consultarCiudad(LugarView.getSmsCiudad()));
+        LugarView.setSmsLocalidad(localidadDao.consultarLocalidad(LugarView.getSmsLocalidad()));
 
         lugarDao.modificarLugar(LugarView);
         LugaresListView = lugarDao.consultarLugares();

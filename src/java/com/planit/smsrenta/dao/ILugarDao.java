@@ -20,5 +20,5 @@ public interface ILugarDao {
     public void eliminarLugar(SmsLugares lugar);
     public List<SmsLugares> filtrarLugar(String dato);
     public List<SmsLugares> consultarLugarCiudad(String dato);
-    public List<SmsLugares> consultarLugar(SmsLugares lugar);
+    public SmsLugares consultarLugar(SmsLugares lugar);
 }

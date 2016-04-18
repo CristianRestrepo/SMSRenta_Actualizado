@@ -15,6 +15,6 @@ import java.util.List;
 public interface IEstadoDao {
     
     public List<SmsEstado> consultarEstados();
-    public List<SmsEstado> consultarEstado(SmsEstado estado);
+    public SmsEstado consultarEstado(SmsEstado estado);
     
 }

@@ -18,9 +18,9 @@ import java.util.List;
 public interface ICostosServiciosDao {
     
     public List<SmsCostosservicios> consultarCostos();
-    public List<SmsCostosservicios> consultarCostoServicio(SmsServicios servicio, SmsCategoria categoria);
-    public List<SmsCostosservicios> consultarCostoServicioTraslado(SmsServicios servicio, SmsCategoria categoria, SmsLugares lugarInicio, SmsLugares lugarDestino);
-    public List<SmsCostosservicios> consultarCostoServicio(SmsServicios servicio);
+    public SmsCostosservicios consultarCostoServicio(SmsServicios servicio, SmsCategoria categoria);
+    public SmsCostosservicios consultarCostoServicioTraslado(SmsServicios servicio, SmsCategoria categoria, SmsLugares lugarInicio, SmsLugares lugarDestino);
+    public SmsCostosservicios consultarCostoServicio(SmsServicios servicio);
     public void registrarCostoServicio(SmsCostosservicios costo);
     public void modificarCostoServicio(SmsCostosservicios costo);
     public void eliminarCostoServicio(SmsCostosservicios costo);

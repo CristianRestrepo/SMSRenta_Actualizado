@@ -16,7 +16,7 @@ public interface IDepartamentoDao {
     
     public List<SmsDepartamento> consultarDepartamentos();
     
-    public List<SmsDepartamento> consultarDepartamento(SmsDepartamento departamento);
+    public SmsDepartamento consultarDepartamento(SmsDepartamento departamento);
     
     public List<SmsDepartamento> filtrarDepartamentos(String valor);
     

@@ -176,7 +176,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         empleadoView.getSmsUsuario().getSmsRol().setRolNombre("Conductor");
         //Asignamos un estado al conductor
         empleadoView.getSmsEstado().setEstadoNombre("Disponible");
-        empleadoView.setSmsEstado(estadoDao.consultarEstado(empleadoView.getSmsEstado()).get(0));
+        empleadoView.setSmsEstado(estadoDao.consultarEstado(empleadoView.getSmsEstado()));
 
         //Si el usuario no registra foto y hoja de vida se asignas unas default
         if (empleadoView.getSmsUsuario().getUsuarioFotoRuta() == null && empleadoView.getSmsHojavida().getHojaVidaRuta() == null) {
@@ -200,18 +200,18 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
         registrarHojaVida(empleadoView.getSmsHojavida());//Se registra la hoja de vida
 
-        empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()).get(0));//Asociamos una ciudad a un usuario
-        empleadoView.getSmsUsuario().setSmsRol(rolDao.consultarRol(empleadoView.getSmsUsuario().getSmsRol()).get(0));//Asociamos un rol a un usuario
+        empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()));//Asociamos una ciudad a un usuario
+        empleadoView.getSmsUsuario().setSmsRol(rolDao.consultarRol(empleadoView.getSmsUsuario().getSmsRol()));//Asociamos un rol a un usuario
         empleadoView.getSmsUsuario().setUsuarioEstadoUsuario(1);//Asignamos un estado de cuenta
-        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
-        empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()).get(0));
+        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()));
+        empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()));
 
         //registramos el usuario
         usuarioDao.registrarUsuario(empleadoView.getSmsUsuario());
 
         //Se consulta toda la informacion de usuario y proveedor y se relaciona al empleado
-        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
-        empleadoView.setSmsUsuario(usuarioDao.consultarUsuario(empleadoView.getSmsUsuario()).get(0));
+        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()));
+        empleadoView.setSmsUsuario(usuarioDao.consultarUsuario(empleadoView.getSmsUsuario()));
 
         empleadoDao.registrarEmpleado(empleadoView);//Registramos al usuario como empleado
         email.sendEmailConductor(empleadoView.getSmsUsuario(), password);//Se envia correo con datos de sesion a conductor
@@ -231,10 +231,10 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         empleadoView.getSmsUsuario().setUsuarioRememberToken(md.getMD5(empleadoView.getSmsUsuario().getUsuarioRememberToken()));
 
         //Asociamos una ciudad a un usuario
-        empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()).get(0));
-        empleadoView.getSmsUsuario().setSmsRol(rolDao.consultarRol(empleadoView.getSmsUsuario().getSmsRol()).get(0));//Asociamos un rol a un usuario
-        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
-        empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()).get(0));
+        empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()));
+        empleadoView.getSmsUsuario().setSmsRol(rolDao.consultarRol(empleadoView.getSmsUsuario().getSmsRol()));//Asociamos un rol a un usuario
+        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()));
+        empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()));
         usuarioDao.modificarUsuario(empleadoView.getSmsUsuario());//Modificamos la informacion de usuario
 
         empleadoDao.modificarEmpleado(empleadoView);
@@ -243,9 +243,9 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
 
     public void modificarEmpleado() {
 
-        empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()).get(0));
-        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()).get(0));
-        empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()).get(0));
+        empleadoView.getSmsUsuario().setSmsCiudad(ciudadDao.consultarCiudad(empleadoView.getSmsUsuario().getSmsCiudad()));
+        empleadoView.setSmsProveedor(proveedorDao.consultarProveedor(empleadoView.getSmsProveedor()));
+        empleadoView.getSmsUsuario().setSmsNacionalidad(nacionalidadDao.consultarNacionalidad(empleadoView.getSmsUsuario().getSmsNacionalidad()));
 
         usuarioDao.modificarUsuario(empleadoView.getSmsUsuario());
         empleadoDao.modificarEmpleado(empleadoView);//Se modifica el empleado

@@ -11,6 +11,7 @@ import com.planit.smsrenta.dao.ICiudadDao;
 import com.planit.smsrenta.dao.IColorDao;
 import com.planit.smsrenta.dao.IEmpleadoDao;
 import com.planit.smsrenta.dao.IEstadoDao;
+import com.planit.smsrenta.dao.IEstadoVehiculoDao;
 import com.planit.smsrenta.dao.IProveedorDao;
 import com.planit.smsrenta.dao.IReferenciaDao;
 import com.planit.smsrenta.dao.IUsuarioDao;
@@ -20,6 +21,7 @@ import com.planit.smsrenta.dao.ImpCiudadDao;
 import com.planit.smsrenta.dao.ImpColorDao;
 import com.planit.smsrenta.dao.ImpEmpleadoDao;
 import com.planit.smsrenta.dao.ImpEstadoDao;
+import com.planit.smsrenta.dao.ImpEstadoVehiculoDao;
 import com.planit.smsrenta.dao.ImpProveedorDao;
 import com.planit.smsrenta.dao.ImpReferenciaDao;
 import com.planit.smsrenta.dao.ImpUsuarioDao;
@@ -81,6 +83,7 @@ public class VehiculoBean {
     IUsuarioDao usuDao;
     IEstadoDao estadoDao;
     IColorDao colorDao;
+    IEstadoVehiculoDao estadoVehDao;
 
     public VehiculoBean() {
 
@@ -106,6 +109,7 @@ public class VehiculoBean {
         usuDao = new ImpUsuarioDao();
         estadoDao = new ImpEstadoDao();
         colorDao = new ImpColorDao();
+        estadoVehDao = new ImpEstadoVehiculoDao();
 
         nombre = "Registrar Vehiculo";
         operacion = 0;
@@ -233,22 +237,22 @@ public class VehiculoBean {
         vehiculoView.getSmsEstado().setEstadoNombre("Disponible");
 
         //Consulta estado
-        vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()).get(0));
+        vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()));
 
         //Consulta proveedor    
-        vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()).get(0));
+        vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()));
 
         //Consulta categoria      
-        vehiculoView.setSmsCategoria(cateDao.consultarCategoria(vehiculoView.getSmsCategoria()).get(0));
+        vehiculoView.setSmsCategoria(cateDao.consultarCategoria(vehiculoView.getSmsCategoria()));
 
         //Consulta ciudad        
-        vehiculoView.setSmsCiudad(ciuDao.consultarCiudad(vehiculoView.getSmsCiudad()).get(0));
+        vehiculoView.setSmsCiudad(ciuDao.consultarCiudad(vehiculoView.getSmsCiudad()));
 
         //Consulta referencia      
-        vehiculoView.setSmsReferencia(refDao.consultarReferencias(vehiculoView.getSmsReferencia()).get(0));
+        vehiculoView.setSmsReferencia(refDao.consultarReferencias(vehiculoView.getSmsReferencia()));
 
         //Consultar color
-        vehiculoView.setSmsColor(colorDao.consultarColor(vehiculoView.getSmsColor()).get(0));
+        vehiculoView.setSmsColor(colorDao.consultarColor(vehiculoView.getSmsColor()));
 
         //Registramos el vehiculo
         vehDao.registrarVehiculo(vehiculoView);//Registra el Vehiculo
@@ -270,22 +274,22 @@ public class VehiculoBean {
 
     public void modificar() {
         //Consulta estado
-        vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()).get(0));
+        vehiculoView.setSmsEstado(estadoDao.consultarEstado(vehiculoView.getSmsEstado()));
 
         //Consulta proveedor    
-        vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()).get(0));
+        vehiculoView.setSmsProveedor(provDao.consultarProveedor(vehiculoView.getSmsProveedor()));
 
         //Consulta categoria      
-        vehiculoView.setSmsCategoria(cateDao.consultarCategoria(vehiculoView.getSmsCategoria()).get(0));
+        vehiculoView.setSmsCategoria(cateDao.consultarCategoria(vehiculoView.getSmsCategoria()));
 
         //Consulta ciudad        
-        vehiculoView.setSmsCiudad(ciuDao.consultarCiudad(vehiculoView.getSmsCiudad()).get(0));
+        vehiculoView.setSmsCiudad(ciuDao.consultarCiudad(vehiculoView.getSmsCiudad()));
 
         //Consulta referencia      
-        vehiculoView.setSmsReferencia(refDao.consultarReferencias(vehiculoView.getSmsReferencia()).get(0));
+        vehiculoView.setSmsReferencia(refDao.consultarReferencias(vehiculoView.getSmsReferencia()));
 
         //Consultar color
-        vehiculoView.setSmsColor(colorDao.consultarColor(vehiculoView.getSmsColor()).get(0));
+        vehiculoView.setSmsColor(colorDao.consultarColor(vehiculoView.getSmsColor()));
 
         vehDao.modificarVehiculo(vehiculoView);//Se modifica el vehiculo
 
@@ -333,7 +337,7 @@ public class VehiculoBean {
             habilitarCancelar = false;
             nombre = "Editar Vehiculo";
             //Consultamos el estado del vehiculo
-            estadoVehiculoView = estadoVehiculoController.consultarEstado(vehiculoView).get(0);
+            estadoVehiculoView = estadoVehDao.consultarEstadoVehiculo(vehiculoView);
 
             //Si el vehiculo tiene una foto asignada damos valores a nuestras variables para mostrar que foto esta asignada
             if (vehiculoView.getVehFotoNombre() != null && vehiculoView.getVehFotoRuta() != null) {
@@ -531,9 +535,9 @@ public class VehiculoBean {
 
     public void asociarVehiculo() {
         //Consultamos objetos
-        vehiculoView = vehDao.consultarVehiculo(vehiculoView).get(0);
+        vehiculoView = vehDao.consultarVehiculo(vehiculoView);
         IEmpleadoDao empleadoDao = new ImpEmpleadoDao();
-        empleadoView = empleadoDao.consultarEmpleado(empleadoView.getSmsUsuario()).get(0);
+        empleadoView = empleadoDao.consultarEmpleado(empleadoView.getSmsUsuario());
 
         //asociamos vehiculo y conductor
         vehiculoView.getSmsEmpleados().add(empleadoView);

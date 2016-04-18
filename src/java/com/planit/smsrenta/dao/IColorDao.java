@@ -15,5 +15,5 @@ import java.util.List;
 public interface IColorDao {
     
     public List<SmsColor> consultarColores();
-    public List<SmsColor> consultarColor(SmsColor color);
+    public SmsColor consultarColor(SmsColor color);
 }

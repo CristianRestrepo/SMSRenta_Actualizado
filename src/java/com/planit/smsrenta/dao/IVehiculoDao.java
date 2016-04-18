@@ -20,7 +20,7 @@ public interface IVehiculoDao {
     public void registrarVehiculo(SmsVehiculo vehiculo);
     public void modificarVehiculo(SmsVehiculo vehiculo);
     public void eliminarVehiculo(SmsVehiculo vehiculo);
-    public List<SmsVehiculo> consultarVehiculo(SmsVehiculo vehiculo);
+    public SmsVehiculo consultarVehiculo(SmsVehiculo vehiculo);
     public List<SmsVehiculo> consultarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String espacioInicio, String espacioLlegada, String mercado);
     public List<SmsVehiculo> filtrarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String categoria, String espacioInicio, String espacioLlegada, String mercado);
     public List<SmsVehiculo> consultarVehiculosCiudad(SmsCiudad ciudad);

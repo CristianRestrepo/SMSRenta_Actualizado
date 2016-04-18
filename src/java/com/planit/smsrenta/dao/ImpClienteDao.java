@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 
 
@@ -20,14 +21,18 @@ import org.hibernate.Session;
  */
 public class ImpClienteDao implements IClienteDao{
     
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
      @Override
     public List<SmsUsuario> consultarUsuariosClientes() {
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();
 
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where rol.rolNombre = 'Cliente'");
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad"
+                    + " left join fetch usuario.smsRol as rol"
+                    + " left join fetch usuario.smsCiudad as ciudad where rol.rolNombre = 'Cliente'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -44,7 +49,7 @@ public class ImpClienteDao implements IClienteDao{
         Session session = null;
         List<SmsUsuario> usuarios = new ArrayList<>();            
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();                   
+            session = sessions.openSession();                   
             Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where "
                     + "(usuario.usuarioNombre LIKE '%" + valor + "%' or usuario.usuarioCc LIKE '%" + valor + "%' or usuario.usuarioEmail LIKE '%" + valor + "%' or usuario.usuarioTelefono LIKE '%" + valor + "%' or "
                     + "ciudad.ciudadNombre LIKE '%" + valor + "%') and rol.rolNombre = 'Cliente'");

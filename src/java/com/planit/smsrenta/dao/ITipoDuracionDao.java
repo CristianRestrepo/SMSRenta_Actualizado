@@ -16,6 +16,6 @@ public interface ITipoDuracionDao {
     
     public List<SmsTipoDuracion> consultarTiposDuracion();
     
-    public List<SmsTipoDuracion> consultarTipoDuracion(SmsTipoDuracion tipo);
+    public SmsTipoDuracion consultarTipoDuracion(SmsTipoDuracion tipo);
     
 }

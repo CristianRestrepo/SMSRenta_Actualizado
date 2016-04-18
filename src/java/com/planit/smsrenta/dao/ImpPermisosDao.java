@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -20,13 +21,14 @@ import org.hibernate.Session;
 public class ImpPermisosDao implements IPermisosDao {
     
      private FacesMessage message;
+     SessionFactory sessions = NewHibernateUtil.getSessionFactory();
     
     @Override
     public List<SmsPermisos> mostrarPermisos() {
         Session session = null;
         List<SmsPermisos> permisos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsPermisos");
             permisos = (List<SmsPermisos>) query.list();           
         } catch (HibernateException e) {
@@ -44,7 +46,7 @@ public class ImpPermisosDao implements IPermisosDao {
     public void registrarPermiso(SmsPermisos permiso) {
         Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(permiso);
             session.getTransaction().commit();
@@ -65,7 +67,7 @@ public class ImpPermisosDao implements IPermisosDao {
     public void modificarPermiso(SmsPermisos permiso) {
         Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(permiso);
             session.getTransaction().commit();
@@ -86,7 +88,7 @@ public class ImpPermisosDao implements IPermisosDao {
     public void eliminarPermiso(SmsPermisos permiso) {
         Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(permiso);
             session.getTransaction().commit();
@@ -104,13 +106,14 @@ public class ImpPermisosDao implements IPermisosDao {
     }
     
     @Override
-    public List<SmsPermisos> consultarPermiso(String permiso) {
+    public SmsPermisos consultarPermiso(String permiso) {
         Session session = null;
-        List<SmsPermisos> permisos = null;
+        SmsPermisos permisos = new SmsPermisos();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsPermisos as permiso where permiso.permisosNombre = '" + permiso + "'");
-            permisos = (List<SmsPermisos>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsPermisos as permiso where "
+                    + "permiso.permisosNombre = '" + permiso + "'");
+            permisos = (SmsPermisos) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -127,7 +130,7 @@ public class ImpPermisosDao implements IPermisosDao {
         Session session = null;
         List<SmsPermisos> permisos = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsPermisos as permiso where permiso.permisosNombre LIKE '%" + valor + "%' or permiso.permisosDescripcion LIKE '%" + valor + "%'");
             permisos = (List<SmsPermisos>) query.list();
         } catch (HibernateException e) {

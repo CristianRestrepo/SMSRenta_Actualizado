@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -21,13 +22,14 @@ import org.hibernate.Session;
 public class ImpCiudadDao implements ICiudadDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsCiudad> mostrarCiudades() {
         Session session = null;
         List<SmsCiudad> ciudades = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsCiudad as ciudad left join fetch ciudad.smsDepartamento left join fetch ciudad.smsTipoLugar");
             ciudades = (List<SmsCiudad>) query.list();
         } catch (HibernateException e) {
@@ -44,7 +46,7 @@ public class ImpCiudadDao implements ICiudadDao {
     public void registrarCiudad(SmsCiudad ciudad) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(ciudad);
             session.getTransaction().commit();
@@ -65,7 +67,7 @@ public class ImpCiudadDao implements ICiudadDao {
     public void modificarCiudad(SmsCiudad ciudad) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(ciudad);
             session.getTransaction().commit();
@@ -86,7 +88,7 @@ public class ImpCiudadDao implements ICiudadDao {
     public void eliminarCiudad(SmsCiudad ciudad) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(ciudad);
             session.getTransaction().commit();
@@ -104,13 +106,15 @@ public class ImpCiudadDao implements ICiudadDao {
     }
 
     @Override
-    public List<SmsCiudad> consultarCiudad(SmsCiudad ciudad) {
+    public SmsCiudad consultarCiudad(SmsCiudad ciudad) {
         Session session = null;
-        List<SmsCiudad> ciudades = new ArrayList<>();
+        SmsCiudad ciudades = new SmsCiudad();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCiudad as ciudad left join fetch ciudad.smsDepartamento left join fetch ciudad.smsTipoLugar where ciudad.ciudadNombre='" + ciudad.getCiudadNombre() + "'");
-            ciudades = (List<SmsCiudad>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsCiudad as ciudad left join fetch ciudad.smsDepartamento"
+                    + " left join fetch ciudad.smsTipoLugar"
+                    + " where ciudad.ciudadNombre='" + ciudad.getCiudadNombre() + "'");
+            ciudades = (SmsCiudad) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -126,7 +130,7 @@ public class ImpCiudadDao implements ICiudadDao {
         Session session = null;
         List<SmsCiudad> ciudades = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsCiudad as ciudad left join fetch ciudad.smsDepartamento left join fetch ciudad.smsTipoLugar where ciudad.ciudadNombre LIKE '%" + dato + "%' or ciudad.smsDepartamento.departamentoNombre LIKE '%" + dato + "%'");
             ciudades = (List<SmsCiudad>) query.list();
         } catch (HibernateException e) {

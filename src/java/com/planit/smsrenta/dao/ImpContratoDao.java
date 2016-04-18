@@ -15,6 +15,7 @@ import net.sf.jasperreports.engine.query.JRJdbcQueryExecuterFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -22,12 +23,14 @@ import org.hibernate.Session;
  */
 public class ImpContratoDao implements IContratoDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsContrato> consultarContratos() {
         Session session = null;
         List<SmsContrato> contratos = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsContrato as contrato "
                     + "left join fetch contrato.smsReservacion");
             contratos = (List<SmsContrato>) query.list();
@@ -42,15 +45,15 @@ public class ImpContratoDao implements IContratoDao {
     }
 
     @Override
-    public List<SmsContrato> consultarContratoSegunReservacion(SmsReservacion reservacion) {
+    public SmsContrato consultarContratoSegunReservacion(SmsReservacion reservacion) {
         Session session = null;
-        List<SmsContrato> contratos = new ArrayList<>();
+        SmsContrato contratos = new SmsContrato();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsContrato as contrato "
                     + "left join fetch contrato.smsReservacion as reservacion "
                     + "where reservacion.idReservacion = '" + reservacion.getIdReservacion() + "'");
-            contratos = (List<SmsContrato>) query.list();
+            contratos = (SmsContrato) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -65,7 +68,7 @@ public class ImpContratoDao implements IContratoDao {
     public void registrarContrato(SmsContrato contrato) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(contrato);
             session.getTransaction().commit();

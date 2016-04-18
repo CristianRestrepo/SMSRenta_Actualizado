@@ -124,7 +124,7 @@ public class ReferenciaBean implements Serializable {
     public void modificar() {
 
         //Consultamos la informacion completa de la marca seleccionada
-        referenciaView.setSmsMarca(marcaDao.consultarMarca(referenciaView.getSmsMarca()).get(0));//relacionamos la referencia con la marca
+        referenciaView.setSmsMarca(marcaDao.consultarMarca(referenciaView.getSmsMarca()));//relacionamos la referencia con la marca
 
         referenciaDao.modificarReferencia(referenciaView);//modificar la referencia
 
@@ -147,7 +147,7 @@ public class ReferenciaBean implements Serializable {
     public void registrar() {
 
         //Consultamos la informacion completa de la marca seleccionada
-        referenciaView.setSmsMarca(marcaDao.consultarMarca(referenciaView.getSmsMarca()).get(0));//relacionamos la referencia con la marca
+        referenciaView.setSmsMarca(marcaDao.consultarMarca(referenciaView.getSmsMarca()));//relacionamos la referencia con la marca
         referenciaDao.registrarReferencia(referenciaView);//Registramos la referencia
 
         referenciaView = new SmsReferencia();//Limpiamos objetos

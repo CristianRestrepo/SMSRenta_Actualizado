@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -22,13 +23,14 @@ import org.hibernate.Session;
 public class ImpTipoLugarDao implements ITipoLugarDao {
 
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsTipoLugar> consultarTiposLugares() {
         List<SmsTipoLugar> tiposLugar = new ArrayList<>();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsTipoLugar");
             tiposLugar = (List<SmsTipoLugar>) query.list();
         } catch (HibernateException e) {
@@ -42,13 +44,14 @@ public class ImpTipoLugarDao implements ITipoLugarDao {
     }
 
     @Override
-    public List<SmsTipoLugar> consultarTipoLugar(SmsTipoLugar tipoLugar) {
-        List<SmsTipoLugar> tiposLugar = new ArrayList<>();
+    public SmsTipoLugar consultarTipoLugar(SmsTipoLugar tipoLugar) {
+        SmsTipoLugar tiposLugar = new SmsTipoLugar();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsTipoLugar as tipo where tipo.tipoLugarNombre = '" + tipoLugar.getTipoLugarNombre() + "'");
-            tiposLugar = (List<SmsTipoLugar>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsTipoLugar as tipo where"
+                    + " tipo.tipoLugarNombre = '" + tipoLugar.getTipoLugarNombre() + "'");
+            tiposLugar = (SmsTipoLugar) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -65,7 +68,7 @@ public class ImpTipoLugarDao implements ITipoLugarDao {
         List<SmsTipoLugar> tiposLugar = new ArrayList<>();
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsTipoLugar as tipo where tipo.tipoLugarNombre LIKE '%" + valor + "%'");
             tiposLugar = (List<SmsTipoLugar>) query.list();
         } catch (HibernateException e) {

@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -21,6 +22,7 @@ import org.hibernate.Session;
 public class ImpRolDao implements IRolDao{
     
     private FacesMessage message;
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
 
     @Override
     public List<SmsRol> mostrarRoles() {
@@ -29,7 +31,7 @@ public class ImpRolDao implements IRolDao{
         List<SmsRol> roles = new ArrayList<>();
         
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsRol as rol left join fetch rol.smsPermisoses as permisos group by rol.idRol");
             roles = (List<SmsRol>) query.list();
             
@@ -47,7 +49,7 @@ public class ImpRolDao implements IRolDao{
     public void registrarRol(SmsRol Rol) {
         Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(Rol);
             session.getTransaction().commit();
@@ -68,7 +70,7 @@ public class ImpRolDao implements IRolDao{
     public void modificarRol(SmsRol Rol) {
        Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(Rol);
             session.getTransaction().commit();
@@ -89,7 +91,7 @@ public class ImpRolDao implements IRolDao{
     public void eliminarRol(SmsRol Rol) {
         Session session = null;
         try{
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(Rol);
             session.getTransaction().commit();
@@ -107,13 +109,15 @@ public class ImpRolDao implements IRolDao{
     }
 
     @Override
-    public List<SmsRol> consultarRol(SmsRol rol) {
+    public SmsRol consultarRol(SmsRol rol) {
         Session session = null;
-        List<SmsRol> roles = new ArrayList<>();
+        SmsRol roles = new SmsRol();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsRol as rol left join fetch rol.smsPermisoses as permisos where rol.rolNombre = '" + rol.getRolNombre() + "'");
-            roles = (List<SmsRol>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsRol as rol "
+                    + "left join fetch rol.smsPermisoses as permisos "
+                    + "where rol.rolNombre = '" + rol.getRolNombre() + "'");
+            roles = (SmsRol) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -129,7 +133,7 @@ public class ImpRolDao implements IRolDao{
         Session session = null;
         List<SmsRol> roles = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsRol as rol left join fetch rol.smsPermisoses as permisos where rol.rolNombre Like '%" + valor + "%'  group by rol.idRol");
             roles = (List<SmsRol>) query.list();
         } catch (HibernateException e) {

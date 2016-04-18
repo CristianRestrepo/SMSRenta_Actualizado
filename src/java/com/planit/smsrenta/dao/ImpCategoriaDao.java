@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -22,13 +23,14 @@ import org.hibernate.Session;
 public class ImpCategoriaDao implements ICategoriaDao {
 
     private FacesMessage message;
-
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsCategoria> mostrarCategorias() {
         Session session = null;
         List<SmsCategoria> categorias = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsCategoria as categoria");
             categorias = (List<SmsCategoria>) query.list();
         } catch (HibernateException e) {
@@ -45,7 +47,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
     public void registrarCategoria(SmsCategoria categoria) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(categoria);
             session.getTransaction().commit();
@@ -66,7 +68,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
     public void modificarCategoria(SmsCategoria categoria) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(categoria);
             session.getTransaction().commit();
@@ -87,7 +89,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
     public void eliminarCategoria(SmsCategoria categoria) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(categoria);
             session.getTransaction().commit();
@@ -105,13 +107,15 @@ public class ImpCategoriaDao implements ICategoriaDao {
     }
 
     @Override
-    public List<SmsCategoria> consultarCategoria(SmsCategoria categoria) {
+    public SmsCategoria consultarCategoria(SmsCategoria categoria) {
         Session session = null;
-        List<SmsCategoria> categorias = new ArrayList<>();
+        SmsCategoria categorias = new SmsCategoria();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsCategoria as categoria left join fetch categoria.smsMercados as mercados where categoria.categoriaNombre='" + categoria.getCategoriaNombre() + "'");
-            categorias = (List<SmsCategoria>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsCategoria as categoria "
+                    + "left join fetch categoria.smsMercados as mercados "
+                    + "where categoria.categoriaNombre='" + categoria.getCategoriaNombre() + "'");
+            categorias = (SmsCategoria) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -127,7 +131,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
         Session session = null;
         List<SmsCategoria> categorias = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsCategoria as categoria where categoria.categoriaNombre LIKE '%" + dato + "%' or categoria.categoriaDescripcion LIKE '%" + dato + "%'");
             categorias = (List<SmsCategoria>) query.list();
         } catch (HibernateException e) {
@@ -145,7 +149,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
     public void agregarMercadosCategoria(SmsCategoria categoria) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(categoria);
             session.getTransaction().commit();
@@ -164,7 +168,7 @@ public class ImpCategoriaDao implements ICategoriaDao {
         Session session = null;
         List<SmsCategoria> categorias = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("select categoria from SmsMercado as mercado left outer join mercado.smsCategorias as categoria where mercado.idMercado = '" + mercado.getIdMercado() + "'");
             categorias = (List<SmsCategoria>) query.list();
         } catch (HibernateException e) {

@@ -16,7 +16,7 @@ public interface ICategoriasServicioDao {
 
     public List<SmsCategoriasServicio> consultarCategoriasServicios();
 
-    public List<SmsCategoriasServicio> consultarCategoriaServicio(SmsCategoriasServicio catServicio);   
+    public SmsCategoriasServicio consultarCategoriaServicio(SmsCategoriasServicio catServicio);   
     
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria);
     

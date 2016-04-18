@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -21,13 +22,14 @@ import org.hibernate.Session;
 public class ImpPaisDao implements IPaisDao {
 
     private FacesMessage message;
-
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsPais> mostrarPaises() {
         Session session = null;
         List<SmsPais> paises = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsPais");
             paises = (List<SmsPais>) query.list();
         } catch (HibernateException e) {
@@ -44,7 +46,7 @@ public class ImpPaisDao implements IPaisDao {
     public void registrarPais(SmsPais pais) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(pais);
             session.getTransaction().commit();
@@ -65,7 +67,7 @@ public class ImpPaisDao implements IPaisDao {
     public void modificarPais(SmsPais pais) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(pais);
             session.getTransaction().commit();
@@ -86,7 +88,7 @@ public class ImpPaisDao implements IPaisDao {
     public void eliminarPais(SmsPais pais) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(pais);
             session.getTransaction().commit();
@@ -104,13 +106,14 @@ public class ImpPaisDao implements IPaisDao {
     }
 
     @Override
-    public List<SmsPais> consultarPais(SmsPais pais) {
+    public SmsPais consultarPais(SmsPais pais) {
         Session session = null;
-        List<SmsPais> paises = new ArrayList<>();
+        SmsPais paises = new SmsPais();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsPais as pais where pais.paisNombre='" + pais.getPaisNombre() + "'");
-            paises = (List<SmsPais>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsPais as pais where "
+                    + "pais.paisNombre='" + pais.getPaisNombre() + "'");
+            paises = (SmsPais) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -126,7 +129,7 @@ public class ImpPaisDao implements IPaisDao {
         Session session = null;
         List<SmsPais> paises = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsPais as pais where pais.paisNombre LIKE '%" + valor + "%'");
             paises = (List<SmsPais>) query.list();
         } catch (HibernateException e) {

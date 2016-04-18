@@ -17,7 +17,7 @@ public interface IFacturaDao {
 
     public List<SmsFactura> consultarFacturas();
 
-    public List<SmsFactura> consultarFacturaSegunReservacion(SmsReservacion reservacion);
+    public SmsFactura consultarFacturaSegunReservacion(SmsReservacion reservacion);
 
     public void registrarFactura(SmsFactura factura);
 

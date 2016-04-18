@@ -12,6 +12,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -19,12 +20,14 @@ import org.hibernate.Session;
  */
 public class ImpEstadoVehiculoDao implements IEstadoVehiculoDao {
 
+    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    
     @Override
     public List<SmsEstadovehiculo> mostrarEstadoVehiculo() {
         Session session = null;
         List<SmsEstadovehiculo> EstadoVehiculos = new ArrayList<>();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             Query query = session.createQuery("from SmsEstadoVehiculo as estado left join fetch estado.smsVehiculo");
             EstadoVehiculos = (List<SmsEstadovehiculo>) query.list();
         } catch (HibernateException e) {
@@ -41,7 +44,7 @@ public class ImpEstadoVehiculoDao implements IEstadoVehiculoDao {
     public void registrarEstadoVehiculo(SmsEstadovehiculo estado) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.save(estado);
             session.getTransaction().commit();
@@ -59,7 +62,7 @@ public class ImpEstadoVehiculoDao implements IEstadoVehiculoDao {
     public void modificarEstadoVehiculo(SmsEstadovehiculo estado) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.update(estado);
             session.getTransaction().commit();
@@ -77,7 +80,7 @@ public class ImpEstadoVehiculoDao implements IEstadoVehiculoDao {
     public void eliminarEstadoVehiculo(SmsEstadovehiculo estado) {
         Session session = null;
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
+            session = sessions.openSession();
             session.beginTransaction();
             session.delete(estado);
             session.getTransaction().commit();
@@ -92,13 +95,15 @@ public class ImpEstadoVehiculoDao implements IEstadoVehiculoDao {
     }
 
     @Override
-    public List<SmsEstadovehiculo> consultarEstadoVehiculo(SmsVehiculo vehiculo) {
+    public SmsEstadovehiculo consultarEstadoVehiculo(SmsVehiculo vehiculo) {
         Session session = null;
-        List<SmsEstadovehiculo> EstadoVehiculos = new ArrayList<>();
+        SmsEstadovehiculo EstadoVehiculos = new SmsEstadovehiculo();
         try {
-            session = NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from SmsEstadovehiculo as estado left join fetch estado.smsVehiculo as vehiculo where vehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "' and estado.fechaEstadoVehiculo = (select MAX(est.fechaEstadoVehiculo) from SmsEstadovehiculo as est where est.smsVehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "')");
-            EstadoVehiculos = (List<SmsEstadovehiculo>) query.list();
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsEstadovehiculo as estado "
+                    + "left join fetch estado.smsVehiculo as vehiculo where vehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "' and "
+                    + "estado.fechaEstadoVehiculo = (select MAX(est.fechaEstadoVehiculo) from SmsEstadovehiculo as est where est.smsVehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "')");
+            EstadoVehiculos = (SmsEstadovehiculo) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

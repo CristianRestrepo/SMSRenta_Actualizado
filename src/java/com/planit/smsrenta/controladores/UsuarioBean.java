@@ -161,7 +161,7 @@ public class UsuarioBean implements Serializable {
             Usuario.setUsuarioRememberToken(md.getMD5(repitaContraseña));
         }
 
-        Usuario.setSmsCiudad(ciudadDao.consultarCiudad(Usuario.getSmsCiudad()).get(0));
+        Usuario.setSmsCiudad(ciudadDao.consultarCiudad(Usuario.getSmsCiudad()));
 
         usuarioDao.modificarUsuario(Usuario);
         estadoFoto = "Foto subida:" + Usuario.getUsuarioFotoNombre();
@@ -176,8 +176,8 @@ public class UsuarioBean implements Serializable {
         SendEmail email = new SendEmail();
 
         String pass = gpassword.generarPass(6);
-        usuarioView = usuarioDao.consultarDatosSesionUsuario(usuarioView).get(0);
-        usuarioView = usuarioDao.consultarUsuario(usuarioView).get(0);
+        usuarioView = usuarioDao.consultarDatosSesionUsuario(usuarioView);
+        usuarioView = usuarioDao.consultarUsuario(usuarioView);
         usuarioView.setUsuarioPassword(md5.getMD5(pass));
         usuarioView.setUsuarioRememberToken(md5.getMD5(pass));
         usuarioDao.modificarSesionUsuario(usuarioView);

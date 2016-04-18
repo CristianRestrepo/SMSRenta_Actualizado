@@ -135,7 +135,7 @@ public class DepartamentoBean {
     public void registrarDepartamento(){
         
         //Se consulta la informacion completa del pais al que pertenece el departamento
-        departamentoView.setSmsPais(paisDao.consultarPais(departamentoView.getSmsPais()).get(0));
+        departamentoView.setSmsPais(paisDao.consultarPais(departamentoView.getSmsPais()));
                 
         //Se registra el departamento
         departamentoDao.registrarDepartamento(departamentoView);
@@ -151,7 +151,7 @@ public class DepartamentoBean {
     public void ModificarDepartamento(){
         
           //Se consulta la informacion completa del pais al que pertenece el departamento
-        departamentoView.setSmsPais(paisDao.consultarPais(departamentoView.getSmsPais()).get(0));
+        departamentoView.setSmsPais(paisDao.consultarPais(departamentoView.getSmsPais()));
                   
         //Se modifica el departamento
         departamentoDao.modificarDepartamento(departamentoView);
@@ -199,7 +199,7 @@ public class DepartamentoBean {
      public void filtrar() {
         departamentoListView = new ArrayList<>();
         if (buscar == null) {
-            departamentoListView = departamentoDao.consultarDepartamento(departamentoView);
+            departamentoListView = departamentoDao.consultarDepartamentos();
         } else {
             departamentoListView = departamentoDao.filtrarDepartamentos(buscar);
         }
