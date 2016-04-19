@@ -126,63 +126,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         }
         return empleados;
     }
-
-    @Override
-    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada, String Proveedor, SmsVehiculo vehiculo) {
-        Session session = null;
-        List<SmsEmpleado> empleados = new ArrayList<>();
-        try {
-            session = sessions.openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado "
-                    + "left join fetch empleado.smsProveedor as proveedor "
-                    + "left join fetch empleado.smsUsuario as usuario "
-                    + "left join fetch usuario.smsNacionalidad as nacionalidad "
-                    + "left join fetch usuario.smsCiudad "
-                    + "left join fetch usuario.smsRol "
-                    + "left join fetch empleado.smsHojavida as hojaVida "
-                    + "where empleado in(select empleado from SmsVehiculo as vehiculo left outer join vehiculo.smsEmpleados as empleado where vehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "') and "
-                    + "empleado.smsUsuario.smsCiudad.ciudadNombre = '" + ciudad + "' and "
-                    + "empleado.smsProveedor.proveedorRazonSocial = '" + Proveedor + "' and "
-                    + "not exists(from SmsReservacion as reservacion where "
-                    + "reservacion.reservacionFechaInicio = '" + fechaInicio + "' and "
-                    + "reservacion.reservacionFechaLlegada = '" + fechaLlegada + "' and "
-                    + "reservacion.reservacionHoraLlegada = '" + horaLlegada + "' and "
-                    + "reservacion.reservacionHoraInicio = '" + horaInicio + "' and "
-                    + "reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado) "
-                    + "and "
-                    + "(('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and "
-                    + "(reservacion.reservacionFechaInicio >= '" + fechaInicio + "' and "
-                    + "reservacion.reservacionFechaLlegada <= '" + fechaLlegada + "')) "
-                    + "and "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaLlegada = '" + fechaInicio + "' and reservacion.reservacionHoraLlegada > '" + horaInicio + "') "
-                    + "and "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaLlegada + "' and reservacion.reservacionHoraInicio < '" + horaLlegada + "') "
-                    + "and "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaInicio + "' and (reservacion.reservacionHoraInicio >= '" + horaInicio + "' or reservacion.reservacionHoraLlegada >= '" + horaInicio + "'))"
-                    + ")"
-                    + "or "
-                    + "('" + fechaInicio + "' = '" + fechaLlegada + "' and "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and "
-                    + "(reservacion.reservacionHoraInicio >= '" + horaInicio + "' and "
-                    + "reservacion.reservacionHoraLlegada <= '" + horaLlegada + "') and reservacion.reservacionFechaInicio = '" + fechaInicio + "')"
-                    + "or "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaLlegada = '" + fechaInicio + "' and reservacion.reservacionHoraLlegada > '" + horaInicio + "') "
-                    + "or "
-                    + "not exists(from SmsReservacion as reservacion where reservacion.smsEmpleado.idEmpleado = empleado.idEmpleado and reservacion.reservacionFechaInicio = '" + fechaLlegada + "' and reservacion.reservacionHoraInicio < '" + horaLlegada + "') "
-                    + "))");
-
-            empleados = (List<SmsEmpleado>) query.list();
-
-        } catch (HibernateException e) {
-            e.getMessage();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return empleados;
-    }
+    
 
     @Override
     public List<SmsEmpleado> consultarEmpleadosCiudad(SmsCiudad ciudad) {
@@ -322,8 +266,10 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                     + "left join fetch usuario.smsNacionalidad as nacionalidad "
                     + "left join fetch usuario.smsCiudad "
                     + "left join fetch usuario.smsRol "
+                    + "left join fetch empleado.smsEstado as estado "
                     + "left join fetch empleado.smsHojavida as hojaVida "
-                    + "where empleado in(select empleado from SmsVehiculo as vehiculo left outer join vehiculo.smsEmpleados as empleado where vehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "')");
+                    + "where estado.idEstado = '1' and "
+                    + "empleado in(select empleado from SmsVehiculo as vehiculo left outer join vehiculo.smsEmpleados as empleado where vehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "')");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

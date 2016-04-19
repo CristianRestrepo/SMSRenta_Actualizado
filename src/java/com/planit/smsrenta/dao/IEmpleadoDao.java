@@ -30,9 +30,7 @@ public interface IEmpleadoDao {
     public List<SmsEmpleado> filtrarUsuariosEmpleadosSegunProveedor(String valor, SmsProveedor proveedor);
 
     public SmsEmpleado consultarEmpleado(SmsUsuario usuario);
-
-    public List<SmsEmpleado> consultarEmpleadosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada, String Proveedor, SmsVehiculo vehiculo);
-
+    
     public List<SmsEmpleado> consultarEmpleadosCiudad(SmsCiudad ciudad);
 
     public List<SmsEmpleado> consultarEmpleadosSegunProveedor(SmsProveedor proveedor);

@@ -380,45 +380,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
             ex.getMessage();
         }
     }
-
-    public List<SmsEmpleado> consultarEmpleadosDisponibles(SmsReservacion reserva) {
-
-        empleadosListView = new ArrayList<>();
-
-        SimpleDateFormat formatDate;
-        SimpleDateFormat formatTime;
-        formatDate = new SimpleDateFormat("yyyy-MM-dd");
-        formatTime = new SimpleDateFormat("HH:mm:ss");
-
-        String FechaInicio = formatDate.format(reserva.getReservacionFechaInicio());
-        String FechaLlegada = formatDate.format(reserva.getReservacionFechaLlegada());
-        String HoraInicio = formatTime.format(reserva.getReservacionHoraInicio());
-        String HoraLlegada = formatTime.format(reserva.getReservacionHoraLlegada());
-
-        Calendar calInicio = Calendar.getInstance();
-        calInicio.setTime(reserva.getReservacionHoraInicio());
-        calInicio.add(Calendar.HOUR, -1);
-        calInicio.add(Calendar.MINUTE, -59);
-
-        Calendar calLlegada = Calendar.getInstance();
-        calLlegada.setTime(reserva.getReservacionHoraLlegada());
-        calLlegada.add(Calendar.HOUR, 1);
-        calLlegada.add(Calendar.MINUTE, 59);
-
-        Date hespacioInicio = calInicio.getTime();
-        Date hespacioLlegada = calLlegada.getTime();
-
-        String espacioinicio = formatTime.format(hespacioInicio);
-        String espacioLlegada = formatTime.format(hespacioLlegada);
-
-        empleadosListView = empleadoDao.consultarEmpleadosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre(), espacioinicio, espacioLlegada, reserva.getSmsVehiculo().getSmsProveedor().getProveedorRazonSocial(), reserva.getSmsVehiculo());
-        List<SmsEmpleado> lista = new ArrayList<>();
-//        for (int i = 0; i < empleadosListView.size(); i++) {
-//            lista.add(empleadoDao.consultarEmpleado(empleadosListView.get(i).getSmsUsuario()).get(0));
-//        }
-        return empleadosListView;
-    }
-
+    
     public List<String> consultarEmpleadosSegunProveedor(SmsProveedor proveedor) {
         empleadosListView = new ArrayList<>();
         nombresUsuarios = new ArrayList<>();

@@ -5,7 +5,8 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 
 
@@ -21,13 +22,40 @@
                             <!-- Content Header (Page header) -->
 
 
-                            <div class="pad margin no-print">
-                                <div class="callout callout-info" style="margin-bottom: 0!important;">
-                                    <h4>Reserva #{reservacionBean.reservaView.idReservacion}</h4>
-                                    Su reserva ha sido exitosa, porfavor verifique los datos ingresados en la reservación
-                                    antes de realizar el pago del servicio.
-                                </div>
-                            </div>
+                            <c:choose>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 4}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-info" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 5}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-warning" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 6}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-success" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 7}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-danger" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                </c:choose>
 
                             <!-- Main content -->
                             <section class="invoice">
@@ -208,7 +236,7 @@
                                 <div class="row no-print">
                                     <div class="col-xs-12" align="left">
                                         <h:panelGrid columns="3">
-                                            <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.eliminarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
+                                            <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.cancelarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea cancelar esta reservación?" icon="ui-icon-alert" /> 
                                             </p:commandButton>                               
                                         </h:panelGrid>

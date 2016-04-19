@@ -405,11 +405,17 @@ public class ReservacionBean implements Serializable {
         return ruta;
     }
 
-    public String eliminarReservacion() {
-        boolean valor = validarEliminarReservacion(modReservacionView);
+    public String cancelarReservacion() {
+        boolean valor = validarCancelarReservacion(modReservacionView);
         String Ruta = "";
         if (valor) {
-            resDao.eliminarReservacion(modReservacionView);
+            SmsEstado estado = new SmsEstado();
+            estado.setEstadoNombre("Cancelada");
+            estado = estadoDao.consultarEstado(estado);
+            modReservacionView.setSmsEstado(estado);
+            resDao.modificarReservacion(modReservacionView);
+            
+            //resDao.eliminarReservacion(modReservacionView);
             modReservacionView = new SmsReservacion();
             costoServicioView = new SmsCostosservicios();
             switch (sesion.getSmsRol().getRolNombre()) {
@@ -425,7 +431,6 @@ public class ReservacionBean implements Serializable {
                     Ruta = "ClienteDash";
                     break;
             }
-
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Imposible cancelar la reservacion", "La reservacion se hara valida en menos de dos horas");
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -568,11 +573,7 @@ public class ReservacionBean implements Serializable {
                         reservaView.setSmsEmpleado(new SmsEmpleado());
                     }
                     SelecCon = false;
-                    if (resDao.mostrarReservaciones().isEmpty()) {
-                        empleadoListView = empleadoDao.consultarEmpleadosSegunVehiculo(reservaView.getSmsVehiculo());
-                    } else {
-                        empleadoListView = empleadoController.consultarEmpleadosDisponibles(reservaView);
-                    }
+                    empleadoListView = empleadoDao.consultarEmpleadosSegunVehiculo(reservaView.getSmsVehiculo());                    
                     reservaView.setReservacionCosto(calcularCostoReservacion(reservaView));
                     break;
                 case "Confirmacion":
@@ -847,7 +848,7 @@ public class ReservacionBean implements Serializable {
         return Ruta;
     }
 
-    public boolean validarEliminarReservacion(SmsReservacion reserva) {
+    public boolean validarCancelarReservacion(SmsReservacion reserva) {
         boolean valido = true;
 
         SimpleDateFormat formatDate;
