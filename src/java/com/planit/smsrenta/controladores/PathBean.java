@@ -174,6 +174,10 @@ public class PathBean implements Serializable {
     public String ir_SMarcas() {
         return "AdminSMarcas";
     }
+    
+    public String ir_SAdminVehiculos() {
+        return "SAdminVehiculos";
+    }
 
     public String ir_SPais() {
         return "AdminSPais";

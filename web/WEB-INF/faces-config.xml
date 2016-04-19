@@ -13,6 +13,11 @@
         <managed-bean-class>com.planit.smsrenta.controladores.MarcaBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+     <managed-bean>
+        <managed-bean-name>contratoBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.ContratoBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>costosServicioBean</managed-bean-name>
         <managed-bean-class>com.planit.smsrenta.controladores.CostosServicioBean</managed-bean-class>    
@@ -559,8 +564,14 @@
             <to-view-id>/vistas/Conductor/reservas/CndListaReservaciones.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>SAdminVehiculos</from-outcome>
+            <to-view-id>/vistas/AdminS/vehiculos/SAdminVehiculos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
-                    
+                 
+                       
     <navigation-rule>
         <from-view-id>/vistas/AdminS/reservas/SReserva.xhtml</from-view-id>
         <navigation-case>
@@ -615,9 +626,5 @@
             <to-view-id>/vistas/AdminS/reservas/SReservacion.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    <managed-bean>
-        <managed-bean-name>contratoBean</managed-bean-name>
-        <managed-bean-class>com.planit.smsrenta.controladores.ContratoBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
+   
 </faces-config>

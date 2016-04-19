@@ -429,25 +429,6 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
         return nombresUsuarios;
     }
 
-    public List<String> filtrarEmpleado(SmsProveedor proveedor) {
-        nombresUsuarios = new ArrayList<>();
-        empleadosListView = new ArrayList<>();
-        if (buscar == null) {
-            if (proveedor.getProveedorRazonSocial() != null) {
-                empleadosListView = empleadoDao.consultarEmpleadosSegunProveedor(proveedor);
-                for (int i = 0; i < empleadosListView.size(); i++) {
-                    nombresUsuarios.add(empleadosListView.get(i).getSmsUsuario().getUsuarioNombre());
-                }
-            }
-        } else {
-            if (proveedor.getProveedorRazonSocial() != null) {
-                empleadosListView = empleadoDao.filtrarUsuariosEmpleadosSegunProveedor(buscar, proveedor);
-                for (int i = 0; i < empleadosListView.size(); i++) {
-                    nombresUsuarios.add(empleadosListView.get(i).getSmsUsuario().getUsuarioNombre());
-                }
-            }
-        }
-        return nombresUsuarios;
-    }
+    
 
 }

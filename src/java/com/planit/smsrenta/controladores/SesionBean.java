@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SesionBean implements Serializable {
 
     private SmsUsuario usuarioView;
+    private IUsuarioDao usuarioDao;
 
     //Contexto y sesion
     private final HttpServletRequest httpServletRequest;
@@ -31,6 +32,7 @@ public class SesionBean implements Serializable {
         usuarioView = new SmsUsuario();
         faceContext = FacesContext.getCurrentInstance();
         httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
+        usuarioDao = new ImpUsuarioDao();
     }
 
     public SmsUsuario getUsuarioView() {
@@ -41,22 +43,28 @@ public class SesionBean implements Serializable {
         this.usuarioView = usuarioView;
     }
 
+    public IUsuarioDao getUsuarioDao() {
+        return usuarioDao;
+    }
+
+    public void setUsuarioDao(IUsuarioDao usuarioDao) {
+        this.usuarioDao = usuarioDao;
+    }
+
     //Metodos para iniciar Sesion
     public String iniciarSesion() {
         String ruta = "/login.xhtml";
         MD5 md = new MD5();
-        SmsUsuario user;
-        IUsuarioDao usuarioDao = new ImpUsuarioDao();
+        SmsUsuario user = new SmsUsuario();
 
-        usuarioView = usuarioDao.consultarDatosSesionUsuario(usuarioView);
-        if (usuarioView.getIdUsuario() != null) {//valida si el usuario existe en la BD        
+        if (usuarioDao.consultarExistenciaUsuario(usuarioView)) {//valida si el usuario existe en la BD    
+            String pass = md.getMD5(usuarioView.getUsuarioPassword());
             user = usuarioDao.consultarUsuario(usuarioView);
-            usuarioView.setUsuarioPassword(md.getMD5(usuarioView.getUsuarioPassword()));
             if (user.getUsuarioEstadoUsuario() == 1) {//Evalua el estado de la cuenta de usuario, si esta activa o inactiva
-                if (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(usuarioView.getUsuarioPassword())) {
-                    
+                if (user.getUsuarioEmail().equalsIgnoreCase(usuarioView.getUsuarioEmail()) && user.getUsuarioPassword().equalsIgnoreCase(pass)) {
+
                     httpServletRequest.getSession().setAttribute("Sesion", user);
-                   
+
                     switch (user.getSmsRol().getRolNombre()) {
                         case "Administrador Principal":
                             ruta = "AdminPPrincipal";
@@ -92,6 +100,6 @@ public class SesionBean implements Serializable {
         usuarioView = new SmsUsuario();
 
         return ruta;
-    }    
-    
+    }
+
 }

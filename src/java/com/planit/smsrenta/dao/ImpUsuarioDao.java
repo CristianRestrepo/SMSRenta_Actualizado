@@ -5,8 +5,8 @@
  */
 package com.planit.smsrenta.dao;
 
+import static com.planit.smsrenta.dao.NewHibernateUtil.getSessionFactory;
 import com.planit.smsrenta.modelos.SmsUsuario;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -22,7 +22,7 @@ import org.hibernate.SessionFactory;
 public class ImpUsuarioDao implements IUsuarioDao {
 
     private FacesMessage message;
-    SessionFactory sessions = NewHibernateUtil.getSessionFactory();
+    SessionFactory sessions = getSessionFactory();
 
     @Override
     public List<SmsUsuario> mostrarUsuario() {
@@ -203,5 +203,30 @@ public class ImpUsuarioDao implements IUsuarioDao {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public boolean consultarExistenciaUsuario(SmsUsuario usuario) {
+        Session session = null;
+        boolean existe = false;
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsUsuario as usuario"
+                    + " left join fetch usuario.smsRol as rol"
+                    + " left join fetch usuario.smsCiudad as ciudad"
+                    + " left join fetch usuario.smsNacionalidad where"
+                    + " usuario.usuarioEmail = '" + usuario.getUsuarioEmail() + "'");
+            if (!query.list().isEmpty()) {
+                existe = true;
+            }
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return existe;
     }
 }

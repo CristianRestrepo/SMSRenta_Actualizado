@@ -113,7 +113,7 @@ where f.idFactura = $P{idFactura} and
 				<text><![CDATA[NIT 900.904.121-8 REGIMEN COMÚN DE IMPUESTOS
 RES DIAN N° 320001340638 DE FECHA 30/11/15 FACTURA POR COMPUTADOR AUTORIZA DEL 1 -10000
 NO SOMOS GRANDES CONTRIBUYENTES - NO SOMOS AUTORETENEDORES - RESPONSABLES DEL IVA
-ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
+ACTIVIDAD ECONÓMICA 7710  - TARIFA ICA 9.+66 X 1000]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="51" width="555" height="1" forecolor="#999999" uuid="f8521acd-3df2-4be2-bceb-61149b15cfdf"/>
@@ -122,6 +122,11 @@ ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
 				<reportElement x="0" y="3" width="58" height="49" uuid="6b28f7be-68a0-4bf4-a776-3a7c69d15063"/>
 				<imageExpression><![CDATA["../Reportes_SMS/logo.jpg"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="61" y="51" width="365" height="20" forecolor="#F86115" uuid="c22de93c-0b5a-49a1-ac4f-4624c22b4784"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SOLUCION EN MOVILIDAD SEGURA SAS]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>

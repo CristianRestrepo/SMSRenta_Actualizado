@@ -27,7 +27,14 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsEstado left join fetch empleado.smsProveedor as proveedor left join fetch empleado.smsUsuario as usuario left join fetch usuario.smsNacionalidad as nacionalidad left join fetch usuario.smsCiudad left join fetch usuario.smsRol left join fetch empleado.smsHojavida as hojaVida");
+            Query query = session.createQuery("from SmsEmpleado as empleado "
+                    + "left join fetch empleado.smsEstado "
+                    + "left join fetch empleado.smsProveedor as proveedor "
+                    + "left join fetch empleado.smsUsuario as usuario "
+                    + "left join fetch usuario.smsNacionalidad as nacionalidad "
+                    + "left join fetch usuario.smsCiudad "
+                    + "left join fetch usuario.smsRol "
+                    + "left join fetch empleado.smsHojavida as hojaVida");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -219,12 +226,14 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> conductores = new ArrayList<>();
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsUsuario as usuario "
-                    + "left join fetch usuario.smsRol as rol "
-                    + "left join fetch usuario.smsCiudad as ciudad "
+            Query query = session.createQuery("from SmsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario as usuario "
+                    + "left join fetch empleado.smsProveedor as proveedor "                    
                     + "left join fetch usuario.smsNacionalidad as nacionalidad "
-                    + "left join fetch empleado.smsEstado "
-                    + "left join fetch empleado.smsProveedor as proveedor where "
+                    + "left join fetch usuario.smsCiudad as ciudad "
+                    + "left join fetch usuario.smsRol as rol "
+                    + "left join fetch empleado.smsHojavida as hojaVida "
+                    + "left join fetch empleado.smsVehiculos where "
                     + "usuario.usuarioNombre LIKE '%" + valor + "%' or "
                     + "usuario.usuarioCc LIKE '%" + valor + "%' or "
                     + "usuario.usuarioEmail LIKE '%" + valor + "%' or "
@@ -249,13 +258,15 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> empleados = new ArrayList<>();
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsEstado "
+            Query query = session.createQuery("from SmsEmpleado as empleado "
+                    + "left join fetch empleado.smsEstado "
                     + "left join fetch empleado.smsProveedor as proveedor "
                     + "left join fetch empleado.smsUsuario as usuario "
                     + "left join fetch usuario.smsNacionalidad as nacionalidad "
                     + "left join fetch usuario.smsCiudad "
                     + "left join fetch usuario.smsRol "
-                    + "left join fetch empleado.smsHojavida as hojaVida where "
+                    + "left join fetch empleado.smsHojavida as hojaVida "
+                    + "left join fetch empleado.smsVehiculos where "
                     + "proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
@@ -274,18 +285,19 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         List<SmsEmpleado> conductores = new ArrayList<>();
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsEmpleado as empleado left join fetch empleado.smsUsuario as usuario "
+            Query query = session.createQuery("from SmsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario as usuario "
                     + "left join fetch usuario.smsRol as rol "
                     + "left join fetch usuario.smsCiudad as ciudad "
                     + "left join fetch usuario.smsNacionalidad as nacionalidad "
                     + "left join fetch empleado.smsEstado "
                     + "left join fetch empleado.smsProveedor as proveedor where "
-                    + "usuario.usuarioNombre LIKE '%" + valor + "%' or "
+                    + "(usuario.usuarioNombre LIKE '%" + valor + "%' or "
                     + "usuario.usuarioCc LIKE '%" + valor + "%' or "
                     + "usuario.usuarioEmail LIKE '%" + valor + "%' or "
                     + "usuario.usuarioTelefono LIKE '%" + valor + "%' or "
                     + "ciudad.ciudadNombre LIKE '%" + valor + "%' or "
-                    + "proveedor.proveedorNit LIKE '%" + valor + "%' and "
+                    + "proveedor.proveedorNit LIKE '%" + valor + "%') and "
                     + "proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
             conductores = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {

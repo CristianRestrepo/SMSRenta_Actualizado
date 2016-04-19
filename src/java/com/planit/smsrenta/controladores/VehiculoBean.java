@@ -60,6 +60,8 @@ public class VehiculoBean {
     private List<SmsVehiculo> vehiculosListView;
     private List<String> placasVehiculos;
 
+    private List<SmsVehiculo> vehiculos;
+    private List<SmsEmpleado> conductores;
     //Relacion con el controlador   
     Upload fileController;
     EstadoVehiculoBean estadoVehiculoController;
@@ -69,6 +71,7 @@ public class VehiculoBean {
     private String buscar;
     private String estadoArchivo1;
     private String estadoArchivo2;
+    private String buscarEmpleado;
     private int operacion;
 
     //Banderas    
@@ -84,6 +87,7 @@ public class VehiculoBean {
     IEstadoDao estadoDao;
     IColorDao colorDao;
     IEstadoVehiculoDao estadoVehDao;
+    IEmpleadoDao empleadoDao;
 
     public VehiculoBean() {
 
@@ -100,6 +104,7 @@ public class VehiculoBean {
         estadoVehiculoController = new EstadoVehiculoBean();
         fileController = new Upload();
         buscar = null;
+        buscarEmpleado = null;
 
         cateDao = new ImpCategoriaDao();
         provDao = new ImpProveedorDao();
@@ -110,12 +115,15 @@ public class VehiculoBean {
         estadoDao = new ImpEstadoDao();
         colorDao = new ImpColorDao();
         estadoVehDao = new ImpEstadoVehiculoDao();
+        empleadoDao = new ImpEmpleadoDao();
 
         nombre = "Registrar Vehiculo";
         operacion = 0;
         estadoArchivo1 = "Foto sin subir";
         estadoArchivo2 = "Foto sin subir";
 
+        vehiculos = new ArrayList<>();
+        conductores = new ArrayList<>();
     }
 
     @PostConstruct
@@ -221,7 +229,30 @@ public class VehiculoBean {
         this.empleadoView = empleadoView;
     }
 
-    
+    public List<SmsVehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<SmsVehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
+    public List<SmsEmpleado> getConductores() {
+        return conductores;
+    }
+
+    public void setConductores(List<SmsEmpleado> conductores) {
+        this.conductores = conductores;
+    }
+
+    public String getBuscarEmpleado() {
+        return buscarEmpleado;
+    }
+
+    public void setBuscarEmpleado(String buscarEmpleado) {
+        this.buscarEmpleado = buscarEmpleado;
+    }
+
     //Definicion de metodos VEHICULO
     public void registrar() {
 
@@ -513,12 +544,12 @@ public class VehiculoBean {
         vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada, mercadoSeleccionado);
         return vehiculosListView;
     }
-    
+
     public List<SmsVehiculo> buscarVehiculoSegunPlaca(SmsReservacion reserva, SmsMercado mercado, String placa) {
-        vehiculosListView = new ArrayList<>();       
+        vehiculosListView = new ArrayList<>();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
         String mercadoSeleccionado = mercado.getMercadoNombre();
-     
+
         SimpleDateFormat formatDate;
         SimpleDateFormat formatTime;
         formatDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -534,11 +565,6 @@ public class VehiculoBean {
     }
 
     public void asociarVehiculo() {
-        //Consultamos objetos
-        vehiculoView = vehDao.consultarVehiculo(vehiculoView);
-        IEmpleadoDao empleadoDao = new ImpEmpleadoDao();
-        empleadoView = empleadoDao.consultarEmpleado(empleadoView.getSmsUsuario());
-
         //asociamos vehiculo y conductor
         vehiculoView.getSmsEmpleados().add(empleadoView);
         empleadoView.getSmsVehiculos().add(vehiculoView);
@@ -548,26 +574,49 @@ public class VehiculoBean {
         vehiculoView = new SmsVehiculo();
         empleadoView = new SmsEmpleado();
         proveedorView = new SmsProveedor();
+        vehiculos = new ArrayList<>();
+        conductores = new ArrayList<>();
     }
 
-    public List<String> filtrarVehiculo(SmsProveedor proveedor) {
-        placasVehiculos = new ArrayList<>();
-        vehiculosListView = new ArrayList<>();
+    //Metodos para la asociacion de vehiculos con conductores
+    public void cargarVehiculoEmpleadosSegunProveedor() {
+        if (proveedorView.getProveedorRazonSocial() != null) {
+            vehiculos = vehDao.consultarVehiculosSegunProveedor(proveedorView);
+            conductores = empleadoDao.consultarEmpleadosSegunProveedor(proveedorView);
+        }
+    }
+
+    public void filtrarVehiculo(SmsProveedor proveedor) {
+        vehiculos = new ArrayList<>();
         if (buscar == null) {
             if (proveedor.getProveedorRazonSocial() != null) {
-                vehiculosListView = vehDao.consultarVehiculosSegunProveedor(proveedor);
-                for (int i = 0; i < vehiculosListView.size(); i++) {
-                    placasVehiculos.add(vehiculosListView.get(i).getVehPlaca());
-                }
+                vehiculos = vehDao.consultarVehiculosSegunProveedor(proveedor);
             }
         } else {
             if (proveedor.getProveedorRazonSocial() != null) {
-                vehiculosListView = vehDao.filtrarVehiculoSegunProveedor(buscar, proveedor);
-                for (int i = 0; i < vehiculosListView.size(); i++) {
-                    placasVehiculos.add(vehiculosListView.get(i).getVehPlaca());
-                }
+                vehiculos = vehDao.filtrarVehiculoSegunProveedor(buscar, proveedor);
             }
         }
-        return placasVehiculos;
+    }
+
+    public void filtrarEmpleado(SmsProveedor proveedor) {
+        conductores = new ArrayList<>();
+        if (buscarEmpleado == null) {
+            if (proveedor.getProveedorRazonSocial() != null) {
+                conductores = empleadoDao.consultarEmpleadosSegunProveedor(proveedor);
+            }
+        } else {
+            if (proveedor.getProveedorRazonSocial() != null) {
+                conductores = empleadoDao.filtrarUsuariosEmpleadosSegunProveedor(buscarEmpleado, proveedor);
+            }
+        }
+    }
+    
+    public void cancelarAsociacion(){
+        vehiculoView = new SmsVehiculo();
+        empleadoView = new SmsEmpleado();
+        proveedorView = new SmsProveedor();
+        vehiculos = new ArrayList<>();
+        conductores = new ArrayList<>();
     }
 }

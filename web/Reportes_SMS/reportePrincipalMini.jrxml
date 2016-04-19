@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaPOS" pageWidth="226" pageHeight="623" columnWidth="186" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d495719f-3b9b-49bc-b4a2-bec5d133ff17">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="763"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idFactura" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{idFactura}]]></defaultValueExpression>
 	</parameter>
@@ -115,11 +115,18 @@ where  f.idFactura = $P{idFactura} and
 				</textElement>
 				<text><![CDATA[NIT 900.904.121-8 REGIMEN COMÚN DE IMPUESTOS RES DIAN N° 320001340638 DE FECHA 30/11/15 FACTURA POR COMPUTADOR AUTORIZA DEL 1 -10000
 NO SOMOS GRANDES CONTRIBUYENTES - NO SOMOS AUTORETENEDORES - RESPONSABLES DEL IVA
-ACTIVIDAD ECONÓMICA XXX  - TARIFA ICA 9.+66 X 1000]]></text>
+ACTIVIDAD ECONÓMICA 7710  - TARIFA ICA 9.+66 X 1000]]></text>
 			</staticText>
 			<line>
 				<reportElement x="1" y="4" width="185" height="1" forecolor="#999999" uuid="dad975da-257e-4e8d-8106-b273d64b5554"/>
 			</line>
+			<staticText>
+				<reportElement x="0" y="-108" width="186" height="18" forecolor="#F86115" uuid="11a48c78-32f8-48ef-977e-8570c8e9c049"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[SOLUCION EN MOVILIDAD SEGURA SAS]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>

@@ -37,7 +37,7 @@
                             </b:column>
 
 
-                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-tag"/>
@@ -74,7 +74,6 @@
                         </h:form>
 
                         <h:form id="formularioMercado">
-
                             <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
                                 <div class="box box-success">
                                     <div class="box-header with-border">
@@ -97,7 +96,7 @@
                                                     <p:commandButton id="BTMercado" disabled="#{mercadoBean.habilitarRegistro}"
                                                                      onclick="PrimeFaces.monitorDownload(start, stop);"
                                                                      class="btn btn-block btn-success" style="width: 100%" 
-                                                                     update=":formularioMercado:BTMercado :formularioMercado:PMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg :formularioSubidaArchivos:messages" 
+                                                                     update=":formularioMercado :formularioListaMercados:ListaMercados :formularioSubidaArchivos:TEstadoFoto :formularioSubidaArchivos:fileIdPhoto :formularioSubidaArchivos:msg :formularioSubidaArchivos:messages" 
                                                                      value="#{mercadoBean.nombre}" 
                                                                      action="#{mercadoBean.metodo()}"/>
                                                     <p:commandButton id="BTCancelar" style="width: 100%" 
@@ -131,7 +130,7 @@
 
 
                         <h:form id="formularioListaMercados">
-                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
                                         <i class="fa fa-2x fa-tag"/>
@@ -158,15 +157,14 @@
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
                                                     </p:commandLink>
                                                 </p:column>
-                                            </p:dataTable>                                                                                
+                                            </p:dataTable>
                                         </div>                                                                       
                                     </div> 
                                 </div>
                             </b:column> 
                         </h:form>
-
                     </b:row>
-                </b:container>            
+                </b:container>  
             </ui:define>
 
         </ui:composition>

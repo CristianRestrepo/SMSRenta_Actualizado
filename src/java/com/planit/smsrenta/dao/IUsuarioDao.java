@@ -26,6 +26,8 @@ public interface IUsuarioDao {
     public void eliminarUsuario(SmsUsuario usuario);
 
     public SmsUsuario consultarUsuario(SmsUsuario usuario);
+    
+    public boolean consultarExistenciaUsuario(SmsUsuario usuario);
 
     public SmsUsuario consultarDatosSesionUsuario(SmsUsuario user);
 
