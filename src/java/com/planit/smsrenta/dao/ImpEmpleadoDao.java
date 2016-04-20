@@ -210,7 +210,7 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
                     + "left join fetch usuario.smsCiudad "
                     + "left join fetch usuario.smsRol "
                     + "left join fetch empleado.smsHojavida as hojaVida "
-                    + "left join fetch empleado.smsVehiculos where "
+                    + "where "
                     + "proveedor.proveedorRazonSocial = '" + proveedor.getProveedorRazonSocial() + "'");
             empleados = (List<SmsEmpleado>) query.list();
         } catch (HibernateException e) {
@@ -280,5 +280,30 @@ public class ImpEmpleadoDao implements IEmpleadoDao {
         }
         return empleados;
     }
+
+    @Override
+    public SmsEmpleado consultarEmpleadoConVehiculo(SmsEmpleado empleado) {
+        Session session = null;
+        SmsEmpleado empleados = new SmsEmpleado();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsEmpleado as empleado "
+                    + "left join fetch empleado.smsProveedor as proveedor "
+                    + "left join fetch empleado.smsUsuario as usuario "
+                    + "left join fetch usuario.smsNacionalidad as nacionalidad "
+                    + "left join fetch usuario.smsCiudad "
+                    + "left join fetch usuario.smsRol "
+                    + "left join fetch empleado.smsHojavida as hojaVida "
+                    + "left join fetch empleado.smsVehiculos "
+                    + "where empleado.idEmpleado = '" + empleado.getIdEmpleado() + "'");
+            empleados = (SmsEmpleado) query.list().get(0);
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return empleados;}
 
 }

@@ -199,7 +199,9 @@ public class ImpCostosServiciosDao implements ICostosServiciosDao {
                     + "left join fetch costo.smsCategoria as categoria "
                     + "left join fetch costo.smsServicios as servicios "
                     + "where categoria.categoriaNombre LIKE '%" + dato + "%' or "
-                    + "servicios.servicioNombre LIKE '%" + dato + "%'");
+                    + "servicios.servicioNombre LIKE '%" + dato + "%' or "
+                    + "lugarInicio.lugarNombre LIKE '%" + dato + "%' or "
+                    + "lugarDestino.lugarNombre LIKE '%" + dato + "%'");
             Costos = (List<SmsCostosservicios>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -209,6 +211,6 @@ public class ImpCostosServiciosDao implements ICostosServiciosDao {
             }
         }
         return Costos;
-    }   
+    }
 
 }

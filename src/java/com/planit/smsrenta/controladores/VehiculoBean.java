@@ -565,6 +565,10 @@ public class VehiculoBean {
     }
 
     public void asociarVehiculo() {
+        //obtenemos los objetos vehiculo y empleado con sus colecciones habilitadas
+        vehiculoView = vehDao.consultarVehiculoConConductores(vehiculoView);
+        empleadoView = empleadoDao.consultarEmpleadoConVehiculo(empleadoView);
+        
         //asociamos vehiculo y conductor
         vehiculoView.getSmsEmpleados().add(empleadoView);
         empleadoView.getSmsVehiculos().add(vehiculoView);

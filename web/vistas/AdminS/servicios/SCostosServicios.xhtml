@@ -144,6 +144,14 @@
                                                 <h:outputText value="#{costo.costoServicioPrecio}"/>
                                             </p:column>
 
+                                            <p:column headerText="Lugar Inicio">
+                                                <h:outputText value="#{costo.smsLugaresByIdLugarInicio.lugarNombre}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Lugar Destino">
+                                                <h:outputText value="#{costo.smsLugaresByIdLugarDestino.lugarNombre}"/>
+                                            </p:column>
+
                                             <p:column style="width: 35px">
                                                 <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
                                                     <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>

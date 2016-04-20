@@ -31,6 +31,8 @@ public interface IEmpleadoDao {
 
     public SmsEmpleado consultarEmpleado(SmsUsuario usuario);
     
+    public SmsEmpleado consultarEmpleadoConVehiculo(SmsEmpleado empleado);
+    
     public List<SmsEmpleado> consultarEmpleadosCiudad(SmsCiudad ciudad);
 
     public List<SmsEmpleado> consultarEmpleadosSegunProveedor(SmsProveedor proveedor);
