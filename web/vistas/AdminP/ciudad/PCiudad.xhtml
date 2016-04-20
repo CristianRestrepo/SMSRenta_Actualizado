@@ -15,7 +15,7 @@
 
                     <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                         <div class="espacio-arriba" style="text-align: center" align="center">
-                            <h4 style="font-size: x-large">CIUDADES Y LUGARES</h4><br/>
+                            <h4 style="font-size: x-large">CIUDADES</h4><br/>
                             <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
                         </div>
                     </b:column>
@@ -67,7 +67,7 @@
                                         </h:panelGrid>
                                     </div><hr/>
                                     <h:panelGrid columns="2" width="100%">
-                                        <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" id="BTCiudad" action="#{ciudadBean.metodo()}" update=":formularioCiudades :formularioDatosCiudades :formularioLugares:SCiudades" value="#{ciudadBean.nombre}"/>                                       
+                                        <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" id="BTCiudad" action="#{ciudadBean.metodo()}" update=":formularioCiudades :formularioDatosCiudades" value="#{ciudadBean.nombre}"/>                                       
                                         <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{ciudadBean.habilitarCancelar}" action="#{ciudadBean.cancelar()}" update="@form" value="Cancelar" />
                                     </h:panelGrid>
                                      <script type="text/javascript">
@@ -130,127 +130,7 @@
                                 </div>
                             </div> 
                         </b:column>
-                    </h:form> 
-
-                    <!--Lugares-->
-                    <h:form id="formularioLugares">
-
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">                            
-                            <p:messages id="msg" autoUpdate="true" closable="true"/>
-                        </b:column>
-
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <div class="box box-info espacio-arriba">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-map-marker"/>
-                                    <h4 class="box-title">Registro de Lugares</h4>
-                                </div> 
-                                <div class="box-body">
-                                    <p style="text-justify: auto">En este panel de registro podrá registrar la 
-                                        información de los lugares más requeridos por los clientes: <em>Aeropuerto El Dorado, Unicentro, Centro Internacional, etc.</em></p> 
-                                </div>
-                            </div>
-                        </b:column>
-
-                        <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
-                            <div class="box box-danger ">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-pencil-square-o"/>
-                                    <h4 class="box-title">Datos de Lugar</h4>
-                                </div>      
-                                <div class="box-body">
-                                    <div class="table-responsive">
-                                        <h:panelGrid id="PLugar" columns="2" cellpadding="5" style="width: 100%">
-                                            <p:selectOneMenu style="width: 100%" id="SCiudades" required="true" requiredMessage="Seleccione Ciudad o municipio" value="#{lugarBean.lugarView.smsCiudad.ciudadNombre}">
-                                                <f:selectItem itemLabel="Seleccione ciudad o municipio"/>
-                                                <f:selectItems value="#{ciudadBean.nombresCiudadesListView}"/>
-                                                <p:ajax event="change" update="SLocalidades"/>
-                                            </p:selectOneMenu>
-                                            <p:message for="SCiudades"/>
-
-                                            <b:selectOneMenu id="SLocalidades" tooltip="Seleccione Localidad a la que pertenece el lugar o barrio" required="true" requiredMessage="Seleccione Localidad" value="#{lugarBean.lugarView.smsLocalidad.localidadNombre}">
-                                                <f:selectItem itemLabel="Seleccione Localidad"/>
-                                                <f:selectItems value="#{localidadBean.consultarLocalidadesSegunCiudad(lugarBean.lugarView.smsCiudad)}"/>
-                                            </b:selectOneMenu>
-                                            <p:message for="SLocalidades"/>
-
-                                            <b:inputText maxlength="50" label="Nombre del lugar" id="TNombreLugar" required="true" requiredMessage="Ingrese nombre del lugar" placeholder="Nombre del lugar"  value="#{lugarBean.lugarView.lugarNombre}" style="width: 100%"></b:inputText>                                            
-                                            <p:message for="TNombreLugar"/>
-
-                                            <b:inputText maxlength="50" label="Direccion de lugar" id="TDireccionLugar" placeholder="Direccion del lugar"  value="#{lugarBean.lugarView.lugarDireccion}" style="width: 100%"></b:inputText>                                            
-                                            <p:message for="TDireccionLugar"/>
-                                        </h:panelGrid>
-                                    </div><hr/>
-                                    <h:panelGrid columns="2" width="100%">
-                                        <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" id="BTLugares" action="#{lugarBean.metodo()}" update=":formularioLugares :formularioDatosLugares:DTLugares" value="#{lugarBean.nombre}"/>                                       
-                                        <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{lugarBean.habilitarCancelar}" action="#{lugarBean.cancelar()}" update="@form" value="Cancelar" />
-
-                                    </h:panelGrid>
-                                     <script type="text/javascript">
-                                        function start() {
-                                            PF('statusDialog').show();
-                                        }
-                                        function stop() {
-                                            PF('statusDialog').hide();
-                                        }
-                                    </script>
-                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
-                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
-                                    </p:dialog>
-                                </div>
-                            </div>                            
-                        </b:column>
-                    </h:form>
-                    <h:form id="formularioDatosLugares">
-                        <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
-                            <div class="box box-success ">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-search"/>
-                                    <h4 class="box-title">Consulta de Lugares</h4>
-                                </div>
-
-                                <div class="box-body">
-                                    <b:inputText placeholder="Buscar" value="#{lugarBean.buscar}" style="width: 100%">
-                                        <p:ajax event="keyup" listener="#{lugarBean.filtrar()}" process="@this" update="DTLugares"/>
-                                    </b:inputText>                                            
-                                    <p:dataTable id="DTLugares" emptyMessage="Lugares no registrados" var="Lugares" value="#{lugarBean.lugaresListView}" 
-                                                 rows="5"
-                                                 paginator="true"
-                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
-                                        <p:column headerText="Lugar">
-                                            <h:outputText value="#{Lugares.lugarNombre}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Direccion">
-                                            <h:outputText value="#{Lugares.lugarDireccion}"/>
-                                        </p:column>
-
-                                        <p:column headerText="Ciudad">
-                                            <h:outputText value="#{Lugares.smsCiudad.ciudadNombre}"/>
-                                        </p:column>
-
-                                        <p:column style="width: 35px">
-                                            <p:commandLink process="@this" update=":formularioLugares" class="fa fa-pencil btn btn-block btn-success" style="color: white"  action="#{lugarBean.seleccionarCrud(1)}" title="Modificar">
-                                                <f:setPropertyActionListener value="#{Lugares}" target="#{lugarBean.lugarView}"/>
-                                            </p:commandLink>
-                                        </p:column>
-
-                                        <p:column style="width: 35px"> 
-                                            <p:commandLink process="@this" update=":formularioLugares :formularioDatosLugares:DTLugares" class="fa fa-trash btn btn-block btn-danger" style="color: white" action="#{lugarBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{Lugares}" target="#{lugarBean.lugarView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta ciudad?" icon="ui-icon-alert" /> 
-                                            </p:commandLink>
-                                        </p:column>
-                                    </p:dataTable>    
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
-                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                    </p:confirmDialog>
-                                </div>
-                            </div> 
-                        </b:column>                       
-                    </h:form>
+                    </h:form>                  
                 </b:row>
             </b:container>
         </ui:define>

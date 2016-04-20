@@ -414,7 +414,7 @@ public class ReservacionBean implements Serializable {
             estado = estadoDao.consultarEstado(estado);
             modReservacionView.setSmsEstado(estado);
             resDao.modificarReservacion(modReservacionView);
-            
+
             //resDao.eliminarReservacion(modReservacionView);
             modReservacionView = new SmsReservacion();
             costoServicioView = new SmsCostosservicios();
@@ -573,7 +573,7 @@ public class ReservacionBean implements Serializable {
                         reservaView.setSmsEmpleado(new SmsEmpleado());
                     }
                     SelecCon = false;
-                    empleadoListView = empleadoDao.consultarEmpleadosSegunVehiculo(reservaView.getSmsVehiculo());                    
+                    empleadoListView = empleadoDao.consultarEmpleadosSegunVehiculo(reservaView.getSmsVehiculo());
                     reservaView.setReservacionCosto(calcularCostoReservacion(reservaView));
                     break;
                 case "Confirmacion":
@@ -585,9 +585,9 @@ public class ReservacionBean implements Serializable {
                     break;
             }
 
-            String newtab;          
+            String newtab;
             newtab = event.getNewStep();
-           
+
             if (event.getOldStep().equalsIgnoreCase("Vehiculo") && event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {// 0 = sin conductor 
                 siguiente = false;
                 atras = true;
@@ -691,9 +691,10 @@ public class ReservacionBean implements Serializable {
                     vehiculosListView = vehiculoDao.mostrarVehiculo();
                 } else {
                     vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
-                }                
+                }
                 newtab = "Vehiculo";
-            }return newtab;
+            }
+            return newtab;
         }
     }
 
@@ -878,9 +879,12 @@ public class ReservacionBean implements Serializable {
         Date FInicioAgenda = fechaInicioAgenda.getTime();
 
         if (reserva.getReservacionFechaInicio().equals(fechaActual)) {
+
             if (FInicioAgenda.before(HoraActual)) {
                 valido = false;
             }
+        } else if (reserva.getReservacionFechaInicio().before(fechaActual)) {
+            valido = false;
         }
         return valido;
     }
@@ -922,6 +926,9 @@ public class ReservacionBean implements Serializable {
 //        5 = mes       
         if (categoriaServicio == 1) { //Tiempo
             costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria());
+            if (costoServicioView.getIdCostosServicio() == null) {
+                costoServicioView.setCostoServicioPrecio(0);
+            }
             milis1 = calFechaInicio.getTimeInMillis();
             milis2 = calFechaLlegada.getTimeInMillis();
 
@@ -961,9 +968,15 @@ public class ReservacionBean implements Serializable {
             lugarDestino = lugarDao.consultarLugar(lugarDestino);
 
             costoServicioView = costoDao.consultarCostoServicioTraslado(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria(), lugarInicio, lugarDestino);
+            if (costoServicioView.getIdCostosServicio() == null) {
+                costoServicioView.setCostoServicioPrecio(0);
+            }
             costo = costoServicioView.getCostoServicioPrecio();
         } else if (categoriaServicio == 3) { // Renta
             costoServicioView = costoDao.consultarCostoServicio(reservaView.getSmsServicios(), reservaView.getSmsVehiculo().getSmsCategoria());
+            if (costoServicioView.getIdCostosServicio() == null) {
+                costoServicioView.setCostoServicioPrecio(0);
+            }
             if (reserva.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 3) {
 
                 milis1 = calFechaInicio.getTimeInMillis();

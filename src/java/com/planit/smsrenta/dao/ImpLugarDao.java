@@ -31,7 +31,9 @@ public class ImpLugarDao implements ILugarDao {
 
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsLugares as lugar left join fetch lugar.smsCiudad as ciudad left join fetch lugar.smsLocalidad");
+            Query query = session.createQuery("from SmsLugares as lugar "
+                    + "left join fetch lugar.smsCiudad as ciudad "
+                    + "left join fetch lugar.smsLocalidad");
             lugares = (List<SmsLugares>) query.list();
 
         } catch (HibernateException e) {
@@ -114,7 +116,10 @@ public class ImpLugarDao implements ILugarDao {
 
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsLugares as lugar left join fetch lugar.smsCiudad as ciudad where lugar.lugarNombre LIKE '%" + dato + "%' or  lugar.lugarDireccion LIKE '%" + dato + "%' or ciudad.ciudadNombre LIKE '%" + dato + "%'");
+            Query query = session.createQuery("from SmsLugares as lugar "
+                    + "left join fetch lugar.smsCiudad as ciudad "
+                    + "left join fetch lugar.smsLocalidad "
+                    + "where lugar.lugarNombre LIKE '%" + dato + "%' or  lugar.lugarDireccion LIKE '%" + dato + "%' or ciudad.ciudadNombre LIKE '%" + dato + "%'");
             lugares = (List<SmsLugares>) query.list();
 
         } catch (HibernateException e) {

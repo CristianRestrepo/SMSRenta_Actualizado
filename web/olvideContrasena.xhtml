@@ -52,15 +52,15 @@
                                                         <p:growl id="messages" life="3500"/>
                                                         <div class="form-group centro"> 
                                                             <p align="center">Ingrese su correo electronico para recibir una nueva contraseña.</p>
-                                                            <b:inputText  placeholder="Ingrese correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
+                                                            <b:inputText validator="emailExistenteValidator" placeholder="Ingrese correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
                                                             </b:inputText>
                                                         </div>                                           
-                                                        <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);"
-                                                                         update="@form" ajax="false"
-                                                                         class="btn btn-lg btn-block btn-danger" 
-                                                                         action="#{usuarioBean.generarNuevaContraseñaDeSesion()}"
-                                                                         value="Solicitar nueva contraseña"
-                                                                         />
+                                                        <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"
+                                                                          update="@form" ajax="false"
+                                                                          class="btn btn-lg btn-block btn-danger" 
+                                                                          action="#{usuarioBean.generarNuevaContraseñaDeSesion()}"
+                                                                          value="Solicitar nueva contraseña"
+                                                                          />
                                                         <div align="center"> <p:commandLink value="Iniciar sesion" 
                                                                                             process="@this" 
                                                                                             immediate="true" 

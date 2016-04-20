@@ -568,7 +568,7 @@ public class VehiculoBean {
         //obtenemos los objetos vehiculo y empleado con sus colecciones habilitadas
         vehiculoView = vehDao.consultarVehiculoConConductores(vehiculoView);
         empleadoView = empleadoDao.consultarEmpleadoConVehiculo(empleadoView);
-        
+
         //asociamos vehiculo y conductor
         vehiculoView.getSmsEmpleados().add(empleadoView);
         empleadoView.getSmsVehiculos().add(vehiculoView);
@@ -582,6 +582,15 @@ public class VehiculoBean {
         conductores = new ArrayList<>();
     }
 
+    public void filtrarVehiculos() {
+        vehiculosListView = new ArrayList<>();
+        if (buscar == null) {
+            vehiculosListView = vehDao.mostrarVehiculo();
+        } else {
+            vehiculosListView = vehDao.filtrarVehiculos(buscar);
+        }
+    }
+
     //Metodos para la asociacion de vehiculos con conductores
     public void cargarVehiculoEmpleadosSegunProveedor() {
         if (proveedorView.getProveedorRazonSocial() != null) {
@@ -590,7 +599,8 @@ public class VehiculoBean {
         }
     }
 
-    public void filtrarVehiculo(SmsProveedor proveedor) {
+    public void filtrarVehiculoSegunProveedor(SmsProveedor proveedor) {
+        
         vehiculos = new ArrayList<>();
         if (buscar == null) {
             if (proveedor.getProveedorRazonSocial() != null) {
@@ -603,7 +613,7 @@ public class VehiculoBean {
         }
     }
 
-    public void filtrarEmpleado(SmsProveedor proveedor) {
+    public void filtrarEmpleadoSegunProveedor(SmsProveedor proveedor) {
         conductores = new ArrayList<>();
         if (buscarEmpleado == null) {
             if (proveedor.getProveedorRazonSocial() != null) {
@@ -615,8 +625,8 @@ public class VehiculoBean {
             }
         }
     }
-    
-    public void cancelarAsociacion(){
+
+    public void cancelarAsociacion() {
         vehiculoView = new SmsVehiculo();
         empleadoView = new SmsEmpleado();
         proveedorView = new SmsProveedor();

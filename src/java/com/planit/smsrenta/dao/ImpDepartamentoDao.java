@@ -30,7 +30,8 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
         Session session = null;
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsDepartamento as departamento left join fetch departamento.smsPais");
+            Query query = session.createQuery("from SmsDepartamento as departamento "
+                    + "left join fetch departamento.smsPais");
             departamentos = (List<SmsDepartamento>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -68,7 +69,10 @@ public class ImpDepartamentoDao implements IDepartamentoDao {
         Session session = null;
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsDepartamento as departamento where departamento.departamentoNombre LIKE '%" + valor + "%'");
+            Query query = session.createQuery("from SmsDepartamento as departamento "
+                    + "left join fetch departamento.smsPais as pais "
+                    + "where departamento.departamentoNombre LIKE '%" + valor + "%' or "
+                    + "pais.paisNombre LIKE '%" + valor + "%'");
             departamentos = (List<SmsDepartamento>) query.list();
         } catch (HibernateException e) {
             e.getMessage();

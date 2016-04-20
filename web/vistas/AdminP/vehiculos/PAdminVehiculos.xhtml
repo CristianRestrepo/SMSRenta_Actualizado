@@ -51,7 +51,7 @@
                                     <div class="box-body">                                       
 
                                         <b:inputText id="BuscarVehiculo" placeholder="Buscar placa" value="#{vehiculoBean.buscar}" style="width: 100%" >
-                                            <p:ajax event="keyup" listener="#{vehiculoBean.filtrarVehiculo(vehiculoBean.proveedorView)}" process="@this" update="DTVehiculos"/>
+                                            <p:ajax event="keyup" listener="#{vehiculoBean.filtrarVehiculoSegunProveedor(vehiculoBean.proveedorView)}" process="@this" update="DTVehiculos"/>
                                         </b:inputText>
                                         <p:dataTable var="vehiculo" id="DTVehiculos" emptyMessage="Vehículos no registrados" value="#{vehiculoBean.vehiculos}"
                                                      rows="5"
@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="box-body">
                                         <b:inputText id="BuscarVehiculo" placeholder="Buscar por nombre, email, CC, etc..." value="#{vehiculoBean.buscarEmpleado}" style="width: 100%" >
-                                             <p:ajax event="keyup" listener="#{vehiculoBean.filtrarEmpleado(vehiculoBean.proveedorView)}" process="@this" update="DTEmpleado"/>
+                                             <p:ajax event="keyup" listener="#{vehiculoBean.filtrarEmpleadoSegunProveedor(vehiculoBean.proveedorView)}" process="@this" update="DTEmpleado"/>
                                         </b:inputText>
                                         <p:dataTable id="DTEmpleado" var="empleado" emptyMessage="Empleados no registrados" value="#{vehiculoBean.conductores}" rows="5"
                                                      paginator="true"

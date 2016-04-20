@@ -84,6 +84,10 @@ public class PathBean implements Serializable {
     public String ir_PPais() {
         return "AdminPPais";
     }
+    
+    public String ir_PDepartamentos() {
+        return "AdminPDepartamentos";
+    }
 
     public String ir_PMarca() {
         return "AdminPMarca";
@@ -187,6 +191,10 @@ public class PathBean implements Serializable {
         return "AdminSLugares";
     }
 
+    public String ir_SDepartamentos() {
+    return "AdminSDepartamentos";
+    }
+    
     public String ir_SReferencias() {
         return "AdminSReferencias";
     }

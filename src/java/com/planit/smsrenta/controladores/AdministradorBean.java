@@ -44,7 +44,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         habilitarCancelar = true;
 
         operacion = 0;
-        nombreOperacion = "Registrar Empleado";
+        nombreOperacion = "Registrar Administrador";
 
     }
 
@@ -163,10 +163,8 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         } else if (operacion == 1) {
             modificarAdministrador();
             //Reiniciamos banderas
-
             habilitarCancelar = true;
             operacion = 0;
-
             nombreOperacion = "Registrar Administrador";
 
         }
@@ -187,7 +185,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
         operacion = 0;
         //Reiniciamos los objetos
         habilitarCancelar = true;
-        nombreOperacion = "Registrar Proveedor";
+        nombreOperacion = "Registrar Administrador";
     }
 
 }

@@ -27,7 +27,12 @@ public class ImpAdministradorDao implements IAdministradorDao{
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad left join fetch usuario.smsNacionalidad where rol.rolNombre = 'Administrador Principal' or rol.rolNombre = 'Administrador Secundario'");
+            Query query = session.createQuery("from SmsUsuario as usuario "
+                    + "left join fetch usuario.smsRol as rol "
+                    + "left join fetch usuario.smsCiudad as ciudad "
+                    + "left join fetch usuario.smsNacionalidad "
+                    + "where rol.rolNombre = 'Administrador Principal' or "
+                    + "rol.rolNombre = 'Administrador Secundario'");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -45,8 +50,14 @@ public class ImpAdministradorDao implements IAdministradorDao{
         List<SmsUsuario> usuarios = new ArrayList<>();
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsUsuario as usuario left join fetch usuario.smsRol as rol left join fetch usuario.smsCiudad as ciudad where "
-                    + "(usuario.usuarioNombre LIKE '%" + valor + "%' or usuario.usuarioCc LIKE '%" + valor + "%' or usuario.usuarioEmail LIKE '%" + valor + "%' or usuario.usuarioTelefono LIKE '%" + valor + "%' or "
+            Query query = session.createQuery("from SmsUsuario as usuario "
+                    + "left join fetch usuario.smsRol as rol "
+                    + "left join fetch usuario.smsCiudad as ciudad "
+                    + "left join fetch usuario.smsNacionalidad as nacionalidad "
+                    + "where (usuario.usuarioNombre LIKE '%" + valor + "%' or "
+                    + "usuario.usuarioCc LIKE '%" + valor + "%' or "
+                    + "usuario.usuarioEmail LIKE '%" + valor + "%' or "
+                    + "usuario.usuarioTelefono LIKE '%" + valor + "%' or "
                     + "ciudad.ciudadNombre LIKE '%" + valor + "%') and (rol.rolNombre = 'Administrador Principal' or rol.rolNombre = 'Administrador Secundario')");
             usuarios = (List<SmsUsuario>) query.list();
         } catch (HibernateException e) {

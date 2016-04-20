@@ -184,12 +184,9 @@ public class UsuarioBean implements Serializable {
 
         email.sendEmailNuevaContrasena(usuarioView, pass);
         usuarioView = new SmsUsuario();
-        
+
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La nueva contraseña ha sido enviada, por favor revise su correo.", null);
         FacesContext.getCurrentInstance().addMessage(null, message);
-
-        
-       
     }
 
     public void habilitar_deshabilitarCuenta(SmsUsuario usuario) {
@@ -197,7 +194,7 @@ public class UsuarioBean implements Serializable {
             usuario.setUsuarioEstadoUsuario(1);
             usuarioDao.modificarSesionUsuario(usuario);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La cuenta de usuario ha sido activada.", null);
-            
+
         } else if (usuario.getUsuarioEstadoUsuario() == 1) {
             usuario.setUsuarioEstadoUsuario(0);
             usuarioDao.modificarSesionUsuario(usuario);

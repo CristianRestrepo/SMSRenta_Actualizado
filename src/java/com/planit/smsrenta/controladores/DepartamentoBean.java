@@ -11,7 +11,6 @@ import com.planit.smsrenta.dao.ImpDepartamentoDao;
 import com.planit.smsrenta.dao.ImpPaisDao;
 import com.planit.smsrenta.modelos.SmsDepartamento;
 import com.planit.smsrenta.modelos.SmsPais;
-import com.planit.smsrenta.modelos.SmsUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

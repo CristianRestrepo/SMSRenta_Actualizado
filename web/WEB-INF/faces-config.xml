@@ -251,29 +251,21 @@
             <from-outcome>Login</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>       
-        <navigation-case>
-            <from-outcome>AdminPEUsuario</from-outcome>
-            <to-view-id>/vistas/AdminP/usuarios/PEUsuario.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>AdminPEProveedores</from-outcome>
-            <to-view-id>/vistas/AdminP/proveedores/PEProveedores.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>AdminPEEmpleado</from-outcome>
-            <to-view-id>/vistas/AdminP/empleados/PEEmpleado.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
+        </navigation-case>      
         <navigation-case>
             <from-outcome>AdminPCostosServicios</from-outcome>
             <to-view-id>/vistas/AdminP/servicios/PCostosServicios.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>AdminPLugares</from-outcome>
             <to-view-id>/vistas/AdminP/lugares/PLugares.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminPDepartamentos</from-outcome>
+            <to-view-id>/vistas/AdminP/departamentos/PDepartamentos.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>AdminPTipoServicio</from-outcome>
@@ -381,6 +373,11 @@
         <navigation-case>
             <from-outcome>AdminSLugares</from-outcome>
             <to-view-id>/vistas/AdminS/lugares/SLugares.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminSDepartamentos</from-outcome>
+            <to-view-id>/vistas/AdminS/departamentos/SDepartamentos.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

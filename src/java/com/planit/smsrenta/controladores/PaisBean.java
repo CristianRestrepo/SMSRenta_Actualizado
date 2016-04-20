@@ -127,7 +127,7 @@ public class PaisBean implements Serializable {
 
     public void eliminar() {
         paisDao.eliminarPais(paisView);
-
+        paisesListView = paisDao.mostrarPaises();
         paisView = new SmsPais();
         nombre = "Registrar Pais";
         estado = 0;

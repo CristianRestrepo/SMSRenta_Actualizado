@@ -200,6 +200,9 @@
                                 </div>
 
                                 <div class="box-body">
+                                     <b:inputText id="BuscarVehiculo" placeholder="Buscar placa, Marca, color, referencia, ciudad, etc..." value="#{vehiculoBean.buscar}" style="width: 100%" >
+                                        <p:ajax event="keyup" listener="#{vehiculoBean.filtrarVehiculos()}" process="@this" update="DTVehiculos"/>
+                                    </b:inputText>
                                     <p:dataTable var="vehiculo" id="DTVehiculos" emptyMessage="Vehiculos nos registrados" value="#{vehiculoBean.vehiculosListView}"
                                                  rows="5"
                                                  paginator="true"
