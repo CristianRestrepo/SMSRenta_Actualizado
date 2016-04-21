@@ -24,7 +24,7 @@ import org.hibernate.SessionFactory;
 public class ImpContratoDao implements IContratoDao {
 
     SessionFactory sessions = NewHibernateUtil.getSessionFactory();
-    
+
     @Override
     public List<SmsContrato> consultarContratos() {
         Session session = null;
@@ -53,7 +53,9 @@ public class ImpContratoDao implements IContratoDao {
             Query query = session.createQuery("from SmsContrato as contrato "
                     + "left join fetch contrato.smsReservacion as reservacion "
                     + "where reservacion.idReservacion = '" + reservacion.getIdReservacion() + "'");
-            contratos = (SmsContrato) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                contratos = (SmsContrato) query.list().get(0);
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -79,7 +81,7 @@ public class ImpContratoDao implements IContratoDao {
             if (session != null) {
                 session.close();
             }
-        }        
+        }
     }
 
 }

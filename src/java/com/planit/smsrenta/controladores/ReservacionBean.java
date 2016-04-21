@@ -431,15 +431,16 @@ public class ReservacionBean implements Serializable {
                     Ruta = "ClienteDash";
                     break;
             }
+
+            consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
+            addEventoCalendario();
+            reservacionesListView = consultarReservacionesSegunUsuario();
+            modReservacionView = new SmsReservacion();
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Imposible cancelar la reservacion", "La reservacion se hara valida en menos de dos horas");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
-        consultarReservacionesSegunUsuario(); //Recargamos las lista de reservaciones que se muestran en las vistas
-        addEventoCalendario();
-        reservacionesListView = consultarReservacionesSegunUsuario();
-        modReservacionView = new SmsReservacion();
         return Ruta;
     }
 

@@ -60,7 +60,9 @@ public class ImpCostosServiciosDao implements ICostosServiciosDao {
                     + "left join fetch costo.smsServicios as servicios "
                     + "where categoria.idCategoria = '" + categoria.getIdCategoria() + "' and "
                     + "servicios.idServicio = '" + servicio.getIdServicio() + "'");
-            Costos = (SmsCostosservicios) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                Costos = (SmsCostosservicios) query.list().get(0);
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

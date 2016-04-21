@@ -97,7 +97,9 @@ public class ImpFacturaDao implements IFacturaDao {
             Query query = session.createQuery("from SmsFactura as factura "
                     + "left join fetch factura.smsReservacion as reservacion "
                     + "where reservacion.idReservacion = '" + reservacion.getIdReservacion() + "'");
-            facturas = (SmsFactura) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                facturas = (SmsFactura) query.list().get(0);
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -106,5 +108,5 @@ public class ImpFacturaDao implements IFacturaDao {
             }
         }
         return facturas;
-    }    
+    }
 }
