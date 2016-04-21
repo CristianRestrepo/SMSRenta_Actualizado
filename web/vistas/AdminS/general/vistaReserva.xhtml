@@ -232,7 +232,7 @@
 
                                     <!-- this row will not appear when printing -->
                                     <div class="row no-print">
-                                        <div class="col-xs-12" align="left">
+                                        <div class="col-xs-12 table-responsive" align="left">
                                             <h:panelGrid columns="5">
                                                 <c:if test="${reservacionBean.modReservacionView.smsEstado.idEstado == 4}">
                                                     <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.cancelarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
