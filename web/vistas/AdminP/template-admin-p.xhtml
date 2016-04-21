@@ -51,13 +51,13 @@
                                 <!-- User Account: style can be found in dropdown.less -->
                                 <li class="dropdown user user-menu">
                                     <a href="#" class="dropdown-toggle nav-sms" data-toggle="dropdown">
-                                        <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="user-image img-circle" alt="User Image"/>
+                                        <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="user-image img-circle center-block img-responsive" alt="User Image"/>
                                         <span class="hidden-xs">#{sesionActivaBean.usuario.usuarioNombre}</span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- User image -->
                                         <li class="user-header">
-                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle " alt="User Image"/>
+                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle center-block img-responsive" alt="User Image"/>
                                             <p>#{sesionActivaBean.usuario.usuarioNombre}<br/>
                                                 <small>#{sesionActivaBean.usuario.smsRol.rolNombre}</small>
                                             </p>
@@ -94,13 +94,15 @@
                                 <!-- sidebar: style can be found in sidebar.less -->
                                 <section class="sidebar">
                                     <!-- Sidebar user panel -->
-                                    <div class="user-panel">
+                                    <div class="user-panel padding-panel">
                                         <div class="pull-left image">
-                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle" alt="User Image"/>
+                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle center-block img-responsive" alt="User Image"/>
                                         </div>
                                         <div class="pull-left info">
-                                            <p>#{sesionActivaBean.usuario.usuarioNombre}</p>
-                                            <p>#{sesionActivaBean.usuario.smsRol.rolNombre}</p>
+                                            <div class="cont-description">
+                                                <p class="text-capitalize text-center " style="font-weight: 600;">#{sesionActivaBean.usuario.usuarioNombre}</p>
+                                                <p class="text-capitalize text-center ">#{sesionActivaBean.usuario.smsRol.rolNombre}</p>
+                                            </div>
                                         </div>
                                     </div>
 

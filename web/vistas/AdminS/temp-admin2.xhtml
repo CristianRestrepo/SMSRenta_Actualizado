@@ -110,13 +110,15 @@
                                 <!-- sidebar: style can be found in sidebar.less -->
                                 <section class="sidebar">
                                     <!-- Sidebar user panel -->
-                                    <div class="user-panel">
+                                    <div class="user-panel padding-panel">
                                         <div class="pull-left image">
-                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle img-altura" alt="User Image"/>
+                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle center-block img-responsive" alt="User Image"/>
                                         </div>
                                         <div class="pull-left info">
-                                            <p>#{sesionActivaBean.usuario.usuarioNombre}</p>
-                                            <p>#{sesionActivaBean.usuario.smsRol.rolNombre}</p>
+                                            <div class="cont-description">
+                                                <p class="text-capitalize text-center " style="font-weight: 600;">#{sesionActivaBean.usuario.usuarioNombre}</p>
+                                                <p class="text-capitalize text-center ">#{sesionActivaBean.usuario.smsRol.rolNombre}</p>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -246,8 +248,8 @@
                                                         <i class="fa fa-circle-o"></i> Países 
                                                     </h:link>
                                                 </li>
-                                                 <li>
-                                                     <h:link outcome="#{pathBean.ir_SDepartamentos()}">
+                                                <li>
+                                                    <h:link outcome="#{pathBean.ir_SDepartamentos()}">
                                                         <i class="fa fa-circle-o"></i> Departamentos 
                                                     </h:link>
                                                 </li>
@@ -261,8 +263,8 @@
                                                         <i class="fa fa-circle-o"></i> Lugares 
                                                     </h:link>
                                                 </li>
-                                                
-                                                
+
+
                                             </ul>
                                         </li>
 

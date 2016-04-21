@@ -491,7 +491,7 @@ a:focus {
     height: auto;
 }
 .user-panel > .info {
-    padding: 5px 5px 5px 5px;
+    padding: 0 5px 5px 5px;
     line-height: 1;
     position: absolute;
     left: 71px;
@@ -667,7 +667,7 @@ a:focus {
 .sidebar-menu,
 .main-sidebar .user-panel,
 .sidebar-menu > li.header {
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
 }
 .sidebar-menu:hover {
