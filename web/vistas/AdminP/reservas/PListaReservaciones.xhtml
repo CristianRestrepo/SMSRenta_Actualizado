@@ -12,76 +12,78 @@
 
             <ui:define name="content">
                 <b:container fluid="true">
-                    <h:form id="formularioReservaciones">
-                        <p:growl autoUpdate="true" life="2500" />
-                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
-                            <div class="espacio-arriba" style="text-align: center" align="center">
-                                <h4 style="font-size: x-large">RESERVACIONES</h4><br/>
-                                <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre}</p>
-                                <p>Busque las reservaciones del cliente mediante el filtro de busqueda, consulte mediante el numero de cedula, nombre o correo</p>
-                            </div>
-                        </b:column>
-                        <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
-                            <b:inputText style="width: 100%" value="#{reservacionBean.buscar}" placeholder="Buscar cedula, nombre, etc...">
-                                <p:ajax event="keyup" process="@this" listener="#{reservacionBean.filtrarReservaciones()}" update="DTReservaciones"/>
-                            </b:inputText>                            
-                            <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}"  rows="15"
-                                         paginator="true"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="15,20,25" emptyMessage="Reservaciones no registrados">
-                                <p:column headerText="ID">
-                                    <h:outputText value="#{reservacion.idReservacion}" />
-                                </p:column>
-
-                                <p:column headerText="Cliente">
-                                    <h:outputText value="#{reservacion.smsUsuario.usuarioNombre}" />
-                                </p:column>
-
-                                <p:column headerText="Vehiculo">
-                                    <h:outputText value="#{reservacion.smsVehiculo.vehPlaca}" />
-                                </p:column>
-
-                                <p:column headerText="Fecha Inicio">
-                                    <h:outputText value="#{reservacion.reservacionFechaInicio}" />
-                                </p:column>
-
-                                <p:column headerText="Hora Inicio">
-                                    <h:outputText value="#{reservacion.reservacionHoraInicio}" />
-                                </p:column>
-
-                                <p:column  style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-arrow-left btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
-                                        <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
-                                    </p:commandLink>
-                                </p:column>
-
-                                <p:column headerText="PC" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura(reservacion)}" title="Generar Factura">
-                                        
-                                    </p:commandLink>
-                                </p:column>  
-                                
-                                <p:column headerText="POS" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-danger" process="@this" ajax="false" action="#{facturaBean.generarFacturaPos(reservacion)}" title="Generar Factura POS">
-                                      
-                                    </p:commandLink>
-                                </p:column> 
-                                
-                                <p:column headerText="FUEC" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacion)}" title="Generar FUEC">
-                                       
-                                    </p:commandLink>
-                                </p:column> 
-                            </p:dataTable>                           
-                        </b:column> 
-                        <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
-                            <h:form>
-                                <div class="espacio-arriba" style="text-align: right" align="center">
-                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.regresarTableroPrincipal()}" look="success" value="Regresar"/>
+                    <b:row>
+                        <h:form id="formularioReservaciones">
+                            <p:growl autoUpdate="true" life="2500" />
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <div class="espacio-arriba" style="text-align: center" align="center">
+                                    <h4 style="font-size: x-large">RESERVACIONES</h4><br/>
+                                    <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
+                                    <p>Busque las reservaciones del cliente mediante el filtro de busqueda, consulte mediante el numero de cedula, nombre o correo</p>
                                 </div>
-                            </h:form>
-                        </b:column> 
-                    </h:form>
+                            </b:column>
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
+                                <b:inputText style="width: 100%" value="#{reservacionBean.buscar}" placeholder="Buscar cedula, nombre, etc...">
+                                    <p:ajax event="keyup" process="@this" listener="#{reservacionBean.filtrarReservaciones()}" update="DTReservaciones"/>
+                                </b:inputText>                            
+                                <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}"  rows="15"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="15,20,25" emptyMessage="Reservaciones no registrados">
+                                    <p:column headerText="ID">
+                                        <h:outputText value="#{reservacion.idReservacion}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cliente">
+                                        <h:outputText value="#{reservacion.smsUsuario.usuarioNombre}" />
+                                    </p:column>
+
+                                    <p:column headerText="Vehiculo">
+                                        <h:outputText value="#{reservacion.smsVehiculo.vehPlaca}" />
+                                    </p:column>
+
+                                    <p:column headerText="Fecha Inicio">
+                                        <h:outputText value="#{reservacion.reservacionFechaInicio}" />
+                                    </p:column>
+
+                                    <p:column headerText="Hora Inicio">
+                                        <h:outputText value="#{reservacion.reservacionHoraInicio}" />
+                                    </p:column>
+
+                                    <p:column  style="width: 35px">
+                                        <p:commandLink style="color: white; padding: 8px" class="fa fa-arrow-left btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
+                                            <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
+                                        </p:commandLink>
+                                    </p:column>
+
+                                    <p:column headerText="PC" style="width: 35px">
+                                        <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura(reservacion)}" title="Generar Factura">
+
+                                        </p:commandLink>
+                                    </p:column>  
+
+                                    <p:column headerText="POS" style="width: 35px">
+                                        <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-danger" process="@this" ajax="false" action="#{facturaBean.generarFacturaPos(reservacion)}" title="Generar Factura POS">
+
+                                        </p:commandLink>
+                                    </p:column> 
+
+                                    <p:column headerText="FUEC" style="width: 35px">
+                                        <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacion)}" title="Generar FUEC">
+
+                                        </p:commandLink>
+                                    </p:column> 
+                                </p:dataTable>                           
+                            </b:column> 
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
+                                <h:form>
+                                    <div class="espacio-arriba" style="text-align: right" align="center">
+                                        <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.regresarTableroPrincipal()}" look="success" value="Regresar"/>
+                                    </div>
+                                </h:form>
+                            </b:column> 
+                        </h:form>
+                    </b:row>
                 </b:container>
             </ui:define>
 

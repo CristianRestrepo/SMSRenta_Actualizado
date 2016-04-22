@@ -18,6 +18,7 @@ public interface IMercadoDao {
     
     
     public List<SmsMercado> consultarMercados();
+    public SmsMercado consultarMercado(SmsMercado mercado);
     public SmsMercado consultarMercadoConCategorias(SmsMercado mercado);
     public SmsMercado consultarMercadoConServicios(SmsMercado mercado);
     public SmsMercado consultarMercadoConProveedores(SmsMercado mercado);

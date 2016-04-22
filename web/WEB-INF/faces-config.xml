@@ -571,6 +571,16 @@
             <to-view-id>/vistas/Cliente/reservas/CCalificarReserva.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminPParametrosReserva</from-outcome>
+            <to-view-id>/vistas/AdminP/reservas/PAdministrarParametrosReservacion.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>AdminSParametrosReservacion</from-outcome>
+            <to-view-id>/vistas/AdminS/reservas/SAdministrarParametrosReservacion.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
                  
                        
@@ -628,5 +638,9 @@
             <to-view-id>/vistas/AdminS/reservas/SReservacion.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-   
+    <managed-bean>
+        <managed-bean-name>parametroReservacionBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.ParametrosReservacionBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
 </faces-config>

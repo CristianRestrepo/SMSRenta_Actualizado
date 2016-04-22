@@ -13,16 +13,19 @@ import com.planit.smsrenta.dao.ICostosServiciosDao;
 import com.planit.smsrenta.dao.IEmpleadoDao;
 import com.planit.smsrenta.dao.IEstadoDao;
 import com.planit.smsrenta.dao.ILugarDao;
+import com.planit.smsrenta.dao.IParametrosReservacionDao;
 import com.planit.smsrenta.dao.IReservacionDao;
 import com.planit.smsrenta.dao.IServicioDao;
 import com.planit.smsrenta.dao.IUsuarioDao;
 import com.planit.smsrenta.dao.IVehiculoDao;
+import com.planit.smsrenta.dao.ImpAdministradorDao;
 import com.planit.smsrenta.dao.ImpCategoriasServicioDao;
 import com.planit.smsrenta.dao.ImpCiudadDao;
 import com.planit.smsrenta.dao.ImpCostosServiciosDao;
 import com.planit.smsrenta.dao.ImpEmpleadoDao;
 import com.planit.smsrenta.dao.ImpEstadoDao;
 import com.planit.smsrenta.dao.ImpLugarDao;
+import com.planit.smsrenta.dao.ImpParametrosReservacionDao;
 import com.planit.smsrenta.dao.ImpReservacionDao;
 import com.planit.smsrenta.dao.ImpServicioDao;
 import com.planit.smsrenta.dao.ImpUsuarioDao;
@@ -35,6 +38,7 @@ import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsEstado;
 import com.planit.smsrenta.modelos.SmsLugares;
 import com.planit.smsrenta.modelos.SmsMercado;
+import com.planit.smsrenta.modelos.SmsParametrosReservacion;
 import com.planit.smsrenta.modelos.SmsServicios;
 import com.planit.smsrenta.modelos.SmsUsuario;
 import com.planit.smsrenta.modelos.SmsVehiculo;
@@ -477,6 +481,7 @@ public class ReservacionBean implements Serializable {
                     formatTime = new SimpleDateFormat("HH:mm:ss");
                     formatDate = new SimpleDateFormat("yyyy-MM-dd");
                     Date fechaActual = new Date();
+                    Date mediaNoche = new Date();
 
                     if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                         reservaView.setSmsUsuario(sesion);
@@ -497,8 +502,12 @@ public class ReservacionBean implements Serializable {
                             fechaInicio = formatDate.format(fechaActual);
                             fechaEntrega = formatDate.format(fechaActual);
 
+                            reservaView.setReservacionFechaInicio(fechaActual);
+                            reservaView.setReservacionFechaLlegada(fechaActual);
+
                             try {
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                                
 
                                 Calendar calInicio1 = Calendar.getInstance();
                                 calInicio1.setTime(reservaView.getReservacionHoraInicio());
@@ -509,12 +518,10 @@ public class ReservacionBean implements Serializable {
                                 }
 
                                 reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
+                                
                             } catch (ParseException pe) {
                                 pe.getMessage();
                             }
-
-                            reservaView.setReservacionFechaInicio(fechaActual);
-                            reservaView.setReservacionFechaLlegada(fechaActual);
 
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
@@ -523,9 +530,12 @@ public class ReservacionBean implements Serializable {
                             fechaInicio = formatDate.format(fechaActual);
                             fechaEntrega = formatDate.format(fechaActual);
 
+                            reservaView.setReservacionFechaInicio(fechaActual);
+                            reservaView.setReservacionFechaLlegada(fechaActual);
+
                             try {
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-
+                                
                                 Calendar calInicio1 = Calendar.getInstance();
                                 calInicio1.setTime(reservaView.getReservacionHoraInicio());
                                 if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) {//duracion minutos
@@ -535,12 +545,10 @@ public class ReservacionBean implements Serializable {
                                 }
 
                                 reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
+                               
                             } catch (ParseException pe) {
                                 pe.getMessage();
                             }
-
-                            reservaView.setReservacionFechaInicio(fechaActual);
-                            reservaView.setReservacionFechaLlegada(fechaActual);
 
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
@@ -604,6 +612,7 @@ public class ReservacionBean implements Serializable {
                 formatTime = new SimpleDateFormat("HH:mm:ss");
                 formatDate = new SimpleDateFormat("yyyy-MM-dd");
                 Date fechaActual = new Date();
+                Date mediaNoche = new Date();
 
                 if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                     reservaView.setSmsUsuario(sesion);
@@ -624,8 +633,12 @@ public class ReservacionBean implements Serializable {
                         fechaInicio = formatDate.format(fechaActual);
                         fechaEntrega = formatDate.format(fechaActual);
 
+                        reservaView.setReservacionFechaInicio(fechaActual);
+                        reservaView.setReservacionFechaLlegada(fechaActual);
+
                         try {
                             reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                           
 
                             Calendar calInicio1 = Calendar.getInstance();
                             calInicio1.setTime(reservaView.getReservacionHoraInicio());
@@ -636,12 +649,10 @@ public class ReservacionBean implements Serializable {
                             }
 
                             reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
+                           
                         } catch (ParseException pe) {
                             pe.getMessage();
                         }
-
-                        reservaView.setReservacionFechaInicio(fechaActual);
-                        reservaView.setReservacionFechaLlegada(fechaActual);
 
                         horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                         horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
@@ -650,8 +661,12 @@ public class ReservacionBean implements Serializable {
                         fechaInicio = formatDate.format(fechaActual);
                         fechaEntrega = formatDate.format(fechaActual);
 
+                        reservaView.setReservacionFechaInicio(fechaActual);
+                        reservaView.setReservacionFechaLlegada(fechaActual);
+
                         try {
                             reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
+                          
 
                             Calendar calInicio1 = Calendar.getInstance();
                             calInicio1.setTime(reservaView.getReservacionHoraInicio());
@@ -662,12 +677,10 @@ public class ReservacionBean implements Serializable {
                             }
 
                             reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
+                            
                         } catch (ParseException pe) {
                             pe.getMessage();
                         }
-
-                        reservaView.setReservacionFechaInicio(fechaActual);
-                        reservaView.setReservacionFechaLlegada(fechaActual);
 
                         horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                         horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
@@ -766,7 +779,6 @@ public class ReservacionBean implements Serializable {
                 listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
                 break;
         }
-
         return listaReservaciones;
 
     }
@@ -1070,8 +1082,13 @@ public class ReservacionBean implements Serializable {
                     costo = costo + (costoServicioView.getCostoServicioPrecio());
                 }
             }
-
         }
+
+        //Verificacion de incrementos
+        IParametrosReservacionDao parametroDao = new ImpParametrosReservacionDao();
+        SmsParametrosReservacion parametro = parametroDao.consultarParametroSegunMercado(mercadoSeleccionado);
+        double valor = (double) costo * (((double) parametro.getParametroValorIncremento()) / 100);
+        costo = costo + (int) valor;
         return costo;
     }
 

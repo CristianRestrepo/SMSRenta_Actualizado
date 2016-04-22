@@ -152,6 +152,10 @@ public class PathBean implements Serializable {
     public String ir_AdminPCondicionUso() {
         return "AdminPCondicionesUso";
     }
+    
+    public String ir_AdminPParametrosReserva(){
+        return "AdminPParametrosReserva";
+    }
 
     /* / ADMIN PRINCIPAL / */
     /* / ADMIN SECUNDARIO / */
@@ -241,6 +245,10 @@ public class PathBean implements Serializable {
 
     public String ir_SCategoServicio() {
         return "AdminSCategoriaServicio";
+    }
+    
+    public String ir_SParametrosReservacion(){
+        return "AdminSParametrosReservacion";
     }
 
     /* / ADMIN SECUNDARIO / */

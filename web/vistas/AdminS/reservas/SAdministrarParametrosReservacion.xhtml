@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../temp-admin2.xhtml">
+            <ui:define name="content1">
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" align="center" style="text-align: center">
+                                <h4 style="font-size: x-large">PARAMETROS DE RESERVACION</h4><br/>
+                                <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
+                            </div>
+                        </b:column>
+
+                        <h:form id="formularioParametros">
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <p:messages autoUpdate="true" id="msg" closable="true"/>
+                            </b:column>
+
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
+                                <div class="box box-info table-responsive">
+                                    <div class="box-header">
+                                        <h4 class="box-title">Criterios de reservacion</h4><hr/>
+                                    </div>
+                                    <div class="box-body with-border">
+                                        <p>Seleccione el mercado y asigne un valor de incremento a las tarifas de los servicios. Todas las reservaciones pertenecientes al mercado elegido se veran afectadas por el incremento.</p>
+                                        <h:panelGrid columns="1" width="100%">
+                                            <p:outputLabel value="Mercado"/>
+                                            <b:selectOneMenu placeholder="Seleccione mercado" id="SMMercado" value="#{parametroReservacionBean.parametroView.smsMercado.mercadoNombre}" tooltip="Selecciona el mercado para afectar todas las reservacion pertenecientes">
+                                                <f:selectItem itemLabel="Seleccione mercado" noSelectionOption="true"/>
+                                                <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>
+                                            </b:selectOneMenu>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" width="100%">
+                                            <p:outputLabel value="Valor del incremento:"/>
+                                            <b:inputText value="#{parametroReservacionBean.parametroView.parametroValorIncremento}" placeholder="%"/>
+                                        </h:panelGrid>
+                                        <div align="center">
+                                            <h:panelGrid columns="2" width="80%">
+                                                <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" update=":formularioParametros :formularioDatosParametros" value="#{parametroReservacionBean.nombreOperacion}" action="#{parametroReservacionBean.metodo()}" class="btn btn-block btn-success"/>
+                                                <p:commandButton update="@form" disabled="#{parametroReservacionBean.habilitarCancelar}" value="Cancelar" action="#{parametroReservacionBean.cancelar()}" class="btn btn-block btn-danger"/>
+                                            </h:panelGrid>
+                                            <script type="text/javascript">
+                                                function start() {
+                                                    PF('statusDialog').show();
+                                                }
+                                                function stop() {
+                                                    PF('statusDialog').hide();
+                                                }
+                                            </script>
+                                            <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                                <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                            </p:dialog>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </h:form>
+
+                        <h:form id="formularioDatosParametros">
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
+                                <div class="box box-success">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-list-ol"/>
+                                        <h4 class="box-title">Registros</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <b:inputText value="#{parametroReservacionBean.buscar}" placeholder="Buscar" style="width: 100%">                                       
+                                            <p:ajax event="keyup" listener="#{parametroReservacionBean.filtrar()}" process="@this" update="DTParametros"/>
+                                        </b:inputText>                                
+                                        <p:dataTable id="DTParametros" var="Parametro" value="#{parametroReservacionBean.parametrosListView}"
+                                                     rows="5"
+                                                     paginator="true"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     rowsPerPageTemplate="5,10,15" emptyMessage="Marcas no registradas">
+                                            <p:column headerText="Incremento">
+                                                <h:outputText value="#{Parametro.parametroValorIncremento}" />
+                                            </p:column>
+
+                                            <p:column headerText="Mercado">
+                                                <h:outputText value="#{Parametro.smsMercado.mercadoNombre}" />
+                                            </p:column>
+
+                                            <p:column style="width: 35px">
+                                                <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formularioParametros" action="#{parametroReservacionBean.seleccionarCRUD(1)}" title="Modificar">
+                                                    <f:setPropertyActionListener value="#{Parametro}" target="#{parametroReservacionBean.parametroView}"/>
+                                                </p:commandLink>
+                                            </p:column>                                            
+                                        </p:dataTable>                                        
+                                    </div>
+                                </div>
+                            </b:column>
+                        </h:form>
+                    </b:row>
+                </b:container>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

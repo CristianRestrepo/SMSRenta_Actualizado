@@ -85,7 +85,7 @@ public class FacturaBean {
         facturaView.setFacturaSubtotal(reservacion.getReservacionCosto());
         facturaView.setFacturaDescuento((facturaView.getFacturaSubtotal() * descuento) / 100);
         facturaView.setFacturaTotal(facturaView.getFacturaSubtotal() - facturaView.getFacturaDescuento());
-        facturaView.setFacturaIva(facturaView.getFacturaTotal() * 0.16);        
+        facturaView.setFacturaIva(facturaView.getFacturaTotal() * 0);        
         facturaView.setFacturaNeto((facturaView.getFacturaTotal()) + facturaView.getFacturaIva());
         facturaView.setFacturaTotal(facturaView.getFacturaNeto());
 

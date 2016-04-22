@@ -236,4 +236,23 @@ public class ImpMercadoDao implements IMercadoDao {
         }
         return mercados;
     }
+
+    @Override
+    public SmsMercado consultarMercado(SmsMercado mercado) {
+        Session session = null;
+        SmsMercado mercados = new SmsMercado();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsMercado as mercado "
+                   + "where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
+            mercados = (SmsMercado) query.list().get(0);
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return mercados;}
 }

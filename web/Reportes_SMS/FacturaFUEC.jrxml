@@ -643,7 +643,7 @@ contrato.idContrato = $P{idContrato}]]>
 			</staticText>
 			<image>
 				<reportElement x="405" y="6" width="97" height="45" uuid="688caf42-c4b3-4fb4-843e-22e841d296d9"/>
-				<imageExpression><![CDATA["C:\\Users\\SISTEMAS\\Documents\\NetBeansProjects\\SMS_FInal\\SMSRenta_Actualizado\\web\\Reportes_SMS\\firma.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../Reportes_SMS/firma.jpg"]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="402" y="41" width="99" height="1" uuid="31798748-bdd6-4beb-ac4b-6bf964e2c606"/>

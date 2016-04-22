@@ -48,5 +48,6 @@
     <mapping resource="com/planit/smsrenta/modelos/SmsContrato.hbm.xml"/>
     <mapping resource="com/planit/smsrenta/modelos/SmsLocalidad.hbm.xml"/>
     <mapping resource="com/planit/smsrenta/modelos/SmsTipoDuracion.hbm.xml"/>
+    <mapping resource="com/planit/smsrenta/modelos/SmsParametrosReservacion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
