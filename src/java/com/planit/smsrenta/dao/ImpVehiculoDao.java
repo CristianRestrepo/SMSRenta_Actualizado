@@ -116,7 +116,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
     @Override
     public SmsVehiculo consultarVehiculo(SmsVehiculo vehiculo) {
         Session session = null;
-        SmsVehiculo vehiculos = null;
+        SmsVehiculo vehiculos = new SmsVehiculo();
         try {
             session = sessions.openSession();
             Query query = session.createQuery("from SmsVehiculo as vehiculo "
@@ -126,8 +126,9 @@ public class ImpVehiculoDao implements IVehiculoDao {
                     + "left join fetch vehiculo.smsReferencia as referencia "
                     + "left join fetch vehiculo.smsEmpleados where "
                     + "vehiculo.vehPlaca = '" + vehiculo.getVehPlaca() + "'");
-            vehiculos = (SmsVehiculo) query.list().get(0);
-
+            if (!query.list().isEmpty()) {
+                vehiculos = (SmsVehiculo) query.list().get(0);
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -552,6 +553,32 @@ public class ImpVehiculoDao implements IVehiculoDao {
             }
         }
         return vehiculos;
+    }
+
+    @Override
+    public boolean verificarExistenciaPlaca(String placa) {
+        Session session = null;
+        boolean existente = false;
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsCategoria as categoria "
+                    + "left join fetch vehiculo.smsCiudad as ciudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsEmpleados where "
+                    + "vehiculo.vehPlaca = '" + placa + "'");
+            if (!query.list().isEmpty()) {
+                existente = true;
+            }
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return existente;
     }
 
 }

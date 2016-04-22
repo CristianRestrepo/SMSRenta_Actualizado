@@ -26,7 +26,7 @@
       <column name="idEstado" not-null="true"/>
     </many-to-one>
     <property name="vehPlaca" type="string">
-      <column length="50" name="Veh_placa" not-null="true"/>
+      <column length="50" unique="true" name="Veh_placa" not-null="true"/>
     </property>
     <property name="vehModelo" type="string">
       <column length="50" name="Veh_modelo" not-null="true"/>

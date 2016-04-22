@@ -30,4 +30,5 @@ public interface IVehiculoDao {
     public List<SmsVehiculo> consultarVehiculosSegunProveedor(SmsProveedor proveedor);
     public SmsVehiculo consultarVehiculoConConductores(SmsVehiculo vehiculo);
     public List<SmsVehiculo> consultarVehiculoDisponibleSegunPlaca(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada , String ciudad, String mercado, String placa);
-    }
+    public boolean verificarExistenciaPlaca(String placa);
+}

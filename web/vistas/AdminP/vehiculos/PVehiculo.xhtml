@@ -12,7 +12,7 @@
             <b:container fluid="true">
                 <b:row>
                     <h:form id="formA">
-                        <p:messages closable="true" id="msg"/>
+                        
 
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                             <div class="box box-info espacio-arriba">
@@ -27,6 +27,10 @@
                             </div>
                         </b:column>
 
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                            <p:messages closable="true" id="msg"/>  
+                        </b:column>
+                        
                         <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12" >
                             <div class="box box-danger">
                                 <div class="box-header with-border">   
@@ -80,7 +84,10 @@
 
                                             <b:inputText id="TVehPer" placeholder="Cant. personas" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehNumPersonas}"/>
 
-                                            <b:inputText id="TVehPlaca" required="true" requiredMessage="Ingrese placa del vehículo" placeholder="Número del placa" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehPlaca}"/>                                                
+                                            <b:inputText validator="placaExistenteValidator" id="TVehPlaca" required="true" requiredMessage="Ingrese placa del vehículo" placeholder="Número del placa" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehPlaca}">
+                                                <f:attribute name="operacion" value="#{vehiculoBean.operacion}"/>
+                                                <f:attribute name="vehiculo" value="#{vehiculoBean.vehiculoView}"/>
+                                            </b:inputText>                                                
 
                                         </h:panelGrid>
                                     </div>
