@@ -260,7 +260,8 @@ public class PathBean implements Serializable {
     public String ir_ConductorVistaReserva() {
         return "VistaReservaConductor";
     }
-
+    
+    
     /* / CONDUCTOR/ */
     /* / PRoveedor/ */
     public String ir_ProDashboard() {
@@ -296,6 +297,11 @@ public class PathBean implements Serializable {
     public String ir_ClienteVistaReserva() {
         return "VistaReservaCliente";
     }
+    
+    public String ir_ClienteCalificarReserva() {
+        return "ClienteCalificarReserva";
+    }
+
     /* / CLIENTE/ */
 
     public String ir_Registrarse() {

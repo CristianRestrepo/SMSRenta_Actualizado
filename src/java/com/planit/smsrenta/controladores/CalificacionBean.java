@@ -5,6 +5,11 @@
  */
 package com.planit.smsrenta.controladores;
 
+import com.planit.smsrenta.dao.ICalificacionDao;
+import com.planit.smsrenta.dao.ImpCalificacionDao;
+import com.planit.smsrenta.metodos.SendEmail;
+import com.planit.smsrenta.modelos.SmsCalificacion;
+import com.planit.smsrenta.modelos.SmsReservacion;
 import java.io.Serializable;
 
 /**
@@ -13,10 +18,43 @@ import java.io.Serializable;
  */
 public class CalificacionBean implements Serializable {
 
-    /**
-     * Creates a new instance of CalificacionBean
-     */
+    private SmsCalificacion calificacionView;
+    private SmsReservacion reservacionView;
+    ICalificacionDao calificacionDao;
+
     public CalificacionBean() {
+        calificacionView = new SmsCalificacion();
+        reservacionView = new SmsReservacion();
+        calificacionDao = new ImpCalificacionDao();
     }
-    
+
+    public SmsCalificacion getCalificacionView() {
+        return calificacionView;
+    }
+
+    public void setCalificacionView(SmsCalificacion calificacionView) {
+        this.calificacionView = calificacionView;
+    }
+
+    public SmsReservacion getReservacionView() {
+        return reservacionView;
+    }
+
+    public void setReservacionView(SmsReservacion reservacionView) {
+        this.reservacionView = reservacionView;
+    }        
+
+    //metodos
+    public String registrar() {
+        calificacionView.setSmsReservacion(reservacionView);
+        calificacionDao.registrarCalificacion(calificacionView);
+        
+        if(calificacionView.getCalificacionCalidadServicio() < 4){
+            SendEmail email = new SendEmail();
+            email.sendEmailMalaCalificacion(calificacionView);
+        }
+        
+        calificacionView = new SmsCalificacion();
+        return "ClienteReservaciones";
+    }
 }

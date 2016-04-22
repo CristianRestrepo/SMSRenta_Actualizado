@@ -71,7 +71,7 @@
     <managed-bean>
         <managed-bean-name>calificacionBean</managed-bean-name>
         <managed-bean-class>com.planit.smsrenta.controladores.CalificacionBean</managed-bean-class>        
-        <managed-bean-scope>view</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>reservacionBean</managed-bean-name>
@@ -564,6 +564,11 @@
         <navigation-case>
             <from-outcome>SAdminVehiculos</from-outcome>
             <to-view-id>/vistas/AdminS/vehiculos/SAdminVehiculos.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ClienteCalificarReserva</from-outcome>
+            <to-view-id>/vistas/Cliente/reservas/CCalificarReserva.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

@@ -9,6 +9,7 @@ import com.planit.smsrenta.dao.IReservacionDao;
 import com.planit.smsrenta.dao.IUsuarioDao;
 import com.planit.smsrenta.dao.ImpReservacionDao;
 import com.planit.smsrenta.dao.ImpUsuarioDao;
+import com.planit.smsrenta.modelos.SmsCalificacion;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsProveedor;
 import com.planit.smsrenta.modelos.SmsReservacion;
@@ -411,7 +412,6 @@ public class SendEmail {
 
     }
 
-    
     public void sendEmailNuevaContrasena(SmsUsuario usuario, String password) {
         init();
         try {
@@ -445,6 +445,37 @@ public class SendEmail {
             //superior la capture y avise al usuario con un popup, por ejemplo.
             return;
         }
+    }
 
+    public void sendEmailMalaCalificacion(SmsCalificacion calificacion) {
+        init();
+        try {
+            MimeMessage message = new MimeMessage(session);
+
+            //quien envia
+            message.setFrom(new InternetAddress("smsrenta@gmail.com"));
+
+            // a donde se envia
+            message.addRecipient(
+                    Message.RecipientType.TO,
+                    new InternetAddress("operaciones@smsrenta.com.co"));
+            message.setSubject("Calificacion baja, reservacion " + calificacion.getSmsReservacion().getIdReservacion());
+            message.setText("El cliente " + calificacion.getSmsReservacion().getSmsUsuario().getUsuarioNombre() + " "
+                    + "califico la reservacion " + calificacion.getSmsReservacion().getIdReservacion() + " con un puntaje de " + calificacion.getCalificacionCalidadServicio() + " estrellas."
+                    + "El conductor asignado a este servicio era el señor(a) " + calificacion.getSmsReservacion().getSmsEmpleado().getSmsUsuario().getUsuarioNombre() + " y "
+                    + "el vehiculo elegido era el identificado con placa "+calificacion.getSmsReservacion().getSmsVehiculo().getVehPlaca()+"./n"
+                    + "Atentamente, SMS Renta");
+
+            Transport t = session.getTransport("smtp");
+            t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
+            t.sendMessage(message, message.getAllRecipients());
+            t.close();
+        } catch (MessagingException me) {
+            me.getMessage();
+            //Aqui se deberia o mostrar un mensaje de error o en lugar
+            //de no hacer nada con la excepcion, lanzarla para que el modulo
+            //superior la capture y avise al usuario con un popup, por ejemplo.
+            return;
+        }
     }
 }

@@ -18,7 +18,7 @@
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="espacio-arriba" style="text-align: center" align="center">
                                 <h4 style="font-size: x-large">RESERVACIONES</h4><br/>
-                                <p>Te damos la bienvenida, #{usuarioBean.usuario.usuarioNombre}</p>
+                                <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
                             </div>
                         </b:column>
                         <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
@@ -64,11 +64,17 @@
                                     </p:commandLink>
                                 </p:column> 
 
-                                <p:column headerText="FUEC" style="width: 35px">
+                                <p:column headerText="FUEC" style="width: 45px">
                                     <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacion)}" title="Generar FUEC">
 
                                     </p:commandLink>
-                                </p:column>                                                 
+                                </p:column>  
+
+                                <p:column headerText="CAL" style="width: 40px">
+                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-check-square-o btn btn-block btn-primary" process="@this" ajax="false" action="#{pathBean.ir_ClienteCalificarReserva()}" title="Calificar Servicio">
+                                        <f:setPropertyActionListener value="#{reservacion}" target="#{calificacionBean.reservacionView}"/>
+                                    </p:commandLink>
+                                </p:column>  
                             </p:dataTable>
 
                         </b:column> 

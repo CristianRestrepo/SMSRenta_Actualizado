@@ -10,17 +10,11 @@
     <many-to-one class="com.planit.smsrenta.modelos.SmsReservacion" fetch="select" name="smsReservacion">
       <column name="idReservacion" not-null="true"/>
     </many-to-one>
-    <property name="calificacionPuntualidad" type="java.lang.Integer">
-      <column name="Calificacion_puntualidad"/>
-    </property>
-    <property name="calificacionTratoConductor" type="java.lang.Integer">
-      <column name="Calificacion_tratoConductor"/>
-    </property>
-    <property name="calificacionEstadoVehiculo" type="java.lang.Integer">
-      <column name="Calificacion_estadoVehiculo"/>
-    </property>
     <property name="calificacionCalidadServicio" type="java.lang.Integer">
       <column name="Calificacion_calidadServicio"/>
+    </property>
+    <property name="calificacionObservacion" type="string">
+      <column name="Calificacion_observacion" length="65535"/>
     </property>
   </class>
 </hibernate-mapping>
