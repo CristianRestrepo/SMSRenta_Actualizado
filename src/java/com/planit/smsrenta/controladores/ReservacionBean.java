@@ -483,15 +483,18 @@ public class ReservacionBean implements Serializable {
                     Date fechaActual = new Date();
                     Date mediaNoche = new Date();
 
-                    if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
+                    if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {
+                        //si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                         reservaView.setSmsUsuario(sesion);
                     } else {
+                        //Si el usuario no es cliente, se asigna como cliente al usuario seleccionado en el panel de reservacion
                         reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()));
                     }
 
-                    reservaView.setSmsVehiculo(new SmsVehiculo());
+                    reservaView.setSmsVehiculo(new SmsVehiculo());//Se instancia un nuevo objeto vehiculo para recibir el vehiculo elegido en la reservacion
                     reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()));//Consulta de servicio
 
+                    //Consultamos la informacion completa de las ciudades y la categoria del servicio elegida
                     reservaView.setSmsCiudadByIdCiudadInicio(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadInicio()));
                     reservaView.setSmsCiudadByIdCiudadDestino(ciuDao.consultarCiudad(reservaView.getSmsCiudadByIdCiudadDestino()));
                     reservaView.setSmsCategoriasServicio(reservaView.getSmsServicios().getSmsCategoriasServicio());
@@ -499,18 +502,19 @@ public class ReservacionBean implements Serializable {
                     switch (categoriaServicio) {
 
                         case 1: //tiempo
-                            fechaInicio = formatDate.format(fechaActual);
-                            fechaEntrega = formatDate.format(fechaActual);
-
                             reservaView.setReservacionFechaInicio(fechaActual);
                             reservaView.setReservacionFechaLlegada(fechaActual);
 
                             try {
+                                //Se formatea la hora de inicio elegida y se asigna a la reservacion
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-                                
+                                mediaNoche = formatTime.parse("00:00:00");
 
                                 Calendar calInicio1 = Calendar.getInstance();
                                 calInicio1.setTime(reservaView.getReservacionHoraInicio());
+
+                                Calendar calFechaEntrega = Calendar.getInstance();
+
                                 if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) { //duracion minutos
                                     calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
                                 } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
@@ -518,26 +522,36 @@ public class ReservacionBean implements Serializable {
                                 }
 
                                 reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
-                                
+                                calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
+
+                                if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                                    calFechaEntrega.add(Calendar.DATE, 1);
+                                    reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
+                                }
+
                             } catch (ParseException pe) {
                                 pe.getMessage();
                             }
 
+                            fechaInicio = formatDate.format(reservaView.getReservacionFechaInicio());
+                            fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                             break;
-                        case 2://traslado
-                            fechaInicio = formatDate.format(fechaActual);
-                            fechaEntrega = formatDate.format(fechaActual);
+                        case 2://traslado                            
 
                             reservaView.setReservacionFechaInicio(fechaActual);
                             reservaView.setReservacionFechaLlegada(fechaActual);
 
                             try {
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-                                
+                                mediaNoche = formatTime.parse("00:00:00");
+
                                 Calendar calInicio1 = Calendar.getInstance();
                                 calInicio1.setTime(reservaView.getReservacionHoraInicio());
+
+                                Calendar calFechaEntrega = Calendar.getInstance();
+
                                 if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) {//duracion minutos
                                     calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
                                 } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
@@ -545,11 +559,20 @@ public class ReservacionBean implements Serializable {
                                 }
 
                                 reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
-                               
+
+                                calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
+
+                                if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                                    calFechaEntrega.add(Calendar.DATE, 1);
+                                    reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
+                                }
+
                             } catch (ParseException pe) {
                                 pe.getMessage();
                             }
 
+                            fechaInicio = formatDate.format(fechaActual);
+                            fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                             break;
@@ -566,7 +589,6 @@ public class ReservacionBean implements Serializable {
                             horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                             horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                             break;
-
                     }
 
                     if (resDao.mostrarReservaciones().isEmpty()) {
@@ -630,18 +652,19 @@ public class ReservacionBean implements Serializable {
                 switch (categoriaServicio) {
 
                     case 1: //tiempo
-                        fechaInicio = formatDate.format(fechaActual);
-                        fechaEntrega = formatDate.format(fechaActual);
 
                         reservaView.setReservacionFechaInicio(fechaActual);
                         reservaView.setReservacionFechaLlegada(fechaActual);
 
                         try {
                             reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-                           
+                            mediaNoche = formatTime.parse("00:00:00");
 
                             Calendar calInicio1 = Calendar.getInstance();
                             calInicio1.setTime(reservaView.getReservacionHoraInicio());
+
+                            Calendar calFechaEntrega = Calendar.getInstance();
+
                             if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) { //duracion minutos
                                 calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
                             } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
@@ -649,27 +672,37 @@ public class ReservacionBean implements Serializable {
                             }
 
                             reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
-                           
+
+                            calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
+
+                            if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                                calFechaEntrega.add(Calendar.DATE, 1);
+                                reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
+                            }
+
                         } catch (ParseException pe) {
                             pe.getMessage();
                         }
+
+                        fechaInicio = formatDate.format(fechaActual);
+                        fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
 
                         horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                         horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                         break;
                     case 2://traslado
-                        fechaInicio = formatDate.format(fechaActual);
-                        fechaEntrega = formatDate.format(fechaActual);
-
                         reservaView.setReservacionFechaInicio(fechaActual);
                         reservaView.setReservacionFechaLlegada(fechaActual);
 
                         try {
                             reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
-                          
+                            mediaNoche = formatTime.parse("00:00:00");
 
                             Calendar calInicio1 = Calendar.getInstance();
                             calInicio1.setTime(reservaView.getReservacionHoraInicio());
+
+                            Calendar calFechaEntrega = Calendar.getInstance();
+
                             if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 1) {//duracion minutos
                                 calInicio1.add(Calendar.MINUTE, reservaView.getSmsServicios().getServicioDuracion());
                             } else if (reservaView.getSmsServicios().getSmsTipoDuracion().getIdTipoDuracion() == 2) {//duracion horas
@@ -677,10 +710,19 @@ public class ReservacionBean implements Serializable {
                             }
 
                             reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
+                            calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
+
+                            if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                                calFechaEntrega.add(Calendar.DATE, 1);
+                                reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
+                            }
                             
                         } catch (ParseException pe) {
                             pe.getMessage();
                         }
+
+                        fechaInicio = formatDate.format(fechaActual);
+                        fechaEntrega = formatDate.format(reservaView.getReservacionFechaLlegada());
 
                         horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                         horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
