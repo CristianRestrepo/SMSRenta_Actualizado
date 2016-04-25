@@ -46,7 +46,8 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch servicio.smsMercado as mercado "
                     + "left join fetch reservacion.smsVehiculo as vehiculo "
                     + "left join fetch vehiculo.smsReferencia as referencia "
-                    + "left join fetch vehiculo.smsColor left join fetch referencia.smsMarca");
+                    + "left join fetch vehiculo.smsColor left join fetch referencia.smsMarca "
+                    + "order by reservacion.idReservacion desc");
             reservaciones = (List<SmsReservacion>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -192,7 +193,7 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch vehiculo.smsReferencia as referencia "
                     + "left join fetch vehiculo.smsColor "
                     + "left join fetch referencia.smsMarca  where "
-                    + "cliente.idUsuario = '" + usuario.getIdUsuario() + "'");
+                    + "cliente.idUsuario = '" + usuario.getIdUsuario() + "' order by reservacion.idReservacion desc");
             resevacionesHechas = (List<SmsReservacion>) query.list();
 
         } catch (HibernateException e) {
@@ -225,7 +226,7 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch vehiculo.smsReferencia as referencia "
                     + "left join fetch vehiculo.smsColor "
                     + "left join fetch referencia.smsMarca where "
-                    + "empleado.idEmpleado = '" + conductor.getIdEmpleado() + "'");
+                    + "empleado.idEmpleado = '" + conductor.getIdEmpleado() + "' order by reservacion.idReservacion desc");
             resevacionesHechas = (List<SmsReservacion>) query.list();
 
         } catch (HibernateException e) {
@@ -307,7 +308,8 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "reservacion.reservacionFechaInicio = '" + FechaInicio + "' and "
                     + "reservacion.reservacionFechaLlegada = '" + FechaLlegada + "' and "
                     + "reservacion.reservacionHoraInicio = '" + HoraInicio + "' and "
-                    + "reservacion.reservacionHoraLlegada = '" + HoraLlegada + "'");
+                    + "reservacion.reservacionHoraLlegada = '" + HoraLlegada + "' "
+                    + "order by reservacion.idReservacion desc");
             reservas = (SmsReservacion) query.list().get(0);
         } catch (HibernateException e) {
             e.getMessage();

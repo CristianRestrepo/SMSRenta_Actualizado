@@ -22,13 +22,9 @@ import static com.planit.smsrenta.metodos.Upload.getPathDefaultUsuario;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsHojavida;
 import com.planit.smsrenta.modelos.SmsProveedor;
-import com.planit.smsrenta.modelos.SmsReservacion;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -175,7 +171,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     public void registrarEmpleado() {
         empleadoView.getSmsUsuario().getSmsRol().setRolNombre("Conductor");
         //Asignamos un estado al conductor
-        empleadoView.getSmsEstado().setEstadoNombre("Disponible");
+        empleadoView.getSmsEstado().setEstadoNombre("No disponible");
         empleadoView.setSmsEstado(estadoDao.consultarEstado(empleadoView.getSmsEstado()));
 
         //Si el usuario no registra foto y hoja de vida se asignas unas default

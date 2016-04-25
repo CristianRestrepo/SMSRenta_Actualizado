@@ -482,7 +482,8 @@ public class ReservacionBean implements Serializable {
                     formatDate = new SimpleDateFormat("yyyy-MM-dd");
                     Date fechaActual = new Date();
                     Date mediaNoche = new Date();
-
+                    Date umbral = new Date();
+                    
                     if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {
                         //si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                         reservaView.setSmsUsuario(sesion);
@@ -509,6 +510,7 @@ public class ReservacionBean implements Serializable {
                                 //Se formatea la hora de inicio elegida y se asigna a la reservacion
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
                                 mediaNoche = formatTime.parse("00:00:00");
+                                umbral = formatTime.parse("23:30:00");
 
                                 Calendar calInicio1 = Calendar.getInstance();
                                 calInicio1.setTime(reservaView.getReservacionHoraInicio());
@@ -524,7 +526,7 @@ public class ReservacionBean implements Serializable {
                                 reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
                                 calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
 
-                                if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                                if ((reservaView.getReservacionHoraInicio().equals(umbral) || reservaView.getReservacionHoraInicio().after(umbral)) && (reservaView.getReservacionHoraLlegada().after(mediaNoche) || reservaView.getReservacionHoraLlegada().equals(mediaNoche))) {
                                     calFechaEntrega.add(Calendar.DATE, 1);
                                     reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
                                 }
@@ -546,6 +548,7 @@ public class ReservacionBean implements Serializable {
                             try {
                                 reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
                                 mediaNoche = formatTime.parse("00:00:00");
+                                umbral = formatTime.parse("23:30:00");
 
                                 Calendar calInicio1 = Calendar.getInstance();
                                 calInicio1.setTime(reservaView.getReservacionHoraInicio());
@@ -562,7 +565,7 @@ public class ReservacionBean implements Serializable {
 
                                 calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
 
-                                if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                                if ((reservaView.getReservacionHoraInicio().equals(umbral) || reservaView.getReservacionHoraInicio().after(umbral)) && (reservaView.getReservacionHoraLlegada().after(mediaNoche) || reservaView.getReservacionHoraLlegada().equals(mediaNoche))) {
                                     calFechaEntrega.add(Calendar.DATE, 1);
                                     reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
                                 }
@@ -635,6 +638,7 @@ public class ReservacionBean implements Serializable {
                 formatDate = new SimpleDateFormat("yyyy-MM-dd");
                 Date fechaActual = new Date();
                 Date mediaNoche = new Date();
+                Date umbral = new Date();
 
                 if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {//si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                     reservaView.setSmsUsuario(sesion);
@@ -659,6 +663,7 @@ public class ReservacionBean implements Serializable {
                         try {
                             reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
                             mediaNoche = formatTime.parse("00:00:00");
+                            umbral = formatTime.parse("23:30:00");
 
                             Calendar calInicio1 = Calendar.getInstance();
                             calInicio1.setTime(reservaView.getReservacionHoraInicio());
@@ -675,7 +680,7 @@ public class ReservacionBean implements Serializable {
 
                             calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
 
-                            if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                            if ((reservaView.getReservacionHoraInicio().equals(umbral) || reservaView.getReservacionHoraInicio().after(umbral)) && (reservaView.getReservacionHoraLlegada().after(mediaNoche) || reservaView.getReservacionHoraLlegada().equals(mediaNoche))) {
                                 calFechaEntrega.add(Calendar.DATE, 1);
                                 reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
                             }
@@ -697,6 +702,7 @@ public class ReservacionBean implements Serializable {
                         try {
                             reservaView.setReservacionHoraInicio(formatTime.parse(horaInicio + ":" + minutosInicio));
                             mediaNoche = formatTime.parse("00:00:00");
+                            umbral = formatTime.parse("23:30:00");
 
                             Calendar calInicio1 = Calendar.getInstance();
                             calInicio1.setTime(reservaView.getReservacionHoraInicio());
@@ -712,7 +718,7 @@ public class ReservacionBean implements Serializable {
                             reservaView.setReservacionHoraLlegada(formatTime.parse(formatTime.format(calInicio1.getTime())));
                             calFechaEntrega.setTime(reservaView.getReservacionFechaLlegada());
 
-                            if (reservaView.getReservacionHoraLlegada().after(mediaNoche)) {
+                            if ((reservaView.getReservacionHoraInicio().equals(umbral) || reservaView.getReservacionHoraInicio().after(umbral)) && (reservaView.getReservacionHoraLlegada().after(mediaNoche) || reservaView.getReservacionHoraLlegada().equals(mediaNoche))) {
                                 calFechaEntrega.add(Calendar.DATE, 1);
                                 reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
                             }
@@ -822,7 +828,6 @@ public class ReservacionBean implements Serializable {
                 break;
         }
         return listaReservaciones;
-
     }
 
 //CREACION DEL CALENDARIO PRIMEFACAES TIPO SCHEDULE ************************

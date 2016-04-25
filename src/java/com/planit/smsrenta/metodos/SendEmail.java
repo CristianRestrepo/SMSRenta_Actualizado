@@ -389,6 +389,7 @@ public class SendEmail {
                     Message.RecipientType.TO,
                     new InternetAddress("" + conductor.getUsuarioEmail()));
             message.setSubject("Bienvenido a SMS Renta");
+            
             message.setText("Conductor " + conductor.getUsuarioNombre() + ","
                     + "\n"
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
