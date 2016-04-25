@@ -17,24 +17,12 @@
 
         <title>Recuperar Contraseña | Registro de SMS</title>
     </h:head>
-    <script>
-        $(document).ready(function () {
-            $(document).mousemove(function (e) {
-                TweenLite.to($('body'),
-                        .5,
-                        {css:
-                                    {
-                                        backgroundPosition: "" + parseInt(event.pageX / 8) + "px " + parseInt(event.pageY / '12') + "px, " + parseInt(event.pageX / '15') + "px " + parseInt(event.pageY / '15') + "px, " + parseInt(event.pageX / '30') + "px " + parseInt(event.pageY / '30') + "px"
-                                    }
-                        });
-            });
-        });
-    </script>
+
     <h:body>
+        <div class="bg-gris "></div>
         <h:form>
             <b:container fluid="true">               
-                <script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
-                <!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
+
                 <h:form>
                     <div class="container">
                         <div class="row vertical-offset-100">
@@ -52,7 +40,9 @@
                                                         <p:growl id="messages" life="3500"/>
                                                         <div class="form-group centro"> 
                                                             <p align="center">Ingrese su correo electronico para recibir una nueva contraseña.</p>
-                                                            <b:inputText validator="emailExistenteValidator" placeholder="Ingrese correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
+                                                            <b:inputText validator="emailExistenteValidator" placeholder="Ingrese correo electronico" 
+                                                                         required="true" requiredMessage="Por favor, ingrese correo electronico" 
+                                                                         value="#{usuarioBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px">
                                                             </b:inputText>
                                                         </div>                                           
                                                         <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"
@@ -75,7 +65,8 @@
                                                             }
                                                         </script>
 
-                                                        <p:dialog modal="true" widgetVar="statusDialog" header="Generando nueva contraseña, espere" draggable="false" closable="false" resizable="false">
+                                                        <p:dialog modal="true" widgetVar="statusDialog" header="Generando nueva contraseña, espere" 
+                                                                  draggable="false" closable="false" resizable="false">
                                                             <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
                                                         </p:dialog>
                                                     </fieldset>                                        

@@ -17,7 +17,7 @@
 
         <title>Login | Registro de SMS</title>
     </h:head>
-    
+
     <h:body >
         <div class="bg-gris"></div>
         <h:form>
@@ -52,13 +52,7 @@
                                                                 <b:inputSecret  placeholder="Contraseña" class="form-control input-lg-sms" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{sesionBean.usuarioView.usuarioPassword}" />
 
                                                                 <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"  class="btn btn-lg btn-block btn-danger" update="messages" action="#{sesionBean.iniciarSesion()}" value="Iniciar Sesion"/>
-<!--                                                                <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrese aqui"/>
 
-                                                                <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"  class="btn btn-lg btn-block btn-danger" update="messages"
-                                                                                  action="#{sesionBean.iniciarSesion()}" value="Iniciar Sesion"/>
-                                                                <div align="center">
-                                                                    <p:commandLink process="@this" immediate="true"   action="#{pathBean.ir_olvideContrasena()}" value="He olvidado mi contraseña"/>
-                                                                </div>-->
                                                             </div>
                                                         </div>
                                                         <div class="row">
