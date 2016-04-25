@@ -1,5 +1,5 @@
 
-@import url(https://fonts.googleapis.com/css?family=Mallanna);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic);
 
 body {
     color: #222D32 !important;
@@ -1125,14 +1125,16 @@ span.round-tabs-conduc.one {}
 }
 
 .title-login{
-    font-family: 'Mallanna', sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
     font-size: 2.5em;
     border-top: 1px solid #FD5538 !important;
     margin-bottom: 29px;
+    padding-top: 13px;
+    font-weight: 100;
 }
 
 .img-logo{
-    margin-bottom: 37px;
+    margin-bottom: 24px;
     margin-top: 30px;
 }
 
@@ -1161,4 +1163,37 @@ span.round-tabs-conduc.one {}
 
 .padding-panel{
     padding-bottom: 26px;
+}
+
+.input-lg-sms{
+    height: 46px !important;
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+    line-height: 1.3333333;
+    border-radius: 6px !important;
+}
+
+.border-line-login{
+    margin-top: -23px;
+    margin-bottom: 16px;
+    border: 0;
+    border-top: 1px solid #CCCCCC !important;
+}
+
+.btn-reg-log{
+    display: inline-block;
+    float: left;
+}
+
+.btn-reg-log-rigth{
+    display: inline-block;
+    float: right;
+}
+
+.bg-gris{
+   background-color: rgba(33, 13, 2, 0.65);
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;
+    background-position: center;
 }

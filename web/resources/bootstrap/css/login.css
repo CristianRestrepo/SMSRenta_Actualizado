@@ -1,7 +1,9 @@
 body{
-    background: url(http://mymaplist.com/img/parallax/back.png);
+    background: url(../../images/zona-rfanca.jpeg);
+    /*background: url(../../images/login-sms.jpg);*/
     background-color: #444;
-    background: url(http://mymaplist.com/img/parallax/pinlayer2.png),url(http://mymaplist.com/img/parallax/pinlayer1.png),url(http://mymaplist.com/img/parallax/back.png);    
+    background-size: cover;
+
 }
 
 .vertical-offset-100{

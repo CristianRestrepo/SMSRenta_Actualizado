@@ -17,24 +17,11 @@
 
         <title>Login | Registro de SMS</title>
     </h:head>
-    <script>
-        $(document).ready(function () {
-            $(document).mousemove(function (e) {
-                TweenLite.to($('body'),
-                        .5,
-                        {css:
-                                    {
-                                        backgroundPosition: "" + parseInt(event.pageX / 8) + "px " + parseInt(event.pageY / '12') + "px, " + parseInt(event.pageX / '15') + "px " + parseInt(event.pageY / '15') + "px, " + parseInt(event.pageX / '30') + "px " + parseInt(event.pageY / '30') + "px"
-                                    }
-                        });
-            });
-        });
-    </script>
-    <h:body>
+    
+    <h:body >
+        <div class="bg-gris"></div>
         <h:form>
             <b:container fluid="true">               
-                <script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
-                <!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
                 <h:form>
                     <div class="container">
                         <div class="row vertical-offset-100">
@@ -50,7 +37,7 @@
                                             <p:fragment autoUpdate="true">
                                                 <p:growl id="messages" life="2000"/>
                                                 <div class="form-group">
-                                                    
+
                                                     <div class="container-fluid">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">
@@ -60,19 +47,27 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-sm-8 col-sm-offset-2 bg-margin-login">
-                                                                
-                                                                <b:inputText placeholder="Correo electronico" required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{sesionBean.usuarioView.usuarioEmail}" style="width: 100%; margin-bottom: 12px"/>
-                                                                <b:inputSecret  placeholder="Contraseña" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{sesionBean.usuarioView.usuarioPassword}" style="width: 100% ; height: 36px; border-radius: 5px;"/>
 
-                                                                <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrese aqui"/>
+                                                                <b:inputText placeholder="Correo electronico" class="input-lg-sms"  required="true" requiredMessage="Por favor, ingrese correo electronico" value="#{sesionBean.usuarioView.usuarioEmail}" />
+                                                                <b:inputSecret  placeholder="Contraseña" class="form-control input-lg-sms" required="true" requiredMessage="Por favor, ingrese contraseña" value="#{sesionBean.usuarioView.usuarioPassword}" />
+
+                                                                <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"  class="btn btn-lg btn-block btn-danger" update="messages" action="#{sesionBean.iniciarSesion()}" value="Iniciar Sesion"/>
+<!--                                                                <p:commandLink process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrese aqui"/>
 
                                                                 <p:commandButton  onclick="PrimeFaces.monitorDownload(start, stop);"  class="btn btn-lg btn-block btn-danger" update="messages"
                                                                                   action="#{sesionBean.iniciarSesion()}" value="Iniciar Sesion"/>
                                                                 <div align="center">
                                                                     <p:commandLink process="@this" immediate="true"   action="#{pathBean.ir_olvideContrasena()}" value="He olvidado mi contraseña"/>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-10 col-sm-offset-1">
+                                                                <hr class="border-line-login"/>
+                                                                <p:commandLink class="btn-reg-log" process="@this" immediate="true" action="#{pathBean.ir_Registrarse()}" value="Registrese aqui"/>
+                                                                <p:commandLink class="btn-reg-log-rigth" process="@this" immediate="true"   action="#{pathBean.ir_olvideContrasena()}" value="He olvidado mi contraseña"/>
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
