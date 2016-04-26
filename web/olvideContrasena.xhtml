@@ -51,6 +51,11 @@
                                                                           action="#{usuarioBean.generarNuevaContraseñaDeSesion()}"
                                                                           value="Solicitar nueva contraseña"
                                                                           />
+                                                        <p:commandButton  update="@form" immediate="@this"
+                                                                          class="btn btn-lg btn-block btn-danger" 
+                                                                          action="#{usuarioBean.enviarCorreoprueba()}"
+                                                                          value="prueba correo"
+                                                                          />
                                                         <div align="center"> <p:commandLink value="Iniciar sesion" 
                                                                                             process="@this" 
                                                                                             immediate="true" 

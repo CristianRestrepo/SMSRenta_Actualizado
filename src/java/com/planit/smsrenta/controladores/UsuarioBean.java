@@ -248,4 +248,8 @@ public class UsuarioBean implements Serializable {
         }
     }
 
+    public void enviarCorreoprueba(){
+        SendEmail email = new SendEmail();
+        email.sendEmailHtmlPrueba();
+    }
 }
