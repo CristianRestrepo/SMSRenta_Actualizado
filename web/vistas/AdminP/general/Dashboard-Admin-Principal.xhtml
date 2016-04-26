@@ -38,8 +38,6 @@
                                     <h:panelGrid class="box-tools" columns="3">
                                         <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
                                         <p:commandButton style="width: 100%" immediate="true" process="@this" ajax="false" action="irListaReservacionesAdminP" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
-                                        <p:commandButton style="width: 100%" immediate="true" process="@this" ajax="false" action="#{usuarioBean.enviarCorreoprueba()}" class=" btn btn-block btn-primary" value="enviar correo"/>
-                                    
                                     </h:panelGrid>
                                 </div>
                                 <div class="box-body">

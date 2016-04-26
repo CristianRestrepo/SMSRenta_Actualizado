@@ -246,10 +246,5 @@ public class UsuarioBean implements Serializable {
         } catch (Exception ex) {
             ex.getMessage();
         }
-    }
-
-    public void enviarCorreoprueba(){
-        SendEmail email = new SendEmail();
-        email.sendEmailHtmlPrueba();
-    }
+    }   
 }
