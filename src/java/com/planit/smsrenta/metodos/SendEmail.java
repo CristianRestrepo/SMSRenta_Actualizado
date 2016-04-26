@@ -17,12 +17,18 @@ import com.planit.smsrenta.modelos.SmsUsuario;
 import com.planit.smsrenta.modelos.SmsVehiculo;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class SendEmail {
 
@@ -389,7 +395,7 @@ public class SendEmail {
                     Message.RecipientType.TO,
                     new InternetAddress("" + conductor.getUsuarioEmail()));
             message.setSubject("Bienvenido a SMS Renta");
-            
+
             message.setText("Conductor " + conductor.getUsuarioNombre() + ","
                     + "\n"
                     + "Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
@@ -464,7 +470,7 @@ public class SendEmail {
             message.setText("El cliente " + calificacion.getSmsReservacion().getSmsUsuario().getUsuarioNombre() + " "
                     + "califico la reservacion " + calificacion.getSmsReservacion().getIdReservacion() + " con un puntaje de " + calificacion.getCalificacionCalidadServicio() + " estrellas."
                     + "El conductor asignado a este servicio era el señor(a) " + calificacion.getSmsReservacion().getSmsEmpleado().getSmsUsuario().getUsuarioNombre() + " y "
-                    + "el vehiculo elegido era el identificado con placa "+calificacion.getSmsReservacion().getSmsVehiculo().getVehPlaca()+"./n"
+                    + "el vehiculo elegido era el identificado con placa " + calificacion.getSmsReservacion().getSmsVehiculo().getVehPlaca() + "./n"
                     + "Atentamente, SMS Renta");
 
             Transport t = session.getTransport("smtp");
@@ -477,6 +483,46 @@ public class SendEmail {
             //de no hacer nada con la excepcion, lanzarla para que el modulo
             //superior la capture y avise al usuario con un popup, por ejemplo.
             return;
+        }
+    }
+
+    public void sendEmailHtmlPrueba() {
+        init();
+        try {
+            MimeMessage message = new MimeMessage(session);
+
+            //quien envia
+            message.setFrom(new InternetAddress("smsrenta@gmail.com"));
+
+            // a donde se envia
+            message.addRecipient(
+                    Message.RecipientType.TO,
+                    new InternetAddress("desarrollo@smsrenta.com.co"));
+            message.setSubject("Mensaje html prueba");
+            String messageHtml = "<H1>Hola</H1>";
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(messageHtml, "text/html");
+
+            // Create a related multi-part to combine the parts
+            MimeMultipart multipart = new MimeMultipart("related");
+            multipart.addBodyPart(messageBodyPart);
+
+            // Create part for the image
+            messageBodyPart = new MimeBodyPart();
+
+            // Fetch the image and associate to part
+            DataSource fds = new FileDataSource("");
+            messageBodyPart.setDataHandler(new DataHandler(fds));
+            messageBodyPart.setHeader("Content-ID", "memememe");
+
+            // Add part to multi-part
+            multipart.addBodyPart(messageBodyPart);
+
+            // Associate multi-part with message
+            message.setContent(multipart);
+
+        } catch (Exception e) {
         }
     }
 }

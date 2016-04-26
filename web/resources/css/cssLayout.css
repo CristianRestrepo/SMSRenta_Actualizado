@@ -1191,9 +1191,9 @@ span.round-tabs-conduc.one {}
 }
 
 .bg-gris{
-   background-color: rgba(33, 13, 2, 0.65);
+    background-color: rgba(33, 13, 2, 0.65);
     min-width: 100%;
     min-height: 100%;
-    position: absolute;
+    position: fixed;
     background-position: center;
 }

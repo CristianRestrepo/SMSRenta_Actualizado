@@ -204,7 +204,7 @@ public class dateTimeValidator implements Validator {
                     throw new ValidatorException(message);
                 }
             } else if (fEntrega.after(fInicio)) {
-                if (hEntrega.after(hInicio) && diffHourEqualDay < 24 && servicioElegido.getServicioDuracion() >= 1) {
+                if (hEntrega.after(hInicio) && diffHourDifferentDay < 24 && servicioElegido.getServicioDuracion() >= 1) {
                     FacesMessage message = new FacesMessage();
                     message.setSummary("El tiempo de reserva debe ser minimo 24 horas");
                     message.setSeverity(FacesMessage.SEVERITY_ERROR);
