@@ -153,7 +153,7 @@
                                             </p:column>
 
                                             <p:column style="width: 35px">
-                                                <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
+                                                <p:commandLink style="color: white" class="btn btn-block btn-success btn-padding" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
                                                     <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>
                                                     <i class="fa fa-pencil">  </i>
                                                 </p:commandLink>
