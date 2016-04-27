@@ -97,15 +97,17 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this"  update=":formularioReferencias :formularioDatosReferencias" action="#{referenciaBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this"  update=":formularioReferencias :formularioDatosReferencias" action="#{referenciaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.referenciaView}"/>
+                                                 <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">                                                    
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formularioReferencias :formularioDatosReferencias" action="#{referenciaBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-danger" process="@this" update=":formularioReferencias :formularioDatosReferencias" action="#{referenciaBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{Referencias}" target="#{referenciaBean.referenciaView}"/>
                                                 <p:confirm header="Confirmación" message="Está seguro que desea eliminar este referencia de vehiculos?" icon="ui-icon-alert" /> 
+                                                 <i class="fa fa-trash">  </i> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

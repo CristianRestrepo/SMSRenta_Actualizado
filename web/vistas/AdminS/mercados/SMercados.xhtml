@@ -153,8 +153,9 @@
                                                 </p:column>
 
                                                 <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" action="#{mercadoBean.seleccionarCrud(1)}" update=":formularioMercado :formularioSubidaArchivos" title="Modificar">
+                                                    <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" action="#{mercadoBean.seleccionarCrud(1)}" update=":formularioMercado :formularioSubidaArchivos" title="Modificar">
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
+                                                          <i class="fa fa-pencil">  </i> 
                                                     </p:commandLink>
                                                 </p:column>
                                             </p:dataTable>

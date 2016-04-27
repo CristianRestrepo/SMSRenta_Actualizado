@@ -174,14 +174,16 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formA :formC:DTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update=":formA :formC:DTEmpleado :formB:TEstadoFoto :formB:fileIdPhoto :formD:TEstadoArchivo :formD:fileIdDoc" action="#{empleadoBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{empleado}" target="#{empleadoBean.empleadoView}"/>
+                                                  <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                          <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white; padding: 8px" class="fa fa-user-times btn btn-block btn-warning" process="@this" update=":formA:msg" action="#{usuarioBean.habilitar_deshabilitarCuenta(empleado.smsUsuario)}" title="Habilitar/Desahibilitar cuenta">
+                                            <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-warning" process="@this" update=":formA:msg" action="#{usuarioBean.habilitar_deshabilitarCuenta(empleado.smsUsuario)}" title="Habilitar/Desahibilitar cuenta">
                                                 <p:confirm header="Confirmación" message="Está seguro que desea habilitar/deshabilitar la cuenta de este usuario?" icon="ui-icon-alert" /> 
+                                                  <i class="fa fa-user-times">  </i> 
                                             </p:commandLink>
                                         </p:column>                                                                               
                                     </p:dataTable>

@@ -46,8 +46,9 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formularioDatos :formularioMarca :formularioFotografia" action="#{marcaBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update=":formularioDatos :formularioMarca :formularioFotografia" action="#{marcaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Marca}" target="#{marcaBean.marcaView}"/>
+                                                  <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>                                        
                                     </p:dataTable>                                   

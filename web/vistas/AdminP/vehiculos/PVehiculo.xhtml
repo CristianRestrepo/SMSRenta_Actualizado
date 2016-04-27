@@ -236,14 +236,16 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formA :formB :formD" action="#{vehiculoBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update=":formA :formB :formD" action="#{vehiculoBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
+                                                  <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formA :formB :formD :formC:DTVehiculos" action="#{vehiculoBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
+                                                  <i class="fa fa-trash">  </i> 
                                                 <p:confirm header="Confirmación"  message="Está seguro que desea eliminar este vehiculo?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>  

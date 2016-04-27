@@ -92,15 +92,9 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update=":formularioPais" action="#{paisBean.seleccionarCrud(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update=":formularioPais" action="#{paisBean.seleccionarCrud(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{paises}" target="#{paisBean.paisView}"/>
-                                            </p:commandLink>
-                                        </p:column>
-
-                                        <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update=":formularioPais :formularioDatosPais:DTPaises" action="#{paisBean.eliminar()}" title="Eliminar">
-                                                <f:setPropertyActionListener value="#{paises}" target="#{paisBean.paisView}"/>
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este cliente?" icon="ui-icon-alert" /> 
+                                                  <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable> 

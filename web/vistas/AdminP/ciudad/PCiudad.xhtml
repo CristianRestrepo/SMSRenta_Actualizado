@@ -111,15 +111,17 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink process="@this" update=":formularioCiudades :formularioDatosCiudades" class="fa fa-pencil btn btn-block btn-success" style="color: white; padding: 8px"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
+                                            <p:commandLink process="@this" update=":formularioCiudades :formularioDatosCiudades" class="btn btn-block btn-success" style="color: white; padding: 8px"  action="#{ciudadBean.seleccionarCrud(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
+                                                <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink process="@this" update=":formularioCiudades :formularioDatosCiudades:DTCiudades" class="fa fa-trash btn btn-block btn-danger" style="color: white; padding: 8px" action="#{ciudadBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink process="@this" update=":formularioCiudades :formularioDatosCiudades:DTCiudades" class="btn btn-block btn-danger" style="color: white; padding: 8px" action="#{ciudadBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{ciudades}" target="#{ciudadBean.ciudadView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta ciudad?" icon="ui-icon-alert" /> 
+                                                <i class="fa fa-trash">  </i> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>    

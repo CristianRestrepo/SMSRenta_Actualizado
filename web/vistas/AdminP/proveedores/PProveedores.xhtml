@@ -144,14 +144,16 @@
                                         </p:column>
                                                                                 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form"  action="#{proveedorBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update="@form"  action="#{proveedorBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
+                                                <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{proveedorBean.eliminarProveedor()}" title="Eliminar">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-danger" process="@this" update="@form" action="#{proveedorBean.eliminarProveedor()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
+                                                <i class="fa fa-trash">  </i> 
                                                 <p:confirm header="Confirmación" message="Está seguro que desea eliminar este Proveedor?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>

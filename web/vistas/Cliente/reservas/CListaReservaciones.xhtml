@@ -47,32 +47,34 @@
                                 </p:column>
 
                                 <p:column style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-arrow-left btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
+                                    <p:commandLink style="color: white; padding: 8px" class=" btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
                                         <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
+                                        <i class="fa fa-arrow-left">  </i>
                                     </p:commandLink>
                                 </p:column>
 
                                 <p:column headerText="PC" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura(reservacion)}" title="Generar Factura">
-
+                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura(reservacion)}" title="Generar Factura">
+                                        <i class="fa fa-download">  </i>
                                     </p:commandLink>
                                 </p:column>  
 
                                 <p:column headerText="POS" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-danger" process="@this" ajax="false" action="#{facturaBean.generarFacturaPos(reservacion)}" title="Generar Factura POS">
-
+                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-danger" process="@this" ajax="false" action="#{facturaBean.generarFacturaPos(reservacion)}" title="Generar Factura POS">
+                                        <i class="fa fa-download">  </i>
                                     </p:commandLink>
                                 </p:column> 
 
                                 <p:column headerText="FUEC" style="width: 45px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-download btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacion)}" title="Generar FUEC">
-
+                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacion)}" title="Generar FUEC">
+                                        <i class="fa fa-download">  </i>
                                     </p:commandLink>
                                 </p:column>  
 
                                 <p:column headerText="CAL" style="width: 40px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-check-square-o btn btn-block btn-primary" process="@this" ajax="false" action="#{pathBean.ir_ClienteCalificarReserva()}" title="Calificar Servicio">
+                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" ajax="false" action="#{pathBean.ir_ClienteCalificarReserva()}" title="Calificar Servicio">
                                         <f:setPropertyActionListener value="#{reservacion}" target="#{calificacionBean.reservacionView}"/>
+                                        <i class="fa fa-check-square-o">  </i>
                                     </p:commandLink>
                                 </p:column>  
                             </p:dataTable>

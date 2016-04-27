@@ -154,15 +154,17 @@
                                                 </p:column>
 
                                                 <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success" process="@this" action="#{mercadoBean.seleccionarCrud(1)}" update=":formularioMercado :formularioSubidaArchivos" title="Modificar">
+                                                    <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" action="#{mercadoBean.seleccionarCrud(1)}" update=":formularioMercado :formularioSubidaArchivos" title="Modificar">
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
+                                                        <i class="fa fa-pencil">  </i> 
                                                     </p:commandLink>
                                                 </p:column>
 
                                                 <p:column style="width: 35px">
-                                                    <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update=":formularioMercado :formularioSubidaArchivos:msg :formularioListaMercados:ListaMercados" title="Eliminar">
+                                                    <p:commandLink style="color: white" class="btn btn-block btn-danger" process="@this" action="#{mercadoBean.eliminarMercado()}" update=":formularioMercado :formularioSubidaArchivos:msg :formularioListaMercados:ListaMercados" title="Eliminar">
                                                         <f:setPropertyActionListener value="#{Mercado}" target="#{mercadoBean.mercadoView}"/>
                                                         <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este mercado?" icon="ui-icon-alert" /> 
+                                                        <i class="fa fa-trash">  </i> 
                                                     </p:commandLink>
                                                 </p:column>
                                             </p:dataTable>

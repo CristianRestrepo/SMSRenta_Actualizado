@@ -118,21 +118,24 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white; padding: 8px" class="fa fa-pencil btn btn-block btn-success" process="@this" update="@form" action="#{clienteBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-success" process="@this" update="@form" action="#{clienteBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.usuarioView}"/>
+                                                <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white; padding: 8px" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{clienteBean.eliminarCliente()}" title="Eliminar">
+                                            <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-danger" process="@this" update="@form" action="#{clienteBean.eliminarCliente()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.usuarioView}"/>
+                                                <i class="fa fa-trash">  </i> 
                                                 <p:confirm header="Confirmación" message="Está seguro que desea eliminar este cliente?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white; padding: 8px" class="fa fa-user-times btn btn-block btn-warning" process="@this" update="@form" action="#{usuarioBean.habilitar_deshabilitarCuenta(cliente)}" title="Habilitar/Desahibilitar cuenta">
+                                            <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-warning" process="@this" update="@form" action="#{usuarioBean.habilitar_deshabilitarCuenta(cliente)}" title="Habilitar/Desahibilitar cuenta">
                                                 <p:confirm header="Confirmación" message="Está seguro que desea habilitar/deshabilitar la cuenta de este usuario?" icon="ui-icon-alert" /> 
+                                                <i class="fa fa-user-times">  </i> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

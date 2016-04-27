@@ -118,14 +118,16 @@
                                             </p:column>
 
                                             <p:column style="width: 35px">
-                                                <p:commandLink process="@this" update=":formularioLugares" class="fa fa-pencil btn btn-block btn-success" style="color: white"  action="#{lugarBean.seleccionarCrud(1)}" title="Modificar">
+                                                <p:commandLink process="@this" update=":formularioLugares" class="btn btn-block btn-success" style="color: white"  action="#{lugarBean.seleccionarCrud(1)}" title="Modificar">
                                                     <f:setPropertyActionListener value="#{Lugares}" target="#{lugarBean.lugarView}"/>
+                                                     <i class="fa fa-pencil">  </i> 
                                                 </p:commandLink>
                                             </p:column>
 
                                             <p:column style="width: 35px"> 
-                                                <p:commandLink process="@this" update=":formularioLugares :formularioDatosLugares:DTLugares" class="fa fa-trash btn btn-block btn-danger" style="color: white" action="#{lugarBean.eliminar()}" title="Eliminar">
+                                                <p:commandLink process="@this" update=":formularioLugares :formularioDatosLugares:DTLugares" class="btn btn-block btn-danger" style="color: white" action="#{lugarBean.eliminar()}" title="Eliminar">
                                                     <f:setPropertyActionListener value="#{Lugares}" target="#{lugarBean.lugarView}"/>
+                                                     <i class="fa fa-trash">  </i> 
                                                     <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta ciudad?" icon="ui-icon-alert" /> 
                                                 </p:commandLink>
                                             </p:column>

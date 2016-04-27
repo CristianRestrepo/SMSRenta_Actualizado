@@ -100,15 +100,17 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink class="fa fa-pencil btn btn-block btn-success btn-padding" style="color: white" process="@this" update=":formularioCategorias" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink class="btn btn-block btn-success btn-padding" style="color: white" process="@this" update=":formularioCategorias" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
+                                                <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink class="fa fa-trash btn btn-block btn-danger btn-padding" style="color: white" process="@this" update="@form" action="#{categoriaBean.eliminar()}" title="Eliminar">
+                                            <p:commandLink class="btn btn-block btn-danger btn-padding" style="color: white" process="@this" update="@form" action="#{categoriaBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
                                                 <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar esta categoria?" icon="ui-icon-alert" /> 
+                                                <i class="fa fa-trash">  </i> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

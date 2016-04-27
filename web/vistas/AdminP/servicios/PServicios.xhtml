@@ -25,7 +25,7 @@
                             </div>
                         </div>                            
                     </b:column>
-                    
+
                     <h:form id="formularioServicios">
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <p:messages id="msgServicios" closable="true"/>
@@ -86,22 +86,22 @@
                                             <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{serviciosBean.habilitarCancelar}" action="#{serviciosBean.cancelar()}" update="@form" value="Cancelar" />
                                         </h:panelGrid>
                                         <script type="text/javascript">
-                                        function start() {
-                                            PF('statusDialog').show();
-                                        }
-                                        function stop() {
-                                            PF('statusDialog').hide();
-                                        }
-                                    </script>
-                                    <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
-                                        <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
-                                    </p:dialog>
+                                            function start() {
+                                                PF('statusDialog').show();
+                                            }
+                                            function stop() {
+                                                PF('statusDialog').hide();
+                                            }
+                                        </script>
+                                        <p:dialog modal="true" widgetVar="statusDialog" header="Cargando" draggable="false" closable="false" resizable="false">
+                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                        </p:dialog>
                                     </div>
                                 </div>
                             </div>                        
                         </b:column> 
                     </h:form>
-                    
+
                     <h:form id="formularioDatosServicios">
                         <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
                             <div class="box box-success">
@@ -128,15 +128,17 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" 
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success btn-padding" process="@this" 
                                                            update=":formularioServicios :formularioDatosServicios:DTservicios" action="#{serviciosBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{servicio}" target="#{serviciosBean.servicioView}"/>
+                                                <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger btn-padding" process="@this" 
+                                            <p:commandLink style="color: white" class="btn btn-block btn-danger btn-padding" process="@this" 
                                                            update=":formularioServicios :formularioDatosServicios:DTservicios" action="#{serviciosBean.eliminar()}" title="Eliminar">
+                                                <i class="fa fa-trash">  </i> 
                                                 <f:setPropertyActionListener value="#{servicio}" target="#{serviciosBean.servicioView}"/>
                                                 <p:confirm header="Confirmación" message="Está seguro que desea eliminar este Servicio?" 
                                                            icon="ui-icon-alert" /> 

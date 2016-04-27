@@ -155,22 +155,13 @@
                                             <p:column style="width: 35px">
                                                 <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" update="@form" action="#{costosServicioBean.seleccionarCRUD(1)}" title="Modificar">
                                                     <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>
-                                                </p:commandLink>
-                                            </p:column>
-
-                                            <p:column style="width: 35px">
-                                                <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger btn-padding" process="@this" update="@form" action="#{costosServicioBean.eliminar()}" title="Eliminar">
-                                                    <f:setPropertyActionListener value="#{costo}" target="#{costosServicioBean.costoView}"/>
-                                                    <p:confirm header="Confirmación" message="Está seguro que desea eliminar este costo?" icon="ui-icon-alert" /> 
+                                                    <i class="fa fa-pencil">  </i>
                                                 </p:commandLink>
                                             </p:column>
                                         </p:dataTable>
 
 
-                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                            <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
-                                            <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
-                                        </p:confirmDialog>
+
                                     </div>                             
                                 </div>
                             </b:column> 

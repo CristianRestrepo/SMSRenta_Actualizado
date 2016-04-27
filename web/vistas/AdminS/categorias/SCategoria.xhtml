@@ -100,8 +100,9 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink class="fa fa-pencil btn btn-block btn-success btn-padding" style="color: white" process="@this" update=":formularioCategorias" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink class="btn btn-block btn-success btn-padding" style="color: white" process="@this" update=":formularioCategorias" action="#{categoriaBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{Categorias}" target="#{categoriaBean.categoriaView}"/>
+                                                  <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
                                     </p:dataTable>

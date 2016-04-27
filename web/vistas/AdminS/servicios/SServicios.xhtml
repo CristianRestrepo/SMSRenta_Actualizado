@@ -128,9 +128,11 @@
                                         </p:column>
 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="fa fa-pencil btn btn-block btn-success btn-padding" process="@this" 
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success btn-padding" process="@this" 
                                                            update=":formularioServicios :formularioDatosServicios:DTservicios" action="#{serviciosBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{servicio}" target="#{serviciosBean.servicioView}"/>
+                                                 <i class="fa fa-pencil">  </i>
+                                                
                                             </p:commandLink>
                                         </p:column>                                        
                                     </p:dataTable>                              
