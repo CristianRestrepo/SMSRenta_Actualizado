@@ -170,7 +170,7 @@ public class UsuarioBean implements Serializable {
         repitaContraseña = "";
     }
 
-    public void generarNuevaContraseñaDeSesion() {
+    public void generarNuevaContraseñaDeSesion() throws IOException {
         GenerarPassword gpassword = new GenerarPassword();
         MD5 md5 = new MD5();
         SendEmail email = new SendEmail();

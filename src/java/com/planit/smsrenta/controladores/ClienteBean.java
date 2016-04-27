@@ -15,6 +15,7 @@ import com.planit.smsrenta.metodos.SendEmail;
 import static com.planit.smsrenta.metodos.Upload.getNameDefaultUsuario;
 import static com.planit.smsrenta.metodos.Upload.getPathDefaultUsuario;
 import com.planit.smsrenta.modelos.SmsUsuario;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos     
-    public String registrarCliente() {
+    public String registrarCliente() throws IOException {
         //asignamos un rol al usuario
         usuarioView.getSmsRol().setRolNombre("Cliente");
 
@@ -142,7 +143,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
 
     }
 
-    public void registrarClienteAdmin() {
+    public void registrarClienteAdmin() throws IOException {
         //asignamos un rol al usuario
         usuarioView.getSmsRol().setRolNombre("Cliente");
 
@@ -237,7 +238,7 @@ public class ClienteBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos Propios
-    public void metodo() {
+    public void metodo() throws IOException {
         if (operacion == 0) {
             registrarClienteAdmin();
         } else if (operacion == 1) {

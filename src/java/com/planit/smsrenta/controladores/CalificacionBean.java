@@ -10,6 +10,7 @@ import com.planit.smsrenta.dao.ImpCalificacionDao;
 import com.planit.smsrenta.metodos.SendEmail;
 import com.planit.smsrenta.modelos.SmsCalificacion;
 import com.planit.smsrenta.modelos.SmsReservacion;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -45,7 +46,7 @@ public class CalificacionBean implements Serializable {
     }        
 
     //metodos
-    public String registrar() {
+    public String registrar() throws IOException {
         calificacionView.setSmsReservacion(reservacionView);
         calificacionDao.registrarCalificacion(calificacionView);
         

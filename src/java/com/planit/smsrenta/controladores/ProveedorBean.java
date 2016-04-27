@@ -18,6 +18,7 @@ import static com.planit.smsrenta.metodos.Upload.getNameDefaultUsuario;
 import static com.planit.smsrenta.metodos.Upload.getPathDefaultUsuario;
 import com.planit.smsrenta.modelos.SmsMercado;
 import com.planit.smsrenta.modelos.SmsProveedor;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +148,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos
-    public void registrarProveedor() {
+    public void registrarProveedor() throws IOException {
         //asignamos un rol al usuario
         proveedorView.getSmsUsuario().getSmsRol().setRolNombre("Proveedor");
 
@@ -273,7 +274,7 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos Propios
-    public void metodo() {
+    public void metodo() throws IOException {
         if (operacion == 0) {
             registrarProveedor();
         } else if (operacion == 1) {

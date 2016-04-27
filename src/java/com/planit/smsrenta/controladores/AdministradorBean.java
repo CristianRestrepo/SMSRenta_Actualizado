@@ -15,6 +15,7 @@ import com.planit.smsrenta.metodos.SendEmail;
 import static com.planit.smsrenta.metodos.Upload.getNameDefaultUsuario;
 import static com.planit.smsrenta.metodos.Upload.getPathDefaultUsuario;
 import com.planit.smsrenta.modelos.SmsUsuario;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -88,7 +89,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
 
     //Declaracion de metodos
     //Metodos CRUD
-    public void registrarAdministrador() {
+    public void registrarAdministrador() throws IOException {
 
         //asignamos al usuario la imagen de perfil default
         usuarioView.setUsuarioFotoRuta(getPathDefaultUsuario());
@@ -157,7 +158,7 @@ public class AdministradorBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos Propios
-    public void metodo() {
+    public void metodo() throws IOException {
         if (operacion == 0) {
             registrarAdministrador();
         } else if (operacion == 1) {

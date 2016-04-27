@@ -168,7 +168,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos que se comunican con el controlador    
-    public void registrarEmpleado() {
+    public void registrarEmpleado() throws IOException {
         empleadoView.getSmsUsuario().getSmsRol().setRolNombre("Conductor");
         //Asignamos un estado al conductor
         empleadoView.getSmsEstado().setEstadoNombre("No disponible");
@@ -281,7 +281,7 @@ public class EmpleadoBean extends UsuarioBean implements Serializable {
     }
 
     //Metodos Propios
-    public void metodo() {
+    public void metodo() throws IOException {
         if (operacion == 0) {
             registrarEmpleado();
         } else if (operacion == 1) {
