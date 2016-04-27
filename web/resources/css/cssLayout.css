@@ -2,6 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic);
 
 body {
+    font-family: 'Open Sans', sans-serif !important;
     color: #222D32 !important;
     background-color: #222D32 !important;
 }
@@ -1196,4 +1197,8 @@ span.round-tabs-conduc.one {}
     min-height: 100%;
     position: fixed;
     background-position: center;
+}
+
+.ui-widget {
+    font-family: 'Open Sans', sans-serif !important;
 }
