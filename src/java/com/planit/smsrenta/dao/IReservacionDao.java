@@ -15,17 +15,34 @@ import java.util.List;
  * @author Desarrollo_Planit
  */
 public interface IReservacionDao {
-    
+
     //Definicion de metodos CRUD
     public List<SmsReservacion> mostrarReservaciones();
+
+    public List<SmsReservacion> consultarReservacionesSegunEstado(int estado);
+
     public void registrarReservacion(SmsReservacion reservacion);
+
     public void modificarReservacion(SmsReservacion reservacion);
-    public void eliminarReservacion(SmsReservacion reservacion); 
+
+    public void eliminarReservacion(SmsReservacion reservacion);
+
     public List<SmsReservacion> filtrarReservacionSegunCliente(String valor);
-    public SmsReservacion consultarReservacionId(SmsReservacion reserva);
-    public SmsReservacion consultarReserva(SmsReservacion reserva); 
-    public SmsReservacion consultarReservacionSinEmpleado(SmsReservacion reserva); 
-    public List<SmsReservacion> mostrarReservacionCliente(SmsUsuario usuario);
-    public List<SmsReservacion> mostrarReservacionConductores(SmsEmpleado conductor);
     
+    public List<SmsReservacion> filtrarReservacionSegunClienteSegunEstado(String valor, int estado);
+
+    public SmsReservacion consultarReservacionId(SmsReservacion reserva);
+
+    public SmsReservacion consultarReserva(SmsReservacion reserva);
+
+    public SmsReservacion consultarReservacionSinEmpleado(SmsReservacion reserva);
+
+    public List<SmsReservacion> mostrarReservacionCliente(SmsUsuario usuario);
+
+    public List<SmsReservacion> mostrarReservacionClienteSegunEstado(SmsUsuario usuario, int estado);
+
+    public List<SmsReservacion> mostrarReservacionConductores(SmsEmpleado conductor);
+
+    public List<SmsReservacion> mostrarReservacionConductoresSegunEstado(SmsEmpleado conductor, int estado);
+
 }

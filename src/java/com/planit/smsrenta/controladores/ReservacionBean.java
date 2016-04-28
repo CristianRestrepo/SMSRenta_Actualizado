@@ -18,7 +18,6 @@ import com.planit.smsrenta.dao.IReservacionDao;
 import com.planit.smsrenta.dao.IServicioDao;
 import com.planit.smsrenta.dao.IUsuarioDao;
 import com.planit.smsrenta.dao.IVehiculoDao;
-import com.planit.smsrenta.dao.ImpAdministradorDao;
 import com.planit.smsrenta.dao.ImpCategoriasServicioDao;
 import com.planit.smsrenta.dao.ImpCiudadDao;
 import com.planit.smsrenta.dao.ImpCostosServiciosDao;
@@ -91,6 +90,8 @@ public class ReservacionBean implements Serializable {
     private String fechaEntrega;
     private String buscar;
 
+    private int estadoReservacion;
+
     private boolean skip = false;//Controla la transicion entre las pestañas del panel de reserva
     //Controlan la seleccion de los vehiculos y los empleados
     private boolean SelecVeh;
@@ -162,6 +163,8 @@ public class ReservacionBean implements Serializable {
 
         mercadoSeleccionado = new SmsMercado();
         categoriaView = new SmsCategoria();
+
+        estadoReservacion = 0;
     }
 
     @PostConstruct
@@ -191,6 +194,14 @@ public class ReservacionBean implements Serializable {
 
     public String getHoraEntrega() {
         return horaEntrega;
+    }
+
+    public int getEstadoReservacion() {
+        return estadoReservacion;
+    }
+
+    public void setEstadoReservacion(int estadoReservacion) {
+        this.estadoReservacion = estadoReservacion;
     }
 
     public void setHoraEntrega(String horaEntrega) {
@@ -451,11 +462,15 @@ public class ReservacionBean implements Serializable {
     //Especificos 
     ///Controla el flujo de la vista de reservacion
     public void filtrarReservaciones() {
-        if (buscar == null) {
-            reservacionesListView = consultarReservacionesSegunUsuario();
-        } else {
-            reservacionesListView = resDao.filtrarReservacionSegunCliente(buscar);
-        }
+            if (buscar == null) {
+                reservacionesListView = consultarReservacionesSegunUsuario();
+            } else {
+                if (estadoReservacion == 0) {
+                    reservacionesListView = resDao.filtrarReservacionSegunCliente(buscar);
+                }else{
+                    reservacionesListView = resDao.filtrarReservacionSegunClienteSegunEstado(buscar, estadoReservacion);
+                }
+            }        
     }
 
     public String flujoDeReservacion(FlowEvent event) {
@@ -483,7 +498,7 @@ public class ReservacionBean implements Serializable {
                     Date fechaActual = new Date();
                     Date mediaNoche = new Date();
                     Date umbral = new Date();
-                    
+
                     if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {
                         //si el usuario logueado es de tipo cliente asignanos su informacion al objeto cliente
                         reservaView.setSmsUsuario(sesion);
@@ -722,7 +737,7 @@ public class ReservacionBean implements Serializable {
                                 calFechaEntrega.add(Calendar.DATE, 1);
                                 reservaView.setReservacionFechaLlegada(formatDate.parse(formatDate.format(calFechaEntrega.getTime())));
                             }
-                            
+
                         } catch (ParseException pe) {
                             pe.getMessage();
                         }
@@ -811,21 +826,40 @@ public class ReservacionBean implements Serializable {
 
         List<SmsReservacion> listaReservaciones = new ArrayList<>();
 
-        switch (sesion.getSmsRol().getRolNombre()) {
+        if (estadoReservacion == 0) {
+            switch (sesion.getSmsRol().getRolNombre()) {
 
-            case "Administrador Principal":
-                listaReservaciones = resDao.mostrarReservaciones();
-                break;
-            case "Administrador Secundario":
-                listaReservaciones = resDao.mostrarReservaciones();
-                break;
-            case "Cliente":
-                listaReservaciones = resDao.mostrarReservacionCliente(sesion);
-                break;
-            case "Conductor":
-                reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
-                listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
-                break;
+                case "Administrador Principal":
+                    listaReservaciones = resDao.mostrarReservaciones();
+                    break;
+                case "Administrador Secundario":
+                    listaReservaciones = resDao.mostrarReservaciones();
+                    break;
+                case "Cliente":
+                    listaReservaciones = resDao.mostrarReservacionCliente(sesion);
+                    break;
+                case "Conductor":
+                    reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
+                    listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
+                    break;
+            }
+        } else {
+            switch (sesion.getSmsRol().getRolNombre()) {
+
+                case "Administrador Principal":
+                    listaReservaciones = resDao.consultarReservacionesSegunEstado(estadoReservacion);
+                    break;
+                case "Administrador Secundario":
+                    listaReservaciones = resDao.consultarReservacionesSegunEstado(estadoReservacion);
+                    break;
+                case "Cliente":
+                    listaReservaciones = resDao.mostrarReservacionClienteSegunEstado(sesion, estadoReservacion);
+                    break;
+                case "Conductor":
+                    reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
+                    listaReservaciones = resDao.mostrarReservacionConductoresSegunEstado(reservaView.getSmsEmpleado(), estadoReservacion);
+                    break;
+            }
         }
         return listaReservaciones;
     }
@@ -873,6 +907,7 @@ public class ReservacionBean implements Serializable {
 
     public void actualizarListasReservaciones() {
         addEventoCalendario();
+        reservacionesListView = consultarReservacionesSegunUsuario();
     }
 
     public String irVistaReserva() {

@@ -8,13 +8,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./../temp-cliente.xhtml">
-
             <ui:define name="content2">
                 <b:container fluid="true">
                     <h:form id="formularioReservaciones">
-
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="espacio-arriba" style="text-align: center" align="center">
                                 <h4 style="font-size: x-large">RESERVACIONES</h4><br/>
@@ -22,10 +19,24 @@
                             </div>
                         </b:column>
                         <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
-                            <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}"  rows="5"
+                            <h:panelGrid columns="2" width="100%">
+
+                                <p:outputLabel value="Estado de la reservacion:"/>
+
+                                <p:selectOneMenu style="width: 100%" value="#{reservacionBean.estadoReservacion}">
+                                    <f:selectItem itemLabel="Todos los estados" itemValue="0"/>
+                                    <f:selectItem itemLabel="Inactiva" itemValue="4"/>
+                                    <f:selectItem itemLabel="En proceso" itemValue="5"/>
+                                    <f:selectItem itemLabel="Terminada" itemValue="6"/>
+                                    <f:selectItem itemLabel="Cancelada" itemValue="7"/>
+                                    <p:ajax event="change" listener="#{reservacionBean.actualizarListasReservaciones()}" update="DTReservaciones"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+
+                            <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}"  rows="15"
                                          paginator="true"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,10,15" emptyMessage="Reservaciones no registrados">
+                                         rowsPerPageTemplate="15,20,25" emptyMessage="Reservaciones no registrados">
                                 <p:column headerText="ID">
                                     <h:outputText value="#{reservacion.idReservacion}" />
                                 </p:column>
@@ -46,16 +57,16 @@
                                     <h:outputText value="#{reservacion.reservacionHoraInicio}" />
                                 </p:column>
 
-                                <p:column style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class=" btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
+                                <p:column  style="width: 35px">
+                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
                                         <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
-                                        <i class="fa fa-arrow-left">  </i>
+                                        <i class="fa fa-arrow-left">  </i> 
                                     </p:commandLink>
                                 </p:column>
 
                                 <p:column headerText="PC" style="width: 35px">
                                     <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-success" process="@this" ajax="false" action="#{facturaBean.generarFactura(reservacion)}" title="Generar Factura">
-                                        <i class="fa fa-download">  </i>
+                                        <i class="fa fa-download">  </i> 
                                     </p:commandLink>
                                 </p:column>  
 
@@ -65,20 +76,19 @@
                                     </p:commandLink>
                                 </p:column> 
 
-                                <p:column headerText="FUEC" style="width: 45px">
+                                <p:column headerText="FUEC" style="width: 35px">
                                     <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-warning" process="@this" ajax="false" action="#{contratoBean.generarFuec(reservacion)}" title="Generar FUEC">
-                                        <i class="fa fa-download">  </i>
+                                        <i class="fa fa-download">  </i> 
                                     </p:commandLink>
-                                </p:column>  
+                                </p:column> 
 
-                                <p:column headerText="CAL" style="width: 40px">
-                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" ajax="false" action="#{pathBean.ir_ClienteCalificarReserva()}" title="Calificar Servicio">
+                                <p:column headerText="CAL" style="width: 35px">
+                                    <p:commandLink style="color: white; padding:8px" class="btn btn-block btn-primary" process="@this" ajax="false" action="#{pathBean.ir_ClienteCalificarReserva()}" title="Calificar Servicio">
                                         <f:setPropertyActionListener value="#{reservacion}" target="#{calificacionBean.reservacionView}"/>
                                         <i class="fa fa-check-square-o">  </i>
                                     </p:commandLink>
                                 </p:column>  
                             </p:dataTable>
-
                         </b:column> 
                         <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
                             <h:form>

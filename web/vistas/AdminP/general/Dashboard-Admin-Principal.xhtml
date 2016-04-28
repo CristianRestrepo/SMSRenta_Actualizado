@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
 
@@ -35,13 +36,25 @@
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-calendar"/>
                                     <h2 class="box-title">Horarios <strong>SMS Renta</strong></h2>
-                                    <h:panelGrid class="box-tools" columns="3">
-                                        <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
-                                        <p:commandButton style="width: 100%" immediate="true" process="@this" ajax="false" action="irListaReservacionesAdminP" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
+                                    <h:panelGrid class="box-tools" columns="2">
+                                        <p:outputLabel value="Tipo de reservacion:"/>
+                                        <b:selectOneMenu value="#{reservacionBean.estadoReservacion}">
+                                            <f:selectItem itemLabel="Todas las reservaciones" itemValue="0"/>
+                                            <f:selectItem itemLabel="Inactiva" itemValue="4"/>
+                                            <f:selectItem itemLabel="En proceso" itemValue="5"/>
+                                            <f:selectItem itemLabel="Terminada" itemValue="6"/>
+                                            <f:selectItem itemLabel="Cancelada" itemValue="7"/>
+                                        </b:selectOneMenu>
                                     </h:panelGrid>
                                 </div>
                                 <div class="box-body">
-                                    <!-- CALENDARIO PRINCIPAL -->                                    
+                                    <!-- CALENDARIO PRINCIPAL -->
+                                    <div align="right">
+                                        <h:panelGrid columns="2" width="20%">
+                                            <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
+                                            <p:commandButton style="width: 100%" immediate="true" process="@this" ajax="false" action="irListaReservacionesAdminP" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
+                                        </h:panelGrid>
+                                    </div>
 
                                     <h:panelGrid columnClasses="value">
                                         <p:schedule timeZone="GMT-5" leftHeaderTemplate="today" centerHeaderTemplate="month, agendaWeek, agendaDay" rightHeaderTemplate="prev,next" id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
