@@ -179,7 +179,6 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
 
         //Asignamos la informacion de usuario al proveedor a registrar
         //proveedorView.setSmsUsuario(usuarioDao.consultarUsuario(proveedorView.getSmsUsuario()).get(0));
-
         //Registramos al usuario como proveedor
         proveedorDao.registrarProveedor(proveedorView);
         //proveedorView = proveedorDao.consultarProveedor(proveedorView).get(0);
@@ -192,12 +191,12 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
             mercados.add(mercadoView);
             mercadoView = new SmsMercado();
         }
-        
+
         for (int i = 0; i < mercados.size(); i++) {//asociamos los mercados con el proveedor
             mercados.get(i).getSmsProveedors().add(proveedorView);
             proveedorView.getSmsMercados().add(mercados.get(i));
         }
-        
+
         proveedorDao.modificarProveedor(proveedorView);//Modificamos el proveedor recien registrado para agregar los mercados a los que pertenece
         email.sendEmailProveedor(proveedorView.getSmsUsuario(), proveedorView, password);//Enviamos correo al proveedor, confirmando su registro al sistema, y enviando datos de sesion
         proveedorListView = proveedorDao.mostrarProveedores();//Recargamos la lista de proveedores
@@ -212,7 +211,24 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
     public void modificarProveedor() {
 
         boolean valor = false;
+        boolean noexiste = false;
         List<SmsMercado> mercadoList = mercadoDao.consultarMercadosSegunProveedor(proveedorView);
+        List<SmsMercado> mercadoEliminadoList = new ArrayList<>();
+
+        //identificamos mercados deseleccionados
+        for (SmsMercado mercado : mercadoList) {
+            for (int i = 0; i < mercadosSeleccionados.size(); i++) {
+                if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(i))) {
+                    noexiste = true;
+                }
+            }
+            if (!noexiste) {
+                mercadoEliminadoList.add(mercado);
+            }
+            noexiste = false;
+        }
+
+        //Agregamos nuevos mercados seleccionados
         for (int j = 0; j < mercadosSeleccionados.size(); j++) {
             for (SmsMercado mercado : mercadoList) {
                 if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
@@ -227,6 +243,27 @@ public class ProveedorBean extends UsuarioBean implements Serializable {
             }
             valor = false;
             mercadoView = new SmsMercado();
+        }
+
+        //Removemos mercados deseleccionados
+        for (int i = 0; i < mercadoEliminadoList.size(); i++) {
+            SmsProveedor prov = new SmsProveedor();
+            
+            for (SmsProveedor proveedor : mercadoEliminadoList.get(i).getSmsProveedors()) {
+                if(proveedor.getIdProveedor().equals(proveedorView.getIdProveedor())){
+                    prov = proveedor;
+                }
+            }
+            
+            for (SmsMercado mercado : proveedorView.getSmsMercados()){
+                if(mercado.getIdMercado().equals(mercadoEliminadoList.get(i).getIdMercado())){
+                mercadoView = mercado;
+                }
+            }
+            
+            mercadoEliminadoList.get(i).getSmsProveedors().remove(prov);
+            proveedorView.getSmsMercados().remove(mercadoView);
+
         }
 
         //el metodo recibe los atributos, agrega al atributo ciudad del objeto usuario un objeto correspondiente, 
