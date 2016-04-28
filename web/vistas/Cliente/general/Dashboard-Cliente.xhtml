@@ -64,7 +64,7 @@
                                         </h:panelGrid>
                                     </div>
 
-                                    <h:panelGrid columnClasses="value">
+                                    <h:panelGrid width="100%" columnClasses="value">
 
                                         <p:schedule id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
                                             <p:ajax event="eventSelect" listener="#{reservacionBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />

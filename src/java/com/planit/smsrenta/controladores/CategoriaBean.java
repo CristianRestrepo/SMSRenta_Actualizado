@@ -36,8 +36,7 @@ public class CategoriaBean implements Serializable {
     //Conexion con el DAO
     ICategoriaDao catDao;
     IMercadoDao mercadoDao;
-    
-    
+
     //Banderas    
     private boolean habilitarCancelar;
 
@@ -51,7 +50,7 @@ public class CategoriaBean implements Serializable {
         buscar = null;
         estado = 0;
         nombre = "Registrar Categoria";
-        
+
         habilitarCancelar = true;
 
         catDao = new ImpCategoriaDao();
@@ -125,13 +124,28 @@ public class CategoriaBean implements Serializable {
     public void setHabilitarCancelar(boolean habilitarCancelar) {
         this.habilitarCancelar = habilitarCancelar;
     }
-    
-    
 
     //METODOS QUE DEVUELVEN DATOS PARA VISTAS
     public void modificar() {
         boolean valor = false;
+        boolean noexiste = false;
         mercadoList = mercadoDao.consultarMercadoSegunCategoria(categoriaView);
+        List<SmsMercado> mercadoEliminadoList = new ArrayList<>();
+
+        //identificamos mercados deseleccionados
+        for (SmsMercado mercado : mercadoList) {
+            for (int i = 0; i < mercadosSeleccionados.size(); i++) {
+                if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(i))) {
+                    noexiste = true;
+                }
+            }
+            if (!noexiste) {
+                mercadoEliminadoList.add(mercado);
+            }
+            noexiste = false;
+        }
+
+        //Agregamos nuevos mercados seleccionados
         for (int j = 0; j < mercadosSeleccionados.size(); j++) {
             for (SmsMercado mercado : mercadoList) {
                 if (mercado.getMercadoNombre().equals(mercadosSeleccionados.get(j))) {
@@ -148,6 +162,31 @@ public class CategoriaBean implements Serializable {
             mercadoView = new SmsMercado();
         }
 
+        //Removemos mercados deseleccionados
+        for (int i = 0; i < mercadoEliminadoList.size(); i++) {
+            SmsCategoria cat = new SmsCategoria();
+
+            //Identificamos categoria a eliminar
+            for (SmsCategoria categoria : mercadoEliminadoList.get(i).getSmsCategorias()) {
+                if (categoria.getIdCategoria().equals(categoriaView.getIdCategoria())) {
+                    cat = categoria;
+                }
+            }
+
+            //Identificamos mercado a eliminar
+            for (SmsMercado mercado : categoriaView.getSmsMercados()) {
+                if (mercado.getIdMercado().equals(mercadoEliminadoList.get(i).getIdMercado())) {
+                    mercadoView = mercado;
+                }
+            }
+
+            //removemos asociaciones
+            mercadoEliminadoList.get(i).getSmsCategorias().remove(cat);
+            categoriaView.getSmsMercados().remove(mercadoView);
+
+        }
+        
+        //modificamos categoria
         catDao.modificarCategoria(categoriaView);
 
         categoriaView = new SmsCategoria();
@@ -160,19 +199,19 @@ public class CategoriaBean implements Serializable {
         //categoriaView = catDao.consultarCategoria(categoriaView).get(0);//Consultamos la categoria recien registrada
 
         List<SmsMercado> mercados = new ArrayList();
-        for (int i = 0; i < mercadosSeleccionados.size(); i++) { 
+        for (int i = 0; i < mercadosSeleccionados.size(); i++) {
             mercadoView.setMercadoNombre(mercadosSeleccionados.get(i));
             mercadoView = mercadoDao.consultarMercadoConCategorias(mercadoView);
             mercados.add(mercadoView);
             mercadoView = new SmsMercado();
         }
-        
+
         //Relacionamos la categoria con los mercados seleccionados
-        for (int i = 0; i < mercados.size(); i++) {            
+        for (int i = 0; i < mercados.size(); i++) {
             mercados.get(i).getSmsCategorias().add(categoriaView);
             categoriaView.getSmsMercados().add(mercados.get(i));
         }
-       
+
         catDao.agregarMercadosCategoria(categoriaView);//se registra la relacion entre la categoria y los mercados
 
         //Limpiamos objetos
@@ -191,7 +230,7 @@ public class CategoriaBean implements Serializable {
         categoriasListView = catDao.mostrarCategorias();
         mercadosSeleccionados = new ArrayList<>();
 
-    }    
+    }
 
     public void filtrar() {
         categoriasListView = new ArrayList<>();
@@ -247,7 +286,7 @@ public class CategoriaBean implements Serializable {
         if (estado == 0) {
             registrar();
         } else if (estado == 1) {
-             habilitarCancelar = true;
+            habilitarCancelar = true;
             modificar();
             estado = 0;
             nombre = "Registrar Categoria";
@@ -266,7 +305,7 @@ public class CategoriaBean implements Serializable {
             }
         }
     }
-    
+
     public void cancelar() {
         //Limpiamos objetos utilizados
         categoriaView = new SmsCategoria();

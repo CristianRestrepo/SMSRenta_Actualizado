@@ -56,7 +56,7 @@
                                         </h:panelGrid>
                                     </div>
 
-                                    <h:panelGrid columnClasses="value">
+                                    <h:panelGrid width="100%">
                                         <p:schedule timeZone="GMT-5" leftHeaderTemplate="today" centerHeaderTemplate="month, agendaWeek, agendaDay" rightHeaderTemplate="prev,next" id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
                                             <p:ajax event="eventSelect" listener="#{reservacionBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
                                         </p:schedule>
