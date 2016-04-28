@@ -979,7 +979,13 @@ li.active:after {
 
 
 .mrg-reserva-1{
-    margin-right:  27px;
+    /*margin-right:  27px;*/
+    margin-right: 27px;
+    font-size: 1.35em;
+    font-weight: 100;
+    position: relative;
+    right: 28px;
+    margin: 14px 0;
 }
 
 .mrg-reserva-2{
