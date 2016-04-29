@@ -87,8 +87,18 @@
                                     <div class="box-body">                                      
 
                                         <h:panelGrid columns="2" width="100%">
-                                            <p:commandButton id="BTProveedor" style="width: 100%" onclick="PrimeFaces.monitorDownload(start, stop);" class="btn btn-block btn-success" update="@form" action="#{proveedorBean.metodo()}" value="#{proveedorBean.nombreOperacion}" />
-                                            <p:commandButton id="BTCancelar" style="width: 100%" process="@this" immediate="true" class="btn btn-block btn-danger" disabled="#{proveedorBean.habilitarCancelar}" action="#{proveedorBean.cancelar()}" update="@form" value="Cancelar" />
+                                            <p:commandButton id="BTProveedor" style="width: 100%" 
+                                                             onclick="PrimeFaces.monitorDownload(start, stop);" 
+                                                             class="btn btn-block btn-success" update="@form" 
+                                                             action="#{proveedorBean.metodo()}" 
+                                                             value="#{proveedorBean.nombreOperacion}" />
+                                            
+                                            <p:commandButton id="BTCancelar" style="width: 100%"
+                                                             process="@this" immediate="true" 
+                                                             class="btn btn-block btn-danger" 
+                                                             disabled="#{proveedorBean.habilitarCancelar}" 
+                                                             action="#{proveedorBean.cancelar()}" update="@form" 
+                                                             value="Cancelar" />
                                         </h:panelGrid>
                                         <script type="text/javascript">
                                             function start() {
@@ -133,7 +143,8 @@
                                     <b:inputText placeholder="Buscar" value="#{proveedorBean.buscar}" style=" width: 100%">
                                         <p:ajax event="keyup" listener="#{proveedorBean.filtrarProveedores()}" process="@this" update="DTProveedores"/>
                                     </b:inputText>
-                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" value="#{proveedorBean.proveedorListView}">
+                                    <p:dataTable id="DTProveedores" var="proveedor" emptyMessage="Proveedores no registrados" 
+                                                 value="#{proveedorBean.proveedorListView}">
 
                                         <p:column headerText="Rázon Social">
                                             <p:outputLabel value="#{proveedor.proveedorRazonSocial}"/>
@@ -144,14 +155,17 @@
                                         </p:column>
                                                                                 
                                         <p:column style="width: 35px">
-                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update="@form"  action="#{proveedorBean.seleccionarCRUD(1)}" title="Modificar">
+                                            <p:commandLink style="color: white; padding: 8px;" class="btn btn-block btn-success " 
+                                                           process="@this" update="@form"  action="#{proveedorBean.seleccionarCRUD(1)}" 
+                                                           title="Modificar">
                                                 <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
                                                 <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="btn btn-block btn-danger" process="@this" update="@form" action="#{proveedorBean.eliminarProveedor()}" title="Eliminar">
+                                            <p:commandLink style="color: white; padding: 8px;" class="btn btn-block btn-danger" process="@this" 
+                                                           update="@form" action="#{proveedorBean.eliminarProveedor()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{proveedor}" target="#{proveedorBean.proveedorView}"/>
                                                 <i class="fa fa-trash">  </i> 
                                                 <p:confirm header="Confirmación" message="Está seguro que desea eliminar este Proveedor?" icon="ui-icon-alert" /> 
@@ -159,7 +173,8 @@
                                         </p:column>
                                         
                                         <p:column style="width: 35px"> 
-                                            <p:commandLink style="color: white" class="btn btn-block btn-warning" process="@this" update="@form" action="#{usuarioBean.habilitar_deshabilitarCuenta(proveedor.smsUsuario)}" title="Habilitar/Desahibilitar cuenta">
+                                            <p:commandLink style="color: white ; padding: 8px;" class="btn btn-block btn-warning" process="@this"
+                                                           update="@form" action="#{usuarioBean.habilitar_deshabilitarCuenta(proveedor.smsUsuario)}" title="Habilitar/Desahibilitar cuenta">
                                                 <p:confirm header="Confirmación" message="Está seguro que desea habilitar/deshabilitar la cuenta de este usuario?" icon="ui-icon-alert" /> 
                                                 <i class="fa fa-user-times">  </i> 
                                             </p:commandLink>

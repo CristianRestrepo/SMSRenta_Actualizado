@@ -1208,3 +1208,14 @@ span.round-tabs-conduc.one {}
 .ui-widget {
     font-family: 'Open Sans', sans-serif !important;
 }
+
+.label-psp{
+    margin-bottom: 40px;
+    font-weight: 400!important;
+    font-size: 23px;
+}
+
+.label-psp-2{
+    font-weight: 400!important;
+    font-size: 19px;
+}
