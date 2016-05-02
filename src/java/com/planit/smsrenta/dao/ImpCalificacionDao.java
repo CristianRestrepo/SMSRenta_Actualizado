@@ -18,8 +18,8 @@ import org.hibernate.SessionFactory;
  * @author Desarrollo_Planit
  */
 public class ImpCalificacionDao implements ICalificacionDao {
+
     SessionFactory sessions = NewHibernateUtil.getSessionFactory();
-    
 
     @Override
     public List<SmsCalificacion> mostrarCalificaciones() {
@@ -28,7 +28,23 @@ public class ImpCalificacionDao implements ICalificacionDao {
 
         try {
             session = sessions.openSession();
-            Query query = session.createQuery("from SmsCalificacion");
+            Query query = session.createQuery("from SmsCalificacion as calificacion "
+                    + "left join fetch calificacion.smsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
+                    + "order by calificacion.idCalificacion desc");
             calificaciones = (List<SmsCalificacion>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -92,6 +108,46 @@ public class ImpCalificacionDao implements ICalificacionDao {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public List<SmsCalificacion> filtrarCalificaciones(String valor) {
+        Session session = null;
+        List<SmsCalificacion> calificaciones = new ArrayList<>();
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsCalificacion as calificacion "
+                    + "left join fetch calificacion.smsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
+                    + "where cliente.usuarioCc LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioNombre LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioEmail LIKE '%" + valor + "%' or "
+                    + "calificacion.calificacionCalidadServicio LIKE '%" + valor + "%' or "
+                    + "reservacion.idReservacion LIKE '%" + valor + "%' "
+                    + "order by calificacion.idCalificacion desc");
+            calificaciones = (List<SmsCalificacion>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return calificaciones;
     }
 
 }

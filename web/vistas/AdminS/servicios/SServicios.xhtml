@@ -126,6 +126,10 @@
                                         <p:column headerText="Descripción del servicio">
                                             <h:outputText value="#{servicio.servicioDescripcion}"/>
                                         </p:column>
+                                        
+                                        <p:column headerText="Mercado">
+                                            <h:outputText value="#{servicio.smsMercado.mercadoNombre}"/>
+                                        </p:column>
 
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class="btn btn-block btn-success btn-padding" process="@this" 

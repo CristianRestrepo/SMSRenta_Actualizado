@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
         <ui:composition template="./../temp-conductor.xhtml">
@@ -17,13 +18,40 @@
                                 <!-- Content Header (Page header) -->
 
 
-                                <div class="pad margin no-print">
-                                    <div class="callout callout-info" style="margin-bottom: 0!important;">
-                                        <h4>Reserva #{reservacionBean.reservaView.idReservacion}</h4>
-                                        Su reserva ha sido exitosa, porfavor verifique los datos ingresados en la reservación
-                                        antes de realizar el pago del servicio.
-                                    </div>
-                                </div>
+                                <c:choose>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 4}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-info" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 5}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-warning" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 6}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-success" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 7}">
+                                        <div class="pad margin no-print">
+                                            <div class="callout callout-danger" style="margin-bottom: 0!important;">
+                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                </c:choose>
 
                                 <!-- Main content -->
                                 <section class="invoice">
@@ -185,19 +213,7 @@
                                                     </table>
                                                 </div>
                                             </div><!-- /.col -->
-                                        </div><!-- /.col -->
-                                        <hr/>
-                                        <div class="col-xs-6">
-                                            <p class="lead">Costo del servicio</p>
-                                            <div class="table-responsive">
-                                                <table class="table">                                               
-                                                    <tr>
-                                                        <th>Costo del servicio:</th>
-                                                        <td>#{reservacionBean.modReservacionView.reservacionCosto}</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div><!-- /.col -->
+                                        </div><!-- /.col -->                                          
                                     </div><!-- /.row -->
 
                                     <!-- this row will not appear when printing -->

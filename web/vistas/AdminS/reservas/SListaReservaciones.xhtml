@@ -20,20 +20,30 @@
                             </div>
                         </b:column>
                         <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
-                            <h:panelGrid columns="2" width="100%">
+                            <div align="left">
+                                <h:panelGrid columns="2" width="60%">
 
-                                <p:outputLabel value="Estado de la reservacion:"/>
+                                    <p:outputLabel value="Tipo de reservacion:"/>
 
-                                <p:selectOneMenu style="width: 100%" value="#{reservacionBean.estadoReservacion}">
-                                    <f:selectItem itemLabel="Todos los estados" itemValue="0"/>
-                                    <f:selectItem itemLabel="Inactiva" itemValue="4"/>
-                                    <f:selectItem itemLabel="En proceso" itemValue="5"/>
-                                    <f:selectItem itemLabel="Terminada" itemValue="6"/>
-                                    <f:selectItem itemLabel="Cancelada" itemValue="7"/>
-                                    <p:ajax event="change" listener="#{reservacionBean.actualizarListasReservaciones()}" update="DTReservaciones"/>
-                                </p:selectOneMenu>
-                            </h:panelGrid>
+                                    <p:selectOneMenu value="#{reservacionBean.mercadoReservacion}" style="width: 100%">
+                                        <f:selectItem itemLabel="Todas las reservaciones" itemValue="todas"/>
+                                        <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/> 
+                                        <p:ajax event="change" listener="#{reservacionBean.actualizarListasReservaciones()}" update="DTReservaciones"/>
+                                    </p:selectOneMenu>
 
+                                    <p:outputLabel value="Estado de la reservacion:"/>
+
+                                    <p:selectOneMenu style="width: 100%" value="#{reservacionBean.estadoReservacion}">
+                                        <f:selectItem itemLabel="Todos los estados" itemValue="0"/>
+                                        <f:selectItem itemLabel="Inactiva" itemValue="4"/>
+                                        <f:selectItem itemLabel="En proceso" itemValue="5"/>
+                                        <f:selectItem itemLabel="Terminada" itemValue="6"/>
+                                        <f:selectItem itemLabel="Cancelada" itemValue="7"/>
+                                        <p:ajax event="change" listener="#{reservacionBean.actualizarListasReservaciones()}" update="DTReservaciones"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </div>
+                            
                             <b:inputText style="width: 100%" value="#{reservacionBean.buscar}" placeholder="Buscar cedula, nombre, etc...">
                                 <p:ajax event="keyup" process="@this" listener="#{reservacionBean.filtrarReservaciones()}" update="DTReservaciones"/>
                             </b:inputText>                            
@@ -62,8 +72,7 @@
                                 </p:column>
 
                                 <p:column  style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
-                                        <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
+                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReservaDesdeLista(reservacion)}" title="Ver Reservacion">
                                         <i class="fa fa-arrow-left">  </i> 
                                     </p:commandLink>
                                 </p:column>

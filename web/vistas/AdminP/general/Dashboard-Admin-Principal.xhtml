@@ -15,7 +15,7 @@
                 <b:row>
                     <h:form>
                         <p:growl id="messages" showDetail="true" />
-                        <b:column col-lg="12" col-md="12" col-sm="6" col-xs="12">
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="box espacio-arriba">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-dashboard" />
@@ -38,19 +38,25 @@
                                     <h2 class="box-title">Horarios <strong>SMS Renta</strong></h2>
                                     <h:panelGrid class="box-tools" columns="2">
                                         <p:outputLabel value="Tipo de reservacion:"/>
-                                        <b:selectOneMenu value="#{reservacionBean.estadoReservacion}">
-                                            <f:selectItem itemLabel="Todas las reservaciones" itemValue="0"/>
-                                            <f:selectItem itemLabel="Inactiva" itemValue="4"/>
-                                            <f:selectItem itemLabel="En proceso" itemValue="5"/>
-                                            <f:selectItem itemLabel="Terminada" itemValue="6"/>
-                                            <f:selectItem itemLabel="Cancelada" itemValue="7"/>
+                                        <b:selectOneMenu value="#{reservacionBean.mercadoReservacion}" style="width: 100%">
+                                            <f:selectItem itemLabel="Todas las reservaciones" itemValue="todas"/>
+                                            <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>                                            
                                         </b:selectOneMenu>
                                     </h:panelGrid>
                                 </div>
                                 <div class="box-body">
                                     <!-- CALENDARIO PRINCIPAL -->
+
                                     <div align="right">
-                                        <h:panelGrid columns="2" width="20%">
+                                        <h:panelGrid columns="2" width="40%"> 
+                                            <p:outputLabel value="Estado de la reservacion:"/>
+                                            <b:selectOneMenu value="#{reservacionBean.estadoReservacion}">
+                                                <f:selectItem itemLabel="Todas las reservaciones" itemValue="0"/>
+                                                <f:selectItem itemLabel="Inactiva" itemValue="4"/>
+                                                <f:selectItem itemLabel="En proceso" itemValue="5"/>
+                                                <f:selectItem itemLabel="Terminada" itemValue="6"/>
+                                                <f:selectItem itemLabel="Cancelada" itemValue="7"/>
+                                            </b:selectOneMenu>
                                             <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
                                             <p:commandButton style="width: 100%" immediate="true" process="@this" ajax="false" action="irListaReservacionesAdminP" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
                                         </h:panelGrid>

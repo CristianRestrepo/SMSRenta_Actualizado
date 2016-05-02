@@ -90,12 +90,15 @@ public class ReservacionBean implements Serializable {
     private String fechaEntrega;
     private String buscar;
 
+    //variables para filtrar las reservaciones segun estado y mercado al que pertenencen
     private int estadoReservacion;
+    private String mercadoReservacion;
 
     private boolean skip = false;//Controla la transicion entre las pestañas del panel de reserva
     //Controlan la seleccion de los vehiculos y los empleados
     private boolean SelecVeh;
     private boolean SelecCon;
+    
     //controla la aparicion del boton siguiente en el proceso de reservacion
     private boolean siguiente;
     private boolean atras;
@@ -165,6 +168,7 @@ public class ReservacionBean implements Serializable {
         categoriaView = new SmsCategoria();
 
         estadoReservacion = 0;
+        mercadoReservacion = "todas";
     }
 
     @PostConstruct
@@ -368,6 +372,14 @@ public class ReservacionBean implements Serializable {
         this.buscar = buscar;
     }
 
+    public String getMercadoReservacion() {
+        return mercadoReservacion;
+    }
+
+    public void setMercadoReservacion(String mercadoReservacion) {
+        this.mercadoReservacion = mercadoReservacion;
+    }
+
     //Metodos    
     //CRUD
     public String registrarReservacion() throws JRException, IOException {
@@ -462,15 +474,23 @@ public class ReservacionBean implements Serializable {
     //Especificos 
     ///Controla el flujo de la vista de reservacion
     public void filtrarReservaciones() {
-            if (buscar == null) {
-                reservacionesListView = consultarReservacionesSegunUsuario();
-            } else {
+        if (buscar == null) {
+            reservacionesListView = consultarReservacionesSegunUsuario();
+        } else {
+            if (mercadoReservacion.equalsIgnoreCase("todas")) {
                 if (estadoReservacion == 0) {
                     reservacionesListView = resDao.filtrarReservacionSegunCliente(buscar);
-                }else{
+                } else {
                     reservacionesListView = resDao.filtrarReservacionSegunClienteSegunEstado(buscar, estadoReservacion);
                 }
-            }        
+            } else {
+                if (estadoReservacion == 0) {
+                    reservacionesListView = resDao.filtrarReservacionSegunClienteSegunMercado(buscar, mercadoReservacion);
+                } else {
+                     reservacionesListView = resDao.filtrarReservacionSegunClienteSegunEstadoyMercado(buscar, estadoReservacion, mercadoReservacion);                
+                }
+            }            
+        }
     }
 
     public String flujoDeReservacion(FlowEvent event) {
@@ -636,6 +656,12 @@ public class ReservacionBean implements Serializable {
 
             String newtab;
             newtab = event.getNewStep();
+
+            if (event.getOldStep().equalsIgnoreCase("Conductor") && event.getNewStep().equalsIgnoreCase("Confirmacion") && reservaView.getSmsServicios().getServicioConductor() == 1 && reservaView.getSmsEmpleado().getIdEmpleado() == null) {
+                siguiente = true;
+                atras = true;
+                newtab = "Conductor";
+            }
 
             if (event.getOldStep().equalsIgnoreCase("Vehiculo") && event.getNewStep().equalsIgnoreCase("Conductor") && reservaView.getSmsServicios().getServicioConductor() == 0) {// 0 = sin conductor 
                 siguiente = false;
@@ -825,40 +851,77 @@ public class ReservacionBean implements Serializable {
     public List<SmsReservacion> consultarReservacionesSegunUsuario() { //carga la agendas de las reservaciones hechan en el sistema segun el tipo de usuario conectado
 
         List<SmsReservacion> listaReservaciones = new ArrayList<>();
+        if (mercadoReservacion.equalsIgnoreCase("todas")) {
+            if (estadoReservacion == 0) {
+                switch (sesion.getSmsRol().getRolNombre()) {
 
-        if (estadoReservacion == 0) {
-            switch (sesion.getSmsRol().getRolNombre()) {
+                    case "Administrador Principal":
+                        listaReservaciones = resDao.mostrarReservaciones();
+                        break;
+                    case "Administrador Secundario":
+                        listaReservaciones = resDao.mostrarReservaciones();
+                        break;
+                    case "Cliente":
+                        listaReservaciones = resDao.mostrarReservacionCliente(sesion);
+                        break;
+                    case "Conductor":
+                        reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
+                        listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
+                        break;
+                }
+            } else {
+                switch (sesion.getSmsRol().getRolNombre()) {
 
-                case "Administrador Principal":
-                    listaReservaciones = resDao.mostrarReservaciones();
-                    break;
-                case "Administrador Secundario":
-                    listaReservaciones = resDao.mostrarReservaciones();
-                    break;
-                case "Cliente":
-                    listaReservaciones = resDao.mostrarReservacionCliente(sesion);
-                    break;
-                case "Conductor":
-                    reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
-                    listaReservaciones = resDao.mostrarReservacionConductores(reservaView.getSmsEmpleado());
-                    break;
+                    case "Administrador Principal":
+                        listaReservaciones = resDao.consultarReservacionesSegunEstado(estadoReservacion);
+                        break;
+                    case "Administrador Secundario":
+                        listaReservaciones = resDao.consultarReservacionesSegunEstado(estadoReservacion);
+                        break;
+                    case "Cliente":
+                        listaReservaciones = resDao.mostrarReservacionClienteSegunEstado(sesion, estadoReservacion);
+                        break;
+                    case "Conductor":
+                        reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
+                        listaReservaciones = resDao.mostrarReservacionConductoresSegunEstado(reservaView.getSmsEmpleado(), estadoReservacion);
+                        break;
+                }
             }
         } else {
-            switch (sesion.getSmsRol().getRolNombre()) {
+            if (estadoReservacion == 0) {
+                switch (sesion.getSmsRol().getRolNombre()) {
 
-                case "Administrador Principal":
-                    listaReservaciones = resDao.consultarReservacionesSegunEstado(estadoReservacion);
-                    break;
-                case "Administrador Secundario":
-                    listaReservaciones = resDao.consultarReservacionesSegunEstado(estadoReservacion);
-                    break;
-                case "Cliente":
-                    listaReservaciones = resDao.mostrarReservacionClienteSegunEstado(sesion, estadoReservacion);
-                    break;
-                case "Conductor":
-                    reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
-                    listaReservaciones = resDao.mostrarReservacionConductoresSegunEstado(reservaView.getSmsEmpleado(), estadoReservacion);
-                    break;
+                    case "Administrador Principal":
+                        listaReservaciones = resDao.mostrarReservacionesSegunMercado(mercadoReservacion);
+                        break;
+                    case "Administrador Secundario":
+                        listaReservaciones = resDao.mostrarReservacionesSegunMercado(mercadoReservacion);
+                        break;
+                    case "Cliente":
+                        listaReservaciones = resDao.mostrarReservacionClienteSegunMercado(sesion, mercadoReservacion);
+                        break;
+                    case "Conductor":
+                        reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
+                        listaReservaciones = resDao.mostrarReservacionConductoresSegunMercado(reservaView.getSmsEmpleado(), mercadoReservacion);
+                        break;
+                }
+            } else {
+                switch (sesion.getSmsRol().getRolNombre()) {
+
+                    case "Administrador Principal":
+                        listaReservaciones = resDao.consultarReservacionesSegunEstadoyMercado(estadoReservacion, mercadoReservacion);
+                        break;
+                    case "Administrador Secundario":
+                        listaReservaciones = resDao.consultarReservacionesSegunEstadoyMercado(estadoReservacion, mercadoReservacion);
+                        break;
+                    case "Cliente":
+                        listaReservaciones = resDao.mostrarReservacionClienteSegunEstadoyMercado(sesion, estadoReservacion, mercadoReservacion);
+                        break;
+                    case "Conductor":
+                        reservaView.setSmsEmpleado(empleadoDao.consultarEmpleado(sesion));//Consultamos la informacion de usuario correspondiente al conductor
+                        listaReservaciones = resDao.mostrarReservacionConductoresSegunEstadoyMercado(reservaView.getSmsEmpleado(), estadoReservacion, mercadoReservacion);
+                        break;
+                }
             }
         }
         return listaReservaciones;
@@ -914,6 +977,40 @@ public class ReservacionBean implements Serializable {
         String Ruta = "";
         modReservacionView.setIdReservacion(Integer.parseInt(evento.getTitle()));
         modReservacionView = resDao.consultarReservacionId(modReservacionView);
+        SimpleDateFormat formatDate;
+        SimpleDateFormat formatTime;
+        formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        formatTime = new SimpleDateFormat("HH:mm:ss");
+
+        fechaInicio = formatDate.format(modReservacionView.getReservacionFechaInicio());
+        fechaEntrega = formatDate.format(modReservacionView.getReservacionFechaLlegada());
+        horaInicio = formatTime.format(modReservacionView.getReservacionHoraInicio());
+        horaEntrega = formatTime.format(modReservacionView.getReservacionHoraLlegada());
+        switch (sesion.getSmsRol().getRolNombre()) {
+            case "Administrador Principal":
+                Ruta = "VistaReservaAdminP";
+                break;
+
+            case "Administrador Secundario":
+                Ruta = "VistaReservaAdminS";
+                break;
+
+            case "Cliente":
+                Ruta = "VistaReservaCliente";
+                break;
+
+            case "Conductor":
+                Ruta = "VistaReservaConductor";
+                break;
+        }
+
+        return Ruta;
+    }
+
+    public String irVistaReservaDesdeLista(SmsReservacion reservacion) {
+        String Ruta = "";
+
+        modReservacionView = resDao.consultarReservacionId(reservacion);
         SimpleDateFormat formatDate;
         SimpleDateFormat formatTime;
         formatDate = new SimpleDateFormat("yyyy-MM-dd");

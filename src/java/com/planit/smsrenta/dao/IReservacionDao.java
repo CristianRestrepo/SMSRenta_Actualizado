@@ -18,8 +18,12 @@ public interface IReservacionDao {
 
     //Definicion de metodos CRUD
     public List<SmsReservacion> mostrarReservaciones();
-
+    
+    public List<SmsReservacion> mostrarReservacionesSegunMercado(String mercado);
+    
     public List<SmsReservacion> consultarReservacionesSegunEstado(int estado);
+    
+    public List<SmsReservacion> consultarReservacionesSegunEstadoyMercado(int estado, String mercado);
 
     public void registrarReservacion(SmsReservacion reservacion);
 
@@ -30,6 +34,10 @@ public interface IReservacionDao {
     public List<SmsReservacion> filtrarReservacionSegunCliente(String valor);
     
     public List<SmsReservacion> filtrarReservacionSegunClienteSegunEstado(String valor, int estado);
+    
+    public List<SmsReservacion> filtrarReservacionSegunClienteSegunMercado(String valor, String mercado);
+    
+    public List<SmsReservacion> filtrarReservacionSegunClienteSegunEstadoyMercado(String valor, int estado, String mercado);
 
     public SmsReservacion consultarReservacionId(SmsReservacion reserva);
 
@@ -40,9 +48,18 @@ public interface IReservacionDao {
     public List<SmsReservacion> mostrarReservacionCliente(SmsUsuario usuario);
 
     public List<SmsReservacion> mostrarReservacionClienteSegunEstado(SmsUsuario usuario, int estado);
+    
+    public List<SmsReservacion> mostrarReservacionClienteSegunMercado(SmsUsuario usuario, String mercado);
+    
+    public List<SmsReservacion> mostrarReservacionClienteSegunEstadoyMercado(SmsUsuario usuario, int estado, String mercado);
 
     public List<SmsReservacion> mostrarReservacionConductores(SmsEmpleado conductor);
 
     public List<SmsReservacion> mostrarReservacionConductoresSegunEstado(SmsEmpleado conductor, int estado);
+    
+    public List<SmsReservacion> mostrarReservacionConductoresSegunMercado(SmsEmpleado conductor, String mercado);
+    
+    public List<SmsReservacion> mostrarReservacionConductoresSegunEstadoyMercado(SmsEmpleado conductor, int estado, String mercado);
+
 
 }

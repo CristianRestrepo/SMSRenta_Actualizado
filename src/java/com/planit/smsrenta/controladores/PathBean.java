@@ -37,6 +37,14 @@ public class PathBean implements Serializable {
         this.sesion = sesion;
     }
 
+    public String ir_PListaCalificaciones() {
+        return "PListaCalificaciones";
+    }
+    
+    public String ir_PCalificacion() {
+        return "PPanelCalificacion";
+    }
+    
     public String ir_PUsuario() {
         return "AdminPUsuario";
     }

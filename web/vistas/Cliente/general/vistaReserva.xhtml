@@ -23,39 +23,39 @@
 
 
                             <c:choose>
-                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 4}">
-                                        <div class="pad margin no-print">
-                                            <div class="callout callout-info" style="margin-bottom: 0!important;">
-                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
-                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
-                                            </div>
+                                <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 4}">
+                                    <div class="pad margin no-print">
+                                        <div class="callout callout-info" style="margin-bottom: 0!important;">
+                                            <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                            La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
                                         </div>
-                                    </c:when>
-                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 5}">
-                                        <div class="pad margin no-print">
-                                            <div class="callout callout-warning" style="margin-bottom: 0!important;">
-                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
-                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
-                                            </div>
+                                    </div>
+                                </c:when>
+                                <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 5}">
+                                    <div class="pad margin no-print">
+                                        <div class="callout callout-warning" style="margin-bottom: 0!important;">
+                                            <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                            La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
                                         </div>
-                                    </c:when>
-                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 6}">
-                                        <div class="pad margin no-print">
-                                            <div class="callout callout-success" style="margin-bottom: 0!important;">
-                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
-                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
-                                            </div>
+                                    </div>
+                                </c:when>
+                                <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 6}">
+                                    <div class="pad margin no-print">
+                                        <div class="callout callout-success" style="margin-bottom: 0!important;">
+                                            <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                            La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
                                         </div>
-                                    </c:when>
-                                    <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 7}">
-                                        <div class="pad margin no-print">
-                                            <div class="callout callout-danger" style="margin-bottom: 0!important;">
-                                                <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
-                                                La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
-                                            </div>
+                                    </div>
+                                </c:when>
+                                <c:when test="${reservacionBean.modReservacionView.smsEstado.idEstado == 7}">
+                                    <div class="pad margin no-print">
+                                        <div class="callout callout-danger" style="margin-bottom: 0!important;">
+                                            <h4>Reserva #{reservacionBean.modReservacionView.idReservacion}</h4>
+                                            La reservacion se encuentra en estado <Strong>#{reservacionBean.modReservacionView.smsEstado.estadoNombre}</Strong>
                                         </div>
-                                    </c:when>
-                                </c:choose>
+                                    </div>
+                                </c:when>
+                            </c:choose>
 
                             <!-- Main content -->
                             <section class="invoice">
@@ -236,9 +236,16 @@
                                 <div class="row no-print">
                                     <div class="col-xs-12 table-responsive" align="left">
                                         <h:panelGrid columns="3">
-                                            <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.cancelarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
-                                                <p:confirm header="Confirmacion" message="Esta seguro que desea cancelar esta reservación?" icon="ui-icon-alert" /> 
-                                            </p:commandButton>                               
+                                            <c:if test="${reservacionBean.modReservacionView.smsEstado.idEstado == 4}">
+                                                <p:commandButton class="btn btn-danger pull-right" action="#{reservacionBean.cancelarReservacion()}" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form"  value="Cancelar Reservacion">
+                                                    <p:confirm header="Confirmacion" message="Esta seguro que desea cancelar esta reservación?" icon="ui-icon-alert" /> 
+                                                </p:commandButton>
+                                            </c:if>
+                                            <c:if test="${reservacionBean.modReservacionView.smsEstado.idEstado == 6}">
+                                                <p:commandButton style="width: 100%" value="Calificar" class="btn btn-warning pull-right" process="@this" ajax="false" action="#{pathBean.ir_ClienteCalificarReserva()}">
+                                                    <f:setPropertyActionListener value="#{reservacionBean.modReservacionView}" target="#{calificacionBean.reservacionView}"/>
+                                                </p:commandButton>
+                                            </c:if>
                                         </h:panelGrid>
                                         <script type="text/javascript">
                                             function start() {

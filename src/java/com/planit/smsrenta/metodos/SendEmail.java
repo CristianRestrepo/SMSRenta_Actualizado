@@ -10,15 +10,13 @@ import com.planit.smsrenta.dao.IUsuarioDao;
 import com.planit.smsrenta.dao.ImpReservacionDao;
 import com.planit.smsrenta.dao.ImpUsuarioDao;
 import com.planit.smsrenta.modelos.SmsCalificacion;
+import com.planit.smsrenta.modelos.SmsCorreo;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsProveedor;
 import com.planit.smsrenta.modelos.SmsReservacion;
 import com.planit.smsrenta.modelos.SmsUsuario;
 import com.planit.smsrenta.modelos.SmsVehiculo;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 import javax.mail.Message;
@@ -28,7 +26,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-public class SendEmail {    
+public class SendEmail {
 
     String inicio = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n"
             + "<html xmlns=\"http://www.w3.org/1999/xhtml\">"
@@ -122,7 +120,7 @@ public class SendEmail {
             + "</td>"
             + "<td class=\"expander\"></td>"
             + "</tr>"
-            + "</table>"            
+            + "</table>"
             + "</th>"
             + "</tr>"
             + "</table>"
@@ -204,15 +202,12 @@ public class SendEmail {
                     Message.RecipientType.TO,
                     new InternetAddress("" + cliente.getUsuarioEmail()));
             message.setSubject("SMSRenta informe de su reservacion");
-           
+
             String mensajehtml = inicio + "<h1>Hola, " + cliente.getUsuarioNombre() + "</h1>"
                     + "\n"
-                    + "<p align=\"justify\">Le confirmamos su reserva para el vehículo " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " programada para el día " + FechaInicio + " a las " + HoraInicio + " en " + reservacion.getReservacionLugarLlegada() + " en la ciudad de " + reservacion.getSmsCiudadByIdCiudadInicio().getCiudadNombre() + " hasta el día " + FechaLlegada + ". "
-                    + "Allí lo atenderá el asesor " + empleado.getSmsUsuario().getUsuarioNombre() + ", quien estará disponible y a sus órdenes para su traslado y apoyo en su estadía. "
-                    + "El Valor de su servicio es de COP $" + reservacion.getReservacionCosto() + ", la factura será enviada a su correo electrónico en dos días.\n"
-                    + "Esperamos que nuestro servicio sea de su total satisfacción y no olvide calificarlo."
-                    + "Atentamente,\n"
-                    + "SMS Renta</p>" + fin;
+                    + "<p align=\"justify\">Su reserva ha sido exitosa para el vehiculo " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " para en dia " + FechaInicio + " a las " + HoraInicio + " "
+                    + "le atenderá el conductor  " + empleado.getSmsUsuario().getUsuarioNombre() + " desde " + reservacion.getReservacionLugarLlegada() + " Hasta " + reservacion.getReservacionLugarDestino() + ", Valor $" + reservacion.getReservacionCosto() + " esperamos el servicio sea "
+                    + "de su total  satisfacción. No olvide calificarnos.</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
             t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
@@ -250,16 +245,13 @@ public class SendEmail {
                     Message.RecipientType.TO,
                     new InternetAddress("" + cliente.getUsuarioEmail()));
 
-            
             message.setSubject("SMSRenta informe de su reservacion");
             String mensajehtml = inicio + "<h1>Hola, " + cliente.getUsuarioNombre() + "<h1>"
                     + "\n"
-                    + "<p align=\"justify\">Le confirmamos su reserva para el vehículo " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " programada para el día " + FechaInicio + " a las " + HoraInicio + " en " + reservacion.getReservacionLugarLlegada() + " en la ciudad de " + reservacion.getSmsCiudadByIdCiudadInicio().getCiudadNombre() + " hasta el día " + FechaLlegada + ". "
-                    + "Allí lo atenderá un asesor de SMSRenta, quien le entregara su vehiculo y le indicara todo lo relacionado al dia y hora de entrega.\n"
-                    + "El Valor de su servicio es de COP $" + reservacion.getReservacionCosto() + ", la factura será enviada a su correo electrónico en dos días.\n"
-                    + "Esperamos que nuestro servicio sea de su total satisfacción y no olvide calificarlo."
-                    + "Atentamente,\n"
-                    + "SMS Renta</p>" + fin;
+                    + "<p align=\"justify\">Su reserva ha sido exitosa para el vehiculo " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " para en dia " + FechaInicio + " a las " + HoraInicio + " hasta el dia " + FechaLlegada + " a las " + HoraLlegada + ""
+                    + "Se le entregara el vehiculo en " + reservacion.getReservacionLugarLlegada() + " y debe devolver el vehiculo en " + reservacion.getReservacionLugarDestino() + ", Valor $" + reservacion.getReservacionCosto() + " esperamos el servicio sea "
+                    + "de su total  satisfacción. No olvide calificarnos.</p>" + fin;
+
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
             t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
@@ -293,13 +285,12 @@ public class SendEmail {
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress("operaciones@smsrenta.com"));
-           
 
             message.setSubject("Nueva reservacion en el sistema. Reservacion " + reservacion.getIdReservacion() + ", cliente " + Cliente.getUsuarioNombre() + ", fecha de inicio " + FechaInicio + "");
             String mensajehtml = inicio + "<h1>Hola, Administrador Principal</h1>"
                     + "\n"
                     + "<p align=\"justify\">Se confirmo una reservación para el cliente '" + Cliente.getUsuarioNombre() + "', el vehiculo elegido es " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " programada para el día " + FechaInicio + " a las " + HoraInicio + " en " + reservacion.getReservacionLugarLlegada() + " en la ciudad de " + reservacion.getSmsCiudadByIdCiudadInicio().getCiudadNombre() + " hasta el día " + FechaLlegada + ". "
-                    + "El asesor elegido es el señor " + empleado.getSmsUsuario().getUsuarioNombre() + " y el Valor de la servicio es de COP $" + reservacion.getReservacionCosto() + "."
+                    + "El conductor elegido es el señor " + empleado.getSmsUsuario().getUsuarioNombre() + " y el Valor de la servicio es de COP $" + reservacion.getReservacionCosto() + "."
                     + "Atentamente,\n"
                     + "SMS Renta</p>" + fin;
 
@@ -336,12 +327,12 @@ public class SendEmail {
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress("operaciones@smsrenta.com"));
-            
+
             message.setSubject("Nueva reservacion en el sistema. Reservacion " + reservacion.getIdReservacion() + ", cliente " + Cliente.getUsuarioNombre() + ", fecha de inicio " + FechaInicio + "");
             String mensajehtml = inicio + "<h1>Hola, Administrador Principal</h1>"
                     + "\n"
                     + "<p align=\"justify\">Se confirmo una reservación para el cliente '" + Cliente.getUsuarioNombre() + "', el vehiculo elegido es " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " programada para el día " + FechaInicio + " a las " + HoraInicio + " en " + reservacion.getReservacionLugarLlegada() + " en la ciudad de " + reservacion.getSmsCiudadByIdCiudadInicio().getCiudadNombre() + " hasta el día " + FechaLlegada + ". "
-                    + "No hay asesor elegido y el Valor de la servicio es de COP $" + reservacion.getReservacionCosto() + "."
+                    + "No hay conductor elegido y el valor de la servicio es de COP $" + reservacion.getReservacionCosto() + "."
                     + "Atentamente,\n"
                     + "SMS Renta</p>" + fin;
             message.setContent(mensajehtml, "text/html");
@@ -378,14 +369,12 @@ public class SendEmail {
                     Message.RecipientType.TO,
                     new InternetAddress("" + empleado.getSmsUsuario().getUsuarioEmail()));
 
-           
-
             message.setSubject("Nueva Reservacion fecha inicio: " + FechaInicio + ", hora de inicio " + HoraInicio + "");
             String mensajehtml = inicio + "<h1>Hola " + empleado.getSmsUsuario().getUsuarioNombre() + "<h1>"
                     + "\n"
-                    + "<p align=\"justify\">Se confirmo una nueva reservacion para la cual usted fue escogido como asesor, el vehiculo escogido es un(a) " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " programada para el día " + FechaInicio + " a las " + HoraInicio + " en " + reservacion.getReservacionLugarLlegada() + " en la ciudad de " + reservacion.getSmsCiudadByIdCiudadInicio().getCiudadNombre() + " hasta el día " + FechaLlegada + "."
-                    + "Allí lo espera el cliente " + Cliente.getUsuarioNombre() + ", quien requiere del mejor servicio y atencion prestada\n"
-                    + "Esperamos que su servicio sea prestado de la mejor forma para garantizar la total satisfaccion del cliente"
+                    + "<p align=\"justify\">Se confirmo una nueva reservacion para la cual usted fue escogido como conductor, el vehiculo escogido es un(a) " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " con placa " + vehiculo.getVehPlaca() + ", "
+                    + "programada para el día " + FechaInicio + " a las " + HoraInicio + " en " + reservacion.getReservacionLugarLlegada() + " hasta " + reservacion.getReservacionLugarDestino() + " en la ciudad de " + reservacion.getSmsCiudadByIdCiudadInicio().getCiudadNombre() + "."
+                    + "Allí lo espera el cliente " + Cliente.getUsuarioNombre() + ", quien requiere del mejor servicio y atencion prestada.\n"
                     + "Atentamente,\n"
                     + "SMS Renta</p>" + fin;
             message.setContent(mensajehtml, "text/html");
@@ -416,7 +405,7 @@ public class SendEmail {
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress("" + Cliente.getUsuarioEmail()));
-           
+
             message.setSubject("Bienvenido a SMS Renta");
             String mensajehtml = inicio + "<h1>Hola, " + Cliente.getUsuarioNombre() + "</h1>"
                     + "\n"
@@ -425,7 +414,7 @@ public class SendEmail {
                     + "Los datos de sesion para acceder al sistema son:.\n"
                     + "Nombre de sesion o email: " + Cliente.getUsuarioEmail() + "\n"
                     + "Contraseña: " + password + "\n"
-                    + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
+                    + "Por favor no olvide editar su perfil para ingresar una imagen de perfil personalizada y modificar su contraseña.\n"
                     + "Atentamente, SMS Renta</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
@@ -455,7 +444,7 @@ public class SendEmail {
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress("" + Admin.getUsuarioEmail()));
-            
+
             message.setSubject("Bienvenido a SMS Renta");
             String mensajehtml = inicio + "<h1>Hola, " + Admin.getUsuarioNombre() + "</h1>"
                     + "\n"
@@ -463,7 +452,7 @@ public class SendEmail {
                     + "Los datos de sesion para acceder al sistema son:.\n"
                     + "Nombre de sesion o email: " + Admin.getUsuarioEmail() + "\n"
                     + "Contraseña: " + password + "\n"
-                    + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
+                    + "Por favor no olvide editar su perfil para ingresar una imagen de perfil personalizada y modificar su contraseña.\n"
                     + "Atentamente, SMS Renta</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
@@ -493,7 +482,7 @@ public class SendEmail {
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress("" + usuario.getUsuarioEmail()));
-           
+
             message.setSubject("Bienvenido a SMS Renta");
             String mensajehtml = inicio + "<h1>Señores " + proveedor.getProveedorRazonSocial() + "</h1>"
                     + "\n"
@@ -501,7 +490,7 @@ public class SendEmail {
                     + "Los datos de sesion para acceder al sistema y administrar sus vehiculos y conductores son:\n"
                     + "Nombre de sesion o email: " + usuario.getUsuarioEmail() + "\n"
                     + "Contraseña: " + password + "\n"
-                    + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
+                    + "Por favor no olvide editar su perfil para ingresar una imagen de perfil personalizada y modificar su contraseña.\n"
                     + "Atentamente, SMS Renta</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
@@ -532,14 +521,14 @@ public class SendEmail {
                     Message.RecipientType.TO,
                     new InternetAddress("" + conductor.getUsuarioEmail()));
             message.setSubject("Bienvenido a SMS Renta");
-           
+
             String mensajehtml = inicio + "<h1>Hola, " + conductor.getUsuarioNombre() + "</h1>"
                     + "\n"
                     + "<p align=\"justify\">Le confirmamos que su registro al sistema SMS Renta fue exitoso, y le damos la bienvenida a nuestra familia. \n"
                     + "Los datos de sesion para acceder al sistema y ver los servicios que tiene agendados son:\n"
                     + "Nombre de sesion o email: " + conductor.getUsuarioEmail() + "\n"
                     + "Contraseña: " + password + "\n"
-                    + "Por favor no olvide editar su perfil para crear un nombre de sesion y contraseña personalizados.\n"
+                    + "Por favor no olvide editar su perfil para ingresar una imagen de perfil personalizada y modificar su contraseña.\n"
                     + "Atentamente, SMS Renta</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
@@ -568,16 +557,15 @@ public class SendEmail {
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress("" + usuario.getUsuarioEmail()));
-           
 
             message.setSubject("Nueva contraseña para SMS Renta");
-            String mensajehtml =  inicio + "<h1>Hola, " + usuario.getUsuarioNombre() + "</h1>"
+            String mensajehtml = inicio + "<h1>Hola, " + usuario.getUsuarioNombre() + "</h1>"
                     + "\n"
                     + "<p align=\"justify\">Mediante este mensaje enviamos una contraseña provisional para acceder al sistema SMS Renta."
                     + "Los datos de sesion para acceder al sistema son:\n"
                     + "Nombre de sesion o email: " + usuario.getUsuarioEmail() + "\n"
                     + "La nueva contraseña es: " + password + "\n"
-                    + "Por favor no olvide editar su perfil para crear una contraseña personalizada.\n"
+                    + "Por favor no olvide editar su perfil para crear una contraseña personalizada."
                     + "Atentamente, SMS Renta</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
@@ -605,13 +593,43 @@ public class SendEmail {
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress("operaciones@smsrenta.com.co"));
-           
+
             message.setSubject("Calificacion baja, reservacion " + calificacion.getSmsReservacion().getIdReservacion());
-            String mensajehtml =  inicio + "<h1>Hola, el cliente " + calificacion.getSmsReservacion().getSmsUsuario().getUsuarioNombre() + "</h1>\n"
+            String mensajehtml = inicio + "<h1>Hola, el cliente " + calificacion.getSmsReservacion().getSmsUsuario().getUsuarioNombre() + "</h1>\n"
                     + "<p class=\"content-txt\">califico la reservacion " + calificacion.getSmsReservacion().getIdReservacion() + " con un puntaje de " + calificacion.getCalificacionCalidadServicio() + " estrellas."
-                    + "El conductor asignado a este servicio era el señor(a) " + calificacion.getSmsReservacion().getSmsEmpleado().getSmsUsuario().getUsuarioNombre() + " y "
-                    + "el vehiculo elegido era el identificado con placa " + calificacion.getSmsReservacion().getSmsVehiculo().getVehPlaca() + "./n"
-                    + "Atentamente, SMS Renta</p>" + fin;
+                    + "El conductor asignado a este servicio fue el señor(a) " + calificacion.getSmsReservacion().getSmsEmpleado().getSmsUsuario().getUsuarioNombre() + " y "
+                    + "el vehiculo elegido es el identificado con placa " + calificacion.getSmsReservacion().getSmsVehiculo().getVehPlaca() + "./n"
+                    + "POR FAVOR COMUNIQUESE INMEDIATAMENTE CON EL CLIENTE PARA TENER NOVEDAD DE LA SITUACION.</p>" + fin;
+            message.setContent(mensajehtml, "text/html");
+            Transport t = session.getTransport("smtp");
+            t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
+            t.sendMessage(message, message.getAllRecipients());
+            t.close();
+        } catch (MessagingException me) {
+            me.getMessage();
+            //Aqui se deberia o mostrar un mensaje de error o en lugar
+            //de no hacer nada con la excepcion, lanzarla para que el modulo
+            //superior la capture y avise al usuario con un popup, por ejemplo.
+            return;
+        }
+    }
+
+    public void sendEmailCorreoPersonalizado(SmsCorreo correo) {
+        init();
+        try {
+            MimeMessage message = new MimeMessage(session);
+
+            //quien envia
+            message.setFrom(new InternetAddress("smsrenta@gmail.com"));
+
+            // a donde se envia
+            message.addRecipient(
+                    Message.RecipientType.TO,
+                    new InternetAddress(correo.getCorreoDestinatario()));
+
+            message.setSubject(correo.getAsusto());
+            String mensajehtml = inicio  
+                    + "<p class=\"content-txt\">" + correo.getMensaje() + "</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");
             t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");

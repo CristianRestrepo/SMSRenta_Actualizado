@@ -13,7 +13,7 @@
         <managed-bean-class>com.planit.smsrenta.controladores.MarcaBean</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
-     <managed-bean>
+    <managed-bean>
         <managed-bean-name>contratoBean</managed-bean-name>
         <managed-bean-class>com.planit.smsrenta.controladores.ContratoBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
@@ -167,7 +167,13 @@
         <managed-bean-name>localidadBean</managed-bean-name>
         <managed-bean-class>com.planit.smsrenta.controladores.LocalidadBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>parametroReservacionBean</managed-bean-name>
+        <managed-bean-class>com.planit.smsrenta.controladores.ParametrosReservacionBean</managed-bean-class>    
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    
     
     <navigation-rule>
         <from-view-id>*</from-view-id>
@@ -281,7 +287,18 @@
             <from-outcome>AdminPCondicionesUso</from-outcome>
             <to-view-id>/vistas/AdminP/reservas/PReserva_Terminos_Condiciones_de_Uso.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>   
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PPanelCalificacion</from-outcome>
+            <to-view-id>/vistas/AdminP/calificaciones/PPanelCalificacion.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>PListaCalificaciones</from-outcome>
+            <to-view-id>/vistas/AdminP/calificaciones/PListaCalificaciones.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+           
                        
         <!-- ADMIN PRINCIPAL -->   
         <!-- ADMIN SECUNDARIO --> 
@@ -537,6 +554,11 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-outcome>CORegreso</from-outcome>
+            <to-view-id>/vistas/Conductor/general/EdicionPerfil.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>COInformacionSesion</from-outcome>
             <to-view-id>/vistas/Conductor/general/CoInformacionSesion.xhtml</to-view-id>
             <redirect/>
@@ -580,7 +602,7 @@
             <from-outcome>AdminSParametrosReservacion</from-outcome>
             <to-view-id>/vistas/AdminS/reservas/SAdministrarParametrosReservacion.xhtml</to-view-id>
             <redirect/>
-        </navigation-case>
+        </navigation-case>        
     </navigation-rule>
                  
                        
@@ -638,9 +660,4 @@
             <to-view-id>/vistas/AdminS/reservas/SReservacion.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    <managed-bean>
-        <managed-bean-name>parametroReservacionBean</managed-bean-name>
-        <managed-bean-class>com.planit.smsrenta.controladores.ParametrosReservacionBean</managed-bean-class>
-    
-        <managed-bean-scope>view</managed-bean-scope></managed-bean>
-</faces-config>
+    </faces-config>

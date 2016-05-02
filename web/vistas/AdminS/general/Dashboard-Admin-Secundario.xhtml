@@ -38,25 +38,30 @@
                                     <h2 class="box-title">Horarios <strong>SMS Renta</strong></h2>
                                     <h:panelGrid class="box-tools" columns="2">
                                         <p:outputLabel value="Tipo de reservacion:"/>
-                                        <b:selectOneMenu value="#{reservacionBean.estadoReservacion}">
-                                            <f:selectItem itemLabel="Todas las reservaciones" itemValue="0"/>
-                                            <f:selectItem itemLabel="Inactiva" itemValue="4"/>
-                                            <f:selectItem itemLabel="En proceso" itemValue="5"/>
-                                            <f:selectItem itemLabel="Terminada" itemValue="6"/>
-                                            <f:selectItem itemLabel="Cancelada" itemValue="7"/>
-                                        </b:selectOneMenu>
+                                        <b:selectOneMenu value="#{reservacionBean.mercadoReservacion}" style="width: 100%">
+                                            <f:selectItem itemLabel="Todas las reservaciones" itemValue="todas"/>
+                                            <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/>                                            
+                                        </b:selectOneMenu>                                        
                                     </h:panelGrid>
                                 </div>
                                 <div class="box-body">
                                     <!-- CALENDARIO PRINCIPAL -->
                                     <p:growl id="messages" showDetail="true" />
                                     <div align="right">
-                                        <h:panelGrid width="20%" columns="2">
+                                        <h:panelGrid width="40%" columns="2">
+                                            <p:outputLabel value="Tipo de reservacion:"/>
+                                            <b:selectOneMenu value="#{reservacionBean.estadoReservacion}">
+                                                <f:selectItem itemLabel="Todas las reservaciones" itemValue="0"/>
+                                                <f:selectItem itemLabel="Inactiva" itemValue="4"/>
+                                                <f:selectItem itemLabel="En proceso" itemValue="5"/>
+                                                <f:selectItem itemLabel="Terminada" itemValue="6"/>
+                                                <f:selectItem itemLabel="Cancelada" itemValue="7"/>
+                                            </b:selectOneMenu>
                                             <p:commandButton style="width: 100%" action="#{reservacionBean.actualizarListasReservaciones()}" update="schedule" class=" btn btn-block btn-success" value="Actualizar reservaciones"/>
                                             <p:commandButton style="width: 100%" action="irListaReservacionesAdminS" update="schedule" class=" btn btn-block btn-primary" value="Ver lista reservaciones"/>
                                         </h:panelGrid>
                                     </div>
-                                    
+
                                     <h:panelGrid width="100%">
                                         <p:schedule timeZone="GMT-5" leftHeaderTemplate="today" centerHeaderTemplate="month, agendaWeek, agendaDay" rightHeaderTemplate="prev,next" id="schedule" value="#{reservacionBean.eventoModelo}" widgetVar="miCalendario">
                                             <p:ajax event="eventSelect" listener="#{reservacionBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
@@ -83,8 +88,6 @@
                                             width: 1000px;
                                         }
                                     </style>
-
-
                                 </div>
                             </div>
                         </b:column>

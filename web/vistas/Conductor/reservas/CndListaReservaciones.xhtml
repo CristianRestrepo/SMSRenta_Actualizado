@@ -21,10 +21,41 @@
                             </div>
                         </b:column>
                         <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
-                            <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}"  rows="5"
+                            <div align="left">
+                                <h:panelGrid columns="2" width="60%">
+
+                                    <p:outputLabel value="Tipo de reservacion:"/>
+
+                                    <p:selectOneMenu value="#{reservacionBean.mercadoReservacion}" style="width: 100%">
+                                        <f:selectItem itemLabel="Todas las reservaciones" itemValue="todas"/>
+                                        <f:selectItems value="#{mercadoBean.nombresMercadosListView}"/> 
+                                        <p:ajax event="change" listener="#{reservacionBean.actualizarListasReservaciones()}" update="DTReservaciones"/>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Estado de la reservacion:"/>
+
+                                    <p:selectOneMenu style="width: 100%" value="#{reservacionBean.estadoReservacion}">
+                                        <f:selectItem itemLabel="Todos los estados" itemValue="0"/>
+                                        <f:selectItem itemLabel="Inactiva" itemValue="4"/>
+                                        <f:selectItem itemLabel="En proceso" itemValue="5"/>
+                                        <f:selectItem itemLabel="Terminada" itemValue="6"/>
+                                        <f:selectItem itemLabel="Cancelada" itemValue="7"/>
+                                        <p:ajax event="change" listener="#{reservacionBean.actualizarListasReservaciones()}" update="DTReservaciones"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </div>
+
+                            <b:inputText style="width: 100%" value="#{reservacionBean.buscar}" placeholder="Buscar cedula, nombre, etc...">
+                                <p:ajax event="keyup" process="@this" listener="#{reservacionBean.filtrarReservaciones()}" update="DTReservaciones"/>
+                            </b:inputText> 
+                            <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}"  rows="15"
                                          paginator="true"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,10,15" emptyMessage="Reservaciones no registrados">
+                                         rowsPerPageTemplate="15,20,25" emptyMessage="Reservaciones no registrados">
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{reservacion.idReservacion}" />
+                                </p:column>
+
                                 <p:column headerText="Cliente">
                                     <h:outputText value="#{reservacion.smsUsuario.usuarioNombre}" />
                                 </p:column>
@@ -41,15 +72,14 @@
                                     <h:outputText value="#{reservacion.reservacionHoraInicio}" />
                                 </p:column>
 
-                                <p:column headerText="Placa vehiculo">
-                                    <h:outputText value="#{reservacion.smsVehiculo.vehPlaca}" />
-                                </p:column>
-                                <p:column headerText="Ver" style="width: 35px">
-                                    <p:commandLink style="color: white; padding: 8px" class="fa fa-arrow-left btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReserva()}" title="Ver Reservacion">
-                                        <f:setPropertyActionListener value="#{reservacion}" target="#{reservacionBean.modReservacionView}"/>
+                                <p:column  style="width: 35px">
+                                    <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" update="@form" action="#{reservacionBean.irVistaReservaDesdeLista(reservacion)}" title="Ver Reservacion">
+                                        <i class="fa fa-arrow-left ">  </i> 
                                     </p:commandLink>
                                 </p:column>
-                            </p:dataTable>
+
+
+                            </p:dataTable>  
 
                         </b:column> 
                     </h:form>

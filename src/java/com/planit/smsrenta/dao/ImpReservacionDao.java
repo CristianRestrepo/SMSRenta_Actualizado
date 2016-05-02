@@ -46,7 +46,8 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch servicio.smsMercado as mercado "
                     + "left join fetch reservacion.smsVehiculo as vehiculo "
                     + "left join fetch vehiculo.smsReferencia as referencia "
-                    + "left join fetch vehiculo.smsColor left join fetch referencia.smsMarca "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
                     + "order by reservacion.idReservacion desc");
             reservaciones = (List<SmsReservacion>) query.list();
         } catch (HibernateException e) {
@@ -344,7 +345,8 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch referencia.smsMarca "
                     + "where cliente.usuarioCc LIKE '%" + valor + "%' or "
                     + "cliente.usuarioNombre LIKE '%" + valor + "%' or "
-                    + "cliente.usuarioEmail LIKE '" + valor + "' order by reservacion.idReservacion desc");
+                    + "cliente.usuarioEmail LIKE '" + valor + "' "
+                    + "order by reservacion.idReservacion desc");
             reservas = (List<SmsReservacion>) query.list();
         } catch (HibernateException e) {
             e.getMessage();
@@ -375,7 +377,8 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch servicio.smsMercado as mercado "
                     + "left join fetch reservacion.smsVehiculo as vehiculo "
                     + "left join fetch vehiculo.smsReferencia as referencia "
-                    + "left join fetch vehiculo.smsColor left join fetch referencia.smsMarca where "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
                     + "estado.idEstado = '" + estado + "' "
                     + "order by reservacion.idReservacion desc");
             reservaciones = (List<SmsReservacion>) query.list();
@@ -410,7 +413,8 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch vehiculo.smsReferencia as referencia "
                     + "left join fetch vehiculo.smsColor "
                     + "left join fetch referencia.smsMarca  where "
-                    + "cliente.idUsuario = '" + usuario.getIdUsuario() + "' and estado.idEstado = '" + estado + "' "
+                    + "cliente.idUsuario = '" + usuario.getIdUsuario() + "' and "
+                    + "estado.idEstado = '" + estado + "' "
                     + "order by reservacion.idReservacion desc");
             resevacionesHechas = (List<SmsReservacion>) query.list();
 
@@ -479,7 +483,8 @@ public class ImpReservacionDao implements IReservacionDao {
                     + "left join fetch vehiculo.smsReferencia as referencia "
                     + "left join fetch vehiculo.smsColor "
                     + "left join fetch referencia.smsMarca "
-                    + "where estado.idEstado = '" + estado + "' and (cliente.usuarioCc LIKE '%" + valor + "%' or "
+                    + "where estado.idEstado = '" + estado + "' and "
+                    + "(cliente.usuarioCc LIKE '%" + valor + "%' or "
                     + "cliente.usuarioNombre LIKE '%" + valor + "%' or "
                     + "cliente.usuarioEmail LIKE '" + valor + "') order by reservacion.idReservacion desc");
             reservas = (List<SmsReservacion>) query.list();
@@ -491,6 +496,296 @@ public class ImpReservacionDao implements IReservacionDao {
             }
         }
         return reservas;
+    }
+
+    @Override
+    public List<SmsReservacion> consultarReservacionesSegunEstadoyMercado(int estado, String mercado) {
+        Session session = null;
+        List<SmsReservacion> reservaciones = new ArrayList<>();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor left join fetch referencia.smsMarca where "
+                    + "estado.idEstado = '" + estado + "' and "
+                    + "mercado.mercadoNombre = '" + mercado + "' "
+                    + "order by reservacion.idReservacion desc");
+            reservaciones = (List<SmsReservacion>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return reservaciones;
+    }
+
+    @Override
+    public List<SmsReservacion> filtrarReservacionSegunClienteSegunEstadoyMercado(String valor, int estado, String mercado) {
+        Session session = null;
+        List<SmsReservacion> reservas = new ArrayList<>();
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
+                    + "where estado.idEstado = '" + estado + "' and "
+                    + "mercado.mercadoNombre = '" + mercado + "' and "
+                    + "(cliente.usuarioCc LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioNombre LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioEmail LIKE '" + valor + "') order by reservacion.idReservacion desc");
+            reservas = (List<SmsReservacion>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return reservas;
+    }
+
+    @Override
+    public List<SmsReservacion> mostrarReservacionClienteSegunEstadoyMercado(SmsUsuario usuario, int estado, String mercado) {
+        Session session = null;
+        List<SmsReservacion> resevacionesHechas = null;
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca  where "
+                    + "mercado.mercadoNombre = '" + mercado + "' and "
+                    + "cliente.idUsuario = '" + usuario.getIdUsuario() + "' and "
+                    + "estado.idEstado = '" + estado + "' "
+                    + "order by reservacion.idReservacion desc");
+            resevacionesHechas = (List<SmsReservacion>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return resevacionesHechas;
+    }
+
+    @Override
+    public List<SmsReservacion> mostrarReservacionConductoresSegunEstadoyMercado(SmsEmpleado conductor, int estado, String mercado) {
+        Session session = null;
+        List<SmsReservacion> resevacionesHechas = null;
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
+                    + "mercado.mercadoNombre = '" + mercado + "' and "
+                    + "empleado.idEmpleado = '" + conductor.getIdEmpleado() + "' and "
+                    + "estado.idEstado = '" + estado + "' "
+                    + "order by reservacion.idReservacion desc");
+            resevacionesHechas = (List<SmsReservacion>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return resevacionesHechas;
+    }
+
+    @Override
+    public List<SmsReservacion> mostrarReservacionesSegunMercado(String mercado) {
+        Session session = null;
+        List<SmsReservacion> reservaciones = new ArrayList<>();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
+                    + "mercado.mercadoNombre = '" + mercado + "' "
+                    + "order by reservacion.idReservacion desc");
+            reservaciones = (List<SmsReservacion>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return reservaciones;
+    }
+
+    @Override
+    public List<SmsReservacion> filtrarReservacionSegunClienteSegunMercado(String valor, String mercado) {
+        Session session = null;
+        List<SmsReservacion> reservas = new ArrayList<>();
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
+                    + "where mercado.mercadoNombre = '" + mercado + "' and "
+                    + "cliente.usuarioCc LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioNombre LIKE '%" + valor + "%' or "
+                    + "cliente.usuarioEmail LIKE '" + valor + "' order by reservacion.idReservacion desc");
+            reservas = (List<SmsReservacion>) query.list();
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return reservas;
+    }
+
+    @Override
+    public List<SmsReservacion> mostrarReservacionClienteSegunMercado(SmsUsuario usuario, String mercado) {
+        Session session = null;
+        List<SmsReservacion> resevacionesHechas = null;
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch servicio.smsMercado as mercado"
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
+                    + "mercado.mercadoNombre = '" + mercado + "' and "
+                    + "cliente.idUsuario = '" + usuario.getIdUsuario() + "' "
+                    + "order by reservacion.idReservacion desc");
+            resevacionesHechas = (List<SmsReservacion>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return resevacionesHechas;
+    }
+
+    @Override
+    public List<SmsReservacion> mostrarReservacionConductoresSegunMercado(SmsEmpleado conductor, String mercado) {
+        Session session = null;
+        List<SmsReservacion> resevacionesHechas = null;
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch servicio.smsMercado as mercado "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca where "
+                    + "mercado.mercadoNombre = '" + mercado + "' and "
+                    + "empleado.idEmpleado = '" + conductor.getIdEmpleado() + "' order by reservacion.idReservacion desc");
+            resevacionesHechas = (List<SmsReservacion>) query.list();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return resevacionesHechas;
     }
 
 }

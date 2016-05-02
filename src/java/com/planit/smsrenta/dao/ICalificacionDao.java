@@ -16,6 +16,7 @@ public interface ICalificacionDao {
     
     //Definicion de metodos CRUD
     public List<SmsCalificacion> mostrarCalificaciones();
+    public List<SmsCalificacion> filtrarCalificaciones(String valor);
     public void registrarCalificacion(SmsCalificacion calificacion);
     public void modificarCalificacion(SmsCalificacion calificacion);
     public void eliminarCalificacion(SmsCalificacion calificacion);
