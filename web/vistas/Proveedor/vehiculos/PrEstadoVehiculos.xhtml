@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+    <ui:composition template="./../TemplateProveedor.xhtml">
+
+        <ui:define name="content4">
+
+            <b:container fluid="true">
+                <b:row>
+                    <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+                        <div class="box box-info espacio-arriba">
+                            <div class="box-header with-border">
+                                <i class="fa fa-2x fa-star-half-o"/>
+                                <h2 class="box-title" >Estadisticas del estado de Vehiculo</h2>
+                            </div>
+                            <div class="box-body">
+                                <blockquote >
+
+
+                                    <div style="display: inline-flex">
+                                        <h5> 
+                                            <i class="fa fa-car"/>
+                                            Seleccionar Vehiculo:
+                                        </h5>
+                                        <b:selectOneMenu value="" style="display: inline">
+                                            <f:selectItem itemLabel="VEhiculo 1" />
+                                            <f:selectItem itemLabel="VEhiculo 2"/>
+                                            <f:selectItem itemLabel="VEhiculo 3"/>
+                                        </b:selectOneMenu>
+                                    </div>
+                                    <br/>
+
+                                    <div style="display: inline-flex">
+                                        <h5> 
+                                            <i class="fa fa-check-square"/>
+                                            Seleccionar Periodo:
+                                        </h5>
+                                        <b:selectOneMenu value="" style="display: inline">
+                                            <f:selectItem itemLabel="Año" />
+                                            <f:selectItem itemLabel="Mes"/>
+                                        </b:selectOneMenu>
+                                    </div>
+
+                                    <div style="display: inline-flex">
+                                        <h5> 
+                                            <i class="fa fa-caret-square-o-right"/>
+                                            Seleccionar Fecha:
+                                        </h5>
+                                        <div style="width: 50%">
+                                            <b:datepicker mode="icon-popup" changeYear="true" changeMonth="true" placeholder="Seleccione una fecha" lang="es" />
+                                        </div>
+                                    </div>
+                                </blockquote>
+                                <b:button value="Hacer consulta" iconAwesome="fa da-user" look="info" style="width: 100%"/>
+                                <hr/>
+
+                                <b:column col-lg="12">
+
+                                    <p:dataTable var="car" value="#{dtBasicView.cars}">
+                                        <p:column headerText="Vehículo">
+                                            <h:outputText value="#{car.id}" />
+                                        </p:column>
+
+                                        <p:column headerText="Ciudad">
+                                            <h:outputText value="#{car.year}" />
+                                        </p:column>
+
+                                        <p:column headerText="Placa">
+                                            <h:outputText value="#{car.brand}" />
+                                        </p:column>
+
+                                        <p:column headerText="Consultar Estado">
+                                            <h:outputText value="#{car.color}" />
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </b:column>
+
+                                <h:panelGrid columns="1" cellpadding="5">
+                                    <p:commandButton value="Modal" type="button" onclick="PF('dlg2').show();" />
+                                </h:panelGrid>
+
+                                <p:dialog header="Estado del Vehiculo" widgetVar="dlg2" modal="true" height="100">
+
+                                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                        <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> 
+
+                                        <p:outputPanel>
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <h:outputText value="Pintura:" />
+                                                <p:rating value="#{ratingView.rating4}" readonly="true" />
+
+                                                <h:outputText value="Motor:" />
+                                                <p:rating value="#{ratingView.rating4}" readonly="true" />
+
+                                                <h:outputText value="Frenos:" />
+                                                <p:rating value="#{ratingView.rating4}" readonly="true" />
+
+                                                <h:outputText value="Silletería:" />
+                                                <p:rating value="#{ratingView.rating4}" readonly="true" />
+                                            </h:panelGrid>
+                                        </p:outputPanel>
+                                    </h:panelGrid>
+
+                                </p:dialog>
+                            </div>
+                        </div>
+                    </b:column>
+
+                    <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >
+                        <div class="box box-danger espacio-arriba">
+                            <div class="box-header with-border">
+                                <i class="fa fa-2x fa-user-plus "/>
+                                <h4 class="box-title">Estado del Vehiculo</h4>
+                            </div>
+                            <div class="box-body">
+                                <p>Dentro del estado del vehiculo se encuentran los items descriptivos 
+                                    del estado de la silletería, el estado de los fenos, del motor y de la pintura. 
+                                    Los calificativos que describen los estados son:<em>Excelente, Bueno, Regular y Malo</em> .</p>
+                            </div>
+                        </div>
+                    </b:column>
+
+                    <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >
+                        <div class="box box-success ">
+                            <div class="box-header with-border">
+                                <i class="fa fa-2x fa-line-chart"/>
+                                <h4 class="box-title">Promedio Ingresos y Ganancias</h4>
+                            </div>
+                            <div class="box-body">
+                                <p>
+                                    Revice las estadistics generales de su Vehiculo dando Clic en el siguiente enlace:
+                                </p>
+                                <b:button value="Ver Estado de Vehiculos"  look="success"  style="width: 100%"/>
+                            </div>
+                        </div>
+                    </b:column>
+
+                </b:row>
+            </b:container>
+
+        </ui:define>
+
+    </ui:composition>
+
+
+</html>

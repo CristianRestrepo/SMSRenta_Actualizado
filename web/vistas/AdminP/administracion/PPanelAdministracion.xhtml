@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../TemplateAdminP.xhtml">
+
+            <ui:define name="content">
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">PANEL DE ADMINISTRACION</h4>
+                                <p>Te damos la bienvenida, <strong>#{sesionActivaBean.usuario.usuarioNombre}</strong></p>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="1" col-md="1" col-sm="2" col-xs="12">
+                            <div class="box box-info">
+                                <div class="box box-body table-responsive">
+                                    <h4 align="center" style="font-size: xx-large">1</h4>
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="11" col-md="11" col-sm="10" col-xs="12">
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <h4 style="font-size: larger"><strong>ASOCIAR VEHICULO Y CONDUCTORES</strong></h4>                                           
+                                </div>
+                                <div class="box-body">
+                                    <table width="100%">
+                                        <th>
+                                            <td width="80%"><p align="justify">Asigne uno o varios conductores para un vehiculo.</p></td>
+                                            <td width="20%"><p:commandButton action="#{pathBean.ir_PAsociarVehiculosConductores()}" value="ir" class="btn btn-block btn-info" style="width: 100%"/></td>                                               
+                                        </th>
+                                    </table>                                   
+                                </div>                                
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="1" col-md="1" col-sm="2" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box box-body table-responsive">
+                                    <h4 align="center" style="font-size: xx-large">2</h4>
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="11" col-md="11" col-sm="10" col-xs="12">
+                            <div class="box box-success"> 
+                                <div class="box-header with-border">
+                                    <h4 style="font-size: larger"><strong>ASOCIAR SERVICIOS Y VEHICULOS</strong></h4>                                      
+                                </div>
+                                <div class="box-body">
+                                    <table width="100%">
+                                        <th>
+                                            <td width="80%"><p align="justify">Administre los vehiculos clasificandolos segun los diferentes tipos de servicios.</p></td>
+                                            <td width="20%"><p:commandButton value="ir" action="#{pathBean.ir_PAsociarVehiculosServicios()}" class="btn btn-block btn-success" style="width: 100%"/></td>                                        
+                                        </th>
+                                    </table> 
+                                </div>                                
+                            </div>
+                        </b:column>  
+
+                        <b:column col-lg="1" col-md="1" col-sm="2" col-xs="12">
+                            <div class="box box-danger">
+                                <div class="box box-body table-responsive">
+                                    <h4 align="center" style="font-size: xx-large">3</h4>
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="11" col-md="11" col-sm="10" col-xs="12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h4 style="font-size: larger"><strong>ASIGNAR PARAMETROS DE LA RESERVACION</strong></h4>                                           
+                                </div>
+                                <div class="box-body">
+                                    <table width="100%">
+                                        <th>
+                                            <td width="80%"><p align="justify">Configure parametros de la reservacion, incrementos, descuentos, etc...</p></td>
+                                            <td width="20%"><p:commandButton action="#{pathBean.ir_PParametrosReservaciones()}" value="ir" class="btn btn-block btn-danger" style="width: 100%"/></td>                                               
+                                        </th>
+                                    </table>                                   
+                                </div>                                
+                            </div>
+                        </b:column>
+                        
+                        <b:column col-lg="1" col-md="1" col-sm="2" col-xs="12">
+                            <div class="box box-warning">
+                                <div class="box box-body table-responsive">
+                                    <h4 align="center" style="font-size: xx-large">4</h4>
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="11" col-md="11" col-sm="10" col-xs="12">
+                            <div class="box box-warning">
+                                <div class="box-header with-border">
+                                    <h4 style="font-size: larger"><strong>ENVIO DE CORREOS</strong></h4>                                           
+                                </div>
+                                <div class="box-body">
+                                    <table width="100%">
+                                        <th>
+                                            <td width="80%"><p align="justify">Envie facturas, documentos o archivos a los clientes desde el sistema, o simplemente comuniquese con ellos.</p></td>
+                                            <td width="20%"><p:commandButton action="#{pathBean.ir_PParametrosReservaciones()}" value="ir" class="btn btn-block btn-warning" style="width: 100%"/></td>                                               
+                                        </th>
+                                    </table>                                   
+                                </div>                                
+                            </div>
+                        </b:column>
+                    </b:row>
+                </b:container>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

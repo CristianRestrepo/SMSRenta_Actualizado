@@ -988,19 +988,19 @@ public class ReservacionBean implements Serializable {
         horaEntrega = formatTime.format(modReservacionView.getReservacionHoraLlegada());
         switch (sesion.getSmsRol().getRolNombre()) {
             case "Administrador Principal":
-                Ruta = "VistaReservaAdminP";
+                Ruta = "AdminPVistaReserva";
                 break;
 
             case "Administrador Secundario":
-                Ruta = "VistaReservaAdminS";
+                Ruta = "AdminSVistaReserva";
                 break;
 
             case "Cliente":
-                Ruta = "VistaReservaCliente";
+                Ruta = "ClienteVistaReserva";
                 break;
 
             case "Conductor":
-                Ruta = "VistaReservaConductor";
+                Ruta = "ConductorVistaReserva";
                 break;
         }
 
@@ -1021,20 +1021,20 @@ public class ReservacionBean implements Serializable {
         horaInicio = formatTime.format(modReservacionView.getReservacionHoraInicio());
         horaEntrega = formatTime.format(modReservacionView.getReservacionHoraLlegada());
         switch (sesion.getSmsRol().getRolNombre()) {
-            case "Administrador Principal":
-                Ruta = "VistaReservaAdminP";
+           case "Administrador Principal":
+                Ruta = "AdminPVistaReserva";
                 break;
 
             case "Administrador Secundario":
-                Ruta = "VistaReservaAdminS";
+                Ruta = "AdminSVistaReserva";
                 break;
 
             case "Cliente":
-                Ruta = "VistaReservaCliente";
+                Ruta = "ClienteVistaReserva";
                 break;
 
             case "Conductor":
-                Ruta = "VistaReservaConductor";
+                Ruta = "ConductorVistaReserva";
                 break;
         }
 
@@ -1299,11 +1299,11 @@ public class ReservacionBean implements Serializable {
         atras = false;
         String ruta = "";
         if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")) {
-            ruta = "AdminPReservacion";
+            ruta = "AdminPReservaciones";
         } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Secundario")) {
-            ruta = "AdminSReserva";
+            ruta = "AdminSReservaciones";
         } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {
-            ruta = "ClienteReservacion";
+            ruta = "ClienteReservaciones";
         }
 
         return ruta;

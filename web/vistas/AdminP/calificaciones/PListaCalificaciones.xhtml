@@ -8,8 +8,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
-        <ui:composition template="./../template-admin-p.xhtml">
+        <ui:composition template="./../TemplateAdminP.xhtml">
             <ui:define name="content">
                 <b:container fluid="true">
                     <b:row>
@@ -50,7 +49,7 @@
                                     </p:column>
 
                                     <p:column headerText="Ver" style="width: 35px">
-                                        <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" update="@form" action="#{pathBean.ir_PCalificacion()}" title="Ver Calificacion">
+                                        <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" update="@form" action="#{pathBean.ir_PCalificaciones()}" title="Ver Calificacion">
                                             <f:setPropertyActionListener value="#{calificacion}" target="#{calificacionBean.calificacionView}"/>
                                             <i class="fa fa-arrow-left ">  </i> 
                                         </p:commandLink>

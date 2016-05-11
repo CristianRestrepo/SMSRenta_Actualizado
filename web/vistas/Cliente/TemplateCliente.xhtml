@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>        
+        <h:outputStylesheet name="./bootstrap/css/bootstrap.css"/>
+        <h:outputStylesheet name="./adminLT/css/AdminLTE.css"/>
+        <h:outputStylesheet name="./adminLT/css/skins/_all-skins.css"/>
+        <h:outputStylesheet name="./adminLT/css/bootstrap3-wysihtml5.css"/>
+
+        <h:outputScript name="./js/bootstrap.min.js" />
+        <h:outputScript name="./js/bootstrap3-wysihtml5.all.min.js" />
+        <h:outputScript name="./js/app.js" />
+
+        <title>Dashboard SMS | Administradot Principal</title>
+    </h:head>
+
+
+    <h:body class="hold-transition skin-blue sidebar-mini">
+
+        <div class="wrapper">
+            <div>
+                <header class="main-header">
+                    <a class="logo">
+                        <div class="logo-mini">
+                            <img class="navbar-brand " style=" margin-left: -13px" src="../../../resources/images/logo-sms-mini.png" />
+                        </div>                  
+                        <div class="logo-lg">                            
+                            <img class="navbar-brand logo-men-1" src="../../../resources/images/logo-DASH.png" />
+                        </div>                  
+                    </a>
+
+                    <!-- Logo -->
+                    <!-- Header Navbar: style can be found in header.less -->
+                    <nav class="navbar navbar-static-top" role="navigation">
+                        <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle navigation</span>
+                        </a>
+
+                        <div class="navbar-custom-menu">
+                            <ul class="nav navbar-nav">
+
+                                <!-- User Account: style can be found in dropdown.less -->
+                                <li class="dropdown user user-menu">
+                                    <a href="#" class="dropdown-toggle nav-sms" data-toggle="dropdown">
+                                        <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="user-image img-circle center-block img-responsive" alt="User Image"/>
+                                        <span class="hidden-xs">#{sesionActivaBean.usuario.usuarioNombre}</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <!-- User image -->
+                                        <li class="user-header">
+                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle center-block img-responsive" alt="User Image"/>
+                                            <p>#{sesionActivaBean.usuario.usuarioNombre}<br/>
+                                                <small>#{sesionActivaBean.usuario.smsRol.rolNombre}</small>
+                                            </p>
+
+                                        </li>
+
+                                        <!-- Menu Footer-->
+                                        <li class="user-footer">
+                                            <div class="pull-left">
+                                                <h:form>
+                                                    <p:commandButton value="Editar Perfil" process="@this" ajax="false" immediate="true" action="#{usuarioBean.ir_editarPerfil()}" class="btn btn-default btn-block "/>
+                                                </h:form>
+                                            </div>
+                                            <div class="pull-right">
+                                                <h:form>
+                                                    <p:commandButton value="Cerrar Sesion" immediate="true" action="#{sesionActivaBean.cerrarSession()}" class="btn btn-default btn-block "/>
+                                                </h:form> 
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+
+            <b:container fluid="true" class="adminLTE-espacioFrontal">
+                <div>
+                    <div id="left-99">
+                        <!-- Left side column. contains the logo and sidebar -->
+                        <aside class="main-sidebar">
+                            <h:form>
+                                <!-- sidebar: style can be found in sidebar.less -->
+                                <section class="sidebar">
+                                    <!-- Sidebar user panel -->
+                                    <div class="user-panel">
+                                        <div class="pull-left image">
+                                            <p:graphicImage value="#{sesionActivaBean.usuario.usuarioFotoRuta}" class="img-circle img-altura" alt="User Image"/>
+                                        </div>
+                                        <div class="pull-left info">
+                                            <p>#{sesionActivaBean.usuario.usuarioNombre}</p>
+                                            <p>#{sesionActivaBean.usuario.smsRol.rolNombre}</p>
+                                        </div>
+                                    </div>                                    
+                                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                                    <ul class="sidebar-menu">
+                                        <li class="header">Menu Principal</li>
+                                        <li>
+                                            <h:link outcome="#{pathBean.ir_CDashboard()}">
+                                                <i class="fa fa-dashboard"></i> <span>Tablero Principal</span>
+                                            </h:link>
+                                        </li>
+
+                                        <li class="treeview">
+                                            <a href="#">
+                                                <i class="fa fa-list-alt"></i>
+                                                <span>Reservaciones SMS Renta </span><i class="fa fa-angle-left pull-right"></i>
+                                            </a>
+                                            <ul class="treeview-menu">
+                                                <li>
+                                                    <h:link outcome="#{pathBean.ir_CTiposServicios()}">
+                                                        <i class="fa fa-circle-o"></i> <span>Reservaciones SMS Renta</span>
+                                                    </h:link>
+                                                </li>
+
+                                                <li>
+                                                    <h:link outcome="#{pathBean.ir_CReservaciones()}">
+                                                        <i class="fa fa-circle-o"></i> Mis Reservas
+                                                    </h:link>
+                                                </li>                                               
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </section>
+                                <!-- /.sidebar -->
+                            </h:form>
+                        </aside>
+                    </div>
+                    <div id="content-123" class="content-wrapper min-alto"  >                        
+                        <ui:insert name="content2">                             
+                        </ui:insert>    
+                    </div>
+                </div>
+            </b:container>
+        </div>
+
+        <div id="bottom-12">
+
+            <footer class="main-footer" style="left: 15px; position: relative; top: 10px;
+                    ">
+                <p>
+                    <span class="copy-r"> Copyright © 2016 | Realizado por <a href="http://www.planit.com.co/">Planit SAS</a>.</span> Todos los derechos reservados.
+                </p>
+            </footer>
+        </div>
+
+
+    </h:body>
+
+</html>

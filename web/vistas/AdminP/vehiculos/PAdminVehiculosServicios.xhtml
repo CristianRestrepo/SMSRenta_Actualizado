@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../TemplateAdminP.xhtml">
+            <ui:define name="content">
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">ADMINISTRACION DE VEHICULOS Y SERVICIOS</h4><br/>
+                                <p>Te damos la bienvenida, <strong>#{sesionActivaBean.usuario.usuarioNombre}</strong></p>
+                            </div>
+                        </b:column>
+
+                        <h:form id="formularioOpciones">
+                            <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12">
+                                <div class="box box-info">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-cogs"/>
+                                        <h4 class="box-title">Funciones</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <table width="100%">
+                                            <th>
+                                                <td align="center">
+                                                    <p:commandButton style="width: 80%" action="#{vehiculoBean.asociar()}" update=":formularioOpciones :formularioAsociarRemover :formularioVehiculos" value="Asociar" class="btn btn-block btn-primary">
+                                                    </p:commandButton>                                                
+                                                </td>
+                                                <td align="center">
+                                                    <p:commandButton style="width: 80%" action="#{vehiculoBean.remover()}" update=":formularioOpciones :formularioAsociarRemover :formularioVehiculos" value="Remover" class="btn btn-block btn-warning">
+                                                    </p:commandButton>
+                                                </td>
+                                                <td align="center">
+                                                    <p:commandButton style="width: 80%" disabled="#{vehiculoBean.habilitarCancelar}" action="#{vehiculoBean.cancelarAsociacionVehiculoServicios()}" update=":formularioOpciones :formularioAsociarRemover  :formularioVehiculos" value="Cancelar" class="btn btn-block btn-danger">
+                                                    </p:commandButton>
+                                                </td>
+                                            </th>
+                                        </table>
+                                    </div>
+                                </div>                                
+                            </b:column>
+                        </h:form>
+
+                        <h:form id="formularioVehiculos">
+                            <c:choose>
+                                <c:when test="${vehiculoBean.operacionAdministracion == 0}">
+                                </c:when>
+                                <c:when test="${vehiculoBean.operacionAdministracion == 2}">
+                                    <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12">
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <i class="fa fa-2x fa-list-ol"/>
+                                                <h4 class="box-title">Categorias de servicios</h4>
+                                            </div>
+                                            <div class="box-body">
+                                                <table width="100%">
+                                                    <th>
+                                                        <td width="50%">
+                                                            <b:selectOneMenu value="#{vehiculoBean.categoria.catNombre}" style="width: 100%" id="SCCategoriasServicios">
+                                                                <f:selectItem itemLabel="Seleccione Categoria" noSelectionOption="true"/>
+                                                                <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
+                                                            </b:selectOneMenu> 
+                                                        </td>
+                                                        <td width="50%" align="center">
+                                                            <p:commandButton style="width: 80%" update=":formularioAsociarRemover :formularioVehiculos:DTVehiculos" value="Consultar" action="#{vehiculoBean.consultarVehiculoSegunCategoria()}" class="btn btn-block btn-success">
+                                                            </p:commandButton>
+                                                        </td>
+                                                    </th>
+                                                </table>
+                                            </div>
+                                        </div>                                
+                                    </b:column>
+                                </c:when>
+                            </c:choose>
+
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-list-ol"/>
+                                        <h4 class="box-title">Vehiculos</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <c:choose>
+                                            <c:when test="${vehiculoBean.operacionAdministracion == 0}">
+                                                <b:inputText id="BuscarVehiculo"  placeholder="Buscar placa, Marca, color, referencia, ciudad, etc..."  style="width: 100%"/>                                                  
+                                                <p:dataTable var="vehiculo" id="DTVehiculos" emptyMessage="Vehículos no registrados" 
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10,15">                                            
+                                                    <p:column headerText="Placa"/>                                                       
+
+                                                    <p:column headerText="Referencia"/>
+
+                                                    <p:column headerText="Ciudad"/>
+
+                                                    <p:column headerText="Categoría"/>
+
+                                                    <p:column headerText="Proveedor"/>
+                                                </p:dataTable>
+                                            </c:when>
+                                            <c:when test="${vehiculoBean.operacionAdministracion != 0}">
+                                                <b:inputText id="BuscarVehiculo"  placeholder="Buscar placa, Marca, color, referencia, ciudad, etc..." value="#{vehiculoBean.buscar}" style="width: 100%" >
+                                                    <p:ajax event="keyup" listener="#{vehiculoBean.filtrarVehiculosConsultados()}" process="@this" update="DTVehiculos"/>
+                                                </b:inputText>
+                                                <p:dataTable rowKey="#{vehiculo.idVehiculo}" var="vehiculo" selection="#{vehiculoBean.vehiculosSeleccionados}" id="DTVehiculos" emptyMessage="Vehículos no registrados" value="#{vehiculoBean.vehiculos}"
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10,15">                                            
+                                                    <p:column selectionMode="multiple" style="width:25px;text-align:center" >
+                                                    </p:column>                                               
+
+                                                    <p:column headerText="Placa">
+                                                        <h:outputText value="#{vehiculo.vehPlaca}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="Referencia">
+                                                        <h:outputText value="#{vehiculo.smsReferencia.referenciaNombre}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="Ciudad">
+                                                        <h:outputText value="#{vehiculo.smsCiudad.ciudadNombre}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="Categoría">
+                                                        <h:outputText value="#{vehiculo.smsCategoria.categoriaNombre}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="Proveedor">
+                                                        <h:outputText value="#{vehiculo.smsProveedor.proveedorRazonSocial}" />
+                                                    </p:column>
+                                                    <f:facet name="footer">
+                                                        <p:commandButton process="DTVehiculos" update=":formularioAsociarRemover:DTVehiculosSeleccionados" icon="ui-icon-search" value="Seleccionar"/>
+                                                    </f:facet>
+                                                </p:dataTable>
+                                            </c:when>                                            
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </h:form>                     
+
+                        <h:form id="formularioAsociarRemover">                            
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <p:messages autoUpdate="true" closable="true"/>
+                            </b:column>
+
+                            <c:choose>
+                                <c:when test="${vehiculoBean.operacionAdministracion == 0}">
+
+                                </c:when>
+                                <c:when test="${vehiculoBean.operacionAdministracion == 1}">
+                                    <b:column col-lg="4" col-md="4" col-sm="12" col-xs="12">
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <i class="fa fa-2x fa-list-ol"/>
+                                                <h4 class="box-title">Categorias de servicios</h4>
+                                            </div>
+                                            <div class="box-body">
+                                                <p:selectManyCheckbox value="#{vehiculoBean.categoriasSeleccionados}" columns="3" style="width: 100%" id="SCCategoriasServicios">
+                                                    <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
+                                                </p:selectManyCheckbox>
+                                                <hr/>
+                                                <center>                                            
+                                                    <p:commandButton style="width: 80%" update=":formularioVehiculos :formularioAsociarRemover" action="#{vehiculoBean.asociarVehiculosServicios()}" value="Asociar" class="btn btn-block btn-success">
+                                                        <p:confirm header="Confirmación"  message="Está seguro que desea asociar estos vehiculos?" icon="ui-icon-alert" /> 
+                                                    </p:commandButton>
+                                                </center>
+                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                    <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                                    <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                                </p:confirmDialog>    
+                                            </div>
+                                        </div>                                
+                                    </b:column>
+                                </c:when>
+                                <c:when test="${vehiculoBean.operacionAdministracion == 2}">
+                                    <b:column col-lg="4" col-md="4" col-sm="12" col-xs="12">
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <i class="fa fa-2x fa-list-ol"/>
+                                                <h4 class="box-title">Remover</h4>
+                                            </div>
+                                            <div class="box-body">                                            
+                                                <center>                                            
+                                                    <p:commandButton style="width: 80%" update=":formularioAsociarRemover :formularioVehiculos" action="#{vehiculoBean.removerVehiculosServicios()}" value="Remover" class="btn btn-block btn-danger">
+                                                        <p:confirm header="Confirmación"  message="Está seguro que desea desligar estos vehiculos?" icon="ui-icon-alert" /> 
+                                                    </p:commandButton>
+                                                </center>
+                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                    <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                                    <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                                </p:confirmDialog>    
+                                            </div>
+                                        </div>                                
+                                    </b:column>
+                                </c:when>
+                            </c:choose>
+
+                            <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12">
+                                <div class="box box-success">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-check-square-o"/>
+                                        <h4 class="box-title">Vehiculos seleccionados</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <p:dataTable var="vehiculo" id="DTVehiculosSeleccionados" emptyMessage="Vehículos no registrados" value="#{vehiculoBean.vehiculosSeleccionados}"
+                                                     rows="10"
+                                                     paginator="true"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     rowsPerPageTemplate="5,10,15">                                            
+                                            <p:column headerText="Placa">
+                                                <h:outputText value="#{vehiculo.vehPlaca}" />
+                                            </p:column>
+
+                                            <p:column headerText="Referencia">
+                                                <h:outputText value="#{vehiculo.smsReferencia.referenciaNombre}" />
+                                            </p:column>
+
+                                            <p:column headerText="Ciudad">
+                                                <h:outputText value="#{vehiculo.smsCiudad.ciudadNombre}" />
+                                            </p:column>
+
+                                            <p:column headerText="Categoría">
+                                                <h:outputText value="#{vehiculo.smsCategoria.categoriaNombre}" />
+                                            </p:column>
+
+                                            <p:column headerText="Proveedor">
+                                                <h:outputText value="#{vehiculo.smsProveedor.proveedorRazonSocial}" />
+                                            </p:column>
+                                        </p:dataTable>    
+                                    </div>
+                                </div>
+                            </b:column>
+                        </h:form>
+
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                            <h:form>
+                                <div class="espacio-arriba" style="text-align: left" align="center">
+                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_PPanelAdministracion()}" look="success" value="Regresar"/>
+                                </div><br/>
+                            </h:form>
+                        </b:column>
+                    </b:row>
+                </b:container>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

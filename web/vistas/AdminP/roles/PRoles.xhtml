@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="./../TemplateAdminP.xhtml">
+        <ui:define name="content">
+            <b:container fluid="true">
+                <b:row>
+                    <h:form>
+                        <p:messages closable="true" id="msg"/>
+
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="box box-info  espacio-arriba">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-dot-circle-o"/>
+                                    <h3 class="box-title">Roles SMS Renta</h3>
+                                </div>
+                                <div class="box-body">
+                                    <p>En este panel podrá ingresar el rol a cada tipo de usuario que necesite que se le asignen 
+                                        permisos diferentes de los que y se encuentran preestablecidos.</p>  
+                                </div>
+                            </div>
+                        </b:column>
+
+
+                        <b:column col-lg="6" col-md="6" col-sm="6" col-xs="12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">                                    
+                                    <i class="fa fa-2x fa-check"/>
+                                    <h4 class="box-title">Registro de roles</h4>
+                                </div> 
+                                <div class="box-body">
+                                    <h:panelGrid cellpadding="5" style="width: 100%" id="formularioRoles">
+                                        <p:row>
+                                            <p:column>
+                                                <h:panelGrid cellpadding="5" columns="2" id="seccionRol" style="width: 100%">                                                                 
+
+                                                    <p:outputLabel value="Nombre del rol: "/>
+                                                    <b:inputText placeholder="Administrador, empleado, cliente,..." value="#{rolBean.rolView.rolNombre}"></b:inputText>
+
+                                                </h:panelGrid>
+                                            </p:column>
+                                        </p:row>                                       
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="6" col-md="6" col-sm="6" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-list-alt"/>
+                                    <h4 class="box-title">Lista de roles</h4>
+                                </div>
+                                <div class="box-body">
+                                    <b:inputText placeholder="Buscar" value="#{rolBean.buscar}" style="width: 100%; margin-bottom: 24px;">
+                                        <p:ajax event="keyup" listener="#{rolBean.filtrar()}"  process="@this" update="DTRoles"/>
+                                    </b:inputText>    
+                                    <p:dataTable emptyMessage="Roles no registrados" id="DTRoles" var="rol" value="#{rolBean.rolesListView}">
+                                        <p:column headerText="Rol">
+                                            <p:outputLabel value="#{rol.rolNombre}"/>
+                                        </p:column>                                      
+                                        <p:column style="width: 35px">
+                                            <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update="@form" action="#{rolBean.seleccionarCrud(1)}" title="Modificar">
+                                                <f:setPropertyActionListener value="#{rol}" target="#{rolBean.rolView}"/>
+                                                <i class="fa fa-pencil">  </i> 
+                                            </p:commandLink>
+                                        </p:column>
+
+                                        <p:column style="width: 35px">
+                                            <p:commandLink style="color: white" class="fa fa-trash btn btn-block btn-danger" process="@this" update="@form" action="#{rolBean.eliminar()}" title="Eliminar">
+                                                <f:setPropertyActionListener value="#{rol}" target="#{rolBean.DRolView}"/>
+                                                <i class="fa fa-trash">  </i> 
+                                                <p:confirm header="Confirmacion" message="Esta seguro que desea eliminar este rol?" icon="ui-icon-alert" /> 
+                                            </p:commandLink>
+                                        </p:column>  
+                                    </p:dataTable>
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                        <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                    </p:confirmDialog>
+                                </div>
+                            </div>
+                        </b:column>
+                    </h:form>
+                </b:row>
+            </b:container>
+        </ui:define>
+    </ui:composition>
+</html>
+

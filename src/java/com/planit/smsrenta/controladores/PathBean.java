@@ -27,8 +27,8 @@ public class PathBean implements Serializable {
     public void init() {
         sesion = sesionController.obtenerSesion();
     }
-    /* / ADMIN PRINCIPAL / */
 
+    //Getter & Setters
     public SmsUsuario getSesion() {
         return sesion;
     }
@@ -37,71 +37,97 @@ public class PathBean implements Serializable {
         this.sesion = sesion;
     }
 
+    //METODOS
+     /* / ADMIN PRINCIPAL / */
+    public String ir_PPrincipal() {
+        return "AdminPDashboard";
+    }
+
+    public String ir_PPanelAdministracion() {
+        return "AdminPPanelAdministracion";
+    }
+
+    public String ir_PEdicionPerfil() {
+        return "AdminPEditarPerfil";
+    }
+
+    public String ir_PInformacionPersonal() {
+        return "AdminPInformacionPersonal";
+    }
+
+    public String ir_PInformacionSesion() {
+        return "AdminPInformacionSesion";
+    }
+
+    public String ir_PVistaReserva() {
+        return "AdminPVistaReserva";
+    }
+
+    public String ir_PListaReservaciones() {
+        return "AdminPIrListaReservaciones";
+    }
+
+    public String ir_PAsociarVehiculosConductores() {
+        return "AdminPAsociarVehiculosConductores";
+    }
+
+    public String ir_PAsociarVehiculosServicios() {
+        return "AdminPAsociarVehiculosServicios";
+    }
+
     public String ir_PListaCalificaciones() {
-        return "PListaCalificaciones";
-    }
-    
-    public String ir_PCalificacion() {
-        return "PPanelCalificacion";
-    }
-    
-    public String ir_PUsuario() {
-        return "AdminPUsuario";
+        return "AdminPListaCalificaciones";
     }
 
-    public String ir_AdminEditarPerfil() {
-        return "AdminEditarPerfil";
+    public String ir_PCalificaciones() {
+        return "AdminPPanelCalificaciones";
     }
 
-    public String ir_PMercado() {
-        return "AdminPMercado";
+    public String ir_PUsuarios() {
+        return "AdminPUsuarios";
+    }
+
+    public String ir_PMercados() {
+        return "AdminPMercados";
     }
 
     public String ir_PCategoriasServicios() {
         return "AdminPCategoriasServicios";
     }
 
-    public String ir_PCategoria() {
-        return "AdminPCategoria";
+    public String ir_PCategorias() {
+        return "AdminPCategorias";
     }
 
-    public String ir_PCliente() {
-        return "AdminPCliente";
+    public String ir_PClientes() {
+        return "AdminPClientes";
     }
 
-    public String ir_PCiudad() {
-        return "AdminPCiudad";
+    public String ir_PCiudades() {
+        return "AdminPCiudades";
     }
 
-    public String ir_PReservaPrueba() {
-        return "ReservaPrueba";
-    }
-
-    public String ir_PEmpleado() {
-        return "AdminPEmpleado";
+    public String ir_PEmpleados() {
+        return "AdminPEmpleados";
     }
 
     public String ir_PEstadisticas() {
         return "AdminPEstadisticas";
     }
 
-    public String ir_PPrincipal() {
-        return "AdminPPrincipal";
+    public String ir_PPaises() {
+        return "AdminPPaises";
     }
 
-    public String ir_PPais() {
-        return "AdminPPais";
-    }
-    
     public String ir_PDepartamentos() {
         return "AdminPDepartamentos";
     }
 
-    public String ir_PMarca() {
-        return "AdminPMarca";
+    public String ir_PMarcas() {
+        return "AdminPMarcas";
     }
 
-    public String ir_PProveedor() {
+    public String ir_PProveedores() {
         return "AdminPProveedores";
     }
 
@@ -109,12 +135,12 @@ public class PathBean implements Serializable {
         return "AdminPReferencias";
     }
 
-    public String ir_PReserva() {
-        return "AdminPReserva";
+    public String ir_PReservaciones() {
+        return "AdminPReservaciones";
     }
 
-    public String ir_PRol() {
-        return "AdminPRol";
+    public String ir_PRoles() {
+        return "AdminPRoles";
     }
 
     public String ir_PServicios() {
@@ -125,10 +151,6 @@ public class PathBean implements Serializable {
         return "AdminPVehiculos";
     }
 
-    public String ir_PEdicionPerfil() {
-        return "AdminPEdicionPerfil";
-    }
-
     public String ir_PCostosServicios() {
         return "AdminPCostosServicios";
     }
@@ -137,42 +159,41 @@ public class PathBean implements Serializable {
         return "AdminPLugares";
     }
 
-    public String ir_AdminPVistaReserva() {
-        return "VistaReservaAdminP";
+    public String ir_PTiposServicios() {
+        return "AdminPTiposServicios";
     }
 
-    public String ir_AdminReporte() {
-        return "AdminPReporte";
+    public String ir_PParametrosReservaciones() {
+        return "AdminPParametrosReservaciones";
     }
 
-    public String ir_AdminPTipoReporte() {
-        return "AdminPTipoServicio";
+    /* / ADMIN SECUNDARIO / */
+    public String ir_SDashboard() {
+        return "AdminSDashboard";
     }
 
-    public String ir_AdminPReservaTurismo() {
-        return "AdminPReservaTurismo";
+    public String ir_SEdicionPerfil() {
+        return "AdminSEdicionPerfil";
     }
 
-    public String ir_AdminPReserva() {
-        return "AdminPTipoServicio";
+    public String ir_SInformacionPersonal() {
+        return "AdminSInformacionPersonal";
     }
 
-    public String ir_AdminPCondicionUso() {
-        return "AdminPCondicionesUso";
+    public String ir_SInformacionSesion() {
+        return "AdminSInformacionSesion";
     }
     
-    public String ir_AdminPParametrosReserva(){
-        return "AdminPParametrosReserva";
+    public String ir_SVistaReserva() {
+        return "VistaReservaAdminS";
     }
 
-    /* / ADMIN PRINCIPAL / */
-    /* / ADMIN SECUNDARIO / */
-    public String ir_SCategoria() {
-        return "AdminSCategoria";
+    public String ir_SCategorias() {
+        return "AdminSCategorias";
     }
 
-    public String ir_SCiudad() {
-        return "AdminSCiudad";
+    public String ir_SCiudades() {
+        return "AdminSCiudades";
     }
 
     public String ir_SClientes() {
@@ -183,20 +204,16 @@ public class PathBean implements Serializable {
         return "AdminSEmpleados";
     }
 
-    public String ir_SGeneral() {
-        return "AdminSGeneral";
-    }
-
     public String ir_SMarcas() {
         return "AdminSMarcas";
     }
-    
-    public String ir_SAdminVehiculos() {
-        return "SAdminVehiculos";
+
+    public String ir_SAsociarVehiculosConductores() {
+        return "AdminSAsociarVehiculosConductores";
     }
 
-    public String ir_SPais() {
-        return "AdminSPais";
+    public String ir_SPaises() {
+        return "AdminSPaises";
     }
 
     public String ir_SLugares() {
@@ -204,9 +221,9 @@ public class PathBean implements Serializable {
     }
 
     public String ir_SDepartamentos() {
-    return "AdminSDepartamentos";
+        return "AdminSDepartamentos";
     }
-    
+
     public String ir_SReferencias() {
         return "AdminSReferencias";
     }
@@ -215,116 +232,152 @@ public class PathBean implements Serializable {
         return "AdminSVehiculos";
     }
 
-    public String ir_SReservacion() {
-        return "AdminSTipoReserva";
+    public String ir_STiposServicios() {
+        return "AdminSTiposServicios";
     }
 
-    public String ir_SCostoServicio() {
-        return "AdminSCostosServicio";
+    public String ir_SCostosServicios() {
+        return "AdminSCostosServicios";
     }
 
-    public String ir_SProveedor() {
-        return "AdminSProveedor";
-    }
-
-    public String ir_SEdicionPerfil() {
-        return "AdminSEdicionPerfil";
+    public String ir_SProveedores() {
+        return "AdminSProveedores";
     }
 
     public String ir_SServicios() {
         return "AdminSServicios";
     }
 
-    public String ir_SRoll() {
-        return "AdminSRoll";
+    public String ir_SRoles() {
+        return "AdminSRoles";
     }
 
     public String ir_SSAdministradores() {
         return "AdminSAdministradores";
+    }    
+
+    public String ir_SMercados() {
+        return "AdminSMercados";
     }
 
-    public String ir_AdminSVistaReserva() {
-        return "VistaReservaAdminS";
+    public String ir_SCategoriasServicios() {
+        return "AdminSCategoriaServicios";
     }
 
-    public String ir_AdminSMercado() {
-        return "AdminSMercado";
+    public String ir_SParametrosReservaciones() {
+        return "AdminSParametrosReservaciones";
     }
 
-    public String ir_SCategoServicio() {
-        return "AdminSCategoriaServicio";
+    public String ir_SPanelCalificaciones() {
+        return "AdminSPanelCalificaciones";
     }
     
-    public String ir_SParametrosReservacion(){
-        return "AdminSParametrosReservacion";
+    public String ir_SListaReservaciones(){
+        return "AdminSIrListaReservaciones";
     }
 
-    /* / ADMIN SECUNDARIO / */
+    public String ir_SListaCalificaciones() {
+        return "AdminSListaCalificaciones";
+    }
+
+    public String ir_SReservaciones() {
+        return "AdminSReservaciones";
+    }
+
     /* / CONDUCTOR / */
-    public String ir_ConductorDash() {
-        return "ConductorDash";
+    public String ir_CoDashboard() {
+        return "ConductorDashboard";
     }
 
-    public String ir_ConductorCliente() {
-        return "ConductorCliente";
+    public String ir_CoInformacionPersonal() {
+        return "ConductorInformacionPersonal";
     }
 
-    public String ir_ConductorEdicionPerfil() {
-        return "CondEdicionPerfil";
-    }
-
-    public String ir_ConductorVistaReserva() {
-        return "VistaReservaConductor";
+    public String ir_CoInformacionSesion() {
+        return "ConductorInformacionSesion";
     }
     
+    public String ir_CoEdicionPerfil() {
+        return "ConductorEdicionPerfil";
+    }
+
+    public String ir_CoVistaReserva() {
+        return "ConductorVistaReserva";
+    }
+
+    public String ir_CoClientes() {
+        return "ConductorListaClientes";
+    }
     
-    /* / CONDUCTOR/ */
-    /* / PRoveedor/ */
+    public String ir_CoListaReservaciones() {
+        return "ConductorIrListaReservaciones";
+    }
+
+
+    /* / Proveedor/ */
     public String ir_ProDashboard() {
-        return "ProveedorDash";
+        return "ProveedorDashboard";
+    }
+    
+    public String ir_ProInformacionPersonal() {
+        return "ProveedorInformacionPersonal";
     }
 
-    public String ir_ProEstVehi() {
-        return "ProveedorEstadoVehiculo";
+    public String ir_ProInformacionSesion() {
+        return "ProveedorInformacionSesion";
     }
 
     public String ir_ProEdicionPerfil() {
         return "ProveedorEdicionPerfil";
     }
-    /* / PROVEEDOR/ */
-    /* / CLIENTE/ */
 
-    public String ir_ClienteReservacion() {
-        return "ClienteReservacion";
+    public String ir_ProEstadoVehiculos() {
+        return "ProveedorEstadoVehiculos";
     }
 
-    public String ir_ClienteReservaciones() {
+    /* / CLIENTE/ */
+    public String ir_CReservaciones() {
         return "ClienteReservaciones";
     }
 
-    public String ir_ClienteDash() {
-        return "ClienteDash";
+    public String ir_CInformacionPersonal() {
+        return "ClienteInformacionPersonal";
     }
 
-    public String ir_ClienteEdicionPerfil() {
+    public String ir_CInformacionSesion() {
+        return "ClienteInformacionSesion";
+    }
+    
+    public String ir_CListaReservaciones() {
+        return "ClienteListaReservaciones";
+    }
+
+    public String ir_CDashboard() {
+        return "ClienteDashboard";
+    }
+
+    public String ir_CEdicionPerfil() {
         return "ClienteEdicionPerfil";
     }
 
-    public String ir_ClienteVistaReserva() {
+    public String ir_CVistaReserva() {
         return "VistaReservaCliente";
     }
+
+    public String ir_CCalificarReservaciones() {
+        return "ClienteCalificarReservaciones";
+    }
     
-    public String ir_ClienteCalificarReserva() {
-        return "ClienteCalificarReserva";
+    public String ir_CTiposServicios() {
+        return "ClienteTiposServicios";
     }
 
-    /* / CLIENTE/ */
-
+    //OTROS
     public String ir_Registrarse() {
         return "Register";
     }
-    
-    public String ir_olvideContrasena(){
+
+    public String ir_olvideContrasena() {
         return "OlvideContrasena";
     }
 
@@ -336,19 +389,19 @@ public class PathBean implements Serializable {
         String ruta = "";
         switch (sesion.getSmsRol().getRolNombre()) {
             case "Administrador Principal":
-                ruta = "AdminPPrincipal";
+                ruta = "AdminPDashboard";
                 break;
             case "Administrador Secundario":
-                ruta = "AdminSGeneral";
+                ruta = "AdminSDashboard";
                 break;
             case "Cliente":
-                ruta = "ClienteDash";
+                ruta = "ClienteDashboard";
                 break;
             case "Conductor":
-                ruta = "ConductorDash";
+                ruta = "ConductorDashbord";
                 break;
             case "Proveedor":
-                ruta = "ProveedorDash";
+                ruta = "ProveedorDashboard";
                 break;
         }
         return ruta;
@@ -358,10 +411,10 @@ public class PathBean implements Serializable {
         String ruta = "";
         switch (sesion.getSmsRol().getRolNombre()) {
             case "Administrador Principal":
-                ruta = "AdminPCliente";
+                ruta = ir_PClientes();
                 break;
             case "Administrador Secundario":
-                ruta = "AdminSClientes";
+                ruta = ir_SClientes();
                 break;
         }
         return ruta;

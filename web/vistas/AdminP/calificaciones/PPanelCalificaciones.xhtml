@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../TemplateAdminP.xhtml">
+            <ui:define name="content">
+                <b:container fluid="true">
+                    <b:row>                        
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">PANEL DE CALIFICACIONES</h4>
+                                <p>Te damos la bienvenida, <strong>#{sesionActivaBean.usuario.usuarioNombre}</strong></p>
+                            </div>
+                        </b:column>                       
+                        
+                        <h:form id="formularioCalificacion">
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <p:messages autoUpdate="true" closable="true" id="msg"/>
+                            </b:column>
+
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12" >
+                                <div class="box box-success">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-th-list"/>
+                                        <h4 class="box-title">Calificacion</h4>
+                                        <div class="box-tools">
+                                            <h:panelGrid columns="2" width="30%">
+                                                <p:commandButton id="BTCorreo" update="BTCancelar :formularioCorreo" action="#{calificacionBean.habilitarCorreo()}" class="btn btn-block btn-success" value="Enviar Correo"/>
+                                                <p:commandButton id="BTCancelar" disabled="#{!calificacionBean.habilitar}" update="BTCancelar :formularioCorreo" action="#{calificacionBean.cancelarCorreo()}" class="btn btn-block btn-danger" value="Cancelar envio"/>
+                                            </h:panelGrid>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-body">
+                                        <h4>Reservacion #{calificacionBean.calificacionView.smsReservacion.idReservacion}</h4>
+                                        <h:panelGrid columns="1" width="100%">
+                                            <p:outputLabel value="Calidad del servicio"/>
+                                            <b:inputText id="TCalidadServicio" value="#{calificacionBean.calificacionView.calificacionCalidadServicio}" />
+                                            <p:slider for="TCalidadServicio" minValue="1" maxValue="5" step="1" />
+                                        </h:panelGrid><hr/>
+                                        <p:inputTextarea style="width: 100%" placeholder="Observacion" rows="5" value="#{calificacionBean.calificacionView.calificacionObservacion}"/>
+                                        <hr/>
+                                        <h4 align="left">Datos de reservacion</h4>
+                                        <h:panelGrid columns="2" width="100%">
+                                            <h:outputLabel value="Fecha de inicio:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.reservacionFechaInicio}" style="width: 100%"/>
+                                            <h:outputLabel value="Fecha de finalizacion:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.reservacionFechaLlegada}" style="width: 100%"/>
+                                            <h:outputLabel value="Placa del vehiculo:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.smsVehiculo.vehPlaca}"/>
+                                            <h:outputLabel value="Nombre del conductor:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.smsEmpleado.smsUsuario.usuarioNombre}"/>
+                                            <h:outputLabel value="Lugar de recojida:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.reservacionLugarLlegada}"/>
+                                            <h:outputLabel value="Lugar de destino:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.reservacionLugarDestino}"/>
+                                        </h:panelGrid>
+                                        <hr/>
+                                        <h4 align="left">Datos del cliente</h4>
+                                        <h:panelGrid columns="2" width="100%">
+                                            <h:outputLabel value="Nombre:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.smsUsuario.usuarioNombre}"/>
+                                            <h:outputLabel value="Correo:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.smsUsuario.usuarioEmail}"/>
+
+                                            <h:outputLabel value="Telefono:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.smsUsuario.usuarioNombre}"/>
+                                            <h:outputLabel value="Identificacion:"/>
+                                            <b:inputText disabled="true" value="#{calificacionBean.calificacionView.smsReservacion.smsUsuario.usuarioCc}"/>                                      
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
+                            </b:column>
+                        </h:form>
+                        <h:form id="formularioCorreo">
+                            <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                                <div class="box box-info">
+                                    <div class="box-header with-border">
+                                        <i class="fa fa-2x fa-envelope"/>
+                                        <h4 class="box-title">Envio de correo al cliente</h4>
+                                    </div>
+                                    <div class="box-body">
+                                        <h:panelGrid columns="1" width="100%">
+                                            <h:outputLabel value="Para:"/>
+                                            <b:inputText disabled="#{!calificacionBean.habilitar}" value="#{calificacionBean.correo.correoDestinatario}" placeholder="Destinatario" style="width: 100%"/>
+                                            <h:outputLabel value="Asunto:"/>
+                                            <b:inputText disabled="#{!calificacionBean.habilitar}" value="#{calificacionBean.correo.asusto}" placeholder="Asunto del correo" style="width: 100%"/>
+                                        </h:panelGrid>
+                                        <hr/>
+                                        <p:inputTextarea disabled="#{!calificacionBean.habilitar}" value="#{calificacionBean.correo.mensaje}" placeholder="Mensaje a enviar" rows="6" style="width: 100%"/>
+                                        <hr/>
+                                        <div align="right">
+                                            <p:commandButton style="width: 40%"  onclick="PrimeFaces.monitorDownload(start, stop);"  update="@form :formularioCalificacion" disabled="#{!calificacionBean.habilitar}" action="#{calificacionBean.enviarCorreo()}" class="btn btn-block btn-success" value="Enviar"/>                                                                                     
+                                            <script type="text/javascript">
+                                                function start() {
+                                                    PF('statusDialog').show();
+                                                }
+                                                function stop() {
+                                                    PF('statusDialog').hide();
+                                                }
+                                            </script>
+                                            <p:dialog modal="true" widgetVar="statusDialog" header="Enviando mensaje" draggable="false" closable="false" resizable="false">
+                                                <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                            </p:dialog>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b:column>                            
+                        </h:form> 
+                        
+                        <h:form>
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                                <div class="espacio-arriba" style="text-align: left" align="center">
+                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_PListaCalificaciones()}" look="success" value="Regresar"/>
+                                </div><br/>
+                            </b:column>
+                        </h:form>
+                    </b:row>                    
+                </b:container>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

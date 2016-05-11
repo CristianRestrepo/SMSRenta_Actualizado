@@ -12,9 +12,7 @@ import com.planit.smsrenta.dao.IEstadoVehiculoDao;
 import com.planit.smsrenta.dao.IVehiculoDao;
 import com.planit.smsrenta.dao.ImpEstadoVehiculoDao;
 import com.planit.smsrenta.dao.ImpVehiculoDao;
-import com.planit.smsrenta.modelos.SmsVehiculo;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**

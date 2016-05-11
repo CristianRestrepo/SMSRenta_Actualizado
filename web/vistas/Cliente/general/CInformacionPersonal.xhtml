@@ -9,7 +9,7 @@
 
     <body>
 
-        <ui:composition template="./../temp-cliente.xhtml">
+        <ui:composition template="./../TemplateCliente.xhtml">
 
             <ui:define name="content2">
 
@@ -44,7 +44,7 @@
                                             <b:inputText maxlength="45" id="TCcProv" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.usuario.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
 
-                                            <b:inputText maxlength="45" id="TPasaporteProv" tooltip="Numero pasaporte" placeholder="Numero de pasaporte" style="width: 100%" value="#{usuarioBean.usuario.usuarioPasaporte}"></b:inputText>
+                                            <b:inputText maxlength="45" id="TPasaporteProv" tooltip="Numero pasaporte" placeholder="Numero de pasaporte (Opcional)" style="width: 100%" value="#{usuarioBean.usuario.usuarioPasaporte}"></b:inputText>
                                             <p:message for="TPasaporteProv"/>                                            
 
                                             <b:inputText maxlength="45" id="TTelProv" tooltip="Numero de telefono" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{usuarioBean.usuario.usuarioTelefono}"></b:inputText> 
@@ -110,10 +110,10 @@
 
                     <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
                         <h:form>
-                            <div style="text-align: right" align="center">
-                                <b:commandButton action="ClienteEdicionPerfil" iconAwesome="fa fa-arrow-left" 
+                            <div style="text-align: left" align="center">
+                                <b:commandButton action="#{pathBean.ir_CEdicionPerfil()}" iconAwesome="fa fa-arrow-left" 
                                                  style="width: 30%"  look="success" value="Regresar" />
-                            </div>
+                            </div><br/>
                         </h:form>
                     </b:column> 
 

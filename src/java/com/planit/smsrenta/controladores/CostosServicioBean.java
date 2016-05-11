@@ -19,7 +19,6 @@ import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsCostosservicios;
 import com.planit.smsrenta.modelos.SmsLugares;
 import com.planit.smsrenta.modelos.SmsMercado;
-import com.planit.smsrenta.modelos.SmsUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

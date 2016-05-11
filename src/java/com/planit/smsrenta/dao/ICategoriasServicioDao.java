@@ -15,8 +15,10 @@ import java.util.List;
 public interface ICategoriasServicioDao {
 
     public List<SmsCategoriasServicio> consultarCategoriasServicios();
-
-    public SmsCategoriasServicio consultarCategoriaServicio(SmsCategoriasServicio catServicio);   
+ 
+    public SmsCategoriasServicio consultarCategoriaServicio(SmsCategoriasServicio catServicio);
+    
+    public SmsCategoriasServicio consultarCategoriaServicioConVehiculos(SmsCategoriasServicio catServicio);   
     
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria);
     

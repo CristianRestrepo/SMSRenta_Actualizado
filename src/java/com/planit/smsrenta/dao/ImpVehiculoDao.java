@@ -5,9 +5,11 @@
  */
 package com.planit.smsrenta.dao;
 
+import com.planit.smsrenta.modelos.SmsCategoriasServicio;
 import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsProveedor;
 import com.planit.smsrenta.modelos.SmsVehiculo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -292,7 +294,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
                     + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo) "
                     + "and "
                     + "("
-                     + "('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
+                    + "('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
                     + "not exists(from SmsReservacion as reservacion "
                     + "where reservacion.smsEstado.idEstado <> '7' and "
                     + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
@@ -465,7 +467,7 @@ public class ImpVehiculoDao implements IVehiculoDao {
                     + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo) "
                     + "and "
                     + "("
-                     + "('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
+                    + "('" + fechaInicio + "' <> '" + fechaLlegada + "' and "
                     + "not exists(from SmsReservacion as reservacion "
                     + "where reservacion.smsEstado.idEstado <> '7' and "
                     + "reservacion.smsVehiculo.idVehiculo = vehiculo.idVehiculo and "
@@ -622,6 +624,120 @@ public class ImpVehiculoDao implements IVehiculoDao {
             }
         }
         return existente;
+    }
+
+    @Override
+    public SmsVehiculo consultarVehiculoConCategorias(SmsVehiculo vehiculo) {
+        Session session = null;
+        SmsVehiculo vehiculos = null;
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsCategoria as categoria "
+                    + "left join fetch vehiculo.smsCiudad as ciudad "
+                    + "left join fetch vehiculo.smsProveedor as proveedor "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsCategoriasServicios where "
+                    + "vehiculo.idVehiculo = '" + vehiculo.getIdVehiculo() + "'");
+            vehiculos = (SmsVehiculo) query.list().get(0);
+
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vehiculos;
+    }
+
+    @Override
+    public void asociarVehiculo(SmsVehiculo vehiculo) {
+        Session session = null;
+        try {
+            session = sessions.openSession();
+            session.beginTransaction();
+            session.update(vehiculo);
+            session.getTransaction().commit();
+
+        } catch (HibernateException e) {
+            e.getMessage();
+            session.getTransaction().rollback();
+
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public List<SmsVehiculo> consultarVehiculosSegunCategoriaServicio(SmsCategoriasServicio categoria) {
+        Session session = null;
+        List<SmsVehiculo> vehiculos = new ArrayList<>();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("select vehiculos from SmsCategoriasServicio as categoriaSer "
+                    + "left outer join categoriaSer.smsVehiculos as vehiculos "
+                    + "left join fetch vehiculos.smsCategoria as categoria "
+                    + "left join fetch vehiculos.smsCiudad as ciudad "
+                    + "left join fetch vehiculos.smsProveedor as proveedor "
+                    + "left join fetch vehiculos.smsReferencia as referencia "
+                    + "left join fetch referencia.smsMarca as marca "
+                    + "left join fetch vehiculos.smsEstado as estado "
+                    + "left join fetch vehiculos.smsColor as color "
+                    + "where "
+                    + "categoriaSer.idCategoriaServicio = '" + categoria.getIdCategoriaServicio() + "'");
+            if (!query.list().isEmpty()) {
+                if (query.list().get(0) != null) {
+                    vehiculos = (List<SmsVehiculo>) query.list();
+                }
+            }
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vehiculos;
+    }
+
+    @Override
+    public List<SmsVehiculo> filtrarVehiculosSegunCategoriaServicio(String valor, SmsCategoriasServicio categoria) {
+        Session session = null;
+        List<SmsVehiculo> vehiculos = new ArrayList<>();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("select vehiculos from SmsCategoriasServicio as categoriaSer "
+                    + "left outer join categoriaSer.smsVehiculos as vehiculos where "
+                    + "left join fetch vehiculos.smsCategoria as categoria "
+                    + "left join fetch vehiculos.smsCiudad as ciudad "
+                    + "left join fetch vehiculos.smsProveedor as proveedor "
+                    + "left join fetch vehiculos.smsReferencia as referencia "
+                    + "left join fetch referencia.smsMarca as marca "
+                    + "left join fetch vehiculos.smsEstado as estado "
+                    + "left join fetch vehiculos.smsColor as color "
+                    + "where "
+                    + "(vehiculos.vehPlaca LIKE '%" + valor + "%' or "
+                    + "categoria.categoriaNombre LIKE '%" + valor + "%' or "
+                    + "ciudad.ciudadNombre LIKE '%" + valor + "%' or "
+                    + "proveedor.proveedorRazonSocial LIKE '%" + valor + "%' or "
+                    + "marca.marcaNombre LIKE '%" + valor + "%' or "
+                    + "color.colorNombre LIKE '%" + valor + "%' or "
+                    + "referencia.referenciaNombre LIKE '%" + valor + "%') and "
+                    + "categoriaSer.idCategoriaServicio = '" + categoria.getIdCategoriaServicio() + "'");
+            if (!query.list().isEmpty()) {
+                vehiculos = (List<SmsVehiculo>) query.list();
+            }
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return vehiculos;
     }
 
 }

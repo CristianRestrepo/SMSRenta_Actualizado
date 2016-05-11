@@ -67,19 +67,19 @@ public class SesionBean implements Serializable {
 
                     switch (user.getSmsRol().getRolNombre()) {
                         case "Administrador Principal":
-                            ruta = "AdminPPrincipal";
+                            ruta = "AdminPDashboard";
                             break;
                         case "Administrador Secundario":
-                            ruta = "AdminSGeneral";
+                            ruta = "AdminSDashboard";
                             break;
                         case "Cliente":
-                            ruta = "ClienteDash";
+                            ruta = "ClienteDashboard";
                             break;
                         case "Conductor":
-                            ruta = "ConductorDash";
+                            ruta = "ConductorDashboard";
                             break;
                         case "Proveedor":
-                            ruta = "ProveedorDash";
+                            ruta = "ProveedorDashboard";
                             break;
                     }
 

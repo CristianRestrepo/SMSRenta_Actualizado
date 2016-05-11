@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./../TemplateCliente.xhtml">
+            <ui:define name="content2">
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <strong>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</strong>
+                            </div>
+                        </b:column>
+                        <h:form>
+
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">                            
+                                <p:messages id="msg" autoUpdate="true" closable="true"/>
+                            </b:column>
+
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
+                                <div class="box box-success espacio-arriba table-responsive">
+                                    <div class="box-header with-border">
+                                        <h4 align="center">Calificion del servicio, reservacion #{calificacionBean.reservacionView.idReservacion}</h4>
+                                    </div>                        
+                                    <div class="box-body" align="center">
+
+                                        <div style="width: 80%"><p align="justify">En un valor de 1 a 5, califique a nivel general la calidad del servicio prestado por sms renta en su reservacion, 
+                                                teniendo en cuenta aspectos como: el trato del conductor, el estado del vehiculo, el tiempo de viaje y otros aspectos que usted considere relevantes, 
+                                                siendo 1 muy malo y 5 excelente.</p></div>
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <td style="width: 20%"><p:outputLabel value="Calidad del servicio"/></td>
+                                                <td align="center"><h:panelGrid columns="1" width="80%">
+                                                        <b:inputText id="TCalidadServicio" value="#{calificacionBean.calificacionView.calificacionCalidadServicio}" />
+                                                        <p:slider for="TCalidadServicio" minValue="1" maxValue="5" step="1" />
+                                                    </h:panelGrid></td>
+                                            </tr>
+                                        </table>
+                                        <hr/>
+                                        <p align="left">Observaciones</p>
+                                        <p:inputTextarea placeholder="Escriba sus sugerencias, observaciones o criticas del servicio." value="#{calificacionBean.calificacionView.calificacionObservacion}" rows="3" style="width: 100%"></p:inputTextarea>
+                                        <hr/>
+                                        <p:commandButton value="enviar calificacion" update="@form" class="btn btn-block btn-success" style="width: 60%" action="#{calificacionBean.registrar()}"/>
+                                    </div>                        
+                                </div>                    
+                            </b:column>
+
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
+                                <h:form>
+                                    <div style="text-align: right" align="center">
+                                        <b:commandButton action="#{pathBean.ir_CReservaciones()}" iconAwesome="fa fa-arrow-left" 
+                                                         style="width: 30%"  look="success" value="Regresar" />
+                                    </div>
+                                </h:form>
+                            </b:column> 
+
+                        </h:form>
+                    </b:row>
+                </b:container>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

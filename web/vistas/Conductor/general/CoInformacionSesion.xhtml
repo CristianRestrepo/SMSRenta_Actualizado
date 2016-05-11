@@ -9,7 +9,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-        <ui:composition template="./../temp-conductor.xhtml">
+        <ui:composition template="./../TemplateConductor.xhtml">
 
         <ui:define name="content3">
                 <b:container fluid="true">
@@ -69,9 +69,9 @@
 
                     <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset-lg="2">
                         <h:form>
-                            <div class="espacio-arriba" style="text-align: right" align="center">
-                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" look="success" action="CORegreso" value="Regresar"/>
-                            </div>
+                            <div class="espacio-arriba" style="text-align: left" align="center">
+                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" look="success" action="#{pathBean.ir_CoEdicionPerfil()}" value="Regresar"/>
+                            </div><br/>
                         </h:form>
                     </b:column> 
 

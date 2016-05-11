@@ -9,7 +9,7 @@
 
     <body>
 
-        <ui:composition template="./../template-admin-p.xhtml">
+        <ui:composition template="./../TemplateAdminP.xhtml">
 
             <ui:define name="content">
                 <b:container fluid="true">
@@ -42,7 +42,7 @@
                                             <b:inputText maxlength="45" id="TCcProv" tooltip="Numero de identificación" placeholder="Cedula de ciudadania" style="width: 100%" value="#{usuarioBean.usuario.usuarioCc}"></b:inputText>
                                             <p:message for="TCcProv"/>
                                             
-                                            <b:inputText maxlength="45" id="TPasaporteProv" tooltip="Numero pasaporte" placeholder="Numero de pasaporte" style="width: 100%" value="#{usuarioBean.usuario.usuarioPasaporte}"></b:inputText>
+                                            <b:inputText maxlength="45" id="TPasaporteProv" tooltip="Numero pasaporte" placeholder="Numero de pasaporte (Opcional)" style="width: 100%" value="#{usuarioBean.usuario.usuarioPasaporte}"></b:inputText>
                                             <p:message for="TPasaporteProv"/>                                            
                                                                                                                                   
                                             <b:inputText maxlength="45" id="TTelProv" tooltip="Numero de telefono" placeholder="Numero de telefono fijo o celular" style="width: 100%" value="#{usuarioBean.usuario.usuarioTelefono}"></b:inputText> 
@@ -94,18 +94,16 @@
                                                 <p:messages id="messages" closable="true" /></div> 
                                         </div>
                                     </p:fragment>
-
                                 </div>
-
                             </div>
                         </h:form>
                     </b:column>                    
 
                     <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset-lg="1">
                         <h:form>
-                            <div class="espacio-arriba" style="text-align: right" align="center">
-                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="AdminPEditarPerfil" look="success" value="Regresar"/>
-                            </div>
+                            <div class="espacio-arriba" style="text-align: left" align="center">
+                                <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_PEdicionPerfil()}" look="success" value="Regresar"/>
+                            </div><br/>
                         </h:form>
                     </b:column> 
 

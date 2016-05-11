@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <ui:composition template="./../TemplateAdminP.xhtml">
+
+        <ui:define name="content">
+
+            <b:container fluid="true" >
+
+                <section class="content-header">
+                    <h1>
+                        Tipo de Servicios de SMS Renta 
+
+                        <small> renta vehículos de placa blanca o blindados</small>
+                    </h1>
+                </section>
+                
+                <b:row>
+
+                    <c:forEach var="Mercado" begin="0" items="#{mercadoBean.mercadoListView}"
+                               end="#{mercadoBean.mercadoListView.size()}"   >
+
+                        <b:column col-lg="4" col-md="4" col-sm="4" col-xs="10"
+                                  offset-lg="1" offset-sm="1" offset="1" offset-xs="1">
+                            <div class="row form-group">
+
+                                <div class="panel panel-default espacio-arriba ancho-servicios" >
+                                    <div class="panel-image">
+
+                                        <p:graphicImage   value="#{Mercado.mercadoFotoRuta}"  class="panel-image-preview"/>
+
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                        <h4>#{Mercado.mercadoNombre}</h4>
+
+                                        <p>#{Mercado.mercadoDescripcion}</p>
+                                    </div>
+                                    <div class="panel-footer text-center">
+                                        <p:commandButton value="Reserve aquí #{Mercado.mercadoNombre}" action="#{reservacionBean.iniciarProcesoReservacion()}" class="btn btn-primary btn-block">
+                                            <f:setPropertyActionListener value="#{Mercado}" target="#{reservacionBean.mercadoSeleccionado}"/>
+                                        </p:commandButton>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </b:column>
+
+                    </c:forEach>
+
+
+                </b:row>
+            </b:container>
+
+        </ui:define>
+
+    </ui:composition>
+
+
+</html>

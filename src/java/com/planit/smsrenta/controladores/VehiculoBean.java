@@ -7,6 +7,7 @@ package com.planit.smsrenta.controladores;
 
 import com.planit.smsrenta.metodos.Upload;
 import com.planit.smsrenta.dao.ICategoriaDao;
+import com.planit.smsrenta.dao.ICategoriasServicioDao;
 import com.planit.smsrenta.dao.ICiudadDao;
 import com.planit.smsrenta.dao.IColorDao;
 import com.planit.smsrenta.dao.IEmpleadoDao;
@@ -17,6 +18,7 @@ import com.planit.smsrenta.dao.IReferenciaDao;
 import com.planit.smsrenta.dao.IUsuarioDao;
 import com.planit.smsrenta.dao.IVehiculoDao;
 import com.planit.smsrenta.dao.ImpCategoriaDao;
+import com.planit.smsrenta.dao.ImpCategoriasServicioDao;
 import com.planit.smsrenta.dao.ImpCiudadDao;
 import com.planit.smsrenta.dao.ImpColorDao;
 import com.planit.smsrenta.dao.ImpEmpleadoDao;
@@ -29,6 +31,7 @@ import com.planit.smsrenta.dao.ImpVehiculoDao;
 import static com.planit.smsrenta.metodos.Upload.getMapPathFotosVehiculos;
 import static com.planit.smsrenta.metodos.Upload.getPathDefaultVehiculo;
 import com.planit.smsrenta.modelos.SmsCategoria;
+import com.planit.smsrenta.modelos.SmsCategoriasServicio;
 import com.planit.smsrenta.modelos.SmsCiudad;
 import com.planit.smsrenta.modelos.SmsEmpleado;
 import com.planit.smsrenta.modelos.SmsEstadovehiculo;
@@ -57,12 +60,19 @@ public class VehiculoBean {
     private SmsEstadovehiculo estadoVehiculoView;
     private SmsProveedor proveedorView;
     private SmsEmpleado empleadoView;
-    private List<SmsVehiculo> vehiculosListView;
-    private List<String> placasVehiculos;
 
+    private List<SmsVehiculo> vehiculosListView;
+    private List<SmsVehiculo> vehiculosSeleccionados;
+    private List<String> placasVehiculos;
     private List<SmsVehiculo> vehiculos;
+
+    //relacion con otros modelos
+    private List<SmsCategoriasServicio> categoriasListView;
+    private List<String> categoriasSeleccionados;
     private List<SmsEmpleado> conductores;
-    //Relacion con el controlador   
+    private SmsCategoriasServicio categoria;
+
+    //Relacion con otros controladores   
     Upload fileController;
     EstadoVehiculoBean estadoVehiculoController;
 
@@ -73,6 +83,7 @@ public class VehiculoBean {
     private String estadoArchivo2;
     private String buscarEmpleado;
     private int operacion;
+    private int operacionAdministracion;
 
     //Banderas    
     private boolean habilitarCancelar;
@@ -96,6 +107,12 @@ public class VehiculoBean {
         empleadoView = new SmsEmpleado();
 
         vehiculosListView = new ArrayList<>();
+        vehiculosSeleccionados = new ArrayList<>();
+
+        categoria = new SmsCategoriasServicio();
+        categoriasListView = new ArrayList<>();
+        categoriasSeleccionados = new ArrayList<>();
+
         estadoVehiculoView = new SmsEstadovehiculo();
         placasVehiculos = new ArrayList<>();
 
@@ -119,6 +136,7 @@ public class VehiculoBean {
 
         nombre = "Registrar Vehiculo";
         operacion = 0;
+        operacionAdministracion = 0;
         estadoArchivo1 = "Foto sin subir";
         estadoArchivo2 = "Foto sin subir";
 
@@ -133,6 +151,38 @@ public class VehiculoBean {
     }
 
     //Getters & Setters 
+    public SmsCategoriasServicio getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(SmsCategoriasServicio categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<SmsCategoriasServicio> getCategoriasListView() {
+        return categoriasListView;
+    }
+
+    public void setCategoriasListView(List<SmsCategoriasServicio> categoriasListView) {
+        this.categoriasListView = categoriasListView;
+    }
+
+    public List<String> getCategoriasSeleccionados() {
+        return categoriasSeleccionados;
+    }
+
+    public void setCategoriasSeleccionados(List<String> categoriasSeleccionados) {
+        this.categoriasSeleccionados = categoriasSeleccionados;
+    }
+
+    public List<SmsVehiculo> getVehiculosSeleccionados() {
+        return vehiculosSeleccionados;
+    }
+
+    public void setVehiculosSeleccionados(List<SmsVehiculo> vehiculosSeleccionados) {
+        this.vehiculosSeleccionados = vehiculosSeleccionados;
+    }
+
     public SmsEstadovehiculo getEstadoVehiculoView() {
         return estadoVehiculoView;
     }
@@ -253,7 +303,16 @@ public class VehiculoBean {
         this.buscarEmpleado = buscarEmpleado;
     }
 
+    public int getOperacionAdministracion() {
+        return operacionAdministracion;
+    }
+
+    public void setOperacionAdministracion(int operacionAdministracion) {
+        this.operacionAdministracion = operacionAdministracion;
+    }
+
     //Definicion de metodos VEHICULO
+    //Metodos CRUD y complementos
     public void registrar() {
 
         //En caso de subir NO una fotografia del vehiculo, el sistema asigna al vehiculo una fotografia default
@@ -388,8 +447,7 @@ public class VehiculoBean {
         }
     }
 
-    //Metodos propios
-    public void cancelar() {
+    public void cancelarCRUD() {
         //Limpiamos objetos utilizados
         vehiculoView = new SmsVehiculo();
         estadoVehiculoView = new SmsEstadovehiculo();
@@ -402,57 +460,7 @@ public class VehiculoBean {
         nombre = "Registrar Vehiculo";
     }
 
-    public void uploadPhoto1(FileUploadEvent e) throws IOException {
-        try {
-            UploadedFile uploadedPhoto = e.getFile();
-            String destination;
-
-            HashMap<String, String> map = getMapPathFotosVehiculos();
-            destination = map.get("path");
-            if (null != uploadedPhoto) {
-                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
-                vehiculoView.setVehFotoNombre(uploadedPhoto.getFileName());
-                vehiculoView.setVehFotoRuta(map.get("url") + uploadedPhoto.getFileName());
-
-                if (operacion == 0) {
-                    estadoArchivo1 = "Foto Subida con exito";
-                } else if (operacion == 1) {
-                    estadoArchivo1 = "Foto actualizada con exito";
-
-                }
-            }
-            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
-    }
-
-    public void uploadPhoto2(FileUploadEvent e) throws IOException {
-        try {
-            UploadedFile uploadedPhoto = e.getFile();
-            String destination;
-
-            HashMap<String, String> map = getMapPathFotosVehiculos();
-            destination = map.get("path");
-            if (null != uploadedPhoto) {
-                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
-                vehiculoView.setVehFoto2Nombre(uploadedPhoto.getFileName());
-                vehiculoView.setVehFoto2Ruta(map.get("url") + uploadedPhoto.getFileName());
-
-                if (operacion == 0) {
-                    estadoArchivo2 = "Foto Subida con exito";
-                } else if (operacion == 1) {
-                    estadoArchivo2 = "Foto actualizada con exito";
-
-                }
-            }
-
-            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
-    }
-
+    //Metodos para filtrar o consultar vehiculos
     public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva, SmsMercado mercado) {
         vehiculosListView = new ArrayList<>();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
@@ -564,7 +572,17 @@ public class VehiculoBean {
         return vehiculosListView;
     }
 
-    public void asociarVehiculo() {
+    public void filtrarVehiculos() {
+        vehiculosListView = new ArrayList<>();
+        if (buscar == null) {
+            vehiculosListView = vehDao.mostrarVehiculo();
+        } else {
+            vehiculosListView = vehDao.filtrarVehiculos(buscar);
+        }
+    }
+
+    //Metodos para la asociacion de vehiculos con conductores
+    public void asociarVehiculosConductores() {
         //obtenemos los objetos vehiculo y empleado con sus colecciones habilitadas
         vehiculoView = vehDao.consultarVehiculoConConductores(vehiculoView);
         empleadoView = empleadoDao.consultarEmpleadoConVehiculo(empleadoView);
@@ -582,16 +600,6 @@ public class VehiculoBean {
         conductores = new ArrayList<>();
     }
 
-    public void filtrarVehiculos() {
-        vehiculosListView = new ArrayList<>();
-        if (buscar == null) {
-            vehiculosListView = vehDao.mostrarVehiculo();
-        } else {
-            vehiculosListView = vehDao.filtrarVehiculos(buscar);
-        }
-    }
-
-    //Metodos para la asociacion de vehiculos con conductores
     public void cargarVehiculoEmpleadosSegunProveedor() {
         if (proveedorView.getProveedorRazonSocial() != null) {
             vehiculos = vehDao.consultarVehiculosSegunProveedor(proveedorView);
@@ -600,7 +608,6 @@ public class VehiculoBean {
     }
 
     public void filtrarVehiculoSegunProveedor(SmsProveedor proveedor) {
-        
         vehiculos = new ArrayList<>();
         if (buscar == null) {
             if (proveedor.getProveedorRazonSocial() != null) {
@@ -626,11 +633,201 @@ public class VehiculoBean {
         }
     }
 
-    public void cancelarAsociacion() {
+    public void cancelarAsociacionVehiculoConductor() {
         vehiculoView = new SmsVehiculo();
         empleadoView = new SmsEmpleado();
         proveedorView = new SmsProveedor();
         vehiculos = new ArrayList<>();
         conductores = new ArrayList<>();
     }
+
+    //metodos para asociacion de vehiculos con servicios
+    public void asociar() {
+        operacionAdministracion = 1;
+        habilitarCancelar = false;
+        vehiculos = new ArrayList<>();
+        vehiculos = vehDao.mostrarVehiculo();
+    }
+
+    public void remover() {
+        operacionAdministracion = 2;
+        habilitarCancelar = false;
+        vehiculos = new ArrayList<>();
+    }
+    
+     public void cancelarAsociacionVehiculoServicios() {
+        operacionAdministracion = 0;
+        habilitarCancelar = true;
+        categoriasSeleccionados = new ArrayList<>();
+        vehiculosSeleccionados = new ArrayList<>();
+        vehiculos = new ArrayList<>();
+        categoria = new SmsCategoriasServicio();
+        vehiculoView = new SmsVehiculo();
+    }
+
+    public void filtrarVehiculosConsultados() {
+        if (operacionAdministracion == 1) {
+            vehiculos = new ArrayList<>();
+            if (buscar == null) {
+                vehiculos = vehDao.mostrarVehiculo();
+            } else {
+                vehiculos = vehDao.filtrarVehiculos(buscar);
+            }
+        } else if (operacionAdministracion == 2) {
+            vehiculos = new ArrayList<>();
+            if (buscar == null) {
+                vehiculos = vehDao.consultarVehiculosSegunCategoriaServicio(categoria);
+            } else {
+                vehiculos = vehDao.filtrarVehiculosSegunCategoriaServicio(buscar, categoria);
+            }
+        }
+    }
+
+    public void consultarVehiculoSegunCategoria() {
+        vehiculos = new ArrayList<>();
+        vehiculosSeleccionados = new ArrayList<>();
+
+        ICategoriasServicioDao catSerDao = new ImpCategoriasServicioDao();
+        categoria = catSerDao.consultarCategoriaServicio(categoria);
+
+        vehiculos = vehDao.consultarVehiculosSegunCategoriaServicio(categoria);
+    }
+   
+    public void asociarVehiculosServicios() {
+        ICategoriasServicioDao catSerDao = new ImpCategoriasServicioDao();
+        SmsCategoriasServicio catServicio = new SmsCategoriasServicio();
+
+        //Consultamos la informacion completa de las categorias seleccionadas
+        for (int i = 0; i < categoriasSeleccionados.size(); i++) {
+            catServicio.setCatNombre(categoriasSeleccionados.get(i));
+            catServicio = catSerDao.consultarCategoriaServicioConVehiculos(catServicio);
+            categoriasListView.add(catServicio);//Almacenamos los objetos completos en una nueva lista
+        }
+
+        List<SmsVehiculo> vehiculosParaAsociar = new ArrayList<>();
+
+        //Consultamos los vehiculos seleccionados para habilitar la relacion con las categorias de servicios
+        for (int i = 0; i < vehiculosSeleccionados.size(); i++) {
+            vehiculosParaAsociar.add(vehDao.consultarVehiculoConCategorias(vehiculosSeleccionados.get(i)));
+        }
+
+        //Asociamos los objetos
+        for (int i = 0; i < vehiculosParaAsociar.size(); i++) {
+            vehiculoView = vehiculosParaAsociar.get(i);
+            for (int j = 0; j < categoriasListView.size(); j++) {
+                catServicio = categoriasListView.get(j);
+                catServicio.getSmsVehiculos().add(vehiculoView);
+                vehiculoView.getSmsCategoriasServicios().add(catServicio);
+            }
+            vehDao.asociarVehiculo(vehiculoView);
+        }
+
+        //Limpiamos objetos
+        categoriasSeleccionados = new ArrayList<>();
+        vehiculosSeleccionados = new ArrayList<>();
+        vehiculoView = new SmsVehiculo();
+
+        //Enviamos mensaje de confirmacion a la vista
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Vehiculos asociados", "");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void removerVehiculosServicios() {
+
+        List<SmsVehiculo> vehiculosParaRemover = new ArrayList<>();
+
+        //Consultamos los vehiculos seleccionados para habilitar la relacion con las categorias de servicios
+        for (int i = 0; i < vehiculosSeleccionados.size(); i++) {
+            vehiculosParaRemover.add(vehDao.consultarVehiculoConCategorias(vehiculosSeleccionados.get(i)));
+        }
+
+        //Removemos los objetos
+        for (int i = 0; i < vehiculosParaRemover.size(); i++) {
+
+            SmsCategoriasServicio categoriaConVehiculos = new SmsCategoriasServicio();
+            ICategoriasServicioDao catDao = new ImpCategoriasServicioDao();
+            categoriaConVehiculos = catDao.consultarCategoriaServicioConVehiculos(categoria);
+
+            for (SmsVehiculo veh : categoriaConVehiculos.getSmsVehiculos()) {
+                if (veh.getIdVehiculo().equals(vehiculosParaRemover.get(i).getIdVehiculo())) {
+                    vehiculoView = veh;
+                }
+            }
+
+            SmsCategoriasServicio cat = new SmsCategoriasServicio();
+            for (SmsCategoriasServicio categoriaServicio : vehiculoView.getSmsCategoriasServicios()) {
+                if (categoriaConVehiculos.getIdCategoriaServicio().equals(categoriaServicio.getIdCategoriaServicio())) {
+                    cat = categoriaServicio;
+                }
+            }
+
+            categoriaConVehiculos.getSmsVehiculos().remove(vehiculoView);
+            vehiculoView.getSmsCategoriasServicios().remove(cat);
+            vehDao.asociarVehiculo(vehiculoView);
+        }
+
+        //Limpiamos objetos
+        categoriasSeleccionados = new ArrayList<>();
+        vehiculos = new ArrayList<>();
+        categoria = new SmsCategoriasServicio();
+        vehiculosSeleccionados = new ArrayList<>();
+        vehiculoView = new SmsVehiculo();
+
+        //Enviamos mensaje de confirmacion a la vista
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Vehiculos Desligados", "");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    //Metodos para subida de archivos  
+    public void uploadPhoto1(FileUploadEvent e) throws IOException {
+        try {
+            UploadedFile uploadedPhoto = e.getFile();
+            String destination;
+
+            HashMap<String, String> map = getMapPathFotosVehiculos();
+            destination = map.get("path");
+            if (null != uploadedPhoto) {
+                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
+                vehiculoView.setVehFotoNombre(uploadedPhoto.getFileName());
+                vehiculoView.setVehFotoRuta(map.get("url") + uploadedPhoto.getFileName());
+
+                if (operacion == 0) {
+                    estadoArchivo1 = "Foto Subida con exito";
+                } else if (operacion == 1) {
+                    estadoArchivo1 = "Foto actualizada con exito";
+
+                }
+            }
+            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }
+
+    public void uploadPhoto2(FileUploadEvent e) throws IOException {
+        try {
+            UploadedFile uploadedPhoto = e.getFile();
+            String destination;
+
+            HashMap<String, String> map = getMapPathFotosVehiculos();
+            destination = map.get("path");
+            if (null != uploadedPhoto) {
+                fileController.uploadFile(IOUtils.toByteArray(uploadedPhoto.getInputstream()), uploadedPhoto.getFileName(), destination);
+                vehiculoView.setVehFoto2Nombre(uploadedPhoto.getFileName());
+                vehiculoView.setVehFoto2Ruta(map.get("url") + uploadedPhoto.getFileName());
+
+                if (operacion == 0) {
+                    estadoArchivo2 = "Foto Subida con exito";
+                } else if (operacion == 1) {
+                    estadoArchivo2 = "Foto actualizada con exito";
+
+                }
+            }
+
+            FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Su foto (" + uploadedPhoto.getFileName() + ")  se ha guardado con exito.", ""));
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }
+
 }

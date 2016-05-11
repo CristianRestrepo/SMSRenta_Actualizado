@@ -50,7 +50,9 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
             session = sessions.openSession();
             Query query = session.createQuery("from SmsCategoriasServicio as catServicio"
                     + " where catServicio.catNombre = '" + catServicio.getCatNombre() + "'");
-            categorias = (SmsCategoriasServicio) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                categorias = (SmsCategoriasServicio) query.list().get(0);
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -60,7 +62,7 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
         }
         return categorias;
     }
-  
+
     @Override
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria) {
         Session session = null;
@@ -122,6 +124,28 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
             }
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    @Override
+    public SmsCategoriasServicio consultarCategoriaServicioConVehiculos(SmsCategoriasServicio catServicio) {
+        Session session = null;
+        SmsCategoriasServicio categorias = new SmsCategoriasServicio();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsCategoriasServicio as catServicio "
+                    + "left join fetch catServicio.smsVehiculos as vehiculos "
+                    + "left join fetch vehiculos.smsCategoriasServicios "
+                    + "where catServicio.catNombre = '" + catServicio.getCatNombre() + "' or "
+                    + "catServicio.idCategoriaServicio = '" + catServicio.getIdCategoriaServicio() + "'");
+            categorias = (SmsCategoriasServicio) query.list().get(0);
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return categorias;
     }
 
 }

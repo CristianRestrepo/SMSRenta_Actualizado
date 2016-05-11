@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../TemplateAdminS.xhtml">
+
+            <ui:define name="content1">
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">LISTA DE CALIFICACIONES</h4>
+                                <p>Te damos la bienvenida, <strong>#{sesionActivaBean.usuario.usuarioNombre}</strong></p>
+                            </div>
+                        </b:column>
+
+                        <h:form>
+                            <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                                <p:messages autoUpdate="true" closable="true" id="msg"/>
+                            </b:column>
+
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
+                                <b:inputText style="width: 100%" value="#{calificacionBean.buscar}" placeholder="Buscar cedula, nombre, calificacion, id de reserva...">
+                                    <p:ajax event="keyup" process="@this" listener="#{calificacionBean.filtrar()}"  update="DTCalificaciones"/>
+                                </b:inputText>
+                                <p:dataTable id="DTCalificaciones" var="calificacion" value="#{calificacionBean.calificacionesListView}"  rows="15"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="15,20,25" emptyMessage="Calificaciones no registradas">
+                                    <p:column headerText="# Reservacion">
+                                        <h:outputText value="#{calificacion.smsReservacion.idReservacion}" />
+                                    </p:column>
+
+                                    <p:column headerText="Calificacion">
+                                        <h:outputText value="#{calificacion.calificacionCalidadServicio}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cliente">
+                                        <h:outputText value="#{calificacion.smsReservacion.smsUsuario.usuarioNombre}" />
+                                    </p:column>
+
+                                    <p:column headerText="Observacion">
+                                        <h:outputText value="#{calificacion.calificacionObservacion}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ver" style="width: 35px">
+                                        <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-primary" process="@this" update="@form" action="#{pathBean.ir_SPanelCalificacion()}" title="Ver Calificacion">
+                                            <f:setPropertyActionListener value="#{calificacion}" target="#{calificacionBean.calificacionView}"/>
+                                            <i class="fa fa-arrow-left ">  </i> 
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </b:column>
+                        </h:form>
+                    </b:row>
+                </b:container>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
