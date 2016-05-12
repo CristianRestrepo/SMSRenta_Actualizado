@@ -196,6 +196,11 @@
                 <redirect/>
             </navigation-case>
             <navigation-case>
+                <from-outcome>AdminPFacturacion</from-outcome>
+                <to-view-id>/vistas/AdminP/facturacion/PFacturacion.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
                 <from-outcome>AdminPInformacionPersonal</from-outcome>
                 <to-view-id>/vistas/AdminP/general/PInformacionPersonal.xhtml</to-view-id>
                 <redirect/>
@@ -371,6 +376,11 @@
                 <from-outcome>AdminSVistaReserva</from-outcome>
                 <to-view-id>/vistas/AdminS/general/SVistaReserva.xhtml</to-view-id>                
                 <redirect/>       
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>AdminSPanelAdministracion</from-outcome>
+                <to-view-id>/vistas/AdminS/administracion/SPanelAdministracion.xhtml</to-view-id>
+                <redirect/>
             </navigation-case>     
             <navigation-case>
                 <from-outcome>AdminSCategorias</from-outcome>
@@ -485,6 +495,11 @@
             <navigation-case>
                 <from-outcome>AdminSAsociarVehiculosConductores</from-outcome>
                 <to-view-id>/vistas/AdminS/vehiculos/SAdminVehiculosConductores.xhtml</to-view-id>
+                <redirect/>
+            </navigation-case>
+            <navigation-case>
+                <from-outcome>AdminSAsociarVehiculosServicios</from-outcome>
+                <to-view-id>/vistas/AdminS/vehiculos/SAdminVehiculosServicios.xhtml</to-view-id>
                 <redirect/>
             </navigation-case>   
             <navigation-case>

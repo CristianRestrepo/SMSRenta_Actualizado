@@ -136,11 +136,19 @@
 
                                         </h:panelGrid>
                                         <center><h:panelGrid columns="2" width="60%">
-                                            <p:commandButton class="btn btn-block btn-success" action="#{vehiculoBean.asociarVehiculo()}" update=":formularioAsociacion :formularioVehiculos :formularioConductores :formularioProveedores" value="Asociar" style="width: 100%"/>
-                                            <p:commandButton class="btn btn-block btn-danger" action="#{vehiculoBean.cancelarAsociacion()}" update=":formularioAsociacion :formularioVehiculos :formularioConductores :formularioProveedores" value="Cancelar asociacion" />
+                                                <p:commandButton class="btn btn-block btn-success" action="#{vehiculoBean.asociarVehiculosConductores()}" update=":formularioAsociacion :formularioVehiculos :formularioConductores :formularioProveedores" value="Asociar" style="width: 100%"/>
+                                                <p:commandButton class="btn btn-block btn-danger" action="#{vehiculoBean.cancelarAsociacionVehiculoConductor()}" update=":formularioAsociacion :formularioVehiculos :formularioConductores :formularioProveedores" value="Cancelar asociacion" />
                                             </h:panelGrid></center>
                                     </div>
                                 </div>
+                            </h:form>
+                        </b:column>
+                        
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
+                            <h:form>
+                                <div class="espacio-arriba" style="text-align: left" align="center">
+                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_SPanelAdministracion()}" look="success" value="Regresar"/>
+                                </div><br/>
                             </h:form>
                         </b:column>
                     </b:row>

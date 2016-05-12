@@ -1,17 +1,129 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./../TemplateAdminP.xhtml">
 
             <ui:define name="content">
-                content
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">FACTURACION Y DOCUMENTOS</h4><br/>
+                                <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
+                            </div>
+                        </b:column>
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-file-pdf-o fa-2x"/>
+                                    <h4 class="box-title">Documento</h4>
+                                </div>
+                                <div class="box-body">
+                                    <h:form id="formularioDocumento">
+                                        <p:media id="PanelDocumento" value="#{facturaBean.reportePdf}" width="100%" height="700px" player="pdf"/>
+                                    </h:form>
+                                </div>                                
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-user fa-2x"/>
+                                    <h4 class="box-title">Usuario</h4>
+                                </div>
+                                <div class="box-body">
+                                    <h:form id="formularioCliente">
+                                        <b:inputText placeholder="Buscar" value="#{clienteBean.buscar}" style=" width: 100%">
+                                            <p:ajax event="keyup" listener="#{clienteBean.filtrarClientes()}" process="@this" update="DTClientes"/>
+                                        </b:inputText>
+                                        <p:dataTable id="DTClientes" rowKey="#{cliente.idUsuario}" var="cliente" emptyMessage="Clientes no registrados" value="#{clienteBean.usuariosListView}" rows="5"
+                                                     paginator="true"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     rowsPerPageTemplate="5,10">
+                                            <p:column selectionMode="multiple" style="width:25px;text-align:center" >
+                                            </p:column>
+
+                                            <p:column headerText="Nombre y apellido">
+                                                <p:outputLabel value="#{cliente.usuarioNombre}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Email">
+                                                <p:outputLabel value="#{cliente.usuarioEmail}"/>
+                                            </p:column>      
+                                        </p:dataTable>
+                                        <hr/>                                        
+                                        <div align="center" style="width: 100%">
+                                            <center>
+                                                <p:commandButton style="width: 80%" value="Consultar Reservaciones" class="btn btn-block btn-success">
+
+                                                </p:commandButton>
+                                            </center>
+                                        </div>
+                                    </h:form>
+                                </div>                                
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-list-ol fa-2x"/>
+                                    <h4 class="box-title">Reservas</h4>
+                                </div>
+                                <div class="box-body">
+                                    <h:form id="formularioReservaciones">
+                                        <b:inputText style="width: 100%" value="#{reservacionBean.buscar}" placeholder="Buscar cedula, nombre, etc...">
+                                            <p:ajax event="keyup" process="@this" listener="#{reservacionBean.filtrarReservaciones()}" update="DTReservaciones"/>
+                                        </b:inputText>
+                                        <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}" rows="10"
+                                                     paginator="true"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     rowsPerPageTemplate="15,20,25" emptyMessage="Reservaciones no registrados">
+                                            <p:column headerText="ID">
+                                                <h:outputText value="#{reservacion.idReservacion}" />
+                                            </p:column>
+
+                                            <p:column headerText="Vehiculo">
+                                                <h:outputText value="#{reservacion.smsVehiculo.vehPlaca}" />
+                                            </p:column>
+
+                                            <p:column headerText="Fecha Inicio">
+                                                <h:outputText value="#{reservacion.reservacionFechaInicio}" />
+                                            </p:column>
+
+                                            <p:column headerText="Hora Inicio">
+                                                <h:outputText value="#{reservacion.reservacionHoraInicio}" />
+                                            </p:column>
+
+                                            <p:column headerText="PC" style="width: 35px">
+                                                <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-success" 
+                                                               process="@this" update=":formularioDocumento:PanelDocumento" action="#{facturaBean.mostrarFactura(reservacion)}" title="Generar Factura">
+                                                    <i class="fa fa-download">  </i> 
+                                                </p:commandLink>
+                                            </p:column>  
+
+                                            <p:column headerText="POS" style="width: 35px">
+                                                <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-danger" 
+                                                               process="@this" update=":formularioDocumento:PanelDocumento" action="#{facturaBean.mostrarFacturaPos(reservacion)}" title="Generar Factura POS">
+                                                    <i class="fa fa-download">  </i> 
+                                                </p:commandLink>
+                                            </p:column>                                          
+                                        </p:dataTable> 
+                                    </h:form>
+                                </div>                                
+                            </div>
+                        </b:column>                       
+                    </b:row>
+                </b:container>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

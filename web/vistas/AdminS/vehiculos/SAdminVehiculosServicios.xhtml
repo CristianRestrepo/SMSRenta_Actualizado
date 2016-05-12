@@ -10,9 +10,10 @@
 
     <body>
 
-        <ui:composition template="./../TemplateAdminP.xhtml">
-            <ui:define name="content">
-                <b:container fluid="true">
+        <ui:composition template="./../TemplateAdminS.xhtml">
+
+            <ui:define name="content1">
+               <b:container fluid="true">
                     <b:row>
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
                             <div class="espacio-arriba" style="text-align: center" align="center">
@@ -139,7 +140,6 @@
                                                     <p:column headerText="Proveedor">
                                                         <h:outputText value="#{vehiculo.smsProveedor.proveedorRazonSocial}" />
                                                     </p:column>
-                                                    
                                                     <f:facet name="footer">
                                                         <p:commandButton process="DTVehiculos" update=":formularioAsociarRemover:DTVehiculosSeleccionados" icon="ui-icon-search" value="Seleccionar"/>
                                                     </f:facet>
@@ -248,13 +248,15 @@
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                             <h:form>
                                 <div class="espacio-arriba" style="text-align: left" align="center">
-                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_PPanelAdministracion()}" look="success" value="Regresar"/>
+                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_SPanelAdministracion()}" look="success" value="Regresar"/>
                                 </div><br/>
                             </h:form>
                         </b:column>
+                        
                     </b:row>
                 </b:container>
             </ui:define>
+
         </ui:composition>
 
     </body>

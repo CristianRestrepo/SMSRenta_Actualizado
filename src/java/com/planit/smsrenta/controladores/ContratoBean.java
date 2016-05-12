@@ -63,7 +63,28 @@ public class ContratoBean {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Este tipo de servicio no necesita de documento FUEC", "");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
-
+    }
+    
+    public String mostrarFuec(SmsReservacion reservacion) throws JRException, IOException {
+        String ruta = "";
+        FacesMessage message;
+        if (!reservacion.getSmsServicios().getSmsMercado().getMercadoNombre().equalsIgnoreCase("Renta")) {
+            SmsContrato contrato = contratoDao.consultarContratoSegunReservacion(reservacion);
+            if (contrato.getIdContrato() == null) {
+                contratoView.setSmsReservacion(reservacion);
+                contratoView.setContratoObjeto("Servicio de transporte");
+                contratoDao.registrarContrato(contratoView);
+            }
+            GenerarReportes reporte = new GenerarReportes();
+            if (contratoView.getIdContrato() == null) {
+                contratoView = contratoDao.consultarContratoSegunReservacion(reservacion);
+            }
+            ruta = reporte.generarFUECEnContexto(contratoView);
+        } else {
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Este tipo de servicio no necesita de documento FUEC", "");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        return ruta;
     }
 
 }

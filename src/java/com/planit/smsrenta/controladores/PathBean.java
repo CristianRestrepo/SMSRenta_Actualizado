@@ -50,6 +50,10 @@ public class PathBean implements Serializable {
     public String ir_PEdicionPerfil() {
         return "AdminPEditarPerfil";
     }
+    
+    public String ir_PFacturacion(){
+        return "AdminPFacturacion";
+    }
 
     public String ir_PInformacionPersonal() {
         return "AdminPInformacionPersonal";
@@ -171,6 +175,10 @@ public class PathBean implements Serializable {
     public String ir_SDashboard() {
         return "AdminSDashboard";
     }
+    
+    public String ir_SPanelAdministracion() {
+        return "AdminSPanelAdministracion";
+    }
 
     public String ir_SEdicionPerfil() {
         return "AdminSEdicionPerfil";
@@ -210,6 +218,10 @@ public class PathBean implements Serializable {
 
     public String ir_SAsociarVehiculosConductores() {
         return "AdminSAsociarVehiculosConductores";
+    }
+        
+    public String ir_SAsociarVehiculosServicios() {
+        return "AdminSAsociarVehiculosServicios";
     }
 
     public String ir_SPaises() {

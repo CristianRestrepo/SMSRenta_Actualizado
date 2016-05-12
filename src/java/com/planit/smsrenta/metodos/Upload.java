@@ -254,7 +254,26 @@ public class Upload {
         return null;
     }
     
+    public static String getPathDocumentos() {
+        try {
+            String path = getPath() + "/resources/documentos/";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
     
+    public static String getPathDefaultDocumentos() {
+
+        try {
+            String path = "/resources/documentos/";
+            return path;
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        return null;
+    }
 
 
     public void uploadFile(byte[] b, String nombre, String destino) throws IOException {

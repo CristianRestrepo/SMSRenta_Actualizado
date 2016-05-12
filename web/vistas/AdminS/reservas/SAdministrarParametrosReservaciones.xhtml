@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
@@ -97,6 +97,14 @@
                                         </p:dataTable>                                        
                                     </div>
                                 </div>
+                            </b:column>
+
+                            <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1" >
+                                <h:form>
+                                    <div class="espacio-arriba" style="text-align: left" align="center">
+                                        <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_SPanelAdministracion()}" look="success" value="Regresar"/>
+                                    </div><br/>
+                                </h:form>
                             </b:column>
                         </h:form>
                     </b:row>

@@ -30,7 +30,11 @@
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.planit.smsrenta.filtros.LoginFilter</filter-class>
-    </filter>    
+    </filter> 
+    <mime-mapping> 
+        <extension>pdf</extension> 
+        <mime-type>application/pdf</mime-type> 
+    </mime-mapping>   
     <!-- Font Awesome -->
     <mime-mapping>
         <extension>eot</extension>
