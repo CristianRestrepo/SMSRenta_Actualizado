@@ -69,8 +69,9 @@ public class ReservacionBean implements Serializable {
     private List<SmsReservacion> reservacionesListView;
     private List<SmsVehiculo> vehiculosListView;
     private List<SmsEmpleado> empleadoListView;
-    private SmsMercado mercadoSeleccionado;
-    private int categoriaServicio; //Controla el tipo de servicio elegido, con lo cual se calcula el la reservacion funciona de maneras distintas
+    private List<SmsReservacion> reservacionesCliente;
+
+    private int categoriaServicio; //Controla el tipo de servicio elegido, modificando el comportamiento de la reservacion
 
     private SmsReservacion reservaView;
     private SmsReservacion modReservacionView;
@@ -79,6 +80,7 @@ public class ReservacionBean implements Serializable {
     private SmsCategoria categoriaView;
     private SmsEstado estadoView;
     private SmsEmpleado empleadoView;
+    private SmsMercado mercadoSeleccionado;
 
     private SmsUsuario sesion; //objeto donde guardaremos los datos del usuario logueado
 
@@ -98,7 +100,7 @@ public class ReservacionBean implements Serializable {
     //Controlan la seleccion de los vehiculos y los empleados
     private boolean SelecVeh;
     private boolean SelecCon;
-    
+
     //controla la aparicion del boton siguiente en el proceso de reservacion
     private boolean siguiente;
     private boolean atras;
@@ -137,6 +139,7 @@ public class ReservacionBean implements Serializable {
 
         vehiculosListView = new ArrayList<>();
         empleadoListView = new ArrayList<>();
+        reservacionesCliente = new ArrayList<>();
 
         emailController = new SendEmail();
         vehiculoController = new VehiculoBean();
@@ -380,6 +383,14 @@ public class ReservacionBean implements Serializable {
         this.mercadoReservacion = mercadoReservacion;
     }
 
+    public List<SmsReservacion> getReservacionesCliente() {
+        return reservacionesCliente;
+    }
+
+    public void setReservacionesCliente(List<SmsReservacion> reservacionesCliente) {
+        this.reservacionesCliente = reservacionesCliente;
+    }
+
     //Metodos    
     //CRUD
     public String registrarReservacion() throws JRException, IOException {
@@ -487,9 +498,9 @@ public class ReservacionBean implements Serializable {
                 if (estadoReservacion == 0) {
                     reservacionesListView = resDao.filtrarReservacionSegunClienteSegunMercado(buscar, mercadoReservacion);
                 } else {
-                     reservacionesListView = resDao.filtrarReservacionSegunClienteSegunEstadoyMercado(buscar, estadoReservacion, mercadoReservacion);                
+                    reservacionesListView = resDao.filtrarReservacionSegunClienteSegunEstadoyMercado(buscar, estadoReservacion, mercadoReservacion);
                 }
-            }            
+            }
         }
     }
 
@@ -1021,7 +1032,7 @@ public class ReservacionBean implements Serializable {
         horaInicio = formatTime.format(modReservacionView.getReservacionHoraInicio());
         horaEntrega = formatTime.format(modReservacionView.getReservacionHoraLlegada());
         switch (sesion.getSmsRol().getRolNombre()) {
-           case "Administrador Principal":
+            case "Administrador Principal":
                 Ruta = "AdminPVistaReserva";
                 break;
 
@@ -1310,4 +1321,8 @@ public class ReservacionBean implements Serializable {
 
     }
 
+    public void consultarReservacionesCliente(SmsUsuario cliente) {
+        reservacionesCliente = new ArrayList<>();
+        reservacionesCliente = resDao.mostrarReservacionCliente(cliente);
+    }
 }

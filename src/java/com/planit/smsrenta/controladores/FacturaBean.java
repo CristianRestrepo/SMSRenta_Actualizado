@@ -13,21 +13,14 @@ import com.planit.smsrenta.metodos.GenerarReportes;
 import com.planit.smsrenta.metodos.Upload;
 import com.planit.smsrenta.modelos.SmsFactura;
 import com.planit.smsrenta.modelos.SmsReservacion;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -41,9 +34,7 @@ public class FacturaBean {
     private String tipo;
     IFacturaDao facturaDao;
     IReservacionDao reservacionDao;
-    StreamedContent reportePdf;
-
-    private String documento;
+    private static String rutaFactura;
 
     public FacturaBean() {
 
@@ -51,32 +42,13 @@ public class FacturaBean {
         reservacionDao = new ImpReservacionDao();
         tipo = "";
 
-        reportePdf = new DefaultStreamedContent();
-        documento = Upload.getPathDefaultDocumentos() + "Factura 9.pdf";
         descuento = 0;
         facturaView = new SmsFactura();
         facturaListView = new ArrayList<>();
     }
 
-    public StreamedContent getReportePdf() throws FileNotFoundException {
-        File archivo = new File(Upload.getPathDocumentos() + "Factura 9.pdf");
-        if (archivo.exists()) {
-            String contentType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(archivo.getAbsolutePath());
-            reportePdf = new DefaultStreamedContent(new FileInputStream(archivo.getAbsolutePath()), contentType, archivo.getName());
-        }
-        return reportePdf;
-    }
-
-    public void setReportePdf(StreamedContent reportePdf) {
-        this.reportePdf = reportePdf;
-    }
-
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public static String getRutaFactura() {
+        return rutaFactura;
     }
 
     public SmsFactura getFacturaView() {
@@ -154,24 +126,72 @@ public class FacturaBean {
         reporte.generarFacturaPOS(facturaView);
     }
 
-    public void mostrarFactura(SmsReservacion reservacion) throws JRException, IOException {
+    public void verificarFacturaEnSistema(SmsReservacion reservacion) {
+        FacesMessage message;
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
-        if (facturaView.getIdFactura() == null) {
-            registrar(reservacion);
+        String ruta = Upload.getPathDocumentos() + "Factura " + facturaView.getIdFactura() + ".pdf";
+        File fichero = new File(ruta);
+        if (!fichero.exists()) {
+            if (facturaView.getIdFactura() == null) {
+                registrar(reservacion);
+            }
+            GenerarReportes reporte = new GenerarReportes();
+            facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+            reporte.generarFacturaEnContexto(facturaView);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La factura ha sido generada,", "Puede verla si asi lo desea.");
+        } else {
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "La factura ya esta creada en el sistema", "Puede verla si lo desea");
         }
-        GenerarReportes reporte = new GenerarReportes();
-        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
-        reportePdf = reporte.generarFacturaEnContexto(facturaView);
+        GenerarReportes.rutaDocumento = Upload.getPathDefaultDocumentos() + "Factura " + facturaView.getIdFactura() + ".pdf";
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    public void mostrarFacturaPos(SmsReservacion reservacion) throws JRException, IOException {
+    public void verificarFacturaPosEnSistema(SmsReservacion reservacion) throws JRException, IOException {
+        FacesMessage message;
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
-        if (facturaView.getIdFactura() == null) {
-            registrar(reservacion);
+        String ruta = Upload.getPathDocumentos() + "Factura POS" + facturaView.getIdFactura() + ".pdf";
+        File fichero = new File(ruta);
+        if (!fichero.exists()) {
+            if (facturaView.getIdFactura() == null) {
+                registrar(reservacion);
+            }
+            GenerarReportes reporte = new GenerarReportes();
+            facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+            reporte.generarFacturaPOSEnContexto(facturaView);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "La factura ha sido generada,", "Puede verla si asi lo desea.");
+        } else {
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "La factura ya esta creada en el sistema", "Puede verla si lo desea");
         }
-        GenerarReportes reporte = new GenerarReportes();
+        GenerarReportes.rutaDocumento = Upload.getPathDefaultDocumentos() + "Factura POS" + facturaView.getIdFactura() + ".pdf";
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public String verFacturaPC(SmsReservacion reservacion) {
+        FacesMessage message;
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
-        documento = reporte.generarFacturaPOSEnContexto(facturaView);
+        String ruta = Upload.getPathDocumentos() + "Factura " + facturaView.getIdFactura() + ".pdf";
+        File fichero = new File(ruta);
+        if (fichero.exists()) {
+            GenerarReportes.rutaDocumento = Upload.getPathDefaultDocumentos() + "Factura " + facturaView.getIdFactura() + ".pdf";
+            return "AdminPDocumentos";
+        }
+        message = new FacesMessage(FacesMessage.SEVERITY_WARN, "La factura no ha sido generada,", "Por favor genere la factura en formato PC.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        return "";
+    }
+
+    public String verFacturaPOS(SmsReservacion reservacion) {
+        FacesMessage message;
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        String ruta = Upload.getPathDocumentos() + "Factura POS" + facturaView.getIdFactura() + ".pdf";
+        File fichero = new File(ruta);
+        if (fichero.exists()) {
+            GenerarReportes.rutaDocumento = Upload.getPathDefaultDocumentos() + "Factura POS" + facturaView.getIdFactura() + ".pdf";
+            return "AdminPDocumentos";
+        }
+        message = new FacesMessage(FacesMessage.SEVERITY_WARN, "La factura no ha sido generada,", "Por favor genere la factura en formato POS.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        return "";
     }
 
 }

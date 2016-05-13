@@ -19,18 +19,11 @@
                                 <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
                             </div>
                         </b:column>
-                        <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
-                            <div class="box box-success">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-file-pdf-o fa-2x"/>
-                                    <h4 class="box-title">Documento</h4>
-                                </div>
-                                <div class="box-body">
-                                    <h:form id="formularioDocumento">
-                                        <p:media id="PanelDocumento" value="#{facturaBean.reportePdf}" width="100%" height="700px" player="pdf"/>
-                                    </h:form>
-                                </div>                                
-                            </div>
+
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <h:form id="formularioNotificaciones">
+                                <p:growl id="msg" autoUpdate="true" life="4000" showDetail="true"/>
+                            </h:form>
                         </b:column>
 
                         <b:column col-lg="6" col-md="6" col-sm="12" col-xs="12">
@@ -44,13 +37,10 @@
                                         <b:inputText placeholder="Buscar" value="#{clienteBean.buscar}" style=" width: 100%">
                                             <p:ajax event="keyup" listener="#{clienteBean.filtrarClientes()}" process="@this" update="DTClientes"/>
                                         </b:inputText>
-                                        <p:dataTable id="DTClientes" rowKey="#{cliente.idUsuario}" var="cliente" emptyMessage="Clientes no registrados" value="#{clienteBean.usuariosListView}" rows="5"
+                                        <p:dataTable id="DTClientes" selection="#{reservacionBean.reservaView.smsUsuario}" selectionMode="single" rowKey="#{cliente.idUsuario}" var="cliente" emptyMessage="Clientes no registrados" value="#{clienteBean.usuariosListView}" rows="5"
                                                      paginator="true"
                                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                      rowsPerPageTemplate="5,10">
-                                            <p:column selectionMode="multiple" style="width:25px;text-align:center" >
-                                            </p:column>
-
                                             <p:column headerText="Nombre y apellido">
                                                 <p:outputLabel value="#{cliente.usuarioNombre}"/>
                                             </p:column>
@@ -62,9 +52,7 @@
                                         <hr/>                                        
                                         <div align="center" style="width: 100%">
                                             <center>
-                                                <p:commandButton style="width: 80%" value="Consultar Reservaciones" class="btn btn-block btn-success">
-
-                                                </p:commandButton>
+                                                <p:commandButton style="width: 80%" update=":formularioReservaciones:DTReservaciones" action="#{reservacionBean.consultarReservacionesCliente(reservacionBean.reservaView.smsUsuario)}" value="Consultar Reservaciones" class="btn btn-block btn-success"/>
                                             </center>
                                         </div>
                                     </h:form>
@@ -79,11 +67,8 @@
                                     <h4 class="box-title">Reservas</h4>
                                 </div>
                                 <div class="box-body">
-                                    <h:form id="formularioReservaciones">
-                                        <b:inputText style="width: 100%" value="#{reservacionBean.buscar}" placeholder="Buscar cedula, nombre, etc...">
-                                            <p:ajax event="keyup" process="@this" listener="#{reservacionBean.filtrarReservaciones()}" update="DTReservaciones"/>
-                                        </b:inputText>
-                                        <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesListView}" rows="10"
+                                <h:form id="formularioReservaciones">                                       
+                                        <p:dataTable id="DTReservaciones" var="reservacion" value="#{reservacionBean.reservacionesCliente}" rows="10"
                                                      paginator="true"
                                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                      rowsPerPageTemplate="15,20,25" emptyMessage="Reservaciones no registrados">
@@ -105,18 +90,43 @@
 
                                             <p:column headerText="PC" style="width: 35px">
                                                 <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-success" 
-                                                               process="@this" update=":formularioDocumento:PanelDocumento" action="#{facturaBean.mostrarFactura(reservacion)}" title="Generar Factura">
-                                                    <i class="fa fa-download">  </i> 
+                                                               process="@this" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form :formularioNotificaciones:msg" action="#{facturaBean.verificarFacturaEnSistema(reservacion)}" title="Cargar/Generar Factura">
+                                                    <i class="fa fa-download"></i> 
+                                                </p:commandLink>
+                                            </p:column>  
+
+                                            <p:column headerText="Ver" style="width: 35px">
+                                                <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-warning" 
+                                                               process="@this" action="#{facturaBean.verFacturaPC(reservacion)}" title="Ver Factura">
+                                                    <i class="fa fa-arrow-right"></i> 
                                                 </p:commandLink>
                                             </p:column>  
 
                                             <p:column headerText="POS" style="width: 35px">
                                                 <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-danger" 
-                                                               process="@this" update=":formularioDocumento:PanelDocumento" action="#{facturaBean.mostrarFacturaPos(reservacion)}" title="Generar Factura POS">
+                                                               process="@this" onclick="PrimeFaces.monitorDownload(start, stop);" update="@form :formularioNotificaciones:msg" action="#{facturaBean.verificarFacturaPosEnSistema(reservacion)}" title="Cargar/Generar Factura POS">
                                                     <i class="fa fa-download">  </i> 
                                                 </p:commandLink>
-                                            </p:column>                                          
-                                        </p:dataTable> 
+                                            </p:column>
+
+                                            <p:column headerText="Ver" style="width: 35px">
+                                                <p:commandLink style="color: white; padding: 8px" class="btn btn-block btn-warning" 
+                                                               process="@this" action="#{facturaBean.verFacturaPOS(reservacion)}" title="Ver Factura">
+                                                    <i class="fa fa-arrow-right"></i> 
+                                                </p:commandLink>
+                                            </p:column>  
+                                        </p:dataTable>
+                                        <script type="text/javascript">
+                                            function start() {
+                                                PF('statusDialog').show();
+                                            }
+                                            function stop() {
+                                                PF('statusDialog').hide();
+                                            }
+                                        </script>
+                                        <p:dialog modal="true" widgetVar="statusDialog" header="Generando factura" draggable="false" closable="false" resizable="false">
+                                            <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                        </p:dialog>
                                     </h:form>
                                 </div>                                
                             </div>

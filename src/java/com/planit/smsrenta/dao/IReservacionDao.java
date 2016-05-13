@@ -30,6 +30,8 @@ public interface IReservacionDao {
     public void modificarReservacion(SmsReservacion reservacion);
 
     public void eliminarReservacion(SmsReservacion reservacion);
+    
+    public List<SmsReservacion> filtrarReservacionesCliente(SmsUsuario usuario, String valor);
 
     public List<SmsReservacion> filtrarReservacionSegunCliente(String valor);
     

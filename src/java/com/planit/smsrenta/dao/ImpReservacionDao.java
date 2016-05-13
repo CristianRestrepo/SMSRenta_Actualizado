@@ -788,4 +788,47 @@ public class ImpReservacionDao implements IReservacionDao {
         return resevacionesHechas;
     }
 
+    @Override
+    public List<SmsReservacion> filtrarReservacionesCliente(SmsUsuario usuario, String valor) {
+        Session session = null;
+        List<SmsReservacion> reservas = new ArrayList<>();
+
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsReservacion as reservacion "
+                    + "left join fetch reservacion.smsCategoriasServicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadInicio as CiudadInicio "
+                    + "left join fetch reservacion.smsCiudadByIdCiudadDestino as CiudadDestino "
+                    + "left join fetch reservacion.smsEmpleado as empleado "
+                    + "left join fetch empleado.smsUsuario "
+                    + "left join fetch empleado.smsProveedor "
+                    + "left join fetch reservacion.smsEstado as estado "
+                    + "left join fetch reservacion.smsServicios as servicio "
+                    + "left join fetch reservacion.smsUsuario as cliente "
+                    + "left join fetch reservacion.smsVehiculo as vehiculo "
+                    + "left join fetch vehiculo.smsReferencia as referencia "
+                    + "left join fetch vehiculo.smsColor "
+                    + "left join fetch referencia.smsMarca "
+                    + "where "
+                    + "cliente.idUsuario LIKE '" + usuario.getIdUsuario() + "' or "
+                    + "reservacion.idReservacion LIKE '%" + valor + "%' or "
+                    + "reservacion.reservacionFechaInicio LIKE '%" + valor + "%' or "
+                    + "reservacion.reservacionFechaLlegada LIKE '%" + valor + "%' or "
+                    + "reservacion.reservacionHoraInicio LIKE '%" + valor + "%' or "
+                    + "reservacion.reservacionHoraLlegada LIKE '%" + valor + "%' or "
+                    + "vehiculo.vehPlaca LIKE '%" + valor + "%' or "
+                    + "order by reservacion.idReservacion desc");
+            if (!query.list().isEmpty()) {
+                reservas = (List<SmsReservacion>) query.list();
+            }
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return reservas;
+    }
+
 }

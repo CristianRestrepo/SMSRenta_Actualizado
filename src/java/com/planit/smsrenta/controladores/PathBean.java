@@ -171,6 +171,9 @@ public class PathBean implements Serializable {
         return "AdminPParametrosReservaciones";
     }
 
+    public String ir_PDocumentos(){
+        return "AdminPDocumentos";
+    }
     /* / ADMIN SECUNDARIO / */
     public String ir_SDashboard() {
         return "AdminSDashboard";

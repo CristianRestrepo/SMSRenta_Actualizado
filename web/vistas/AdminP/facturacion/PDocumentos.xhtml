@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../TemplateAdminP.xhtml">
+
+            <ui:define name="content">
+
+                <b:container fluid="true">
+                    <b:row>
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">FACTURACION Y DOCUMENTOS</h4><br/>
+                                <p>Te damos la bienvenida, #{sesionActivaBean.usuario.usuarioNombre}</p>
+                            </div>
+                        </b:column>
+                        <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
+                            <div class="box box-success">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-file-pdf-o fa-2x"/>
+                                    <h4 class="box-title">Documento</h4>
+                                </div>
+                                <div class="box-body">
+                                    <h:form id="formularioDocumento">
+                                        <p:media id="PanelDocumento" value="#{documentoBean.documento}" width="100%" height="800px" player="pdf"/>
+                                    </h:form>
+                                </div>                                
+                            </div>
+                        </b:column>
+
+
+                        <b:column col-lg="11" col-md="11" col-sm="12" col-xs="12" offset="1">
+                            <h:form>
+                                <br/>
+                                <div style="text-align: left" align="center">
+                                    <b:commandButton iconAwesome="fa fa-arrow-left" style="width: 30%" action="#{pathBean.ir_PFacturacion()}" look="success" value="Regresar"/>
+                                </div>
+                                <br/>
+                            </h:form>
+                        </b:column>
+                    </b:row>
+                </b:container>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
