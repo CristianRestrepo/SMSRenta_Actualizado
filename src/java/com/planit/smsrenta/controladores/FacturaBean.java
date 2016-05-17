@@ -106,14 +106,20 @@ public class FacturaBean {
         facturaView = new SmsFactura();
     }
 
-    public void generarFactura(SmsReservacion reservacion) throws JRException, IOException {
+    public void generarFactura(SmsReservacion reservacion) {
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
         if (facturaView.getIdFactura() == null) {
-            registrar(reservacion);
+            registrar(reservacion);//Registra factura
         }
         GenerarReportes reporte = new GenerarReportes();
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
-        reporte.generarFactura(facturaView);
+        try {
+            reporte.generarFactura(facturaView);
+        } catch (JRException e) {
+            e.getMessage();
+        } catch (IOException e) {
+            e.getMessage();
+        }
     }
 
     public void generarFacturaPos(SmsReservacion reservacion) throws JRException, IOException {
@@ -123,18 +129,42 @@ public class FacturaBean {
         }
         GenerarReportes reporte = new GenerarReportes();
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
-        reporte.generarFacturaPOS(facturaView);
+        try {
+            reporte.generarFacturaPOS(facturaView);
+        } catch (JRException e) {
+            e.getMessage();
+        } catch (IOException e) {
+            e.getMessage();
+        }
+    }
+
+    public void generarFacturaParaCorreo(SmsReservacion reservacion) {
+        facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        if (facturaView.getIdFactura() == null) {
+            registrar(reservacion);//Registra Factura
+            facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        }
+
+        String ruta = Upload.getPathDocumentos() + "Factura " + facturaView.getIdFactura() + ".pdf";
+        File fichero = new File(ruta);
+        if (!fichero.exists()) {
+            GenerarReportes reporte = new GenerarReportes();
+            facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+            reporte.generarFacturaEnContexto(facturaView);
+        }
+        GenerarReportes.rutaDocumento = Upload.getPathDocumentos() + "Factura " + facturaView.getIdFactura() + ".pdf";
     }
 
     public void verificarFacturaEnSistema(SmsReservacion reservacion) {
         FacesMessage message;
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        if (facturaView.getIdFactura() == null) {
+            registrar(reservacion);
+            facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        }
         String ruta = Upload.getPathDocumentos() + "Factura " + facturaView.getIdFactura() + ".pdf";
         File fichero = new File(ruta);
         if (!fichero.exists()) {
-            if (facturaView.getIdFactura() == null) {
-                registrar(reservacion);
-            }
             GenerarReportes reporte = new GenerarReportes();
             facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
             reporte.generarFacturaEnContexto(facturaView);
@@ -146,15 +176,16 @@ public class FacturaBean {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    public void verificarFacturaPosEnSistema(SmsReservacion reservacion) throws JRException, IOException {
+    public void verificarFacturaPosEnSistema(SmsReservacion reservacion) {
         FacesMessage message;
         facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        if (facturaView.getIdFactura() == null) {
+            registrar(reservacion);
+            facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
+        }
         String ruta = Upload.getPathDocumentos() + "Factura POS" + facturaView.getIdFactura() + ".pdf";
         File fichero = new File(ruta);
         if (!fichero.exists()) {
-            if (facturaView.getIdFactura() == null) {
-                registrar(reservacion);
-            }
             GenerarReportes reporte = new GenerarReportes();
             facturaView = facturaDao.consultarFacturaSegunReservacion(reservacion);
             reporte.generarFacturaPOSEnContexto(facturaView);

@@ -132,33 +132,5 @@ public class GenerarReportes {
         } catch (JRException e) {
             e.getMessage();
         }
-
-    }
-
-    public String generarFUECEnContexto(SmsContrato contrato) throws JRException, IOException {
-
-        String ruta = Upload.getPathDefaultDocumentos() + "FUEC " + contrato.getIdContrato() + ".pdf";
-        String path = Upload.getPathDocumentos() + "FUEC " + contrato.getIdContrato() + ".pdf";
-        File fichero = new File(ruta);
-
-        if (!fichero.exists()) {
-            ConectarBD conexion = new ConectarBD();
-            Map parametro = new HashMap();
-            parametro.put("idContrato", contrato.getIdContrato());
-
-            File jasper = new File(getPath() + "/Reportes_SMS/FacturaFUEC.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
-
-            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            response.addHeader("Content-disposition", "attachment; filename=FUEC " + contrato.getIdContrato() + ".pdf");
-            ServletOutputStream stream = response.getOutputStream();
-
-            JasperExportManager.exportReportToPdfFile(jp, path);
-
-            stream.flush();
-            stream.close();
-            FacesContext.getCurrentInstance().responseComplete();
-        }
-        return ruta;
-    }
+    }    
 }

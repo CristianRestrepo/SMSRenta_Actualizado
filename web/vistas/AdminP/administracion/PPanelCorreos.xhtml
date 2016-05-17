@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../TemplateAdminP.xhtml">
+            <ui:define name="content">
+                <b:container fluid="true">
+                    <b:row>
+
+                        <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12">
+                            <div class="espacio-arriba" style="text-align: center" align="center">
+                                <h4 style="font-size: x-large">CORREOS</h4>
+                                <p>Te damos la bienvenida, <strong>#{sesionActivaBean.usuario.usuarioNombre}</strong></p>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="8" col-md="8" col-sm="12" col-xs="12" offset="2">
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-2x fa-envelope"/>
+                                    <h4 class="box-title">Envio de correo al cliente</h4>
+                                </div>
+                                <div class="box-body">
+                                    <h:form>
+                                        <h:panelGrid columns="1" width="100%">
+                                            <h:outputLabel value="Para:"/>
+                                            <b:inputText  value="#{correoBean.correo}" placeholder="Destinatario" style="width: 100%"/>
+                                            <h:outputLabel value="Asunto:"/>
+                                            <b:inputText value="#{correoBean.asunto}" placeholder="Asunto del correo" style="width: 100%"/>
+                                        </h:panelGrid>
+                                        <hr/>
+                                        <p:inputTextarea value="#{correoBean.mensaje}" placeholder="Mensaje a enviar" rows="6" style="width: 100%"/>
+                                        <hr/>
+                                        <div align="right">
+                                            <p:commandButton style="width: 40%"  onclick="PrimeFaces.monitorDownload(start, stop);"  update="@form"  action="#{calificacionBean.enviarCorreo()}" class="btn btn-block btn-success" value="Enviar"/>                                                                                     
+                                            <script type="text/javascript">
+                                                function start() {
+                                                    PF('statusDialog').show();
+                                                }
+                                                function stop() {
+                                                    PF('statusDialog').hide();
+                                                }
+                                            </script>
+                                            <p:dialog modal="true" widgetVar="statusDialog" header="Enviando mensaje" draggable="false" closable="false" resizable="false">
+                                                <p:graphicImage width="100%" value="/resources/images/demo/ajaxloadingbar.gif" />
+                                            </p:dialog>
+                                        </div>
+                                    </h:form>
+                                </div>                                
+                            </div>
+                        </b:column>
+                    </b:row>
+                </b:container>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

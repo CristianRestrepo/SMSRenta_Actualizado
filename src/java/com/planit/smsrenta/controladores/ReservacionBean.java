@@ -29,6 +29,7 @@ import com.planit.smsrenta.dao.ImpReservacionDao;
 import com.planit.smsrenta.dao.ImpServicioDao;
 import com.planit.smsrenta.dao.ImpUsuarioDao;
 import com.planit.smsrenta.dao.ImpVehiculoDao;
+import com.planit.smsrenta.metodos.GenerarReportes;
 import com.planit.smsrenta.metodos.Sesion;
 import com.planit.smsrenta.modelos.SmsCategoria;
 import com.planit.smsrenta.modelos.SmsCategoriasServicio;
@@ -400,15 +401,16 @@ public class ReservacionBean implements Serializable {
 
         //Registro
         resDao.registrarReservacion(reservaView);
+        facturaController.generarFacturaParaCorreo(reservaView);
 
         //Enviamos mensajes al administrador del sistema, el cliente y el conductor
         if (reservaView.getSmsEmpleado() != null) {
             emailController.sendEmailAdministrador(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
-            emailController.sendEmailCliente(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
+            emailController.sendEmailCliente(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario(), GenerarReportes.rutaDocumento);
             emailController.sendEmailConductor(reservaView.getSmsEmpleado(), reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
         } else {
             emailController.sendEmailAdministradorWithout(reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
-            emailController.sendEmailClienteWithout(reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario());
+            emailController.sendEmailClienteWithout(reservaView.getSmsVehiculo(), reservaView, reservaView.getSmsUsuario(), GenerarReportes.rutaDocumento);
         }
 
         //Recargamos las lista de reservaciones que se muestran en las vistas
@@ -428,7 +430,7 @@ public class ReservacionBean implements Serializable {
         String ruta = "";
 
         if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Principal")) {
-            ruta = "regresarAdminPReservacion";
+            ruta = "RegresarAdminPReservacion";
         } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Cliente")) {
             ruta = "RegresarClienteReservacion";
         } else if (sesion.getSmsRol().getRolNombre().equalsIgnoreCase("Administrador Secundario")) {
@@ -458,15 +460,15 @@ public class ReservacionBean implements Serializable {
             costoServicioView = new SmsCostosservicios();
             switch (sesion.getSmsRol().getRolNombre()) {
                 case "Administrador Principal":
-                    Ruta = "AdminPPrincipal";
+                    Ruta = "AdminPDashboard";
                     break;
 
                 case "Administrador Secundario":
-                    Ruta = "AdminSGeneral";
+                    Ruta = "AdminSDashboard";
                     break;
 
                 case "Cliente":
-                    Ruta = "ClienteDash";
+                    Ruta = "ClienteDashboard";
                     break;
             }
 
@@ -697,7 +699,6 @@ public class ReservacionBean implements Serializable {
                 } else {
                     reservaView.setSmsUsuario(usuDao.consultarUsuario(reservaView.getSmsUsuario()));
                 }
-
                 reservaView.setSmsVehiculo(new SmsVehiculo());
                 reservaView.setSmsServicios(servicioDao.ConsultarServicio(reservaView.getSmsServicios()));//Consulta de servicio
 
@@ -708,7 +709,6 @@ public class ReservacionBean implements Serializable {
                 switch (categoriaServicio) {
 
                     case 1: //tiempo
-
                         reservaView.setReservacionFechaInicio(fechaActual);
                         reservaView.setReservacionFechaLlegada(fechaActual);
 
@@ -1282,7 +1282,7 @@ public class ReservacionBean implements Serializable {
         return costo;
     }
 
-    public void consultarCategoria(SmsServicios servicio) {
+    public void consultarCategoria(SmsServicios servicio) { //Consulta la categoria del servicio desde la vista de la reservacion
         if (!servicio.getServicioNombre().isEmpty()) {
             SmsCategoriasServicio catServicio = servicioDao.ConsultarServicio(servicio).getSmsCategoriasServicio();
             if (catServicio.getCatNombre().equalsIgnoreCase("Renta")) {

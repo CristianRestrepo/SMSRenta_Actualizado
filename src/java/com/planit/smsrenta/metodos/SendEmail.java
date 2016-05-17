@@ -19,12 +19,17 @@ import com.planit.smsrenta.modelos.SmsVehiculo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class SendEmail {
 
@@ -179,17 +184,16 @@ public class SendEmail {
         session = Session.getDefaultInstance(properties);
     }
 
-    public void sendEmailCliente(SmsEmpleado empleado, SmsVehiculo vehiculo, SmsReservacion reservacion, SmsUsuario Cliente) throws IOException {
+    public void sendEmailCliente(SmsEmpleado empleado, SmsVehiculo vehiculo, SmsReservacion reservacion, SmsUsuario Cliente, String rutaArchivo) throws IOException {
 
         init();
         IUsuarioDao usuDao = new ImpUsuarioDao();
         SmsUsuario cliente = usuDao.consultarUsuario(Cliente);
 
         //Se formatean las fechas y horas
-        String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());
-        String FechaLlegada = formatDate.format(reservacion.getReservacionFechaLlegada());
+        String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());      
         String HoraInicio = formatTime.format(reservacion.getReservacionHoraInicio());
-        String HoraLlegada = formatTime.format(reservacion.getReservacionHoraLlegada());
+       
 
         try {
             MimeMessage message = new MimeMessage(session);
@@ -203,12 +207,26 @@ public class SendEmail {
                     new InternetAddress("" + cliente.getUsuarioEmail()));
             message.setSubject("SMSRenta informe de su reservacion");
 
+            BodyPart texto = new MimeBodyPart();
+
             String mensajehtml = inicio + "<h1>Hola, " + cliente.getUsuarioNombre() + "</h1>"
                     + "\n"
                     + "<p align=\"justify\">Su reserva ha sido exitosa para el vehiculo " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " para en dia " + FechaInicio + " a las " + HoraInicio + " "
                     + "le atenderá el conductor  " + empleado.getSmsUsuario().getUsuarioNombre() + " desde " + reservacion.getReservacionLugarLlegada() + " Hasta " + reservacion.getReservacionLugarDestino() + ", Valor $" + reservacion.getReservacionCosto() + " esperamos el servicio sea "
                     + "de su total  satisfacción. No olvide calificarnos.</p>" + fin;
-            message.setContent(mensajehtml, "text/html");
+
+            texto.setContent(mensajehtml,"text/html");
+
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource(rutaArchivo)));
+            adjunto.setFileName("Factura.pdf");
+
+            MimeMultipart multiParte = new MimeMultipart();
+
+            multiParte.addBodyPart(texto);
+            multiParte.addBodyPart(adjunto);
+
+            message.setContent(multiParte);
             Transport t = session.getTransport("smtp");
             t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
             t.sendMessage(message, message.getAllRecipients());
@@ -222,7 +240,7 @@ public class SendEmail {
         }
     }
 
-    public void sendEmailClienteWithout(SmsVehiculo vehiculo, SmsReservacion reservacion, SmsUsuario Cliente) throws IOException {
+    public void sendEmailClienteWithout(SmsVehiculo vehiculo, SmsReservacion reservacion, SmsUsuario Cliente, String rutaArchivo) throws IOException {
 
         init();
         IUsuarioDao usuDao = new ImpUsuarioDao();
@@ -246,13 +264,27 @@ public class SendEmail {
                     new InternetAddress("" + cliente.getUsuarioEmail()));
 
             message.setSubject("SMSRenta informe de su reservacion");
+            
+            BodyPart texto = new MimeBodyPart();
+            
             String mensajehtml = inicio + "<h1>Hola, " + cliente.getUsuarioNombre() + "<h1>"
                     + "\n"
                     + "<p align=\"justify\">Su reserva ha sido exitosa para el vehiculo " + vehiculo.getSmsReferencia().getSmsMarca().getMarcaNombre() + " " + vehiculo.getSmsReferencia().getReferenciaNombre() + " para en dia " + FechaInicio + " a las " + HoraInicio + " hasta el dia " + FechaLlegada + " a las " + HoraLlegada + ""
                     + "Se le entregara el vehiculo en " + reservacion.getReservacionLugarLlegada() + " y debe devolver el vehiculo en " + reservacion.getReservacionLugarDestino() + ", Valor $" + reservacion.getReservacionCosto() + " esperamos el servicio sea "
                     + "de su total  satisfacción. No olvide calificarnos.</p>" + fin;
 
-            message.setContent(mensajehtml, "text/html");
+            texto.setContent(mensajehtml,"text/html");
+
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource(rutaArchivo)));
+            adjunto.setFileName("Factura.pdf");
+
+            MimeMultipart multiParte = new MimeMultipart();
+
+            multiParte.addBodyPart(texto);
+            multiParte.addBodyPart(adjunto);
+
+            message.setContent(multiParte);
             Transport t = session.getTransport("smtp");
             t.connect("smtp.gmail.com", (String) properties.get("mail.smtp.user"), "Smsrenta2016");
             t.sendMessage(message, message.getAllRecipients());
@@ -273,8 +305,7 @@ public class SendEmail {
         String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());
         String FechaLlegada = formatDate.format(reservacion.getReservacionFechaLlegada());
         String HoraInicio = formatTime.format(reservacion.getReservacionHoraInicio());
-        String HoraLlegada = formatTime.format(reservacion.getReservacionHoraLlegada());
-
+      
         try {
             MimeMessage message = new MimeMessage(session);
 
@@ -315,8 +346,7 @@ public class SendEmail {
         String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());
         String FechaLlegada = formatDate.format(reservacion.getReservacionFechaLlegada());
         String HoraInicio = formatTime.format(reservacion.getReservacionHoraInicio());
-        String HoraLlegada = formatTime.format(reservacion.getReservacionHoraLlegada());
-
+       
         try {
             MimeMessage message = new MimeMessage(session);
 
@@ -353,10 +383,9 @@ public class SendEmail {
 
         init();
         //Se formatean las fechas y horas
-        String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());
-        String FechaLlegada = formatDate.format(reservacion.getReservacionFechaLlegada());
+        String FechaInicio = formatDate.format(reservacion.getReservacionFechaInicio());        
         String HoraInicio = formatTime.format(reservacion.getReservacionHoraInicio());
-        String HoraLlegada = formatTime.format(reservacion.getReservacionHoraLlegada());
+       
 
         try {
             MimeMessage message = new MimeMessage(session);
@@ -628,7 +657,7 @@ public class SendEmail {
                     new InternetAddress(correo.getCorreoDestinatario()));
 
             message.setSubject(correo.getAsusto());
-            String mensajehtml = inicio  
+            String mensajehtml = inicio
                     + "<p class=\"content-txt\">" + correo.getMensaje() + "</p>" + fin;
             message.setContent(mensajehtml, "text/html");
             Transport t = session.getTransport("smtp");

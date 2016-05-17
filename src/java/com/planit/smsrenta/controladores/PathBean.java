@@ -71,6 +71,10 @@ public class PathBean implements Serializable {
         return "AdminPIrListaReservaciones";
     }
 
+    public String ir_PPanelCorreos(){
+        return "AdminPCorreos";
+    }
+    
     public String ir_PAsociarVehiculosConductores() {
         return "AdminPAsociarVehiculosConductores";
     }

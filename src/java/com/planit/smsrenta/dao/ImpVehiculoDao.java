@@ -158,6 +158,8 @@ public class ImpVehiculoDao implements IVehiculoDao {
                     + "where categoria in(select categoria from SmsMercado as mercado "
                     + "left outer join mercado.smsCategorias as categoria where "
                     + "mercado.mercadoNombre = '" + mercado + "') and "
+                    + "vehiculo in(select vehiculos from SmsCategoriasServicio as categoriasServicios"
+                    + "left outer join categoriasServicios.smsVehiculos as vehiculos)"
                     + "vehiculo.smsCiudad.ciudadNombre = '" + ciudad + "' and "
                     + "not exists(from SmsReservacion as reservacion "
                     + "where reservacion.smsEstado.idEstado <> '7' and "
