@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FUEC" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="1071"/>
-	<property name="ireport.y" value="1726"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="25"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idContrato" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{idContrato}]]></defaultValueExpression>
 	</parameter>
@@ -87,7 +87,7 @@ contrato.idContrato = $P{idContrato}]]>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="0" width="304" height="80" forecolor="#666666" uuid="8b6da278-b1cc-4f4f-91a2-c7299e1dbce6"/>
+				<reportElement x="0" y="1" width="304" height="80" forecolor="#666666" uuid="8b6da278-b1cc-4f4f-91a2-c7299e1dbce6"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
@@ -99,38 +99,49 @@ contrato.idContrato = $P{idContrato}]]>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="41" y="89" width="452" height="14" forecolor="#666666" uuid="42b10b69-d89b-472f-9b9c-a849f5186c76"/>
+				<reportElement x="41" y="92" width="452" height="14" forecolor="#666666" uuid="42b10b69-d89b-472f-9b9c-a849f5186c76"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[FORMATO ÚNICO DE EXTRACTO DEL CONTRATO  DE SERVICIO PUBLICO DE  TRANSPORTE ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="102" width="452" height="14" forecolor="#666666" uuid="f6f941f4-9786-407f-80e7-caa2c3287376"/>
+				<reportElement x="41" y="105" width="452" height="14" forecolor="#666666" uuid="f6f941f4-9786-407f-80e7-caa2c3287376"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[TERRESTRE AUTOMOTOR ESPECIAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="116" width="154" height="14" forecolor="#666666" uuid="b775e8ef-bfc7-4e57-a17b-9b7bc555482a"/>
+				<reportElement x="171" y="120" width="133" height="18" forecolor="#666666" uuid="b775e8ef-bfc7-4e57-a17b-9b7bc555482a"/>
 				<textElement>
-					<font size="9" isBold="false"/>
+					<font size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[N° 425526302    201600600370]]></text>
+				<text><![CDATA[N° 425526302   ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="15" width="304" height="65" uuid="51a12a50-09c0-4296-ae01-ea9ef5e8a929"/>
+				<reportElement x="0" y="3" width="304" height="65" uuid="51a12a50-09c0-4296-ae01-ea9ef5e8a929"/>
 				<imageExpression><![CDATA["../Reportes_SMS/minitraspret.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="313" y="15" width="49" height="65" uuid="61fe03f1-664c-4205-8473-f7b80b2fee06"/>
+				<reportElement x="313" y="13" width="49" height="65" uuid="61fe03f1-664c-4205-8473-f7b80b2fee06"/>
 				<imageExpression><![CDATA["../Reportes_SMS/super_transporte.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="362" y="15" width="187" height="65" uuid="fc6bb60c-0d9f-4771-b8a3-0a15e6f1423a"/>
+				<reportElement x="362" y="5" width="187" height="65" uuid="fc6bb60c-0d9f-4771-b8a3-0a15e6f1423a"/>
 				<imageExpression><![CDATA["../Reportes_SMS/coopenal.jpg"]]></imageExpression>
 			</image>
+			<textField pattern="0000">
+				<reportElement x="115" y="55" width="100" height="23" forecolor="#990000" uuid="4f45c434-198e-4840-9482-936f26e2ef6d"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idContrato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="93" y="57" width="24" height="13" forecolor="#990000" uuid="d4f4ece2-cc64-41e6-8b35-d9100dc44f1f"/>
+				<text><![CDATA[No.]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
@@ -142,7 +153,7 @@ contrato.idContrato = $P{idContrato}]]>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="41" y="7" width="263" height="14" forecolor="#666666" uuid="fa836ffe-7ee2-4636-9d4d-85505d8e7c6a"/>
+				<reportElement x="41" y="8" width="263" height="14" forecolor="#666666" uuid="fa836ffe-7ee2-4636-9d4d-85505d8e7c6a"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -156,9 +167,16 @@ contrato.idContrato = $P{idContrato}]]>
 				<text><![CDATA[Nit: 850.020.381-7]]></text>
 			</staticText>
 			<image>
-				<reportElement x="304" y="7" width="139" height="50" uuid="7c80126e-aabd-4f15-bf12-0caaa464be9d"/>
+				<reportElement x="304" y="4" width="139" height="50" uuid="7c80126e-aabd-4f15-bf12-0caaa464be9d"/>
 				<imageExpression><![CDATA["../Reportes_SMS/coopenal.jpg"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="118" y="26" width="97" height="28" forecolor="#666666" uuid="9b7ba81f-d235-4d3e-a255-10e6455457ce"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ 201600600370]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -172,13 +190,6 @@ contrato.idContrato = $P{idContrato}]]>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="0000">
-				<reportElement x="176" y="2" width="100" height="15" uuid="0ec1fbb4-b856-4869-b24d-2ef3215e3594"/>
-				<textElement>
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{idContrato}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="41" y="0" width="100" height="17" forecolor="#333333" uuid="6e6d16ff-2bd5-40a8-b266-73ccdbbcad55"/>
 				<textElement verticalAlignment="Middle">
@@ -359,21 +370,18 @@ contrato.idContrato = $P{idContrato}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Contrato_objeto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="159" y="53" width="145" height="13" uuid="eb57a937-75bd-4f67-88f7-bc8bb3d85ec5"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{Reservacion_lugar_llegada}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="314" y="53" width="12" height="13" uuid="8e4b1cec-3b03-4651-9980-8960d450c629"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[ - ]]></text>
+				<reportElement x="157" y="51" width="50" height="20" uuid="908ca829-c700-4de5-8470-ab2f25c28330"/>
+				<text><![CDATA[Bogotá   -]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="336" y="53" width="143" height="13" uuid="a56f7dba-e745-46b4-a2b1-4a984740b3cc"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{Reservacion_lugar_destino}]]></textFieldExpression>
-			</textField>
+			<staticText>
+				<reportElement x="213" y="51" width="45" height="20" uuid="9dc0c2b5-8e46-4b0a-ae51-2eeb5cdb9d13"/>
+				<text><![CDATA[Bogotá]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="51" width="186" height="20" uuid="60843978-0814-43d7-ab52-14d371e2f33c"/>
+				<text><![CDATA[Perimetro Urbano de Bogotá]]></text>
+			</staticText>
 		</band>
 		<band height="236">
 			<rectangle>
