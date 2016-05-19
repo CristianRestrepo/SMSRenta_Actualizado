@@ -20,9 +20,11 @@ public interface ICategoriasServicioDao {
     
     public SmsCategoriasServicio consultarCategoriaServicioConVehiculos(SmsCategoriasServicio catServicio);   
     
+    public SmsCategoriasServicio consultarCategoriaServicioConMercados(SmsCategoriasServicio catServicio);   
+        
     public void registrarCategoriaServicio(SmsCategoriasServicio categoria);
     
-    public void modificarCategoriaServicio(SmsCategoriasServicio categoria);
+    public void modificarCategoriaServicio(SmsCategoriasServicio categoria);    
     
     public void eliminarCategoriaServicio(SmsCategoriasServicio categoria);
     

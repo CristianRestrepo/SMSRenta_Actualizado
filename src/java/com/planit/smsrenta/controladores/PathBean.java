@@ -178,6 +178,11 @@ public class PathBean implements Serializable {
     public String ir_PDocumentos(){
         return "AdminPDocumentos";
     }
+    
+    public String ir_PAsociarMercadosCategoriasServicios(){
+        return "AdminPMercadosCategoriasServicios";
+    }
+    
     /* / ADMIN SECUNDARIO / */
     public String ir_SDashboard() {
         return "AdminSDashboard";

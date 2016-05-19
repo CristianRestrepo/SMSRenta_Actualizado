@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface IContratoDao {    
     public List<SmsContrato> consultarContratos();
+    public int consultarMaxIndicativo();
     public SmsContrato consultarContratoSegunReservacion(SmsReservacion reservacion);
     public void registrarContrato(SmsContrato contrato);    
 }

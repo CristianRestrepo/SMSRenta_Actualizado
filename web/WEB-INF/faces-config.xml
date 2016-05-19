@@ -369,7 +369,12 @@
             <to-view-id>/vistas/AdminP/administracion/PPanelCorreos.xhtml</to-view-id>
             <redirect/>
         </navigation-case>                               
-      
+        <navigation-case>
+            <from-outcome>AdminPMercadosCategoriasServicios</from-outcome>
+            <to-view-id>/vistas/AdminP/mercados/PAdminMercadosServicios.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case> 
+        
         <!-- ADMIN SECUNDARIO -->
         <navigation-case>
             <from-outcome>AdminSDashboard</from-outcome>

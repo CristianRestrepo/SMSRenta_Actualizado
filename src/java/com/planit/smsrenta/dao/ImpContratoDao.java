@@ -9,9 +9,6 @@ import com.planit.smsrenta.modelos.SmsContrato;
 import com.planit.smsrenta.modelos.SmsReservacion;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import net.sf.jasperreports.engine.query.JRJdbcQueryExecuterFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -82,6 +79,26 @@ public class ImpContratoDao implements IContratoDao {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public int consultarMaxIndicativo() {
+        Session session = null;
+        int maximo = 0;
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("select MAX(contrato.contratoIndicativo) from SmsContrato as contrato");
+            if (query.list().get(0) != null) {
+                maximo = (int) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return maximo;
     }
 
 }

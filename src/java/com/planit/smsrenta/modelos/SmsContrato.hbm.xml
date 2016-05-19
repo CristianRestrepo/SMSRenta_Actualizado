@@ -14,7 +14,16 @@
             <column name="idReservacion" not-null="true"/>
         </many-to-one>
         <property name="contratoObjeto" type="string">
-            <column length="15" name="Contrato_objeto" not-null="true"/>
+            <column name="Contrato_objeto" not-null="true"/>
+        </property>
+        <property name="contratoVigencia" type="java.lang.Integer">
+            <column name="Contrato_vigencia" not-null="true"/>
+        </property>
+        <property name="contratoNumeroContrato" type="java.lang.Integer">
+            <column name="Contrato_numeroContrato" not-null="true"/>
+        </property>
+        <property name="contratoIndicativo" type="java.lang.Integer">
+            <column name="Contrato_indicativo" not-null="true"/>
         </property>
     </class> 
 </hibernate-mapping>

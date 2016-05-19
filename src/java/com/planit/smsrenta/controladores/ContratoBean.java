@@ -51,7 +51,17 @@ public class ContratoBean {
             SmsContrato contrato = contratoDao.consultarContratoSegunReservacion(reservacion);
             if (contrato.getIdContrato() == null) {
                 contratoView.setSmsReservacion(reservacion);
-                contratoView.setContratoObjeto("Servicio de transporte");
+                contratoView.setContratoObjeto("Proveedor servicio de transporte");
+                int numerocontrato = 266;
+                contratoView.setContratoNumeroContrato(numerocontrato);
+                contratoView.setContratoVigencia(2016);
+                int indicativo = 0;
+                if (contratoDao.consultarMaxIndicativo() == 0) {
+                    indicativo = 700;
+                } else {
+                    indicativo = contratoDao.consultarMaxIndicativo() + 1;
+                }
+                contratoView.setContratoIndicativo(indicativo);
                 contratoDao.registrarContrato(contratoView);
             }
             GenerarReportes reporte = new GenerarReportes();
@@ -63,5 +73,5 @@ public class ContratoBean {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Este tipo de servicio no necesita de documento FUEC", "");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
-    }  
-  }
+    }
+}

@@ -33,8 +33,9 @@ public class ImpMercadoDao implements IMercadoDao {
         try {
             session = sessions.openSession();
             Query query = session.createQuery("from SmsMercado as mercado");
-            mercados = (List<SmsMercado>) query.list();
-
+            if (!query.list().isEmpty()) {
+                mercados = (List<SmsMercado>) query.list();
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -174,7 +175,7 @@ public class ImpMercadoDao implements IMercadoDao {
         }
         return mercados;
     }
-    
+
     @Override
     public SmsMercado consultarMercadoConProveedores(SmsMercado mercado) {
         Session session = null;
@@ -195,8 +196,8 @@ public class ImpMercadoDao implements IMercadoDao {
         }
         return mercados;
     }
-    
-     @Override
+
+    @Override
     public List<SmsMercado> consultarMercadoSegunCategoria(SmsCategoria categoria) {
         Session session = null;
         List<SmsMercado> mercados = new ArrayList<>();
@@ -213,9 +214,10 @@ public class ImpMercadoDao implements IMercadoDao {
             if (session != null) {
                 session.close();
             }
-        }return mercados;
+        }
+        return mercados;
     }
-    
+
     @Override
     public List<SmsMercado> consultarMercadosSegunProveedor(SmsProveedor proveedor) {
         Session session = null;
@@ -244,7 +246,7 @@ public class ImpMercadoDao implements IMercadoDao {
         try {
             session = sessions.openSession();
             Query query = session.createQuery("from SmsMercado as mercado "
-                   + "where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
+                    + "where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "'");
             mercados = (SmsMercado) query.list().get(0);
 
         } catch (HibernateException e) {
@@ -254,5 +256,52 @@ public class ImpMercadoDao implements IMercadoDao {
                 session.close();
             }
         }
-        return mercados;}
+        return mercados;
+    }
+
+    @Override
+    public SmsMercado consultarMercadoConCategoriasServicios(SmsMercado mercado) {
+        Session session = null;
+        SmsMercado mercados = new SmsMercado();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsMercado as mercado "
+                    + "left join fetch mercado.smsCategoriasServicios as categorias "
+                    + "left join fetch categorias.smsMercados "
+                    + "where mercado.mercadoNombre = '" + mercado.getMercadoNombre() + "' or "
+                    + "mercado.idMercado = '" + mercado.getIdMercado() + "'");
+            if (!query.list().isEmpty()) {
+                mercados = (SmsMercado) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return mercados;
+    }
+
+    @Override
+    public void actualizarMercado(SmsMercado mercado) {
+        Session session = null;
+        try {
+            session = sessions.openSession();
+            session.beginTransaction();
+            session.update(mercado);
+            session.getTransaction().commit();
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Categorias asociadas", "");
+        } catch (Exception e) {
+            e.getMessage();
+            session.getTransaction().rollback();
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Imposible realizar operacion", "");
+
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }

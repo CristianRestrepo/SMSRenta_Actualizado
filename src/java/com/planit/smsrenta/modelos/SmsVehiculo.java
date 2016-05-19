@@ -27,6 +27,7 @@ public class SmsVehiculo implements java.io.Serializable {
     private String vehFoto2Ruta;
     private String vehNumeroInterno;
     private String vehNumeroTarjetaOperacion;
+    private String vehEmpresaAfiliacion;
     private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>(0);
     private Set<SmsReservacion> smsReservacions = new HashSet<>(0);
     private Set<SmsEstadovehiculo> smsEstadovehiculos = new HashSet<>(0);
@@ -42,7 +43,7 @@ public class SmsVehiculo implements java.io.Serializable {
         this.smsEstado = new SmsEstado();
     }
 
-    public SmsVehiculo(SmsCategoria smsCategoria, SmsEstado smsEstado, SmsCiudad smsCiudad, SmsProveedor smsProveedor, SmsReferencia smsReferencia, SmsColor smsColor, String vehPlaca, String vehModelo, Integer vehNumPersonas, Integer vehNumMalGrande, Integer vehNumMalPequeña, String vehFotoNombre, String vehFotoRuta, String vehFoto2Nombre, String vehFoto2Ruta) {
+    public SmsVehiculo(SmsCategoria smsCategoria, SmsEstado smsEstado, SmsCiudad smsCiudad, SmsProveedor smsProveedor, SmsReferencia smsReferencia, SmsColor smsColor, String vehPlaca, String vehModelo, Integer vehNumPersonas, Integer vehNumMalGrande, Integer vehNumMalPequeña, String vehFotoNombre, String vehFotoRuta, String vehFoto2Nombre, String vehFoto2Ruta, String vehEmpresaAfiliacion) {
         this.smsCategoria = smsCategoria;
         this.smsEstado = smsEstado;
         this.smsCiudad = smsCiudad;
@@ -58,9 +59,10 @@ public class SmsVehiculo implements java.io.Serializable {
         this.vehFotoRuta = vehFotoRuta;
         this.vehFoto2Nombre = vehFoto2Nombre;
         this.vehFoto2Ruta = vehFoto2Ruta;
+        this.vehEmpresaAfiliacion = vehEmpresaAfiliacion;
     }
 
-    public SmsVehiculo(SmsCategoria smsCategoria, SmsCiudad smsCiudad, String vehNumeroInterno, String vehNumeroTarjetaOperacion, SmsProveedor smsProveedor, SmsReferencia smsReferencia, String vehPlaca, String vehModelo, String vehColor, Integer vehNumPersonas, Integer vehNumMalGrande, Integer vehNumMalPequeña, String vehFotoNombre, String vehFotoRuta, String vehFoto2Nombre, String vehFoto2Ruta, Set<SmsCategoriasServicio> smsCategoriasServicios, Set<SmsReservacion> smsReservacions, Set<SmsEstadovehiculo> smsEstadovehiculos, Set<SmsLugares> smsLugares, Set<SmsEmpleado> smsEmpleados) {
+    public SmsVehiculo(SmsCategoria smsCategoria, SmsCiudad smsCiudad, String vehNumeroInterno, String vehNumeroTarjetaOperacion, SmsProveedor smsProveedor, SmsReferencia smsReferencia, String vehPlaca, String vehModelo, String vehColor, Integer vehNumPersonas, Integer vehNumMalGrande, Integer vehNumMalPequeña, String vehFotoNombre, String vehFotoRuta, String vehFoto2Nombre, String vehFoto2Ruta, String vehEmpresaAfiliacion, Set<SmsCategoriasServicio> smsCategoriasServicios, Set<SmsReservacion> smsReservacions, Set<SmsEstadovehiculo> smsEstadovehiculos, Set<SmsLugares> smsLugares, Set<SmsEmpleado> smsEmpleados) {
         this.smsCategoria = smsCategoria;
         this.smsCiudad = smsCiudad;
         this.smsProveedor = smsProveedor;
@@ -81,6 +83,7 @@ public class SmsVehiculo implements java.io.Serializable {
         this.smsEmpleados = smsEmpleados;
         this.vehNumeroInterno = vehNumeroInterno;
         this.vehNumeroTarjetaOperacion = vehNumeroTarjetaOperacion;
+        this.vehEmpresaAfiliacion = vehEmpresaAfiliacion;
     }
 
     public Integer getIdVehiculo() {
@@ -266,5 +269,15 @@ public class SmsVehiculo implements java.io.Serializable {
     public void setVehNumeroTarjetaOperacion(String vehNumeroTarjetaOperacion) {
         this.vehNumeroTarjetaOperacion = vehNumeroTarjetaOperacion;
     }
-    
+
+    public String getVehEmpresaAfiliacion() {
+        return vehEmpresaAfiliacion;
+    }
+
+    public void setVehEmpresaAfiliacion(String vehEmpresaAfiliacion) {
+        this.vehEmpresaAfiliacion = vehEmpresaAfiliacion;
+    }
+
+   
+       
 }

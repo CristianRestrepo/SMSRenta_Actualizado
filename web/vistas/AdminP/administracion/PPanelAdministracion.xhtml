@@ -92,9 +92,33 @@
                         </b:column>
                         
                         <b:column col-lg="1" col-md="1" col-sm="2" col-xs="12">
-                            <div class="box box-warning">
+                            <div class="box box-default">
                                 <div class="box box-body table-responsive">
                                     <h4 align="center" style="font-size: xx-large">4</h4>
+                                </div>
+                            </div>
+                        </b:column>
+
+                        <b:column col-lg="11" col-md="11" col-sm="10" col-xs="12">
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h4 style="font-size: larger"><strong>ASOCIAR MERCADOS Y CATEGORIAS DE SERVICIOS</strong></h4>                                           
+                                </div>
+                                <div class="box-body">
+                                    <table width="100%">
+                                        <th>
+                                            <td width="80%"><p align="justify">Seleccione y asocie que tipos de servicios se ofreceran segun un mercado.</p></td>
+                                            <td width="20%"><p:commandButton action="#{pathBean.ir_PAsociarMercadosCategoriasServicios()}" value="ir" class="btn btn-block btn-default" style="width: 100%"/></td>                                               
+                                        </th>
+                                    </table>                                   
+                                </div>                                
+                            </div>
+                        </b:column>
+                        
+                        <b:column col-lg="1" col-md="1" col-sm="2" col-xs="12">
+                            <div class="box box-warning">
+                                <div class="box box-body table-responsive">
+                                    <h4 align="center" style="font-size: xx-large">5</h4>
                                 </div>
                             </div>
                         </b:column>
@@ -117,7 +141,6 @@
                     </b:row>
                 </b:container>
             </ui:define>
-
         </ui:composition>
 
     </body>

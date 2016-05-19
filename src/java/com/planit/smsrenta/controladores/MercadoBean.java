@@ -5,12 +5,14 @@
  */
 package com.planit.smsrenta.controladores;
 
+import com.planit.smsrenta.dao.ICategoriasServicioDao;
 import com.planit.smsrenta.dao.IMercadoDao;
+import com.planit.smsrenta.dao.ImpCategoriasServicioDao;
 import com.planit.smsrenta.dao.ImpMercadoDao;
 import com.planit.smsrenta.metodos.Upload;
 import static com.planit.smsrenta.metodos.Upload.getMapPathFotosMercado;
+import com.planit.smsrenta.modelos.SmsCategoriasServicio;
 import com.planit.smsrenta.modelos.SmsMercado;
-import com.planit.smsrenta.modelos.SmsUsuario;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,6 +36,10 @@ public class MercadoBean implements Serializable {
     private List<SmsMercado> mercadoListView;
     private List<String> nombresMercadosListView;
 
+    //Variables y arrays necesarios para la asociacion de mercados
+    public List<String> categoriasSeleccionadas;
+    public String mercadoSeleccionado;
+
     private String buscar;
     private String estadoFoto;
     IMercadoDao mercadoDao;
@@ -55,6 +61,9 @@ public class MercadoBean implements Serializable {
     public MercadoBean() {
         mercadoDao = new ImpMercadoDao();
 
+        mercadoSeleccionado = "";
+        categoriasSeleccionadas = new ArrayList<>();
+
         mercadoView = new SmsMercado();
         mercadoListView = new ArrayList<>();
         nombresMercadosListView = new ArrayList<>();
@@ -69,7 +78,6 @@ public class MercadoBean implements Serializable {
 
         habilitarRegistro = true;
         habilitarCancelar = true;
-
     }
 
     @PostConstruct
@@ -153,6 +161,22 @@ public class MercadoBean implements Serializable {
 
     public void setHabilitarCancelar(boolean habilitarCancelar) {
         this.habilitarCancelar = habilitarCancelar;
+    }
+
+    public List<String> getCategoriasSeleccionadas() {
+        return categoriasSeleccionadas;
+    }
+
+    public void setCategoriasSeleccionadas(List<String> categoriasSeleccionadas) {
+        this.categoriasSeleccionadas = categoriasSeleccionadas;
+    }
+
+    public String getMercadoSeleccionado() {
+        return mercadoSeleccionado;
+    }
+
+    public void setMercadoSeleccionado(String mercadoSeleccionado) {
+        this.mercadoSeleccionado = mercadoSeleccionado;
     }
 
     //Metodos
@@ -248,5 +272,57 @@ public class MercadoBean implements Serializable {
         estado = 0;
         habilitarRegistro = true;
         nombre = "Registrar Mercado";
+    }
+
+    //Administracion de mercados
+    //Metodos para asociar mercados y categorias servicios
+    public void asociarMercadoConCategoriasServicios() {
+        List<SmsCategoriasServicio> categoriasParaAsociar = new ArrayList<>();
+        ICategoriasServicioDao catSerDao = new ImpCategoriasServicioDao();
+
+        //Consultamos las categorias seleccionadas con su lista de mercados habilitada
+        for (int i = 0; i < categoriasSeleccionadas.size(); i++) {
+            SmsCategoriasServicio categoria = new SmsCategoriasServicio();
+            categoria.setCatNombre(categoriasSeleccionadas.get(i));
+            categoria = catSerDao.consultarCategoriaServicioConMercados(categoria);
+            categoriasParaAsociar.add(categoria);
+        }
+
+        //Consultamos el mercado seleccionado con su lista de categorias servicios habilitada
+        mercadoView.setMercadoNombre(mercadoSeleccionado);
+        mercadoView = mercadoDao.consultarMercadoConCategoriasServicios(mercadoView);
+
+        //asociamos los objetos
+        for (int i = 0; i < categoriasParaAsociar.size(); i++) {
+            boolean existeMercado = false;
+
+            //Verificamos que el mercado a asociar no este agregado en la lista de la categoria a evaluar
+            for (SmsMercado mercado : categoriasParaAsociar.get(i).getSmsMercados()) {
+                if (mercado.getIdMercado().equals(mercadoView.getIdMercado())) {
+                    existeMercado = true;
+                }
+            }
+            //si el mercado aun no existe en la lista se agrega
+            if (!existeMercado) {
+                categoriasParaAsociar.get(i).getSmsMercados().add(mercadoView);
+            }
+
+            boolean existeCategoria = false;
+            //Consultamos que la categoria a asociar no exista dentro de la lista del mercado seleccionado
+            for (SmsCategoriasServicio categoria : mercadoView.getSmsCategoriasServicios()) {
+                if (categoria.getIdCategoriaServicio().equals(categoriasParaAsociar.get(i).getIdCategoriaServicio())) {
+                    existeCategoria = true;
+                }
+            }
+            //Si la categoria no existe se agrega a la coleccion de categorias del mercado
+            if (!existeCategoria) {
+                mercadoView.getSmsCategoriasServicios().add(categoriasParaAsociar.get(i));
+            }
+        }
+        //actualizamos el mercado para asociar las categorias con el mercado
+        mercadoDao.actualizarMercado(mercadoView);
+        mercadoView = new SmsMercado();
+        categoriasSeleccionadas = new ArrayList<>();
+        mercadoSeleccionado = "";
     }
 }

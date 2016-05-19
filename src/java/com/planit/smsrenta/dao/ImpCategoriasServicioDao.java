@@ -31,7 +31,9 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
         try {
             session = sessions.openSession();
             Query query = session.createQuery("from SmsCategoriasServicio as catServicio");
-            categorias = (List<SmsCategoriasServicio>) query.list();
+            if (!query.list().isEmpty()) {
+                categorias = (List<SmsCategoriasServicio>) query.list();
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {
@@ -92,11 +94,9 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
             session.beginTransaction();
             session.update(categoria);
             session.getTransaction().commit();
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria modificada", "" + categoria.getCatNombre());
         } catch (HibernateException e) {
             e.getMessage();
             session.getTransaction().rollback();
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imposible realizar la operacion", null);
         } finally {
             if (session != null) {
                 session.close();
@@ -137,7 +137,33 @@ public class ImpCategoriasServicioDao implements ICategoriasServicioDao {
                     + "left join fetch vehiculos.smsCategoriasServicios "
                     + "where catServicio.catNombre = '" + catServicio.getCatNombre() + "' or "
                     + "catServicio.idCategoriaServicio = '" + catServicio.getIdCategoriaServicio() + "'");
-            categorias = (SmsCategoriasServicio) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                categorias = (SmsCategoriasServicio) query.list().get(0);
+            }
+        } catch (HibernateException e) {
+            e.getMessage();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return categorias;
+    }
+
+    @Override
+    public SmsCategoriasServicio consultarCategoriaServicioConMercados(SmsCategoriasServicio catServicio) {
+        Session session = null;
+        SmsCategoriasServicio categorias = new SmsCategoriasServicio();
+        try {
+            session = sessions.openSession();
+            Query query = session.createQuery("from SmsCategoriasServicio as catServicio "
+                    + "left join fetch catServicio.smsMercados as mercados "
+                    + "left join fetch mercados.smsCategoriasServicios "
+                    + "where catServicio.catNombre = '" + catServicio.getCatNombre() + "' or "
+                    + "catServicio.idCategoriaServicio = '" + catServicio.getIdCategoriaServicio() + "'");
+            if (!query.list().isEmpty()) {
+                categorias = (SmsCategoriasServicio) query.list().get(0);
+            }
         } catch (HibernateException e) {
             e.getMessage();
         } finally {

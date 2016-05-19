@@ -86,6 +86,8 @@
                                                 <f:attribute name="operacion" value="#{vehiculoBean.operacion}"/>
                                                 <f:attribute name="vehiculo" value="#{vehiculoBean.vehiculoView}"/>
                                             </b:inputText>   
+
+                                            <b:inputText id="TVehEmpresa" placeholder="Empresa de afiliacion" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehEmpresaAfiliacion}"/>
                                         </h:panelGrid>
                                     </div>
                                     <hr/>
@@ -235,7 +237,7 @@
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class=" btn btn-block btn-success" process="@this" update=":formA :formB :formD" action="#{vehiculoBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
-                                                 <i class="fa fa-pencil">  </i>
+                                                <i class="fa fa-pencil">  </i>
                                             </p:commandLink>
                                         </p:column>
 

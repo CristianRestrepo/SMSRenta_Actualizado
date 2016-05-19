@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FUEC" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db1a9af9-5d83-4649-ba2b-f16d84fc5bbe">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="25"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="200"/>
+	<property name="ireport.y" value="846"/>
 	<parameter name="idContrato" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[$F{idContrato}]]></defaultValueExpression>
 	</parameter>
@@ -14,7 +14,7 @@
 reservacion.Reservacion_fechaInicio, reservacion.Reservacion_fechaLlegada, 
 reservacion.Reservacion_horaInicio, reservacion.Reservacion_horaLlegada, 
 vehiculo.Veh_placa, vehiculo.Veh_modelo, 
-vehiculo.Veh_numero_interno, vehiculo.Veh_numero_tarjeta_operacion, marca.Marca_nombre, cat.Categoria_nombre, conductor.Usuario_nombre, conductor.Usuario_CC, empleado.Empleado_numero_licencia, empleado.Empleado_licencia_vigencia, contrato.idContrato, contrato.Contrato_objeto from sms_contrato as contrato, sms_reservacion as reservacion, sms_vehiculo as vehiculo, sms_referencia as ref, sms_marca as marca , sms_categoria as cat, sms_usuario as conductor , sms_empleado as empleado where contrato.idReservacion = reservacion.idReservacion and 
+vehiculo.Veh_numero_interno, vehiculo.Veh_numero_tarjeta_operacion, vehiculo.Veh_empresaAfiliacion, marca.Marca_nombre, cat.Categoria_nombre, conductor.Usuario_nombre, conductor.Usuario_CC, empleado.Empleado_numero_licencia, empleado.Empleado_licencia_vigencia, contrato.idContrato, contrato.Contrato_objeto, contrato.Contrato_vigencia, contrato.Contrato_numeroContrato, contrato.Contrato_indicativo from sms_contrato as contrato, sms_reservacion as reservacion, sms_vehiculo as vehiculo, sms_referencia as ref, sms_marca as marca , sms_categoria as cat, sms_usuario as conductor , sms_empleado as empleado where contrato.idReservacion = reservacion.idReservacion and 
 reservacion.idVehiculo = vehiculo.idVehiculo AND
 reservacion.idEmpleado = empleado.idEmpleado AND
 empleado.idUsuario = conductor.idUsuario AND
@@ -75,6 +75,10 @@ contrato.idContrato = $P{idContrato}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Empleado_licencia_vigencia" class="java.util.Date"/>
+	<field name="Contrato_vigencia" class="java.lang.Integer"/>
+	<field name="Contrato_numeroContrato" class="java.lang.Integer"/>
+	<field name="Contrato_indicativo" class="java.lang.Integer"/>
+	<field name="Veh_empresaAfiliacion" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -164,19 +168,27 @@ contrato.idContrato = $P{idContrato}]]>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<text><![CDATA[Nit: 850.020.381-7]]></text>
+				<text><![CDATA[Nit: 860.020.381-7]]></text>
 			</staticText>
 			<image>
 				<reportElement x="304" y="4" width="139" height="50" uuid="7c80126e-aabd-4f15-bf12-0caaa464be9d"/>
 				<imageExpression><![CDATA["../Reportes_SMS/coopenal.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="118" y="26" width="97" height="28" forecolor="#666666" uuid="9b7ba81f-d235-4d3e-a255-10e6455457ce"/>
-				<textElement>
-					<font size="11" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ 201600600370]]></text>
-			</staticText>
+			<textField>
+				<reportElement x="41" y="26" width="52" height="20" uuid="1789bdac-b13b-45ca-9ba2-c8c1f7393b57"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Contrato_vigencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0000">
+				<reportElement x="93" y="26" width="24" height="20" uuid="64f68dda-adbb-4d7e-8a54-f91fb3649d70"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Contrato_numeroContrato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="0000">
+				<reportElement x="115" y="26" width="79" height="20" uuid="4de6d264-4593-4e42-86c3-5c9ca67ffce7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Contrato_indicativo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -197,6 +209,13 @@ contrato.idContrato = $P{idContrato}]]>
 				</textElement>
 				<text><![CDATA[CONTRATO N°]]></text>
 			</staticText>
+			<textField pattern="0000">
+				<reportElement x="141" y="0" width="100" height="17" uuid="67a99b24-fe81-4a3b-a980-f5e93c5c0564"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Contrato_numeroContrato}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="25">
 			<rectangle>
@@ -364,24 +383,32 @@ contrato.idContrato = $P{idContrato}]]>
 				<text><![CDATA[OBJETO CONTRATO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="159" y="16" width="298" height="20" forecolor="#333333" uuid="37509016-e449-4499-b482-65a60d11842c"/>
+				<reportElement x="157" y="6" width="298" height="20" forecolor="#333333" uuid="37509016-e449-4499-b482-65a60d11842c"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Contrato_objeto}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="160" y="46" width="157" height="20" uuid="eea08588-a5f9-459e-8f5b-301960420181"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Reservacion_lugar_llegada}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="157" y="51" width="50" height="20" uuid="908ca829-c700-4de5-8470-ab2f25c28330"/>
-				<text><![CDATA[Bogotá   -]]></text>
+				<reportElement x="317" y="46" width="13" height="20" uuid="048d18df-456d-45fc-9c46-e571be90088a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[-]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="213" y="51" width="45" height="20" uuid="9dc0c2b5-8e46-4b0a-ae51-2eeb5cdb9d13"/>
-				<text><![CDATA[Bogotá]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="315" y="51" width="186" height="20" uuid="60843978-0814-43d7-ab52-14d371e2f33c"/>
-				<text><![CDATA[Perimetro Urbano de Bogotá]]></text>
-			</staticText>
+			<textField>
+				<reportElement x="329" y="46" width="150" height="20" uuid="0c0292cc-12d7-4bad-9cba-9ca60b1f1217"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Reservacion_lugar_destino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="77" width="164" height="20" uuid="72f19069-3411-42da-8825-2d41890cdfbe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Veh_empresaAfiliacion}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="236">
 			<rectangle>

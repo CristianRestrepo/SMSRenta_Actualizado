@@ -31,6 +31,7 @@ import com.planit.smsrenta.dao.ImpUsuarioDao;
 import com.planit.smsrenta.dao.ImpVehiculoDao;
 import com.planit.smsrenta.metodos.GenerarReportes;
 import com.planit.smsrenta.metodos.Sesion;
+import com.planit.smsrenta.modelos.SmsCalificacion;
 import com.planit.smsrenta.modelos.SmsCategoria;
 import com.planit.smsrenta.modelos.SmsCategoriasServicio;
 import com.planit.smsrenta.modelos.SmsCostosservicios;
@@ -394,13 +395,14 @@ public class ReservacionBean implements Serializable {
 
     //Metodos    
     //CRUD
-    public String registrarReservacion() throws JRException, IOException {
+    public String registrarReservacion() throws JRException, IOException, InterruptedException {
 
         estadoView.setEstadoNombre("Inactiva");
         reservaView.setSmsEstado(estadoDao.consultarEstado(estadoView));
 
         //Registro
         resDao.registrarReservacion(reservaView);
+        Thread.sleep(2000);
         facturaController.generarFacturaParaCorreo(reservaView);
 
         //Enviamos mensajes al administrador del sistema, el cliente y el conductor
@@ -480,7 +482,6 @@ public class ReservacionBean implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Imposible cancelar la reservacion", "La reservacion se hara valida en menos de dos horas");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
-
         return Ruta;
     }
 
@@ -643,9 +644,10 @@ public class ReservacionBean implements Serializable {
                     }
 
                     if (resDao.mostrarReservaciones().isEmpty()) {
-                        vehiculosListView = vehiculoDao.mostrarVehiculo();
+                        SmsCategoriasServicio cat = new SmsCategoriasServicio(categoriaServicio);
+                        vehiculosListView = vehiculoDao.consultarVehiculosSegunCategoriaServicio(cat);
                     } else {
-                        vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
+                        vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado, categoriaServicio);
                     }
                     break;
                 case "Conductor":
@@ -798,13 +800,13 @@ public class ReservacionBean implements Serializable {
                         horaInicio = formatTime.format(reservaView.getReservacionHoraInicio());
                         horaEntrega = formatTime.format(reservaView.getReservacionHoraLlegada());
                         break;
-
                 }
 
                 if (resDao.mostrarReservaciones().isEmpty()) {
-                    vehiculosListView = vehiculoDao.mostrarVehiculo();
+                    SmsCategoriasServicio cat = new SmsCategoriasServicio(categoriaServicio);
+                    vehiculosListView = vehiculoDao.consultarVehiculosSegunCategoriaServicio(cat);
                 } else {
-                    vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
+                    vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado, categoriaServicio);
                 }
                 newtab = "Vehiculo";
             }
@@ -831,7 +833,7 @@ public class ReservacionBean implements Serializable {
                 vehiculosListView = vehiculoDao.consultarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio());
             } else {
                 vehiculosListView = new ArrayList<>();
-                vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
+                vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado, categoriaServicio);
             }
         } else {
             if (resDao.mostrarReservaciones().isEmpty()) {
@@ -839,7 +841,7 @@ public class ReservacionBean implements Serializable {
                 vehiculosListView = vehiculoDao.filtrarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio(), categoriaView.getCategoriaNombre());
             } else {
                 vehiculosListView = new ArrayList<>();
-                vehiculosListView = vehiculoController.filtrarVehiculosDisponibles(reservaView, categoriaView, mercadoSeleccionado);
+                vehiculosListView = vehiculoController.filtrarVehiculosDisponibles(reservaView, categoriaView, mercadoSeleccionado, categoriaServicio);
             }
         }
     }
@@ -851,10 +853,10 @@ public class ReservacionBean implements Serializable {
                 vehiculosListView = vehiculoDao.consultarVehiculosCiudad(reservaView.getSmsCiudadByIdCiudadInicio());
             } else {
                 vehiculosListView = new ArrayList<>();
-                vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado);
+                vehiculosListView = vehiculoController.consultarVehiculosDisponible(reservaView, mercadoSeleccionado, categoriaServicio);
             }
         } else {
-            vehiculosListView = vehiculoController.buscarVehiculoSegunPlaca(reservaView, mercadoSeleccionado, buscar);
+            vehiculosListView = vehiculoController.buscarVehiculoSegunPlaca(reservaView, mercadoSeleccionado, buscar, categoriaServicio);
         }
     }
 

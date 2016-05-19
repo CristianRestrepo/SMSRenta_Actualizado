@@ -41,6 +41,7 @@ import com.planit.smsrenta.modelos.SmsReservacion;
 import com.planit.smsrenta.modelos.SmsVehiculo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -461,7 +462,7 @@ public class VehiculoBean {
     }
 
     //Metodos para filtrar o consultar vehiculos
-    public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva, SmsMercado mercado) {
+    public List<SmsVehiculo> consultarVehiculosDisponible(SmsReservacion reserva, SmsMercado mercado, int categoriaServicio) {
         vehiculosListView = new ArrayList<>();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
         String mercadoSeleccionado = mercado.getMercadoNombre();
@@ -490,7 +491,7 @@ public class VehiculoBean {
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
 
-        vehiculosListView = vehDao.consultarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, espacioinicio, espacioLlegada, mercadoSeleccionado);
+        vehiculosListView = vehDao.consultarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, espacioinicio, espacioLlegada, mercadoSeleccionado, categoriaServicio);
         return vehiculosListView;
     }
 
@@ -519,7 +520,7 @@ public class VehiculoBean {
         return vehiculosListView;
     }
 
-    public List<SmsVehiculo> filtrarVehiculosDisponibles(SmsReservacion reserva, SmsCategoria cat, SmsMercado mercado) {
+    public List<SmsVehiculo> filtrarVehiculosDisponibles(SmsReservacion reserva, SmsCategoria cat, SmsMercado mercado, int categoriaServicio) {
         vehiculosListView = new ArrayList<>();
         String categoriaVeh = cat.getCategoriaNombre();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
@@ -549,11 +550,11 @@ public class VehiculoBean {
         String espacioinicio = formatTime.format(hespacioInicio);
         String espacioLlegada = formatTime.format(hespacioLlegada);
 
-        vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada, mercadoSeleccionado);
+        vehiculosListView = vehDao.filtrarVehiculosDisponibles(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, categoriaVeh, espacioinicio, espacioLlegada, mercadoSeleccionado, categoriaServicio);
         return vehiculosListView;
     }
 
-    public List<SmsVehiculo> buscarVehiculoSegunPlaca(SmsReservacion reserva, SmsMercado mercado, String placa) {
+    public List<SmsVehiculo> buscarVehiculoSegunPlaca(SmsReservacion reserva, SmsMercado mercado, String placa, int categoriaServicio) {
         vehiculosListView = new ArrayList<>();
         String ciudadVeh = reserva.getSmsCiudadByIdCiudadInicio().getCiudadNombre();
         String mercadoSeleccionado = mercado.getMercadoNombre();
@@ -568,7 +569,7 @@ public class VehiculoBean {
         String HoraInicio = formatTime.format(reserva.getReservacionHoraInicio());
         String HoraLlegada = formatTime.format(reserva.getReservacionHoraLlegada());
 
-        vehiculosListView = vehDao.consultarVehiculoDisponibleSegunPlaca(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, mercadoSeleccionado, placa);
+        vehiculosListView = vehDao.consultarVehiculoDisponibleSegunPlaca(FechaInicio, FechaLlegada, HoraInicio, HoraLlegada, ciudadVeh, mercadoSeleccionado, placa, categoriaServicio);
         return vehiculosListView;
     }
 
@@ -654,8 +655,8 @@ public class VehiculoBean {
         habilitarCancelar = false;
         vehiculos = new ArrayList<>();
     }
-    
-     public void cancelarAsociacionVehiculoServicios() {
+
+    public void cancelarAsociacionVehiculoServicios() {
         operacionAdministracion = 0;
         habilitarCancelar = true;
         categoriasSeleccionados = new ArrayList<>();
@@ -692,13 +693,14 @@ public class VehiculoBean {
 
         vehiculos = vehDao.consultarVehiculosSegunCategoriaServicio(categoria);
     }
-   
+
     public void asociarVehiculosServicios() {
         ICategoriasServicioDao catSerDao = new ImpCategoriasServicioDao();
-        SmsCategoriasServicio catServicio = new SmsCategoriasServicio();
-
+        SmsCategoriasServicio catServicio;
+        categoriasListView = new ArrayList<>();
         //Consultamos la informacion completa de las categorias seleccionadas
         for (int i = 0; i < categoriasSeleccionados.size(); i++) {
+            catServicio = new SmsCategoriasServicio();
             catServicio.setCatNombre(categoriasSeleccionados.get(i));
             catServicio = catSerDao.consultarCategoriaServicioConVehiculos(catServicio);
             categoriasListView.add(catServicio);//Almacenamos los objetos completos en una nueva lista
@@ -712,24 +714,59 @@ public class VehiculoBean {
         }
 
         //Asociamos los objetos
-        for (int i = 0; i < vehiculosParaAsociar.size(); i++) {
-            vehiculoView = vehiculosParaAsociar.get(i);
-            for (int j = 0; j < categoriasListView.size(); j++) {
-                catServicio = categoriasListView.get(j);
-                catServicio.getSmsVehiculos().add(vehiculoView);
-                vehiculoView.getSmsCategoriasServicios().add(catServicio);
+        for (int i = 0; i < categoriasListView.size(); i++) {
+            for (int j = 0; j < vehiculosParaAsociar.size(); j++) {
+                boolean existeVeh = false;
+                
+                //Validamos que el vehiculo j no este asociado a la categoria i
+                for (SmsVehiculo vehiculo : categoriasListView.get(i).getSmsVehiculos()) {
+                    if (vehiculo.getIdVehiculo().equals(vehiculosParaAsociar.get(j).getIdVehiculo())) {
+                        existeVeh = true;
+                    }
+                }
+                if (!existeVeh) {
+                    categoriasListView.get(i).getSmsVehiculos().add(vehiculosParaAsociar.get(j));
+                }
+
+                boolean existeCat = false;
+                
+                //validamos que la categoria i no este ya asociada al vehiculo j
+                for (SmsCategoriasServicio cat : vehiculosParaAsociar.get(j).getSmsCategoriasServicios()) {
+                    if (cat.getIdCategoriaServicio().equals(categoriasListView.get(i).getIdCategoriaServicio())) {
+                        existeCat = true;
+                    }
+                }
+                if (!existeCat) {
+                    vehiculosParaAsociar.get(j).getSmsCategoriasServicios().add(categoriasListView.get(i));
+                }
             }
-            vehDao.asociarVehiculo(vehiculoView);
         }
 
+        for (int i = 0; i < vehiculosParaAsociar.size(); i++) {
+            vehDao.asociarVehiculo(vehiculosParaAsociar.get(i));
+        }
+
+//        for (int i = 0; i < vehiculosParaAsociar.size(); i++) {
+//            vehiculoView = new SmsVehiculo();
+//            vehiculoView = vehiculosParaAsociar.get(i);
+//            for (int j = 0; j < categoriasListView.size(); j++) {
+//                catServicio = categoriasListView.get(j);
+//                catServicio.getSmsVehiculos().add(vehiculoView);
+//                vehiculoView.getSmsCategoriasServicios().add(catServicio);
+//                vehDao.asociarVehiculo(vehiculoView);
+//            }
+//        }
         //Limpiamos objetos
         categoriasSeleccionados = new ArrayList<>();
         vehiculosSeleccionados = new ArrayList<>();
         vehiculoView = new SmsVehiculo();
+        categoria = new SmsCategoriasServicio();
 
         //Enviamos mensaje de confirmacion a la vista
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Vehiculos asociados", "");
-        FacesContext.getCurrentInstance().addMessage(null, message);
+
+        FacesContext.getCurrentInstance()
+                .addMessage(null, message);
     }
 
     public void removerVehiculosServicios() {

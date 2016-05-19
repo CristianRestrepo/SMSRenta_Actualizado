@@ -12,7 +12,7 @@
             <b:container fluid="true">
                 <b:row>
                     <h:form id="formA">
-                        
+
 
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                             <div class="box box-info espacio-arriba">
@@ -30,7 +30,7 @@
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                             <p:messages closable="true" id="msg"/>  
                         </b:column>
-                        
+
                         <b:column col-lg="7" col-md="7" col-sm="12" col-xs="12" >
                             <div class="box box-danger">
                                 <div class="box-header with-border">   
@@ -89,6 +89,7 @@
                                                 <f:attribute name="vehiculo" value="#{vehiculoBean.vehiculoView}"/>
                                             </b:inputText>                                                
 
+                                            <b:inputText id="TVehEmpresa" placeholder="Empresa de afiliacion" style="width: 100%" value="#{vehiculoBean.vehiculoView.vehEmpresaAfiliacion}"/>
                                         </h:panelGrid>
                                     </div>
                                     <hr/>
@@ -129,6 +130,7 @@
 
                                             <p:outputLabel value="Kilometraje:" />
                                             <b:inputText placeholder="Valor del kilometraje" style="width: 100%" value="#{vehiculoBean.estadoVehiculoView.estadoVehKilometraje}"/>
+                                           
                                         </h:panelGrid>
 
                                     </div><hr/>
@@ -237,14 +239,14 @@
                                         <p:column style="width: 35px">
                                             <p:commandLink style="color: white" class="btn btn-block btn-success" process="@this" update=":formA :formB :formD" action="#{vehiculoBean.seleccionarCRUD(1)}" title="Modificar">
                                                 <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
-                                                  <i class="fa fa-pencil">  </i> 
+                                                <i class="fa fa-pencil">  </i> 
                                             </p:commandLink>
                                         </p:column>
 
                                         <p:column style="width: 35px"> 
                                             <p:commandLink style="color: white" class="btn btn-block btn-danger" process="@this" update=":formA :formB :formD :formC:DTVehiculos" action="#{vehiculoBean.eliminar()}" title="Eliminar">
                                                 <f:setPropertyActionListener value="#{vehiculo}" target="#{vehiculoBean.vehiculoView}"/>
-                                                  <i class="fa fa-trash">  </i> 
+                                                <i class="fa fa-trash">  </i> 
                                                 <p:confirm header="Confirmación"  message="Está seguro que desea eliminar este vehiculo?" icon="ui-icon-alert" /> 
                                             </p:commandLink>
                                         </p:column>  

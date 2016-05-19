@@ -13,11 +13,12 @@ public class SmsMercado implements java.io.Serializable {
     private String mercadoNombre;
     private String mercadoDescripcion;
     private String mercadoFotoNombre;
-    private String mercadoFotoRuta;  
+    private String mercadoFotoRuta;
     private Set<SmsServicios> smsServicios = new HashSet<>(0);
     private Set<SmsProveedor> smsProveedors = new HashSet<>(0);
     private Set<SmsCategoria> smsCategorias = new HashSet<>(0);
     private Set<SmsParametrosReservacion> smsParametrosReservaciones = new HashSet<>(0);
+    private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>(0);
 
     public SmsMercado() {
         smsCategorias = new HashSet<>();
@@ -29,15 +30,16 @@ public class SmsMercado implements java.io.Serializable {
         this.mercadoFotoRuta = mercadoFotoRuta;
     }
 
-    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsServicios> smsServicios, Set<SmsParametrosReservacion> smsParametrosReservaciones) {
+    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsServicios> smsServicios, Set<SmsParametrosReservacion> smsParametrosReservaciones, Set<SmsCategoriasServicio> smsCategoriasServicios) {
         this.mercadoNombre = mercadoNombre;
         this.mercadoDescripcion = mercadoDescripcion;
         this.mercadoFotoNombre = mercadoFotoNombre;
-        this.mercadoFotoRuta = mercadoFotoRuta;       
+        this.mercadoFotoRuta = mercadoFotoRuta;
         this.smsProveedors = smsProveedors;
         this.smsCategorias = smsCategorias;
         this.smsServicios = smsServicios;
         this.smsParametrosReservaciones = smsParametrosReservaciones;
+        this.smsCategoriasServicios = smsCategoriasServicios;
     }
 
     public Integer getIdMercado() {
@@ -79,7 +81,7 @@ public class SmsMercado implements java.io.Serializable {
     public void setMercadoFotoRuta(String mercadoFotoRuta) {
         this.mercadoFotoRuta = mercadoFotoRuta;
     }
-   
+
     public Set<SmsProveedor> getSmsProveedors() {
         return this.smsProveedors;
     }
@@ -94,7 +96,7 @@ public class SmsMercado implements java.io.Serializable {
 
     public void setSmsCategorias(Set<SmsCategoria> smsCategorias) {
         this.smsCategorias = smsCategorias;
-    }   
+    }
 
     public Set<SmsServicios> getSmsServicios() {
         return smsServicios;
@@ -111,8 +113,12 @@ public class SmsMercado implements java.io.Serializable {
     public void setSmsParametrosReservaciones(Set<SmsParametrosReservacion> smsParametrosReservaciones) {
         this.smsParametrosReservaciones = smsParametrosReservaciones;
     }
-    
-    
-    
 
+    public Set<SmsCategoriasServicio> getSmsCategoriasServicios() {
+        return smsCategoriasServicios;
     }
+
+    public void setSmsCategoriasServicios(Set<SmsCategoriasServicio> smsCategoriasServicios) {
+        this.smsCategoriasServicios = smsCategoriasServicios;
+    }
+}

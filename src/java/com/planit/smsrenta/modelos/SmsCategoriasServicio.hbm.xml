@@ -19,6 +19,14 @@
       </key>
       <one-to-many class="com.planit.smsrenta.modelos.SmsServicios"/>
     </set>
+    <set fetch="select" inverse="false" lazy="true" name="smsMercados" table="sms_mercado_sms_categorias_servicio">
+      <key>
+        <column name="idCategoria_Servicio" not-null="true"/>
+      </key>
+      <many-to-many class="com.planit.smsrenta.modelos.SmsMercado">
+        <column name="idMercado" not-null="true"/>
+      </many-to-many>
+    </set>
     <set fetch="select" inverse="true" lazy="true" name="smsEmpleados" table="sms_empleado_sms_categorias_servicio">
       <key>
         <column name="idCategoria_Servicio" not-null="true"/>

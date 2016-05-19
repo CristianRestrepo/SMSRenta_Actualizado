@@ -33,7 +33,7 @@ public interface IVehiculoDao {
 
     public SmsVehiculo consultarVehiculoConCategorias(SmsVehiculo vehiculo);       
 
-    public List<SmsVehiculo> consultarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada, String mercado);
+    public List<SmsVehiculo> consultarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String espacioInicio, String espacioLlegada, String mercado, int categoriaServicio);
 
     public List<SmsVehiculo> consultarVehiculosCiudad(SmsCiudad ciudad);
     
@@ -41,7 +41,7 @@ public interface IVehiculoDao {
 
     public List<SmsVehiculo> consultarVehiculosSegunProveedor(SmsProveedor proveedor);
 
-    public List<SmsVehiculo> consultarVehiculoDisponibleSegunPlaca(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String mercado, String placa);
+    public List<SmsVehiculo> consultarVehiculoDisponibleSegunPlaca(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String mercado, String placa, int categoriaServicio);
 
     public List<SmsVehiculo> filtrarVehiculos(String valor);
 
@@ -51,7 +51,7 @@ public interface IVehiculoDao {
     
     public List<SmsVehiculo> filtrarVehiculosSegunCategoriaServicio(String valor, SmsCategoriasServicio categoria);
 
-    public List<SmsVehiculo> filtrarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String categoria, String espacioInicio, String espacioLlegada, String mercado);
+    public List<SmsVehiculo> filtrarVehiculosDisponibles(String fechaInicio, String fechaLlegada, String horaInicio, String horaLlegada, String ciudad, String categoria, String espacioInicio, String espacioLlegada, String mercado, int categoriaServicio);
 
     public boolean verificarExistenciaPlaca(String placa);
 }

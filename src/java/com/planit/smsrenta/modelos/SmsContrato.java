@@ -14,6 +14,9 @@ public class SmsContrato {
     private Integer idContrato;
     private SmsReservacion smsReservacion;
     private String contratoObjeto;
+    private int contratoVigencia;
+    private int contratoNumeroContrato;
+    private int contratoIndicativo;
 
     public SmsContrato() {
     }
@@ -22,10 +25,14 @@ public class SmsContrato {
         this.smsReservacion = smsReservacion;
     }
 
-    public SmsContrato(SmsReservacion smsReservacion, String contratoObjeto) {
+    public SmsContrato(SmsReservacion smsReservacion, String contratoObjeto, int contratoVigencia, int contratoNumeroContrato, int contratoIndicativo) {
         this.smsReservacion = smsReservacion;
         this.contratoObjeto = contratoObjeto;
+        this.contratoVigencia = contratoVigencia;
+        this.contratoNumeroContrato = contratoNumeroContrato;
+        this.contratoIndicativo = contratoIndicativo;
     }
+    
 
     public Integer getIdContrato() {
         return idContrato;
@@ -50,6 +57,31 @@ public class SmsContrato {
     public void setContratoObjeto(String contratoObjeto) {
         this.contratoObjeto = contratoObjeto;
     }
+
+    public int getContratoVigencia() {
+        return contratoVigencia;
+    }
+
+    public void setContratoVigencia(int contratoVigencia) {
+        this.contratoVigencia = contratoVigencia;
+    }
+
+    public int getContratoNumeroContrato() {
+        return contratoNumeroContrato;
+    }
+
+    public void setContratoNumeroContrato(int contratoNumeroContrato) {
+        this.contratoNumeroContrato = contratoNumeroContrato;
+    }
+
+    public int getContratoIndicativo() {
+        return contratoIndicativo;
+    }
+
+    public void setContratoIndicativo(int contratoIndicativo) {
+        this.contratoIndicativo = contratoIndicativo;
+    }
+    
     
     
     
