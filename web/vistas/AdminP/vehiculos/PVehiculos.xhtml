@@ -12,8 +12,6 @@
             <b:container fluid="true">
                 <b:row>
                     <h:form id="formA">
-
-
                         <b:column col-lg="12" col-md="12" col-sm="12" col-xs="12" >
                             <div class="box box-info espacio-arriba">
                                 <div class="box-header with-border"> 
@@ -155,7 +153,6 @@
                     </h:form>
 
                     <h:form id="formB" enctype="multipart/form-data">
-
                         <b:column col-lg="5" col-md="5" col-sm="12" col-xs="12" >
                             <div class="box box-primary">
                                 <p:fragment autoUpdate="true">
@@ -168,7 +165,6 @@
                                         <div class="table-responsive">
                                             <p:fileUpload id="fileIdPhoto" fileUploadListener="#{vehiculoBean.uploadPhoto1}" mode="advanced" dragDropSupport="false"
                                                           process="@this" uploadLabel="Subir fotografia" cancelLabel="Cancelar" update=":formB" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
-
                                             <p:messages id="messages" closable="true" />
                                         </div> 
                                     </div>
@@ -190,7 +186,6 @@
                                         <div class="table-responsive">
                                             <p:fileUpload id="fileIdPhoto" fileUploadListener="#{vehiculoBean.uploadPhoto2}" mode="advanced" dragDropSupport="false"
                                                           process="@this" uploadLabel="Subir fotografia" cancelLabel="Cancelar" update=":formD" sizeLimit="10000000" allowTypes="/(\.|\/)(jpg|jpeg|png)$/"  />
-
                                             <p:messages id="messages" closable="true" />
                                         </div> 
                                     </div>

@@ -26,39 +26,30 @@
                         </b:column>
 
                         <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
-                            <div class="box box-success">
-                                <div class="box-header with-border">
-                                    <i class="fa fa-2x fa-check-square-o"/>
-                                    <h4 class="box-title">Mercados </h4>
-                                </div>
-                                <div class="box-body">
-                                    <h:form id="formularioMercado">
-                                        <center>
-                                            <b:selectOneMenu id="SMMercado" style="width: 100%" value="#{mercadoBean.mercadoSeleccionado}">
-                                                <f:selectItem  noSelectionOption="true" itemLabel="Seleccione mercado"/>
-                                                <f:selectItems  var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}" value="#{mercadoBean.nombresMercadosListView}"/>
-                                            </b:selectOneMenu>
-                                        </center>
-                                    </h:form>
-                                </div>
-                            </div>                              
-                        </b:column>
-
-                        <b:column col-lg="10" col-md="10" col-sm="12" col-xs="12" offset="1">
                             <div class="box box-info">
                                 <div class="box-header with-border">
                                     <i class="fa fa-2x fa-list"/>
-                                    <h4 class="box-title">Categorias de servicios</h4>
+                                    <h4 class="box-title">Categorias y mercados</h4>
                                 </div>
                                 <div class="box-body">
-                                    <h:form id="formularioCategorias">      
+                                    <h:form id="formularioPrincipal">      
                                         <center>
+                                            <b:selectOneMenu id="SMMercado" style="width: 80%" value="#{mercadoBean.mercadoSeleccionado}">
+                                                <f:selectItem  noSelectionOption="true" itemLabel="Seleccione mercado"/>
+                                                <f:selectItems  var="mercados" itemValue="#{mercados}" itemLabel="#{mercados}" value="#{mercadoBean.nombresMercadosListView}"/>
+                                            </b:selectOneMenu>
                                             <p:selectManyCheckbox value="#{mercadoBean.categoriasSeleccionadas}" style="width:60%" columns="2"  id="SCCategoriasServicios">
                                                 <f:selectItems value="#{categoriasServiciosBean.nombresCategoriasServicios}"/>
                                             </p:selectManyCheckbox>
                                             <hr/>
-                                            <p:commandButton update=":formularioMensajes :formularioMercado :formularioCategorias" onclick="PrimeFaces.monitorDownload(start, stop);" value="Asociar" action="#{mercadoBean.asociarMercadoConCategoriasServicios()}" class="btn btn-block btn-success" style="width: 80%"/>
+                                            <p:commandButton update=":formularioMensajes :formularioPrincipal" onclick="PrimeFaces.monitorDownload(start, stop);" value="Asociar" action="#{mercadoBean.asociarMercadoConCategoriasServicios()}" class="btn btn-block btn-success" style="width: 80%">
+                                                <p:confirm header="Confirmación" message="Está seguro que desea asociar este mercado con estas categorias de servicios?" icon="ui-icon-alert" /> 
+                                            </p:commandButton>
                                         </center>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <b:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" look="success" iconAwesome="fa fa-check" />
+                                            <b:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" look="danger" iconAwesome="fa fa-close" />
+                                        </p:confirmDialog>
                                         <script type="text/javascript">
                                             function start() {
                                                 PF('statusDialog').show();

@@ -19,7 +19,7 @@
         <property name="mercadoFotoRuta" type="string">
             <column length="65535" name="Mercado_foto_ruta" not-null="true"/>
         </property>   
-        <set fetch="select" lazy="false" inverse="true" name="smsCategoriasServicios" table="sms_mercado_sms_categorias_servicio">
+        <set fetch="select" lazy="false" inverse="false" name="smsCategoriasServicios" table="sms_mercado_sms_categorias_servicio">
             <key>
                 <column name="idMercado" not-null="true"/>
             </key>
