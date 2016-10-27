@@ -30,6 +30,7 @@
   <table-filter match-name="sms_tipo_lugar"/>
   <table-filter match-name="sms_mercado_sms_servicios"/>
   <table-filter match-name="sms_mercado_sms_categoria"/>
+  <table-filter match-name="sms_mercado_sms_categorias_servicio"/>
   <table-filter match-name="sms_costosservicios"/>
   <table-filter match-name="sms_hojavida"/>
   <table-filter match-name="sms_estado"/>

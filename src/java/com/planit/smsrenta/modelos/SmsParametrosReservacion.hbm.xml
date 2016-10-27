@@ -8,9 +8,6 @@
         </id>
         <property name="parametroValorIncremento" type="int">
             <column length="45" name="Parametro_valor_incremento" not-null="true"/>
-        </property>
-        <many-to-one class="com.planit.smsrenta.modelos.SmsMercado" fetch="join" name="smsMercado">
-            <column name="idMercado" not-null="true"/>
-        </many-to-one>
+        </property>     
     </class>     
 </hibernate-mapping>

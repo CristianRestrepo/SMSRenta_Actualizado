@@ -14,9 +14,12 @@ public class ConectarBD {
     public ConectarBD() {
 
         String ruta = "jdbc:mysql://localhost:3306/smsrenta_actualizada";
+        String clave = "";
+//        String ruta = "jdbc:mysql://192.168.100.251:3306/smsrenta_actualizada";
+//        String clave = "yU7eywfXILoZjtaD";
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection(ruta, "root", "");
+            conexion = DriverManager.getConnection(ruta, "administrador", clave);
         } catch (ClassNotFoundException e) {
             System.out.println("error" + e);
         } catch (SQLException e) {
@@ -35,5 +38,4 @@ public class ConectarBD {
     Statement createStatement() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

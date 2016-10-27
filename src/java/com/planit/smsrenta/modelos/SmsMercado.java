@@ -16,8 +16,7 @@ public class SmsMercado implements java.io.Serializable {
     private String mercadoFotoRuta;
     private Set<SmsServicios> smsServicios = new HashSet<>(0);
     private Set<SmsProveedor> smsProveedors = new HashSet<>(0);
-    private Set<SmsCategoria> smsCategorias = new HashSet<>(0);
-    private Set<SmsParametrosReservacion> smsParametrosReservaciones = new HashSet<>(0);
+    private Set<SmsCategoria> smsCategorias = new HashSet<>(0);  
     private Set<SmsCategoriasServicio> smsCategoriasServicios = new HashSet<>(0);
 
     public SmsMercado() {
@@ -30,15 +29,14 @@ public class SmsMercado implements java.io.Serializable {
         this.mercadoFotoRuta = mercadoFotoRuta;
     }
 
-    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsServicios> smsServicios, Set<SmsParametrosReservacion> smsParametrosReservaciones, Set<SmsCategoriasServicio> smsCategoriasServicios) {
+    public SmsMercado(String mercadoNombre, String mercadoDescripcion, String mercadoFotoNombre, String mercadoFotoRuta, Set<SmsProveedor> smsProveedors, Set<SmsCategoria> smsCategorias, Set<SmsServicios> smsServicios, Set<SmsCategoriasServicio> smsCategoriasServicios) {
         this.mercadoNombre = mercadoNombre;
         this.mercadoDescripcion = mercadoDescripcion;
         this.mercadoFotoNombre = mercadoFotoNombre;
         this.mercadoFotoRuta = mercadoFotoRuta;
         this.smsProveedors = smsProveedors;
         this.smsCategorias = smsCategorias;
-        this.smsServicios = smsServicios;
-        this.smsParametrosReservaciones = smsParametrosReservaciones;
+        this.smsServicios = smsServicios;       
         this.smsCategoriasServicios = smsCategoriasServicios;
     }
 
@@ -105,15 +103,7 @@ public class SmsMercado implements java.io.Serializable {
     public void setSmsServicios(Set<SmsServicios> smsServicios) {
         this.smsServicios = smsServicios;
     }
-
-    public Set<SmsParametrosReservacion> getSmsParametrosReservaciones() {
-        return smsParametrosReservaciones;
-    }
-
-    public void setSmsParametrosReservaciones(Set<SmsParametrosReservacion> smsParametrosReservaciones) {
-        this.smsParametrosReservaciones = smsParametrosReservaciones;
-    }
-
+    
     public Set<SmsCategoriasServicio> getSmsCategoriasServicios() {
         return smsCategoriasServicios;
     }

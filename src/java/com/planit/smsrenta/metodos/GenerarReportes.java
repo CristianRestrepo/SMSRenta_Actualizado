@@ -42,7 +42,7 @@ public class GenerarReportes {
         Map parametro = new HashMap();
         parametro.put("idFactura", factura.getIdFactura());
 
-        File jasper = new File(getPath() + "/Reportes_SMS/FacturaPrincipal.jasper");
+        File jasper = new File(getPath() + "/resources/reportes/FacturaPrincipal.jasper");
         JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -54,20 +54,19 @@ public class GenerarReportes {
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
-
     }
 
-    public void generarFacturaPOS(SmsFactura factura) throws JRException, IOException {
+     public void generarFacturaPOS(SmsFactura factura) throws JRException, IOException {
 
         ConectarBD conexion = new ConectarBD();
         Map parametro = new HashMap();
         parametro.put("idFactura", factura.getIdFactura());
 
-        File jasper = new File(getPath() + "/Reportes_SMS/reportePrincipalMini.jasper");
+        File jasper = new File(getPath() + "/resources/reportes/FacturaPrincipalMini.jasper");
         JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Factura POS" + factura.getIdFactura() + ".pdf");
+        response.addHeader("Content-disposition", "attachment; filename=POS " + factura.getIdFactura() + ".pdf");
         ServletOutputStream stream = response.getOutputStream();
 
         JasperExportManager.exportReportToPdfStream(jp, stream);
@@ -75,16 +74,15 @@ public class GenerarReportes {
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
-
     }
-
-    public void generarFUEC(SmsContrato contrato) throws JRException, IOException {
+    
+     public void generarFUEC(SmsContrato contrato) throws JRException, IOException {
 
         ConectarBD conexion = new ConectarBD();
         Map parametro = new HashMap();
         parametro.put("idContrato", contrato.getIdContrato());
 
-        File jasper = new File(getPath() + "/Reportes_SMS/FacturaFUEC.jasper");
+        File jasper = new File(getPath() + "/resources/reportes/FacturaFUEC.jasper");
         JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -96,9 +94,8 @@ public class GenerarReportes {
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
-
     }
-
+    
     public void generarFacturaEnContexto(SmsFactura factura) {
 
         try {
@@ -107,7 +104,7 @@ public class GenerarReportes {
             Map parametro = new HashMap();
             parametro.put("idFactura", factura.getIdFactura());
 
-            File jasper = new File(getPath() + "/Reportes_SMS/FacturaPrincipal.jasper");
+            File jasper = new File(getPath() + "/resources/reportes/FacturaPrincipal.jasper");
             JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
             JasperExportManager.exportReportToPdfFile(jp, path);
@@ -115,22 +112,38 @@ public class GenerarReportes {
             e.getMessage();
         }
     }
-
+    
     public void generarFacturaPOSEnContexto(SmsFactura factura) {
 
         try {
-            String path = Upload.getPathDocumentos() + "Factura POS" + factura.getIdFactura() + ".pdf";
+            String path = Upload.getPathDocumentos() + "POS " + factura.getIdFactura() + ".pdf";
             ConectarBD conexion = new ConectarBD();
             Map parametro = new HashMap();
             parametro.put("idFactura", factura.getIdFactura());
 
-            File jasper = new File(getPath() + "/Reportes_SMS/reportePrincipalMini.jasper");
+            File jasper = new File(getPath() + "/resources/reportes/FacturaPrincipalMini.jasper");
             JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
 
             JasperExportManager.exportReportToPdfFile(jp, path);
-
         } catch (JRException e) {
             e.getMessage();
         }
-    }    
+    }
+        
+    public void generarFUECEnContexto(SmsContrato contrato) {
+
+        try {
+            String path = Upload.getPathDocumentos() + "FUEC " + contrato.getIdContrato() + ".pdf";
+            ConectarBD conexion = new ConectarBD();
+            Map parametro = new HashMap();
+            parametro.put("idContrato", contrato.getIdContrato());
+
+            File jasper = new File(getPath() + "/resources/reportes/FacturaFUEC.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(jasper.getAbsolutePath(), parametro, conexion.getConexion());
+
+            JasperExportManager.exportReportToPdfFile(jp, path);
+        } catch (JRException e) {
+            e.getMessage();
+        }
+    }
 }
